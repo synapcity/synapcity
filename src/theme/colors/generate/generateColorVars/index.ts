@@ -1,0 +1,1 @@
+export { generateColorVars } from "./generateColorVars";

@@ -1,0 +1,1 @@
+export { setGlobalMode } from "./setGlobalMode";

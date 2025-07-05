@@ -1,0 +1,1 @@
+export { applyVars } from "./applyVars";

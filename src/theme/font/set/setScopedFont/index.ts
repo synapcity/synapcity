@@ -1,0 +1,1 @@
+export { setScopedFont } from "./setScopedFont";

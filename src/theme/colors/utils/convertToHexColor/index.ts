@@ -1,0 +1,1 @@
+export { convertToHexColor } from "./convertToHexColor";
