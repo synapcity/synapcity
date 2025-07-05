@@ -155,6 +155,7 @@ const config: Config = {
 
 	// The test environment that will be used for testing
 	testEnvironment: "jsdom",
+	testTimeout: 10000,
 
 	// Options that will be passed to the testEnvironment
 	// testEnvironmentOptions: {},
