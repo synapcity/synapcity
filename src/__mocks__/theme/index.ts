@@ -1,0 +1,1 @@
+export { colord } from "./colordInstance";

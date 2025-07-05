@@ -1,0 +1,1 @@
+export { resetGlobalTheme } from "./resetGlobalTheme";

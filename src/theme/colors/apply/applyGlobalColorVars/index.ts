@@ -1,0 +1,1 @@
+export { applyGlobalColorVars } from "./applyGlobalColorVars";

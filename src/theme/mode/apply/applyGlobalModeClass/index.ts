@@ -1,0 +1,1 @@
+export { applyGlobalModeClass } from "./applyGlobalModeClass";

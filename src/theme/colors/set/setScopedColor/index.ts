@@ -1,0 +1,1 @@
+export { setScopedColor } from "./setScopedColor";

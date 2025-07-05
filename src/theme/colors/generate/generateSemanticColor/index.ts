@@ -1,0 +1,1 @@
+export { generateSemanticColor } from "./generateSemanticColor";

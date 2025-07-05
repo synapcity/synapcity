@@ -1,0 +1,1 @@
+export { updateScopedTheme } from "./updateScopedTheme";

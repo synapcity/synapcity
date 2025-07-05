@@ -1,0 +1,1 @@
+export { applyGlobalFontVars } from "./applyGlobalFontVars";
