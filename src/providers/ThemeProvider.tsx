@@ -12,7 +12,6 @@ import { cn, getUpdatedValues } from "@/utils";
 import isEqual from "lodash.isequal";
 import { applyGlobalModeClass, applyScopedModeClass } from "@/theme/mode/apply";
 import { EntityType } from "@/types/entity";
-import { getDiff } from "@/utils"
 
 export interface ThemeProviderProps {
 	scope: ThemeScope;
@@ -38,8 +37,6 @@ export const ThemeProvider = ({
 	const resetScopedTheme = useThemeStore(state => state.resetScopedPreferences)
 	const hasHydrated = useThemeStore(state => state.hasHydrated)
 
-
-
 	const { preferences, isGlobal, isInherited, isScoped, isCustom } = resolveThemeMetadata({
 		entityType: scope,
 		entityId,
@@ -52,8 +49,6 @@ export const ThemeProvider = ({
 	const targetRef = useRef<HTMLElement | null>(null);
 	const scopedPrefs = getPreferences(scope, entityId).preferences
 
-
-	// Function to update preview state
 	const updatePreview = (data: Partial<ThemePreferences>) => {
 		setPreview(prev => {
 			const newPreview = { ...prev, ...data };
@@ -64,7 +59,6 @@ export const ThemeProvider = ({
 		});
 	};
 
-	// Function to update the color (primary or accent)
 	const updateColor = (color: string, prefix: "primary" | "accent", preview?: boolean) => {
 		const colorData = generateSemanticColor(color);
 		updatePreview({ [prefix]: colorData })
@@ -89,18 +83,15 @@ export const ThemeProvider = ({
 	};
 
 	const updateFontSize = (fontSize: FontSizeToken, preview = false) => {
-		updatePreview({ fontSize });
-		const element = (preview ? previewRef.current : targetRef.current) as HTMLElement
+		if (preview) {
+			updatePreview({ fontSize });
+			applyScopedFontVars({ postfix: "size", element: previewRef.current as HTMLElement, size: fontSize })
+			return;
+		}
 		if (isGlobal) {
 			applyGlobalFontVars({ postfix: "size", size: fontSize });
-			if (!preview) {
-				setGlobalPreferences({ fontSize })
-			}
-		} else if (entityId && previewRef) {
-			applyScopedFontVars({ postfix: "size", element, size: fontSize });
-			if (!preview) {
-				setScopedPreferences(scope as EntityType, entityId, { fontSize })
-			}
+		} else {
+			applyScopedFontVars({ postfix: "size", element: targetRef.current as HTMLElement, size: fontSize });
 		}
 	};
 
@@ -116,23 +107,35 @@ export const ThemeProvider = ({
 		}
 	}
 
+
 	const resetTheme = () => {
 		if (isGlobal) {
 			resetGlobalTheme();
+		} else if (entityId) {
+			resetScopedTheme(
+				scope as EntityType,
+				entityId,
+			);
 		} else {
-			resetScopedTheme(scope as EntityType, id)
+			console.warn(`entityId not passed in for ${scope}`);
 		}
-	}
+	};
 
 	const applyGlobal = useCallback(() => {
 		applyGlobalModeClass(preferences.mode)
-	}, [preferences.mode])
+		applyGlobalFontVars({ size: preferences.fontSize, postfix: "size" })
+	}, [preferences.fontSize, preferences.mode])
+
+	const applyScoped = useCallback(() => {
+		const element = targetRef.current as HTMLElement
+		applyScopedModeClass(preferences.mode, element)
+		applyScopedFontVars({ postfix: "size", size: preferences.fontSize, element })
+	}, [preferences.fontSize, preferences.mode])
 
 	const updateTheme = () => {
 		const updatedValues = getUpdatedValues(preferences, preview)
 		const names = Object.getOwnPropertyNames(updatedValues)
-		console.log("names", names)
-		if (names.length !== 1) {
+		if (names.length > 0) {
 			if (isGlobal) {
 				setGlobalPreferences(updatedValues)
 			} else {
@@ -149,10 +152,9 @@ export const ThemeProvider = ({
 	const applyUpdatedVars = (names: string[], values: Partial<ThemePreferences>) => {
 		if (names.includes("mode") && values.mode) {
 			updateMode(values.mode)
+		} else if (names.includes("fontSize") && values.fontSize) {
+			updateFontSize(values.fontSize)
 		}
-	}
-	const getDiffValues = () => {
-		return getDiff(preview, preferences)
 	}
 
 	useEffect(() => {
@@ -161,10 +163,15 @@ export const ThemeProvider = ({
 
 	useEffect(() => {
 		if (hasHydrated && !hasRendered.current) {
-			applyGlobal()
+			if (isGlobal) {
+				applyGlobal()
+			} else {
+				applyScoped()
+			}
+
 			hasRendered.current = true
 		}
-	}, [applyGlobal, hasHydrated])
+	}, [applyGlobal, applyScoped, hasHydrated, isGlobal])
 
 	const id = `${scope}-${entityId ?? "main"}`;
 
@@ -185,16 +192,17 @@ export const ThemeProvider = ({
 				scopedPrefs,
 				resetTheme,
 				isCustom,
-				getDiffValues,
 				updateTheme,
 			}}
 		>
 			<div
 				ref={targetRef as RefObject<HTMLDivElement>}
 				data-id={id}
+				data-theme={preferences.mode}
 				className={cn(
 					"size-full text-foreground bg-background",
-					className
+					className,
+					preferences.mode
 				)}
 				{...props}
 			>

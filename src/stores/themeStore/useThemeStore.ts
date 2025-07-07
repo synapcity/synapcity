@@ -51,26 +51,34 @@ export const themeStoreInitializer: StateCreator<ScopedThemeState> = (
 		});
 	},
 	initScopedPreferences: (scope, id) => {
-		const global = get().globalPreferences;
-		set((state) => ({
-			scopedPreferences: {
-				...state.scopedPreferences,
-				[scope]: {
-					...state.scopedPreferences[scope],
-					[id]: {
-						...global,
+		let global;
+		set((state) => {
+			global = state.globalPreferences;
+			return {
+				scopedPreferences: {
+					...state.scopedPreferences,
+					[scope]: {
+						...state.scopedPreferences[scope],
+						[id]: {
+							...global,
+						},
 					},
 				},
-			},
-		}));
-		return global;
+			};
+		});
+		return global as unknown as ThemePreferences;
 	},
 
 	setPreferences: (scope, id, updates) => {
 		set((state) => {
 			const prev =
 				state.scopedPreferences[scope]?.[id] ??
-				getDefaultTheme(get().globalPreferences.mode);
+				getDefaultTheme(state.globalPreferences.mode);
+			const updateSet = new Set(Object.keys(updates));
+			const useGlobalTheme = updateSet.has("inheritsFromGlobalTheme");
+			if (!useGlobalTheme && prev.inheritsFromGlobalTheme) {
+				updates.inheritsFromGlobalTheme = false;
+			}
 
 			return {
 				scopedPreferences: {

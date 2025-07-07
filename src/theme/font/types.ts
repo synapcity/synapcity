@@ -8,9 +8,6 @@ export type FontSizeToken =
 	| "3xl"
 	| "4xl"
 	| "5xl"
-	| "6xl"
-	| "7xl"
-	| "8xl"
-	| "9xl";
+	| "6xl";
 
 export type FontSizeScale = Record<FontSizeToken, number>;

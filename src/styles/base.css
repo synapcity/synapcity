@@ -136,7 +136,7 @@
 	--primary-800: #e5e5e5;
 	--primary-900: #f7f7f7;
 
-	--accent-50: #004d40;
+	/* --accent-50: #004d40;
 	--accent-100: #00695c;
 	--accent-200: #00796b;
 	--accent-300: #00897b;
@@ -145,7 +145,18 @@
 	--accent-600: #4db6ac;
 	--accent-700: #80cbc4;
 	--accent-800: #b2dfdb;
-	--accent-900: #e0f2f1;
+	--accent-900: #e0f2f1; */
+	--accent-50: theme(colors.cyan.50);
+	--accent-100: theme(colors.cyan.100);
+	--accent-200: theme(colors.cyan.100);
+	--accent-300: theme(colors.cyan.100);
+	--accent-400: theme(colors.cyan.100);
+	--accent-500: theme(colors.cyan.100);
+	--accent-600: theme(colors.cyan.100);
+	--accent-700: theme(colors.cyan.100);
+	--accent-800: theme(colors.cyan.100);
+	--accent-900: theme(colors.cyan.100);
+	--accent-950: theme(colors.cyan.100);
 
 	--primary: var(--primary-100);
 	--primary-foreground: var(--primary-900);
@@ -222,7 +233,6 @@
 	--shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
 	--shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.4);
 }
-
 
 /* @theme {
 	--radius: 0.625rem;
@@ -413,4 +423,4 @@
 	--color-shadow-sm: var(--shadow-sm);
 	--color-shadow-md: var(--shadow-md);
 	--color-shadow-lg: var(--shadow-lg);
-} */ */
+} */

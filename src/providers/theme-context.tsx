@@ -18,7 +18,6 @@ export interface ThemeContextType {
   scopedPrefs: ThemePreferences | null;
   resetTheme: () => void;
   isCustom: boolean;
-  getDiffValues: () => void;
   updateTheme: () => void;
 }
 

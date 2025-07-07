@@ -22,13 +22,21 @@ describe("updateScopedTheme", () => {
 		);
 	});
 
-	it("does nothing if inheritsFromGlobalTheme is true", () => {
+	it("sets inheritsFromGlobalTheme to false automatically if theme values change", () => {
 		const el = document.createElement("div");
+		useThemeStore.getState().resetScopedPreferences("note", "abc");
 
+		const initialPrefs = useThemeStore.getState().getPreferences("note", "abc");
+		const initialInherit = initialPrefs.preferences.inheritsFromGlobalTheme;
+		const initialFont = initialPrefs.preferences.fontSize;
+		expect(initialInherit).toEqual(true);
+		expect(initialFont).toEqual("md");
 		updateScopedTheme("note", "abc", { fontSize: "sm" }, el);
 
 		const theme = useThemeStore.getState().getPreferences("note", "abc");
 		const fontSize = theme.preferences.fontSize;
-		expect(fontSize).toEqual("md");
+		const inherits = theme.preferences.inheritsFromGlobalTheme;
+		expect(fontSize).toEqual("sm");
+		expect(inherits).toEqual(false);
 	});
 });

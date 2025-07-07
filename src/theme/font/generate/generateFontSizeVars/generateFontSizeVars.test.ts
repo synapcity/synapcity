@@ -6,8 +6,8 @@ describe("generateFontSizeVars", () => {
 		const result = generateFontSizeVars("md");
 
 		expect(result).toHaveProperty("--text-xs");
-		expect(result).toHaveProperty("--text-md");
-		expect(result["--text-md"]).toMatch(/^clamp\(/);
+		expect(result).toHaveProperty("--text-base");
+		expect(result["--text-base"]).toMatch(/^clamp\(/);
 	});
 
 	it("generates correct clamp expression for known scale", () => {
@@ -21,6 +21,6 @@ describe("generateFontSizeVars", () => {
 		const expected = `clamp(${min}rem, ${mid}rem + 0.5vw, ${max}rem)`;
 		const vars = generateFontSizeVars("md");
 
-		expect(vars["--text-md"]).toBe(expected);
+		expect(vars["--text-base"]).toBe(expected);
 	});
 });

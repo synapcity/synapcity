@@ -17,17 +17,11 @@ export function getFontSizeValue(token: FontSizeToken): string {
 		case "3xl":
 			return "1.875rem";
 		case "4xl":
-			return "2.25rem";
+			return "2.125rem";
 		case "5xl":
-			return "3rem";
+			return "2.5rem";
 		case "6xl":
-			return "3.75rem";
-		case "7xl":
-			return "4.5rem";
-		case "8xl":
-			return "6rem";
-		case "9xl":
-			return "8rem";
+			return "2.75rem";
 		default:
 			return "1rem";
 	}

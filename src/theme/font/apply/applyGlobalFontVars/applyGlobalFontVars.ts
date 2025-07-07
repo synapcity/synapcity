@@ -18,9 +18,11 @@ export function applyGlobalFontVars({
 }) {
 	let vars: Record<string, string> = {};
 	const element = document.body;
+	console.log("initial vars", vars);
 
 	if (postfix === "size" && size) {
 		vars = generateFontSizeVars(size);
+		console.log("VARS", vars);
 	} else if ((postfix === "body" || postfix === "heading") && fontFamily) {
 		vars = { [`--font-${postfix}`]: fontFamily };
 	}
