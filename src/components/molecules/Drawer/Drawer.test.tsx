@@ -14,10 +14,13 @@ describe("Drawer", () => {
     const user = userEvent.setup()
 
     expect(screen.queryByText("My Drawer")).not.toBeInTheDocument()
-    await user.click(screen.getByRole("button", { name: /open/i }))
+
+    await user.click(screen.getByRole("button", { name: "Open" }))
+
     expect(await screen.findByText("My Drawer")).toBeInTheDocument()
     expect(screen.getByText("Drawer Content")).toBeInTheDocument()
   })
+
 
   it("renders title and description conditionally with visibility", async () => {
     render(

@@ -96,7 +96,7 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
 
           <UISelectContent>
             <UISelectScrollUpButton />
-            {groupedOptions && groupedOptions.length > 0
+            {groupedOptions && groupedOptions.length > 0 || isGrouped
               ? groupedOptions?.map((group, index) => (
                 <React.Fragment key={group.label ?? index}>
                   <UISelectGroup>

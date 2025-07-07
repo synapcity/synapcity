@@ -1,18 +1,32 @@
 "use client"
 
-import * as React from "react"
 import {
-  UISheet,
-  UISheetTrigger,
-  UISheetContent,
-  UISheetHeader,
-  UISheetFooter,
-  UISheetTitle,
-  UISheetDescription,
-  UISheetClose,
-} from "@/components/atoms"
+  Sheet as UISheet,
+  SheetTrigger as UISheetTrigger,
+  SheetContent as UISheetContent,
+  SheetHeader as UISheetHeader,
+  SheetTitle as UISheetTitle,
+  SheetDescription as UISheetDescription,
+  SheetFooter as UISheetFooter,
+  SheetClose as UISheetClose,
+} from "@/components/atoms/ui/sheet";
+import * as React from "react"
 import { Button } from "@/components/atoms"
 import { cn } from "@/utils"
+// import dynamic from "next/dynamic"
+
+// const UISheet = dynamic(() => import("@/components/atoms/ui/sheet").then((mod) => mod.Sheet), {
+//   ssr: true
+// })
+// const UISheetTrigger = dynamic(() => import("@/components/atoms/ui/sheet").then((mod) => mod.SheetTrigger), {
+//   ssr: true
+// })
+// const UISheetContent = dynamic(() => import("@/components/atoms/ui/sheet").then((mod) => mod.SheetContent), { ssr: true })
+// const UISheetHeader = dynamic(() => import("@/components/atoms/ui/sheet").then((mod) => mod.SheetHeader), { ssr: true })
+// const UISheetTitle = dynamic(() => import("@/components/atoms/ui/sheet").then((mod) => mod.SheetTitle), { ssr: true })
+// const UISheetDescription = dynamic(() => import("@/components/atoms/ui/sheet").then((mod) => mod.SheetDescription), { ssr: true })
+// const UISheetFooter = dynamic(() => import("@/components/atoms/ui/sheet").then((mod) => mod.SheetFooter), { ssr: true })
+// const UISheetClose = dynamic(() => import("@/components/atoms/ui/sheet").then((mod) => mod.SheetClose), { ssr: true })
 
 export interface DrawerProps {
   trigger?: React.ReactNode
@@ -50,7 +64,6 @@ export const Drawer: React.FC<DrawerProps> = ({
   return (
     <UISheet open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
       {trigger && <UISheetTrigger asChild>{trigger}</UISheetTrigger>}
-
       <UISheetContent side={side} className={cn("p-0", className)}>
         <UISheetHeader className={cn("border-b px-4 py-3", { "sr-only": !showTitle && !showDescription })}>
           <UISheetTitle className={cn({ "sr-only": !showTitle })}>

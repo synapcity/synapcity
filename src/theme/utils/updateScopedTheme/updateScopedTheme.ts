@@ -19,7 +19,9 @@ export function updateScopedTheme(
 	if (rawScoped?.inheritsFromGlobalTheme) return;
 
 	useThemeStore.getState().setPreferences(scope, id, updates);
-	const updated = useThemeStore.getState().getPreferences(scope, id);
+	const updated = useThemeStore
+		.getState()
+		.getPreferences(scope, id).preferences;
 
 	applyScopedColorVars(updated.primary, updated.mode, "primary", element);
 	applyScopedColorVars(updated.accent, updated.mode, "accent", element);

@@ -12,6 +12,6 @@ export function applyGlobalColorVars(
 	prefix: ColorType
 ) {
 	const vars = generateColorVars(color, mode, prefix);
-	const root = document.documentElement;
+	const root = document.body;
 	applyVars(vars, root);
 }

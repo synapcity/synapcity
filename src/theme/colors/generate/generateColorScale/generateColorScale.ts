@@ -1,6 +1,10 @@
-import { colord } from "colord";
+import { colord, extend } from "colord";
 import { COLOR_SHADE_KEYS } from "@/theme/colors/constants";
 import type { ColorShade } from "@/theme/colors/types";
+import mixPlugin from "colord/plugins/mix";
+import labPlugin from "colord/plugins/lab";
+
+extend([mixPlugin, labPlugin]);
 
 export function generateColorScale(base: string): Record<ColorShade, string> {
 	if (!colord(base).isValid()) {

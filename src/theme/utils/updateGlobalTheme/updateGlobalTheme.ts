@@ -4,27 +4,35 @@ import { applyFont } from "@/theme/font";
 import { applyModeClass } from "@/theme/mode";
 import { ThemePreferences } from "@/theme/types";
 
-const { applyGlobalFontVars } = applyFont;
-const { applyGlobalColorVars } = applyColor;
-const { applyGlobalModeClass } = applyModeClass;
 export function updateGlobalTheme(updates: Partial<ThemePreferences>) {
 	const set = useThemeStore.getState().setGlobalPreferences;
 	set(updates);
 
 	const preferences = useThemeStore.getState().globalPreferences;
 
-	applyGlobalColorVars(preferences.primary, preferences.mode, "primary");
-	applyGlobalColorVars(preferences.accent, preferences.mode, "accent");
+	applyColor.applyGlobalColorVars(
+		preferences.primary,
+		preferences.mode,
+		"primary"
+	);
+	applyColor.applyGlobalColorVars(
+		preferences.accent,
+		preferences.mode,
+		"accent"
+	);
 
-	applyGlobalFontVars({ postfix: "size", size: preferences.fontSize });
-	applyGlobalFontVars({
+	applyFont.applyGlobalFontVars({
+		postfix: "size",
+		size: preferences.fontSize,
+	});
+	applyFont.applyGlobalFontVars({
 		postfix: "body",
 		fontFamily: preferences.fontFamilyBody,
 	});
-	applyGlobalFontVars({
+	applyFont.applyGlobalFontVars({
 		postfix: "heading",
 		fontFamily: preferences.fontFamilyHeading,
 	});
 
-	applyGlobalModeClass(preferences.mode);
+	applyModeClass.applyGlobalModeClass(preferences.mode);
 }

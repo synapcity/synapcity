@@ -15,7 +15,6 @@ export default meta;
 type Story = StoryObj<typeof PopoverWrapper>;
 
 export const Default: Story = {
-  name: "Default",
   render: () => (
     <PopoverWrapper
       trigger={<Button>Open Popover</Button>}
@@ -79,7 +78,6 @@ export const SideAndAlign: Story = {
 };
 
 export const WithAnchor: Story = {
-  name: "With Anchor",
   render: () => (
     <PopoverWrapper
       withAnchor
@@ -93,7 +91,6 @@ export const WithAnchor: Story = {
 };
 
 export const WithFormContent: Story = {
-  name: "With Form Content",
   render: () => (
     <PopoverWrapper
       trigger={<Button>Open Form</Button>}

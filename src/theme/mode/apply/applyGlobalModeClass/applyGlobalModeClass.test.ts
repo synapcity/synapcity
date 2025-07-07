@@ -5,7 +5,7 @@ describe("applyGlobalModeClass", () => {
 		document.documentElement.classList.add("dark");
 		applyGlobalModeClass("light");
 
-		expect(document.documentElement.classList.contains("dark")).toBe(false);
-		expect(document.documentElement.classList.contains("light")).toBe(true);
+		expect(document.body.classList.contains("dark")).toBe(false);
+		expect(document.body.classList.contains("light")).toBe(true);
 	});
 });

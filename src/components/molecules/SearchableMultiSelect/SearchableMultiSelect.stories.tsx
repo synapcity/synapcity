@@ -36,6 +36,9 @@ function Template(args: Partial<React.ComponentProps<typeof SearchableMultiSelec
           setValue(v);
           args.onChange?.(v);
         }}
+        onSearch={(query: string) => new Promise(() => {
+          console.log(query)
+        })}
       />
     </div>
   );

@@ -11,6 +11,9 @@ export const fontScaleFactors: FontSizeScale = {
 	"4xl": 2.25,
 	"5xl": 3,
 	"6xl": 3.75,
+	"7xl": 4.5,
+	"8xl": 6,
+	"9xl": 8,
 };
 
 export const fontSizes: FontSizeToken[] = [
@@ -24,4 +27,7 @@ export const fontSizes: FontSizeToken[] = [
 	"4xl",
 	"5xl",
 	"6xl",
+	"7xl",
+	"8xl",
+	"9xl",
 ];

@@ -29,7 +29,7 @@ type Props = {
   value: string[];
   onChange: (selected: string[]) => void;
   options?: SearchableMultiSelectOption[];
-  onSearch?: (query: string) => Promise<SearchableMultiSelectOption[]>;
+  onSearch: (query: string) => Promise<SearchableMultiSelectOption[]>;
   onCreateOption?: (label: string) => void;
   placeholder?: string;
   triggerLabel?: string;
@@ -60,16 +60,15 @@ export function SearchableMultiSelect({
 }: Props) {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
-  const fetchedOptions = onSearch
-    ? useDebouncedSearch(input, onSearch, 250)
-    : [];
+  const debouncedSearch = useDebouncedSearch(input, onSearch, 250)
+  const fetchedOptions = debouncedSearch
 
   const inputRef = useRef<HTMLInputElement>(null);
 
   const selectedSet = useMemo(() => new Set(value), [value]);
   const lowerInput = input.trim().toLowerCase();
 
-  const combinedOptions = onSearch ? fetchedOptions : options;
+  const combinedOptions = fetchedOptions && fetchedOptions.length > 0 ? fetchedOptions : options;
 
   const matchedOptions = useMemo(() => {
     if (!lowerInput) return combinedOptions;

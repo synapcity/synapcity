@@ -2,16 +2,18 @@ import { create, StateCreator } from "zustand";
 import { persist } from "zustand/middleware";
 import { getDefaultTheme } from "@/theme/utils";
 import { DEFAULT_THEME } from "@/theme/defaults";
-import type { ThemePreferences } from "@/theme/types";
+import type { ThemePreferences, ThemeScope } from "@/theme/types";
 import type { EntityType } from "@/types/entity";
 import { migrateThemeStore } from "./migrate";
+import { resolveThemeMetadata } from "@/theme/utils/resolveThemeMetadata";
+import { ThemeMetadataInfo } from "@/theme/utils/resolveThemeMetadata/resolveThemeMetadata";
 
 export interface ScopedThemeState {
 	hasHydrated: boolean;
 	setHasHydrated: (hasHydrated: boolean) => void;
 	globalPreferences: ThemePreferences;
 	scopedPreferences: Record<EntityType, Record<string, ThemePreferences>>;
-	getPreferences: (scope: EntityType, id?: string) => ThemePreferences;
+	getPreferences: (scope: ThemeScope, id?: string) => ThemeMetadataInfo;
 	setPreferences: (
 		scope: EntityType,
 		id: string,
@@ -39,18 +41,14 @@ export const themeStoreInitializer: StateCreator<ScopedThemeState> = (
 	},
 
 	getPreferences: (scope, id) => {
-		if (!id) return get().globalPreferences;
-
-		const scopedPrefs = get().scopedPreferences[scope]?.[id];
-
-		if (!scopedPrefs || scopedPrefs.inheritsFromGlobalTheme === true) {
-			return get().globalPreferences;
-		}
-
-		return {
-			...getDefaultTheme(get().globalPreferences.mode),
-			...scopedPrefs,
-		};
+		const global = get().globalPreferences;
+		const scopedPreferences = get().scopedPreferences;
+		return resolveThemeMetadata({
+			globalPreferences: global,
+			scopedPreferences: scopedPreferences,
+			entityType: scope,
+			entityId: id,
+		});
 	},
 	initScopedPreferences: (scope, id) => {
 		const global = get().globalPreferences;
@@ -107,6 +105,7 @@ export const themeStoreInitializer: StateCreator<ScopedThemeState> = (
 	},
 	resetScopedPreferences: (scope: EntityType, id: string) => {
 		set((state) => {
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			const { [id]: _, ...rest } = state.scopedPreferences[scope];
 			return {
 				scopedPreferences: {

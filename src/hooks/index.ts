@@ -1,1 +1,1 @@
-export * from "./useThemePreferences";
+export * from "./useDebouncedSearch";

@@ -6,12 +6,12 @@ jest.mock("@/components", () => {
 	return {
 		__esModule: true,
 		Spinner: () => <div role="status">Spinner</div>,
-		Icon: ({ name }: any) => (
+		Icon: ({ name }: IconProps) => (
 			<svg role="img" aria-label={name} data-testid="icon">
 				{name}
 			</svg>
 		),
-		Tooltip: ({ trigger, children, content }: any) => (
+		Tooltip: ({ trigger, children, content }: TooltipProps) => (
 			<>
 				{trigger || children}
 				<div data-testid="tooltip-content">{content}</div>
@@ -23,6 +23,8 @@ jest.mock("@/components", () => {
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { LinkButton } from "./LinkButton";
+import { IconProps } from "../../Icon";
+import { TooltipProps } from "../../Tooltip";
 
 
 

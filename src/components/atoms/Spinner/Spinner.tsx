@@ -3,7 +3,7 @@ import clsx from "clsx";
 
 interface SpinnerProps {
   className?: string;
-  size?: number; // Tailwind size scale, e.g., 4 = "h-4 w-4"
+  size?: number;
   withMargin?: boolean;
   label?: string;
 }

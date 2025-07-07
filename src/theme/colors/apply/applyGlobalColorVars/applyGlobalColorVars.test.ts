@@ -70,7 +70,7 @@ describe("applyGlobalColorVars", () => {
 	});
 
 	it("calls applyVars with correct vars and document.documentElement", () => {
-		const mockRoot = document.documentElement;
+		const mockRoot = document.body;
 		applyGlobalColorVars(mockColor, "light", "primary");
 		expect(applyVars).toHaveBeenCalledWith(expect.any(Object), mockRoot);
 	});

@@ -5,6 +5,5 @@ export * from "./Tooltip";
 export * from "./Spinner";
 export * from "./Input";
 export * from "./Label";
-export * from "./DarkModeToggle";
 export * from "./RadioGroup";
 export * from "./Select";

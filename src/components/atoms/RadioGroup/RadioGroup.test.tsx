@@ -22,7 +22,6 @@ describe("RadioGroup", () => {
   })
 
   it("calls onChange when a different option is selected", async () => {
-    const user = userEvent.setup()
     const handleChange = jest.fn()
     const options: RadioOption[] = [
       { label: "Light", value: "light", description: "Bright and clean UI" },

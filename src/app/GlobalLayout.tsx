@@ -1,11 +1,19 @@
-import { DarkModeToggle } from "@/components/atoms/DarkModeToggle";
+"use client"
+
+import { useThemeStore } from "@/stores";
 import GlobalProviders from "./GlobalProviders";
+import { useEffect } from "react";
 
 export default function GlobalLayout({ children }: { children: React.ReactNode; }) {
+  const hasHydrated = useThemeStore(state => state.hasHydrated)
+  useEffect(() => {
+    if (!hasHydrated) {
+      return;
+    }
+  }, [hasHydrated])
   return (
     <GlobalProviders>
       {children}
-      <DarkModeToggle className="absolute top-4 right-4" />
     </GlobalProviders>
   )
 }

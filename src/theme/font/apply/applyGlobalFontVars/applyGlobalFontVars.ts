@@ -17,7 +17,7 @@ export function applyGlobalFontVars({
 	fontFamily?: string;
 }) {
 	let vars: Record<string, string> = {};
-	const element = document.documentElement;
+	const element = document.body;
 
 	if (postfix === "size" && size) {
 		vars = generateFontSizeVars(size);

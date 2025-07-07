@@ -2,7 +2,7 @@ jest.mock('@/components', () => {
   const actual = jest.requireActual('@/components');
   return {
     ...actual,
-    Tooltip: ({ trigger, children, content }: any) => (
+    Tooltip: ({ trigger, children, content }: TooltipProps) => (
       <>
         {trigger || children}
         {typeof content === 'string' ? (
@@ -28,6 +28,7 @@ import userEvent from "@testing-library/user-event";
 import { TransitionButton } from "./TransitionButton";
 import { CheckCircle2, Star } from "lucide-react";
 import { renderWithTooltip } from "@/__mocks__";
+import { TooltipProps } from "../../Tooltip";
 
 const SuccessIcon = <CheckCircle2 data-testid="success-icon" />;
 const CustomIcon = <Star data-testid="custom-icon" />;

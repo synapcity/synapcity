@@ -1,15 +1,14 @@
 "use client"
 
-import { useFormContext } from "react-hook-form"
 import { ColorFieldPopover } from "../Fields/ColorField/ColorField"
 import { FontField } from "../../font/FontFamily/FontField/FontField"
 import { FontSizeField } from "../../font/FontSize/FontSizeField/FontSizeField"
 import { DarkModeField } from "./DarkMode/DarkModeField"
 import { SwitchField } from "../Fields"
+import { useTheme } from "@/providers"
 
 export const ThemeFormFields = () => {
-  const { control } = useFormContext()
-
+  const { isScoped } = useTheme()
   return (
     <div className="grid gap-4">
       <DarkModeField />
@@ -25,7 +24,7 @@ export const ThemeFormFields = () => {
 
       <ColorFieldPopover name="primary.base" label="Primary Base" />
       <ColorFieldPopover name="accent.base" label="Accent Base" />
-      <SwitchField name="useGlobalTheme" label="Use Global Theme" />
+      {isScoped && <SwitchField name="useGlobalTheme" label="Use Global Theme" />}
     </div>
   )
 }

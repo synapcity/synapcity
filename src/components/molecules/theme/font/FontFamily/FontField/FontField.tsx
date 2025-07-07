@@ -7,7 +7,7 @@ import { Label } from "@/components";
 export const FontField = ({ name, label }: { name: string; label: string; }) => {
   const { control } = useFormContext();
   return (
-    <div className="space-y-2 text-background">
+    <div className="space-y-2 text-foreground¯">
       <Label>{label}</Label>
       <Controller
         control={control}
@@ -16,7 +16,7 @@ export const FontField = ({ name, label }: { name: string; label: string; }) => 
           <FontFamilyCombobox
             value={field.value}
             onChange={field.onChange}
-            className="text-[var(--primary-background)]"
+            className="text-primary-background"
           />
         )}
       />

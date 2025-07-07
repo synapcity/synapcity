@@ -17,7 +17,7 @@ describe("applyGlobalFontVars", () => {
 		applyGlobalFontVars({ postfix: "size", size: "md" });
 
 		expect(generateFontSizeVars).toHaveBeenCalledWith("md");
-		expect(applyVars).toHaveBeenCalledWith(mockVars, document.documentElement);
+		expect(applyVars).toHaveBeenCalledWith(mockVars, document.body);
 	});
 
 	it("applies font family to --font-body", () => {
@@ -25,7 +25,7 @@ describe("applyGlobalFontVars", () => {
 
 		expect(applyVars).toHaveBeenCalledWith(
 			{ "--font-body": "Inter" },
-			document.documentElement
+			document.body
 		);
 	});
 

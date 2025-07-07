@@ -1,5 +1,8 @@
 import type { SemanticColor } from "./types";
 
+export const DEFAULT_PRIMARY_BASE = "#78716c";
+export const DEFAULT_ACCENT_BASE = "22d3ee";
+
 export const defaultPrimary: SemanticColor = {
 	base: "#78716c",
 	light: {

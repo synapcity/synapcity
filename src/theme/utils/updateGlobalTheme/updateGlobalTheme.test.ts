@@ -1,11 +1,10 @@
+import { applyColor } from "@/theme/colors";
 import { updateGlobalTheme } from "../updateGlobalTheme";
 import { useThemeStore } from "@/stores";
-import { applyColor, generateColor } from "@/theme/colors";
 import { generateSemanticColor } from "@/theme/colors/generate";
-import { getContrastingColor } from "@/theme/colors/utils";
-import { applyFont, FontSizeToken } from "@/theme/font";
+import { applyFont, type FontSizeToken } from "@/theme/font";
 import { applyModeClass } from "@/theme/mode";
-import { ThemeMode } from "@/theme/types";
+import type { ThemeMode } from "@/theme/types";
 
 jest.mock("@/stores", () => ({
 	useThemeStore: {
@@ -58,14 +57,8 @@ describe("updateGlobalTheme", () => {
 		updateGlobalTheme(preferences);
 
 		expect(setGlobalPreferences).toHaveBeenCalledWith(preferences);
-		expect(
-			require("@/theme/colors").applyColor.applyGlobalColorVars
-		).toHaveBeenCalledTimes(2);
-		expect(
-			require("@/theme/font").applyFont.applyGlobalFontVars
-		).toHaveBeenCalledTimes(3);
-		expect(
-			require("@/theme/mode").applyModeClass.applyGlobalModeClass
-		).toHaveBeenCalledWith("dark");
+		expect(applyColor.applyGlobalColorVars).toHaveBeenCalledTimes(2);
+		expect(applyFont.applyGlobalFontVars).toHaveBeenCalledTimes(3);
+		expect(applyModeClass.applyGlobalModeClass).toHaveBeenCalledWith("dark");
 	});
 });

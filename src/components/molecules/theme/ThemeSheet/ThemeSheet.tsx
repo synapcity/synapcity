@@ -1,37 +1,47 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 
-import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle } from "@/components/atoms/ui/sheet"
-import { ThemeForm } from "../ThemeForm/ThemeForm"
-import { IconButton } from "@/components"
-import { useThemePreferences } from "@/hooks"
+import { useTheme } from "@/providers"
+import type { ThemeScope } from "@/theme/types"
+import dynamic from "next/dynamic"
 
-export const ThemeSheet = () => {
-  const { preferences: prefs } = useThemePreferences("global")
+const IconButtonSkeleton = dynamic(() => import("@/components/loading/buttons/IconButtonSkeleton").then((mod) => mod.IconButtonSkeleton))
+
+const Drawer = dynamic(() => import("@/components/molecules/Drawer/Drawer").then((mod) => mod.Drawer))
+const ThemeForm = dynamic(() => import("@/components/molecules/theme/ThemeForm/ThemeForm").then((mod) => mod.ThemeForm), {
+  ssr: false,
+  loading: () => <div>Loading...</div>
+})
+const IconButton = dynamic(() => import("@/components/atoms/buttons/IconButton/IconButton").then((mod) => mod.IconButton), {
+  ssr: true,
+  loading: () => <IconButtonSkeleton />
+})
+
+export const ThemeSheet = ({ entityId, scope }: { entityId?: string; scope: ThemeScope; }) => {
+  const { updateTheme } = useTheme()
   const handleSubmit = (data: any) => {
     console.log("data", data)
+    updateTheme()
   }
   return (
-    <Sheet>
-      <SheetTrigger asChild>
+    <Drawer
+      trigger={
         <IconButton
           variant="ghost"
           icon="Palette"
           aria-label="Font & Theme"
           tooltip="Font & Theme"
         />
-      </SheetTrigger>
-      <SheetContent side="right" className="w-[400px] p-4">
-        <SheetHeader>
-          <SheetTitle className="text-3xl">Theme</SheetTitle>
-        </SheetHeader>
-        <div className="mt-4">
-
-          <ThemeForm
-            theme={prefs}
-            onSubmit={handleSubmit}
-          />
-        </div>
-      </SheetContent>
-    </Sheet>
+      }
+      title="Theme"
+    >
+      <div className="mt-4">
+        <ThemeForm
+          entityId={entityId}
+          scope={scope}
+          onSubmit={handleSubmit}
+        />
+      </div>
+    </Drawer>
   )
 }

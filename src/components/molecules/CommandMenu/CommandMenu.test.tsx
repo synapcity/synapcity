@@ -1,4 +1,4 @@
-import React, { act, useState } from "react";
+import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { CommandMenu } from "./CommandMenu";
 import userEvent from "@testing-library/user-event";
@@ -56,7 +56,6 @@ describe("CommandMenu - Full Coverage", () => {
   });
 
   it("handles internal state toggle (uncontrolled mode)", async () => {
-    const user = userEvent.setup();
     render(<CommandMenu groups={mockGroups} />);
 
     fireEvent.keyDown(document, { key: "Meta" });

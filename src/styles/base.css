@@ -1,4 +1,230 @@
-@theme {
+:root {
+	--font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+	--font-heading: var(--font-space-grotesk), sans-serif;
+	--font-body: var(--font-sans);
+	--font-mono: var(--font-space-mono), monospace;
+
+	--body-size: 1rem;
+	--heading-size: calc(var(--body-size) * 1.25);
+	--line-height: 1.6;
+
+	--primary: var(--primary-700);
+	--primary-foreground: white;
+	--accent: var(--accent-600);
+	--accent-foreground: black;
+
+	--shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+	--shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+	--shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.15);
+
+	--z-overlay: 50;
+	--z-modal: 40;
+	--z-popover: 30;
+
+	--radius-sm: calc(var(--radius) * 0.5);
+	--radius-lg: calc(var(--radius) * 1.5);
+
+	--transition: 0.2s ease-in-out;
+	--ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* === DYNAMIC COLOR SCALES (set via JS) === */
+:root {
+	--primary-50: #f7f7f7;
+	--primary-100: #e5e5e5;
+	--primary-200: #d4d4d4;
+	--primary-300: #a3a3a3;
+	--primary-400: #737373;
+	--primary-500: #525252;
+	--primary-600: #404040;
+	--primary-700: #262626;
+	--primary-800: #171717;
+	--primary-900: #0f0f0f;
+
+	--accent-50: #e0f2f1;
+	--accent-100: #b2dfdb;
+	--accent-200: #80cbc4;
+	--accent-300: #4db6ac;
+	--accent-400: #26a69a;
+	--accent-500: #009688;
+	--accent-600: #00897b;
+	--accent-700: #00796b;
+	--accent-800: #00695c;
+	--accent-900: #004d40;
+}
+
+/* === SEMANTIC TOKENS === */
+:root {
+	--background: var(--primary-100);
+	--foreground: var(--primary-900);
+
+	--muted: var(--primary-200);
+	--muted-foreground: var(--primary-600);
+
+	--surface: var(--primary-50);
+	--surface-foreground: var(--primary-900);
+
+	--border: var(--primary-300);
+	--ring: var(--accent-400);
+
+	--input-background: var(--primary-50);
+	--input-foreground: var(--primary-900);
+	--input-border: var(--primary-300);
+	--input-placeholder: var(--primary-400);
+	--input-focus-border: var(--accent-500);
+
+	--sidebar-background: var(--primary-50);
+	--sidebar-foreground: var(--primary-900);
+
+	--tooltip-background: var(--primary-800);
+	--tooltip-foreground: var(--primary-50);
+
+	--button-background: var(--accent);
+	--button-foreground: var(--accent-foreground);
+	--button-hover: var(--accent-500);
+
+	--modal-background: var(--surface);
+	--modal-foreground: var(--surface-foreground);
+	--modal-border: var(--border);
+
+	--badge-background: var(--accent-100);
+	--badge-foreground: var(--accent-900);
+
+	--avatar-ring: var(--accent-500);
+
+	--card-background: var(--surface);
+	--card-foreground: var(--surface-foreground);
+	--card-border: var(--border);
+
+	--table-header-background: var(--muted);
+	--table-header-foreground: var(--foreground);
+	--table-row-background: var(--surface);
+	--table-border: var(--border);
+
+	--tab-background: var(--muted);
+	--tab-foreground: var(--foreground);
+	--tab-active-background: var(--accent);
+	--tab-active-foreground: var(--accent-foreground);
+
+	--switch-track: var(--muted);
+	--switch-thumb: var(--foreground);
+	--switch-checked: var(--accent);
+
+	--divider-color: var(--border);
+
+	--success-bg: var(--accent-100);
+	--color-success: var(--accent-900);
+	--warning-bg: #fff4ce;
+	--color-warning: #663c00;
+	--error-bg: #fdecea;
+	--color-error: #b00020;
+	--info-bg: #e7f5ff;
+	--color-info: #095aba;
+}
+
+/* === DARK MODE OVERRIDES === */
+[data-theme="dark"],
+.dark {
+	--primary-50: #0f0f0f;
+	--primary-100: #171717;
+	--primary-200: #262626;
+	--primary-300: #404040;
+	--primary-400: #525252;
+	--primary-500: #737373;
+	--primary-600: #a3a3a3;
+	--primary-700: #d4d4d4;
+	--primary-800: #e5e5e5;
+	--primary-900: #f7f7f7;
+
+	--accent-50: #004d40;
+	--accent-100: #00695c;
+	--accent-200: #00796b;
+	--accent-300: #00897b;
+	--accent-400: #009688;
+	--accent-500: #26a69a;
+	--accent-600: #4db6ac;
+	--accent-700: #80cbc4;
+	--accent-800: #b2dfdb;
+	--accent-900: #e0f2f1;
+
+	--primary: var(--primary-100);
+	--primary-foreground: var(--primary-900);
+	--accent: var(--accent-300);
+	--accent-foreground: var(--accent-900);
+
+	--background: var(--primary-900);
+	--foreground: var(--primary-50);
+
+	--muted: var(--primary-700);
+	--muted-foreground: var(--primary-400);
+
+	--surface: var(--primary-800);
+	--surface-foreground: var(--primary-50);
+
+	--border: var(--primary-600);
+	--ring: var(--accent-500);
+
+	--input-background: var(--primary-800);
+	--input-foreground: var(--primary-100);
+	--input-border: var(--primary-500);
+	--input-placeholder: var(--primary-400);
+	--input-focus-border: var(--accent-400);
+
+	--sidebar-background: var(--primary-900);
+	--sidebar-foreground: var(--primary-100);
+
+	--tooltip-background: var(--primary-50);
+	--tooltip-foreground: var(--primary-900);
+
+	--button-background: var(--accent);
+	--button-foreground: var(--accent-foreground);
+	--button-hover: var(--accent-400);
+
+	--modal-background: var(--surface);
+	--modal-foreground: var(--surface-foreground);
+	--modal-border: var(--border);
+
+	--badge-background: var(--accent-800);
+	--badge-foreground: var(--accent-100);
+
+	--avatar-ring: var(--accent-400);
+
+	--card-background: var(--surface);
+	--card-foreground: var(--surface-foreground);
+	--card-border: var(--border);
+
+	--table-header-background: var(--muted);
+	--table-header-foreground: var(--foreground);
+	--table-row-background: var(--surface);
+	--table-border: var(--border);
+
+	--tab-background: var(--muted);
+	--tab-foreground: var(--foreground);
+	--tab-active-background: var(--accent);
+	--tab-active-foreground: var(--accent-foreground);
+
+	--switch-track: var(--muted);
+	--switch-thumb: var(--foreground);
+	--switch-checked: var(--accent);
+
+	--divider-color: var(--border);
+
+	--success-bg: var(--accent-800);
+	--color-success: var(--accent-100);
+	--warning-bg: #5c4400;
+	--color-warning: #fff4ce;
+	--error-bg: #3c0008;
+	--color-error: #ffb4ab;
+	--info-bg: #01367d;
+	--color-info: #d0e8ff;
+
+	--shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+	--shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
+	--shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.4);
+}
+
+
+/* @theme {
 	--radius: 0.625rem;
 	--radius-sm: calc(var(--radius) * 0.5);
 	--radius-md: var(--radius);
@@ -187,4 +413,4 @@
 	--color-shadow-sm: var(--shadow-sm);
 	--color-shadow-md: var(--shadow-md);
 	--color-shadow-lg: var(--shadow-lg);
-} */
+} */ */

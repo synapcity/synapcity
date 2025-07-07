@@ -13,12 +13,12 @@ export const baseButtonStyles =
 
 export const variantClasses: Record<ButtonVariant, string> = {
 	primary:
-		"bg-[var(--primary-background)] text-[var(--primary-foreground)] hover:text-[var(--primary-background)] hover:bg-[var(--primary-foreground)] border border-[var(--primary)] data-[state=active]:bg-[var(--accent)] hover:border-[var(--primary-700)] active:bg-[var(--primary-200)] focus-visible:ring-[var(--primary-200)]",
+		"bg-foreground text-background hover:text-[var(--primary-background)] hover:bg-[var(--primary-foreground)] border border-[var(--primary)] data-[state=active]:bg-[var(--accent)] hover:border-[var(--primary-700)] active:bg-[var(--primary-200)] focus-visible:ring-[var(--primary-200)]",
 	outline:
-		"bg-transparent text-[var(--primary-foreground)] border border-[var(--accent-300)] hover:bg-[var(--accent)] data-[state=active]:bg-[var(--accent)] data-[state=active]:text-[var(--primary-100)] hover:text-[var(--primary-100)]",
+		"bg-transparent text-foreground border border-[var(--accent-300)] hover:bg-[var(--accent)] data-[state=active]:bg-[var(--accent)] data-[state=active]:text-[var(--primary-100)] hover:text-[var(--primary-100)]",
 	link: "text-[var(--primary-foreground)] hover:text-[var(--accent-500)] underline-offset-4 hover:underline shadow-none hover:shadow-none data-[state=active]:text-[var(--accent-900)] data-[state=active]:bg-[var(--accent-50)]",
 	ghost:
-		"text-[var(--primary-foreground)] hover:bg-[var(--primary-foreground)] hover:text-[var(--primary-background)] hover:border active:bg-[var(--primary-200)] shadow-none hover:shadow-sm active:shadow-none data-[state=active]:bg-[var(--primary-300)] data-[state=active]:text-[var(--primary-foreground)] disabled:hover:shadow-none disabled:hover:bg-transparent disabled:pointer-events-none disabled:hover:scale-none",
+		"text-[var(--foreground)] hover:bg-[var(--foreground)] hover:text-[var(--background)] hover:border active:bg-[var(--primary-200)] shadow-none hover:shadow-sm active:shadow-none data-[state=active]:bg-[var(--primary-300)] data-[state=active]:text-[var(--primary-foreground)] disabled:hover:shadow-none disabled:hover:bg-transparent disabled:pointer-events-none disabled:hover:scale-none",
 	destructive:
 		"text-red-600 hover:text-white hover:bg-red-500 active:bg-red-600 focus-visible:ring-red-200",
 	disabled:

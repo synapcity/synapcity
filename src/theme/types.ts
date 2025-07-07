@@ -1,3 +1,4 @@
+import { EntityType } from "@/types/entity";
 import { SemanticColor } from "./colors/types";
 import { FontSizeToken } from "./font/types";
 
@@ -16,3 +17,5 @@ export interface ThemePreferences {
 
 	inheritsFromGlobalTheme: boolean;
 }
+
+export type ThemeScope = "global" | EntityType;

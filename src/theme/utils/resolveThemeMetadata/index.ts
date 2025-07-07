@@ -1,0 +1,1 @@
+export { resolveThemeMetadata } from "./resolveThemeMetadata";

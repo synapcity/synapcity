@@ -29,7 +29,6 @@ describe("<PopoverWrapper />", () => {
   });
 
   it("toggles visibility via controlled open prop", async () => {
-    const user = userEvent.setup();
     const onOpenChange = jest.fn();
 
     const { rerender } = render(

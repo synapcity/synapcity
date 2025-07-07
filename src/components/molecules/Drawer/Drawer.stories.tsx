@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/nextjs-vite"
 import { Drawer } from "./Drawer"
 import { Button } from "@/components/atoms"
 import React from "react"
@@ -122,7 +122,6 @@ export const ControlledOpenState: Story = {
           description="This drawer's state is controlled by the parent."
           showTitle
           showDescription
-          children={drawerBody}
           footer={
             <div className="flex justify-end">
               <Button onClick={() => setOpen(false)} variant="outline">
@@ -130,7 +129,9 @@ export const ControlledOpenState: Story = {
               </Button>
             </div>
           }
-        />
+        >
+          {drawerBody}
+        </Drawer>
       </div>
     )
   },
