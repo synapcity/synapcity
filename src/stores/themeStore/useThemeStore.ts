@@ -1,12 +1,13 @@
 import { create, StateCreator } from "zustand";
 import { persist } from "zustand/middleware";
 import { getDefaultTheme } from "@/theme/utils";
-import { DEFAULT_THEME } from "@/theme/defaults";
-import type { ThemePreferences, ThemeScope } from "@/theme/types";
-import type { EntityType } from "@/types/entity";
+import { DEFAULT } from "@/theme/defaults";
+import type { ThemePreferences, ThemeScope, EntityType } from "@/theme/types";
 import { migrateThemeStore } from "./migrate";
-import { resolveThemeMetadata } from "@/theme/utils/resolveThemeMetadata";
-import { ThemeMetadataInfo } from "@/theme/utils/resolveThemeMetadata/resolveThemeMetadata";
+import {
+	resolveThemeMetadata,
+	type ThemeMetadataInfo,
+} from "@/theme/utils/resolveThemeMetadata";
 
 export interface ScopedThemeState {
 	hasHydrated: boolean;
@@ -33,7 +34,7 @@ export const themeStoreInitializer: StateCreator<ScopedThemeState> = (
 ) => ({
 	hasHydrated: false,
 	setHasHydrated: (hasHydrated) => set({ hasHydrated }),
-	globalPreferences: DEFAULT_THEME,
+	globalPreferences: DEFAULT.THEME,
 	scopedPreferences: {
 		note: {},
 		dashboard: {},
@@ -97,7 +98,7 @@ export const themeStoreInitializer: StateCreator<ScopedThemeState> = (
 
 	setGlobalPreferences: (updates) => {
 		set((state) => {
-			const prev = state.globalPreferences ?? { ...DEFAULT_THEME };
+			const prev = state.globalPreferences ?? { ...DEFAULT.THEME };
 			return {
 				globalPreferences: {
 					...prev,
@@ -108,7 +109,7 @@ export const themeStoreInitializer: StateCreator<ScopedThemeState> = (
 	},
 	resetGlobalPreferences: () => {
 		set(() => ({
-			globalPreferences: { ...DEFAULT_THEME },
+			globalPreferences: { ...DEFAULT.THEME },
 		}));
 	},
 	resetScopedPreferences: (scope: EntityType, id: string) => {

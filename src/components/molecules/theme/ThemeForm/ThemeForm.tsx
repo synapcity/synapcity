@@ -1,19 +1,28 @@
 "use client";
 
-import { Button } from "@/components/atoms";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { themePreferencesSchema, ThemePreferencesFormValues } from "../schema";
 import { cn } from "@/utils";
-import { ThemeFormFields } from "./ThemeFormFields/ThemeFormFields";
-import { ThemePreview } from "../ThemePreview/ThemePreview";
-import { ThemeScope } from "@/theme/types";
 import { resolveThemeMetadata } from "@/theme/utils/resolveThemeMetadata";
 import { useThemeStore } from "@/stores";
-// import { usePreviewTheme } from "@/hooks";
 import { useEffect } from "react";
 import { useTheme } from "@/providers";
-import { IconButton } from "@/components/atoms";
+import type { ThemeScope } from "@/theme/types";
+import dynamic from "next/dynamic";
+
+const ThemeFormFields = dynamic(() => import("@/components/molecules/theme/ThemeForm/ThemeFormFields/ThemeFormFields").then((mod) => mod.ThemeFormFields), {
+  ssr: true,
+  loading: () => <div>Loading...</div>
+})
+
+const ThemePreview = dynamic(() => import("@/components/molecules/theme/ThemePreview/ThemePreview").then((mod) => mod.ThemePreview), {
+  ssr: false,
+  loading: () => <div>Loading...</div>
+})
+
+const IconButton = dynamic(() => import("@/components/atoms/buttons/IconButton/IconButton").then((mod) => mod.IconButton))
+const Button = dynamic(() => import("@/components/atoms/buttons/Button/Button").then((mod) => mod.Button))
 
 export const ThemeForm = ({
   entityId,

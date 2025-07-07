@@ -1,9 +1,11 @@
 "use client";
 
 import { useThemeStore } from "@/stores";
-import { applyColor } from "@/theme/colors";
-import { applyFont } from "@/theme/font";
-import { applyModeClass } from "@/theme/mode";
+import {
+	applyGlobalFontVars,
+	applyGlobalModeVars,
+	applyGlobalColorVars,
+} from "@/theme/applyCss";
 import { ThemePreferences } from "@/theme/types";
 import { getUpdatedValues } from "@/utils";
 
@@ -17,35 +19,35 @@ export function updateGlobalTheme(updates: Partial<ThemePreferences>) {
 	}
 
 	if (names.has("primary") && updatedValues.primary) {
-		applyColor.applyGlobalColorVars(updatedValues.primary, get.mode, "primary");
+		applyGlobalColorVars(updatedValues.primary, get.mode, "primary");
 	}
 
 	if (names.has("accent") && updatedValues.accent) {
-		applyColor.applyGlobalColorVars(updatedValues.accent, get.mode, "accent");
+		applyGlobalColorVars(updatedValues.accent, get.mode, "accent");
 	}
 
 	if (names.has("fontSize") && updatedValues.fontSize) {
-		applyFont.applyGlobalFontVars({
+		applyGlobalFontVars({
 			postfix: "size",
 			size: updatedValues.fontSize,
 		});
 	}
 
 	if (names.has("fontFamilyBody") && updatedValues.fontFamilyBody) {
-		applyFont.applyGlobalFontVars({
+		applyGlobalFontVars({
 			postfix: "body",
 			fontFamily: updatedValues.fontFamilyBody,
 		});
 	}
 
-	if (names.has("fontFamiylHeading") && updatedValues.fontFamilyHeading) {
-		applyFont.applyGlobalFontVars({
+	if (names.has("fontFamilyHeading") && updatedValues.fontFamilyHeading) {
+		applyGlobalFontVars({
 			postfix: "heading",
 			fontFamily: updatedValues.fontFamilyHeading,
 		});
 	}
 
 	if (names.has("mode") && updatedValues.mode) {
-		applyModeClass.applyGlobalModeClass(updatedValues.mode);
+		applyGlobalModeVars(updatedValues.mode);
 	}
 }

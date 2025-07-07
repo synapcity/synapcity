@@ -4,7 +4,7 @@ import { Controller, useFormContext } from "react-hook-form"
 import { FontSizeControls } from "../FontSizeControls"
 import { Label } from "@/components"
 import { useTheme } from "@/providers/ThemeProvider"
-import type { FontSizeToken } from "@/theme/font/types"
+import type { FontSizeToken } from "@/theme/types"
 
 export const FontSizeField = () => {
   const { control } = useFormContext()

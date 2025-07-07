@@ -1,1 +1,0 @@
-export { applyScopedModeClass } from "./applyScopedModeClass";

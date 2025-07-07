@@ -17,7 +17,7 @@ export function ThemePreview() {
       ref={previewRef as RefObject<HTMLDivElement>}
       className={cn(
         "rounded-md border p-4 shadow-sm transition-all",
-        "text-foreground bg-background", liveValues.mode)}
+        "text-[var(--foreground)] bg-[var(--background)]", liveValues.mode)}
       data-theme={liveValues.mode}
     >
       <div className="space-y-2">

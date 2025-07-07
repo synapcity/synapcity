@@ -1,1 +1,0 @@
-export { setColor } from "./setColor";

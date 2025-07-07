@@ -1,7 +1,7 @@
-import { EntityType } from "@/types/entity";
 import { updateScopedTheme } from "../updateScopedTheme";
 import { useThemeStore } from "@/stores";
 import { getDefaultTheme } from "../getDefaultTheme";
+import type { EntityType } from "@/theme/types/entity";
 
 export function resetScopedTheme(
 	scope: EntityType,

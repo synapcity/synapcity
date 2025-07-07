@@ -1,7 +1,9 @@
 "use client"
 
-import { ScopedThemePopover } from "./ScopedThemePopover"
-import TestWidgetLayout from "./TestWidgetLayout"
+import dynamic from "next/dynamic"
+
+const ScopedThemePopover = dynamic(() => import("@/components/molecules/theme/ScopedThemePopover/ScopedThemePopover").then((mod) => mod.ScopedThemePopover))
+const TestWidgetLayout = dynamic(() => import("@/components/molecules/theme/TestWidgetLayout").then((mod) => mod.default))
 
 export const TestWidget = () => {
   return (

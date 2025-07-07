@@ -1,8 +1,8 @@
 "use client";
 
-import { fontSizes } from "@/theme/font/constants";
-import type { FontSizeToken } from "@/theme/font/types";
-import { Button } from "@/components";
+import { fontSizes } from "@/theme/constants";
+import { Button } from "@/components/atoms";
+import type { FontSizeToken } from "@/theme/types";
 import { cn } from "@/utils";
 
 interface FontSizeControlProps {

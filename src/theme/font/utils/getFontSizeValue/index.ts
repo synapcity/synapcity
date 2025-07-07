@@ -1,1 +1,0 @@
-export { getFontSizeValue } from "./getFontSizeValue";

@@ -1,1 +1,5 @@
-export { resolveThemeMetadata } from "./resolveThemeMetadata";
+export {
+	resolveThemeMetadata,
+	type ThemeMetadataInfo,
+	type ThemeMetadataOptions,
+} from "./resolveThemeMetadata";

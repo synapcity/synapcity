@@ -1,13 +1,11 @@
 import { useThemeStore } from "@/stores";
-import { applyColor } from "@/theme/colors";
-import { applyFont } from "@/theme/font";
-import { applyModeClass } from "@/theme/mode";
-import { ThemePreferences } from "@/theme/types";
-import { EntityType } from "@/types/entity";
+import {
+	applyScopedFontVars,
+	applyScopedModeVars,
+	applyScopedColorVars,
+} from "@/theme/applyCss";
+import type { EntityType, ThemePreferences } from "@/theme/types";
 
-const { applyScopedFontVars } = applyFont;
-const { applyScopedColorVars } = applyColor;
-const { applyScopedModeClass } = applyModeClass;
 export function updateScopedTheme(
 	scope: EntityType,
 	id: string,
@@ -38,5 +36,5 @@ export function updateScopedTheme(
 		element,
 	});
 
-	applyScopedModeClass(updated.mode, element);
+	applyScopedModeVars(updated.mode, element);
 }

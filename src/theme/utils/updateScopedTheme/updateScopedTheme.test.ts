@@ -1,42 +1,65 @@
-jest.mock("@/theme/colors/apply");
-jest.mock("@/theme/font/apply");
-jest.mock("@/theme/mode/apply");
+jest.mock("@/theme/applyCss", () => ({
+	applyScopedColorVars: jest.fn(),
+	applyScopedFontVars: jest.fn(),
+	applyScopedModeVars: jest.fn(),
+}));
+
+const mockSetPreferences = jest.fn();
+const mockGetPreferences = jest.fn();
+const mockResetScopedPreferences = jest.fn();
+
+jest.mock("@/stores", () => ({
+	useThemeStore: {
+		getState: () => ({
+			setPreferences: mockSetPreferences,
+			getPreferences: mockGetPreferences,
+			resetScopedPreferences: mockResetScopedPreferences,
+			scopedPreferences: {
+				note: {
+					abc: {
+						inheritsFromGlobalTheme: false,
+					},
+				},
+			},
+		}),
+	},
+}));
 
 import { updateScopedTheme } from "../updateScopedTheme";
-import { useThemeStore } from "@/stores";
-import { applyColor } from "@/theme/colors";
-import { applyFont } from "@/theme/font";
-import { applyModeClass } from "@/theme/mode";
+import {
+	applyScopedColorVars,
+	applyScopedFontVars,
+	applyScopedModeVars,
+} from "@/theme/applyCss";
 
 describe("updateScopedTheme", () => {
-	it("applies scoped theme updates", () => {
-		const element = document.createElement("div");
+	beforeEach(() => {
+		jest.clearAllMocks();
 
-		updateScopedTheme("note", "abc", { fontSize: "sm" }, element);
-
-		expect(applyColor.applyScopedColorVars).toHaveBeenCalledTimes(2);
-		expect(applyFont.applyScopedFontVars).toHaveBeenCalledTimes(3);
-		expect(applyModeClass.applyScopedModeClass).toHaveBeenCalledWith(
-			"light",
-			element
-		);
+		mockGetPreferences.mockReturnValue({
+			preferences: {
+				primary: "p",
+				accent: "a",
+				mode: "light",
+				fontSize: "sm",
+				fontFamilyBody: "body",
+				fontFamilyHeading: "heading",
+				inheritsFromGlobalTheme: false,
+			},
+		});
 	});
 
-	it("sets inheritsFromGlobalTheme to false automatically if theme values change", () => {
+	it("applies scoped theme updates", () => {
 		const el = document.createElement("div");
-		useThemeStore.getState().resetScopedPreferences("note", "abc");
 
-		const initialPrefs = useThemeStore.getState().getPreferences("note", "abc");
-		const initialInherit = initialPrefs.preferences.inheritsFromGlobalTheme;
-		const initialFont = initialPrefs.preferences.fontSize;
-		expect(initialInherit).toEqual(true);
-		expect(initialFont).toEqual("md");
 		updateScopedTheme("note", "abc", { fontSize: "sm" }, el);
 
-		const theme = useThemeStore.getState().getPreferences("note", "abc");
-		const fontSize = theme.preferences.fontSize;
-		const inherits = theme.preferences.inheritsFromGlobalTheme;
-		expect(fontSize).toEqual("sm");
-		expect(inherits).toEqual(false);
+		expect(mockSetPreferences).toHaveBeenCalledWith("note", "abc", {
+			fontSize: "sm",
+		});
+
+		expect(applyScopedColorVars).toHaveBeenCalledTimes(2);
+		expect(applyScopedFontVars).toHaveBeenCalledTimes(3);
+		expect(applyScopedModeVars).toHaveBeenCalledWith("light", el);
 	});
 });

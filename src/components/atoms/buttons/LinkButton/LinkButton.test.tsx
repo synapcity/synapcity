@@ -1,8 +1,4 @@
-/**
- * ⚠️ This must come first, before any imports
- */
-jest.mock("@/components", () => {
-	// Avoid loading LinkButton here!
+jest.mock("@/components/atoms", () => {
 	return {
 		__esModule: true,
 		Spinner: () => <div role="status">Spinner</div>,

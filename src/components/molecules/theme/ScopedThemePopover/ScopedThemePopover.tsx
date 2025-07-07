@@ -2,8 +2,6 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { PopoverWrapper } from "@/components/molecules/PopoverWrapper";
-import { IconButton } from "@/components/atoms";
 import type { ThemeScope } from "@/theme/types";
 import { useTheme } from "@/providers";
 
@@ -18,6 +16,8 @@ const ThemeForm = dynamic(
   }
 );
 
+const IconButton = dynamic(() => import("@/components/atoms/buttons/IconButton/IconButton").then((mod) => mod.IconButton))
+const PopoverWrapper = dynamic(() => import("@/components/molecules/PopoverWrapper/PopoverWrapper").then((mod) => mod.PopoverWrapper))
 export const ScopedThemePopover = ({
   scope,
   entityId,

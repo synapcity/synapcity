@@ -1,7 +1,8 @@
 import { createStore, StoreApi } from "zustand";
 import { ScopedThemeState, themeStoreInitializer } from "@/stores/themeStore";
-import { DEFAULT_THEME } from "@/theme/defaults";
+import { DEFAULT } from "@/theme/defaults";
 import { getDefaultTheme } from "@/theme/utils";
+import { ThemeMode } from "@/theme";
 
 describe('themeStore', () => {
 	let testStore: StoreApi<ScopedThemeState>;
@@ -17,7 +18,7 @@ describe('themeStore', () => {
 	});
 	it("initializes with default theme", () => {
 		const state = testStore.getState();
-		expect(state.globalPreferences).toEqual(DEFAULT_THEME);
+		expect(state.globalPreferences).toEqual(DEFAULT.THEME);
 	});
 
 	it("can set global preferences", () => {
@@ -28,7 +29,7 @@ describe('themeStore', () => {
 	it("can reset global preferences", () => {
 		testStore.getState().setGlobalPreferences({ fontSize: "lg" });
 		testStore.getState().resetGlobalPreferences();
-		expect(testStore.getState().globalPreferences).toEqual(DEFAULT_THEME);
+		expect(testStore.getState().globalPreferences).toEqual(DEFAULT.THEME);
 	});
 
 	it("can init and set scoped preferences", () => {
@@ -45,7 +46,7 @@ describe('themeStore', () => {
 			.getState()
 			.setPreferences("note", "abc", { inheritsFromGlobalTheme: true });
 		const pref = testStore.getState().getPreferences("note", "abc");
-		expect(pref.preferences).toEqual(DEFAULT_THEME);
+		expect(pref.preferences).toEqual(DEFAULT.THEME);
 	});
 
 	it("can reset scoped preferences", () => {
@@ -87,9 +88,9 @@ describe('themeStore', () => {
 		const result = testStore.getState().getPreferences("note", "merge-test");
 
 		expect(result.preferences.fontSize).toBe("2xl");
-		expect(result.preferences.mode).toBe(DEFAULT_THEME.mode);
+		expect(result.preferences.mode).toBe(DEFAULT.MODE);
 		expect(result.preferences).toMatchObject({
-			...getDefaultTheme(DEFAULT_THEME.mode),
+			...getDefaultTheme(DEFAULT.MODE as ThemeMode),
 			fontSize: "2xl",
 			inheritsFromGlobalTheme: false
 		});
@@ -97,7 +98,7 @@ describe('themeStore', () => {
 	});
 	it("returns globalPreferences when getPreferences is called without id", () => {
 		const result = testStore.getState().getPreferences("note");
-		expect(result.preferences).toEqual(DEFAULT_THEME);
+		expect(result.preferences).toEqual(DEFAULT.THEME);
 	});
 
 	it("uses fallback when globalPreferences is undefined", () => {

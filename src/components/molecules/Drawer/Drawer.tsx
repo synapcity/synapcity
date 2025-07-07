@@ -13,20 +13,7 @@ import {
 import * as React from "react"
 import { Button } from "@/components/atoms"
 import { cn } from "@/utils"
-// import dynamic from "next/dynamic"
 
-// const UISheet = dynamic(() => import("@/components/atoms/ui/sheet").then((mod) => mod.Sheet), {
-//   ssr: true
-// })
-// const UISheetTrigger = dynamic(() => import("@/components/atoms/ui/sheet").then((mod) => mod.SheetTrigger), {
-//   ssr: true
-// })
-// const UISheetContent = dynamic(() => import("@/components/atoms/ui/sheet").then((mod) => mod.SheetContent), { ssr: true })
-// const UISheetHeader = dynamic(() => import("@/components/atoms/ui/sheet").then((mod) => mod.SheetHeader), { ssr: true })
-// const UISheetTitle = dynamic(() => import("@/components/atoms/ui/sheet").then((mod) => mod.SheetTitle), { ssr: true })
-// const UISheetDescription = dynamic(() => import("@/components/atoms/ui/sheet").then((mod) => mod.SheetDescription), { ssr: true })
-// const UISheetFooter = dynamic(() => import("@/components/atoms/ui/sheet").then((mod) => mod.SheetFooter), { ssr: true })
-// const UISheetClose = dynamic(() => import("@/components/atoms/ui/sheet").then((mod) => mod.SheetClose), { ssr: true })
 
 export interface DrawerProps {
   trigger?: React.ReactNode

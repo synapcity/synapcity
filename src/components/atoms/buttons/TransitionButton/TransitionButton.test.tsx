@@ -1,21 +1,3 @@
-jest.mock('@/components', () => {
-  const actual = jest.requireActual('@/components');
-  return {
-    ...actual,
-    Tooltip: ({ trigger, children, content }: TooltipProps) => (
-      <>
-        {trigger || children}
-        {typeof content === 'string' ? (
-          <div data-testid="tooltip-content">{content}</div>
-        ) : (
-          content
-        )}
-      </>
-    ),
-  };
-});
-
-
 import React from "react";
 import {
   render,
@@ -28,12 +10,15 @@ import userEvent from "@testing-library/user-event";
 import { TransitionButton } from "./TransitionButton";
 import { CheckCircle2, Star } from "lucide-react";
 import { renderWithTooltip } from "@/__mocks__";
-import { TooltipProps } from "../../Tooltip";
 
 const SuccessIcon = <CheckCircle2 data-testid="success-icon" />;
 const CustomIcon = <Star data-testid="custom-icon" />;
 
 describe("TransitionButton", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  })
+
   it("renders loader icon when loading", () => {
     const { container } = render(<TransitionButton isLoading>Click</TransitionButton>);
     const spinner = container.querySelector("svg");
@@ -61,6 +46,7 @@ describe("TransitionButton", () => {
   });
 
   it("renders success text after loading ends", async () => {
+
     jest.useFakeTimers();
     const { rerender } = render(
       <TransitionButton
@@ -115,15 +101,15 @@ describe("TransitionButton", () => {
 
   it("shows tooltip if tooltip and hideTextOnLoading are set", async () => {
     renderWithTooltip(
-      <TransitionButton isLoading tooltip="Hello Tooltip" hideTextOnLoading>
+      <TransitionButton isLoading tooltip="Hello Tooltip" hideTextOnLoading data-testid="tooltip-trigger">
         Submit
       </TransitionButton>
     );
 
-    const button = screen.getByRole("button");
+    const button = screen.getByTestId("tooltip-trigger");
     await userEvent.hover(button);
 
-    const tooltip = await screen.findByTestId("tooltip-content");
+    const tooltip = screen.getAllByTestId("tooltip-content")[0];
     expect(tooltip).toHaveTextContent("Hello Tooltip");
   });
 

@@ -2,7 +2,7 @@ import * as React from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs-vite"
 import { GlobalSearchBar } from "./GlobalSearchBar"
 import { FileTextIcon, TagIcon, UserIcon } from "lucide-react"
-import type { SearchItem } from "@/types/search"
+import type { SearchItem } from "@/theme/types/search"
 
 const meta: Meta<typeof GlobalSearchBar> = {
   title: "Molecules/GlobalSearchBar",

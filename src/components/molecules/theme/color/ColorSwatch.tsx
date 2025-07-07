@@ -2,7 +2,7 @@
 
 import React from 'react';
 import clsx from 'clsx';
-import { getContrastingColor } from '@/theme/colors/utils/getContrastingColor/getContrastingColor';
+import { getContrastingColor } from '@/theme/generateValues/utils/getContrastingColor/getContrastingColor';
 
 interface ColorSwatchProps {
   color: string;

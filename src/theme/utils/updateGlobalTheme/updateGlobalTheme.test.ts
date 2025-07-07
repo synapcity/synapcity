@@ -1,64 +1,74 @@
-import { applyColor } from "@/theme/colors";
-import { updateGlobalTheme } from "../updateGlobalTheme";
-import { useThemeStore } from "@/stores";
-import { generateSemanticColor } from "@/theme/colors/generate";
-import { applyFont, type FontSizeToken } from "@/theme/font";
-import { applyModeClass } from "@/theme/mode";
-import type { ThemeMode } from "@/theme/types";
+const mockSetGlobalPreferences = jest.fn();
+
+jest.mock("@/theme/applyCss", () => ({
+	applyGlobalColorVars: jest.fn(),
+	applyGlobalFontVars: jest.fn(),
+	applyGlobalModeVars: jest.fn(),
+}));
 
 jest.mock("@/stores", () => ({
 	useThemeStore: {
-		getState: jest.fn(),
+		getState: () => ({
+			setGlobalPreferences: mockSetGlobalPreferences,
+			globalPreferences: {
+				primary: "oldPrimary",
+				accent: "oldAccent",
+				fontSize: "sm",
+				fontFamilyBody: "OldBody",
+				fontFamilyHeading: "OldHeading",
+				mode: "dark",
+			},
+		}),
 	},
 }));
 
-jest.mock("@/theme/colors", () => ({
-	applyColor: {
-		applyGlobalColorVars: jest.fn(),
-	},
-}));
-
-jest.mock("@/theme/font", () => ({
-	applyFont: {
-		applyGlobalFontVars: jest.fn(),
-	},
-}));
-
-jest.mock("@/theme/mode", () => ({
-	applyModeClass: {
-		applyGlobalModeClass: jest.fn(),
-	},
-}));
+import { updateGlobalTheme } from "../updateGlobalTheme";
+import {
+	applyGlobalColorVars,
+	applyGlobalFontVars,
+	applyGlobalModeVars,
+} from "@/theme/applyCss";
+import {
+	DEFAULT,
+	defaultAccent,
+	defaultFontValues,
+	defaultPrimary,
+} from "@/theme/defaults";
 
 describe("updateGlobalTheme", () => {
-	it("sets and applies global theme", () => {
-		const setGlobalPreferences = jest.fn();
-		const primaryColor = generateSemanticColor("12345");
-		const primary = { ...primaryColor };
-		const accentColor = generateSemanticColor("#654321");
-		const accent = { ...accentColor };
+	it("sets and applies global theme updates", () => {
 		const preferences = {
-			primary,
-			accent,
-			fontSize: "md" as FontSizeToken,
-			fontFamilyBody: "Inter",
-			fontFamilyHeading: "Grotesk",
-			mode: "dark" as ThemeMode,
+			...DEFAULT.THEME,
 		};
-
-		(useThemeStore.getState as jest.Mock)
-			.mockReturnValueOnce({
-				setGlobalPreferences,
-			})
-			.mockReturnValueOnce({
-				globalPreferences: preferences,
-			});
 
 		updateGlobalTheme(preferences);
 
-		expect(setGlobalPreferences).toHaveBeenCalledWith(preferences);
-		expect(applyColor.applyGlobalColorVars).toHaveBeenCalledTimes(2);
-		expect(applyFont.applyGlobalFontVars).toHaveBeenCalledTimes(3);
-		expect(applyModeClass.applyGlobalModeClass).toHaveBeenCalledWith("dark");
+		expect(mockSetGlobalPreferences).toHaveBeenCalledWith(preferences);
+
+		expect(applyGlobalColorVars).toHaveBeenCalledWith(
+			defaultPrimary,
+			"dark",
+			"primary"
+		);
+		expect(applyGlobalColorVars).toHaveBeenCalledWith(
+			defaultAccent,
+			"dark",
+			"accent"
+		);
+
+		expect(applyGlobalFontVars).toHaveBeenCalledWith({
+			postfix: "size",
+			size: "md",
+		});
+		expect(applyGlobalFontVars).toHaveBeenCalledWith({
+			postfix: "body",
+			fontFamily: defaultFontValues.fontFamilyBody,
+		});
+		expect(applyGlobalFontVars).toHaveBeenCalledWith({
+			postfix: "heading",
+			fontFamily: defaultFontValues.fontFamilyHeading,
+		});
+
+		expect(applyGlobalModeVars).toHaveBeenCalledWith(DEFAULT.MODE);
 	});
 });
