@@ -13,8 +13,8 @@ export function applyGlobalColorVars(
 ) {
 	const vars = generateColorVars(color, mode, prefix);
 	const scale = mode === "dark" ? color.dark.scale : color.light.scale;
-	vars[`--foreground`] = scale[950];
-	vars[`--background`] = scale[50];
+	vars[`--foreground`] = scale[900];
+	vars[`--background`] = scale[100];
 	const root = document.body;
 	applyVars(vars, root);
 }

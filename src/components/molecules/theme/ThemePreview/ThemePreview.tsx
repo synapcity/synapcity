@@ -1,16 +1,33 @@
 "use client";
 
 import { cn } from "@/utils";
-import { RefObject } from "react";
+import { RefObject, useEffect, useRef } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { ThemePreferencesFormValues } from "../schema";
 import { Button } from "@/components/atoms";
 import { useTheme } from "@/providers/ThemeProvider";
+import { isEqual } from "lodash";
+import { applyThemeVars, ThemePreferences } from "@/theme";
 
 export function ThemePreview() {
-  const { previewRef } = useTheme()
   const { control } = useFormContext<ThemePreferencesFormValues>();
-  const liveValues = useWatch({ control });
+  const liveValues = useWatch({ control }) as ThemePreferences;
+  const { previewRef, previewTheme, updatePreviewTheme } = useTheme();
+  const prevValuesRef = useRef<ThemePreferencesFormValues | null>(null);
+
+  useEffect(() => {
+    if (!isEqual(prevValuesRef.current, liveValues)) {
+      updatePreviewTheme(liveValues);
+      prevValuesRef.current = liveValues;
+    }
+
+    if (previewRef.current) {
+      applyThemeVars({
+        preferences: liveValues,
+        element: previewRef.current,
+      });
+    }
+  }, [liveValues, previewRef, previewTheme, updatePreviewTheme]);
 
   return (
     <div

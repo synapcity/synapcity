@@ -14,9 +14,6 @@ export const SwitchField = ({
   name
 }: SwitchFieldProps) => {
   const { control } = useFormContext()
-  const fieldState = control.getFieldState("useGlobalTheme")
-  console.log("field state", fieldState.isDirty)
-
   return (
     <div className="flex items-center gap-2">
       <Label>{label}</Label>

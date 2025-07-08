@@ -2,8 +2,8 @@
 
 import dynamic from "next/dynamic"
 
-const ScopedThemePopover = dynamic(() => import("@/components/molecules/theme/ScopedThemePopover/ScopedThemePopover").then((mod) => mod.ScopedThemePopover))
-const TestWidgetLayout = dynamic(() => import("@/components/molecules/theme/TestWidgetLayout").then((mod) => mod.default))
+const ScopedThemePopover = dynamic(() => import("@/components/molecules/theme/ScopedThemePopover/ScopedThemePopover").then((mod) => mod.ScopedThemePopover), { ssr: false })
+const TestWidgetLayout = dynamic(() => import("@/components/molecules/theme/TestWidgetLayout").then((mod) => mod.default), { ssr: true })
 
 export const TestWidget = () => {
   return (

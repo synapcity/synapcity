@@ -1,1 +1,0 @@
-export { updateGlobalTheme } from "./updateGlobalTheme";

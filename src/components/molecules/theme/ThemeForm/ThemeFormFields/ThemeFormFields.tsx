@@ -4,8 +4,8 @@ import { ColorFieldPopover } from "../Fields/ColorField/ColorField"
 import { FontField } from "../../font/FontFamily/FontField/FontField"
 import { FontSizeField } from "../../font/FontSize/FontSizeField/FontSizeField"
 import { DarkModeField } from "./DarkMode/DarkModeField"
-import { SwitchField } from "../Fields"
-import { useTheme } from "@/providers"
+import { SwitchField } from "../Fields/SwitchField/SwitchField"
+import { useTheme } from "@/providers/ThemeProvider"
 
 export const ThemeFormFields = () => {
   const { isScoped } = useTheme()

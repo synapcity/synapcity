@@ -4,6 +4,7 @@ export function applyGlobalModeVars(mode: ThemeMode) {
 	const root = document.body;
 	root.classList.remove("light", "dark");
 	root.classList.add(mode);
+	root.dataset.theme = mode;
 }
 
 export function applyScopedModeVars(mode: ThemeMode, el: HTMLElement) {

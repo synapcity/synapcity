@@ -2,6 +2,9 @@ jest.mock("@/theme/applyCss", () => ({
 	applyScopedColorVars: jest.fn(),
 	applyScopedFontVars: jest.fn(),
 	applyScopedModeVars: jest.fn(),
+	applyGlobalColorVars: jest.fn(),
+	applyGlobalFontVars: jest.fn(),
+	applyGlobalModeVars: jest.fn(),
 }));
 
 const mockSetPreferences = jest.fn();
@@ -25,12 +28,59 @@ jest.mock("@/stores", () => ({
 	},
 }));
 
-import { updateScopedTheme } from "../updateScopedTheme";
+import {
+	DEFAULT,
+	defaultPrimary,
+	defaultAccent,
+	defaultFontValues,
+} from "@/theme/defaults";
+import { updateScopedTheme, updateGlobalTheme } from "./updateTheme";
 import {
 	applyScopedColorVars,
 	applyScopedFontVars,
 	applyScopedModeVars,
+	applyGlobalColorVars,
+	applyGlobalFontVars,
+	applyGlobalModeVars,
 } from "@/theme/applyCss";
+
+describe("updateGlobalTheme", () => {
+	it("sets and applies global theme updates", () => {
+		const preferences = {
+			...DEFAULT.THEME,
+		};
+
+		updateGlobalTheme(preferences);
+
+		expect(mockSetPreferences).toHaveBeenCalledWith(preferences);
+
+		expect(applyGlobalColorVars).toHaveBeenCalledWith(
+			defaultPrimary,
+			"dark",
+			"primary"
+		);
+		expect(applyGlobalColorVars).toHaveBeenCalledWith(
+			defaultAccent,
+			"dark",
+			"accent"
+		);
+
+		expect(applyGlobalFontVars).toHaveBeenCalledWith({
+			postfix: "size",
+			size: "md",
+		});
+		expect(applyGlobalFontVars).toHaveBeenCalledWith({
+			postfix: "body",
+			fontFamily: defaultFontValues.fontFamilyBody,
+		});
+		expect(applyGlobalFontVars).toHaveBeenCalledWith({
+			postfix: "heading",
+			fontFamily: defaultFontValues.fontFamilyHeading,
+		});
+
+		expect(applyGlobalModeVars).toHaveBeenCalledWith(DEFAULT.MODE);
+	});
+});
 
 describe("updateScopedTheme", () => {
 	beforeEach(() => {
