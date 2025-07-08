@@ -2,7 +2,6 @@
 
 import React, { createContext } from 'react';
 import { FontFamilyName, FontSizeToken, ThemeMode, ThemePreferences, ThemeScope } from '@/theme';
-import { ThemePreferencesFormValues } from '@/components/molecules/theme/schema';
 
 export interface ThemeContextType {
   previewRef: React.RefObject<HTMLElement | null>;
@@ -19,7 +18,7 @@ export interface ThemeContextType {
   prefs: ThemePreferences
   resetTheme: () => void;
   isCustom: boolean;
-  updateTheme: (data: ThemePreferencesFormValues) => void;
+  updateTheme: () => void;
   updatePreviewTheme: (data: ThemePreferences) => void;
   scope: ThemeScope;
   id: string;

@@ -47,7 +47,6 @@ export const ThemeForm = ({
 
   useEffect(() => {
     reset(theme);
-    console.log("prefs", theme)
   }, [theme, reset]);
 
   return (
