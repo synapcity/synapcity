@@ -3,7 +3,7 @@ window.HTMLElement.prototype.scrollIntoView = jest.fn();
 import { render, screen, fireEvent } from "@testing-library/react";
 import { GlobalSearchBar } from "./GlobalSearchBar";
 import { BookOpen, Hash, User } from "lucide-react";
-import { SearchItem } from "@/types/search";
+import { SearchItem } from "@/theme/types";
 
 describe("GlobalSearchBar", () => {
   const mockOnSelectNote = jest.fn();

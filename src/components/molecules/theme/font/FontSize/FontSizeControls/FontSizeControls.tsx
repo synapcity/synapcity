@@ -1,8 +1,8 @@
 "use client";
 
-import { fontSizes } from "@/theme/font/constants";
-import type { FontSizeToken } from "@/theme/font/types";
-import { Button } from "@/components";
+import { fontSizes } from "@/theme/constants";
+import { Button } from "@/components/atoms";
+import type { FontSizeToken } from "@/theme/types";
 import { cn } from "@/utils";
 
 interface FontSizeControlProps {
@@ -12,6 +12,7 @@ interface FontSizeControlProps {
 
 export function FontSizeControls({ value = "md", onChange }: FontSizeControlProps) {
   const currentIndex = fontSizes.findIndex((k) => k === value);
+  const lastIndex = fontSizes.length - 1
 
   const decrease = () => {
     const next = fontSizes[Math.max(0, currentIndex - 1)];
@@ -30,6 +31,7 @@ export function FontSizeControls({ value = "md", onChange }: FontSizeControlProp
         onClick={decrease}
         className={cn("px-2 py-1 text-sm")}
         aria-label="Decrease font size"
+        disabled={currentIndex === 0}
       >
         A-
       </Button>
@@ -41,6 +43,7 @@ export function FontSizeControls({ value = "md", onChange }: FontSizeControlProp
         onClick={increase}
         className={cn("px-2 py-1 text-sm")}
         aria-label="Increase font size"
+        disabled={currentIndex === lastIndex}
       >
         A+
       </Button>

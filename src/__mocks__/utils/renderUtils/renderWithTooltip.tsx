@@ -1,7 +1,9 @@
 import { ReactNode } from "react";
 import { render } from "@testing-library/react";
-import { Tooltip } from "@/components";
+import { TooltipProvider } from "@/components/atoms/ui/tooltip";
 
 export function renderWithTooltip(ui: ReactNode) {
-  return render(<Tooltip>{ui}</Tooltip>);
+  return render(
+    <TooltipProvider>{ui}</TooltipProvider>
+  )
 }

@@ -1,1 +1,0 @@
-export { resetGlobalTheme } from "./resetGlobalTheme";

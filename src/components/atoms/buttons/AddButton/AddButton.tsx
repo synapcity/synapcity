@@ -1,7 +1,7 @@
 import { IconButton } from "../IconButton";
 import { ButtonSize } from "../variants";
 
-export default function AddButton({ size, onSubmit }: { size?: ButtonSize; onSubmit: () => void }) {
+export function AddButton({ size, onSubmit }: { size?: ButtonSize; onSubmit: () => void }) {
   return (
     <div
       data-testid="add-button-wrapper"

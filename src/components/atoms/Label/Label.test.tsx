@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { Label } from "./Label"; // adjust the path as needed
+import { Label } from "./Label";
 import "@testing-library/jest-dom";
 
 describe("Label component", () => {

@@ -1,7 +1,8 @@
 import { createStore, StoreApi } from "zustand";
 import { ScopedThemeState, themeStoreInitializer } from "@/stores/themeStore";
-import { DEFAULT_THEME } from "@/theme/defaults";
+import { DEFAULT } from "@/theme/defaults";
 import { getDefaultTheme } from "@/theme/utils";
+import { ThemeMode } from "@/theme";
 
 describe('themeStore', () => {
 	let testStore: StoreApi<ScopedThemeState>;
@@ -17,7 +18,7 @@ describe('themeStore', () => {
 	});
 	it("initializes with default theme", () => {
 		const state = testStore.getState();
-		expect(state.globalPreferences).toEqual(DEFAULT_THEME);
+		expect(state.globalPreferences).toEqual(DEFAULT.THEME);
 	});
 
 	it("can set global preferences", () => {
@@ -28,7 +29,7 @@ describe('themeStore', () => {
 	it("can reset global preferences", () => {
 		testStore.getState().setGlobalPreferences({ fontSize: "lg" });
 		testStore.getState().resetGlobalPreferences();
-		expect(testStore.getState().globalPreferences).toEqual(DEFAULT_THEME);
+		expect(testStore.getState().globalPreferences).toEqual(DEFAULT.THEME);
 	});
 
 	it("can init and set scoped preferences", () => {
@@ -45,7 +46,7 @@ describe('themeStore', () => {
 			.getState()
 			.setPreferences("note", "abc", { inheritsFromGlobalTheme: true });
 		const pref = testStore.getState().getPreferences("note", "abc");
-		expect(pref).toEqual(DEFAULT_THEME);
+		expect(pref.preferences).toEqual(DEFAULT.THEME);
 	});
 
 	it("can reset scoped preferences", () => {
@@ -86,10 +87,10 @@ describe('themeStore', () => {
 
 		const result = testStore.getState().getPreferences("note", "merge-test");
 
-		expect(result.fontSize).toBe("2xl");
-		expect(result.mode).toBe(DEFAULT_THEME.mode);
-		expect(result).toMatchObject({
-			...getDefaultTheme(DEFAULT_THEME.mode),
+		expect(result.preferences.fontSize).toBe("2xl");
+		expect(result.preferences.mode).toBe(DEFAULT.MODE);
+		expect(result.preferences).toMatchObject({
+			...getDefaultTheme(DEFAULT.MODE as ThemeMode),
 			fontSize: "2xl",
 			inheritsFromGlobalTheme: false
 		});
@@ -97,10 +98,11 @@ describe('themeStore', () => {
 	});
 	it("returns globalPreferences when getPreferences is called without id", () => {
 		const result = testStore.getState().getPreferences("note");
-		expect(result).toEqual(DEFAULT_THEME);
+		expect(result.preferences).toEqual(DEFAULT.THEME);
 	});
 
 	it("uses fallback when globalPreferences is undefined", () => {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		testStore.setState({ ...testStore.getState(), globalPreferences: undefined as any });
 		testStore.getState().setGlobalPreferences({ fontSize: "xl" });
 
@@ -124,6 +126,7 @@ describe('themeStore', () => {
 					...state.scopedPreferences.note,
 					["fallback-test"]: {
 						...state.scopedPreferences.note["fallback-test"],
+						// eslint-disable-next-line @typescript-eslint/no-explicit-any
 						mode: undefined as any,
 					},
 				},

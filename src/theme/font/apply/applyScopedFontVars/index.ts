@@ -1,1 +1,0 @@
-export { applyScopedFontVars } from "./applyScopedFontVars";

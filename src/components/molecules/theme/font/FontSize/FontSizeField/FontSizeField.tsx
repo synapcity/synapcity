@@ -3,9 +3,15 @@
 import { Controller, useFormContext } from "react-hook-form"
 import { FontSizeControls } from "../FontSizeControls"
 import { Label } from "@/components"
+import { useTheme } from "@/providers/ThemeProvider"
+import type { FontSizeToken } from "@/theme/types"
 
 export const FontSizeField = () => {
   const { control } = useFormContext()
+  const { updateFontSize } = useTheme()
+  const handleChange = (value: FontSizeToken) => {
+    updateFontSize(value, true)
+  }
   return (
     <div className="space-y-2">
       <Label>Font Size</Label>
@@ -13,7 +19,10 @@ export const FontSizeField = () => {
         control={control}
         name="fontSize"
         render={({ field }) => (
-          <FontSizeControls value={field.value} onChange={field.onChange} />
+          <FontSizeControls value={field.value} onChange={(value: FontSizeToken) => {
+            handleChange(value)
+            field.onChange(value)
+          }} />
         )}
       />
     </div>

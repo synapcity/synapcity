@@ -35,3 +35,5 @@ export const colord = (color: string) => {
 		},
 	};
 };
+
+export const extend = jest.fn();

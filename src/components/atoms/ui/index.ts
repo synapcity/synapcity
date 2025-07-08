@@ -76,3 +76,4 @@ export {
 	CommandShortcut as UICommandShortcut,
 	CommandSeparator as UICommandSeparator,
 } from "./command";
+export { Skeleton as UISkeleton } from "./skeleton";

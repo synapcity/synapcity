@@ -1,6 +1,6 @@
 "use client";
 
-import { IconSource, IconSize, Icon, Spinner } from "@/components";
+import { IconSource, IconSize, Icon, Spinner } from "@/components/atoms";
 import { Button, ButtonProps } from "../Button";
 import { ButtonSize, ButtonVariant } from "../variants";
 

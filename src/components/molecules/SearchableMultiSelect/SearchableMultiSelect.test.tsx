@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
 
 jest.mock("lodash.debounce", () => {
@@ -36,7 +37,8 @@ describe("SearchableMultiSelect", () => {
 
 
   it("renders with default trigger label", () => {
-    render(<SearchableMultiSelect value={[]} onChange={() => { }} options={OPTIONS} />);
+    const handleSearch = jest.fn()
+    render(<SearchableMultiSelect onSearch={handleSearch} value={[]} onChange={() => { }} options={OPTIONS} />);
     const trigger = screen.getByTestId("popover-trigger")
     expect(trigger).toBeInTheDocument()
     expect(screen.getByText("Select…")).toBeInTheDocument();
@@ -44,7 +46,8 @@ describe("SearchableMultiSelect", () => {
 
   it("selects an option", async () => {
     const handleChange = jest.fn();
-    render(<SearchableMultiSelect value={[]} onChange={handleChange} options={OPTIONS} />);
+    const handleSearch = jest.fn()
+    render(<SearchableMultiSelect value={[]} onSearch={handleSearch} onChange={handleChange} options={OPTIONS} />);
     const trigger = screen.getByTestId("popover-trigger");
     await userEvent.click(trigger);
     await userEvent.click(await screen.findByText("React"));
@@ -53,10 +56,12 @@ describe("SearchableMultiSelect", () => {
 
   it("deselects an option", async () => {
     const handleChange = jest.fn();
+    const handleSearch = jest.fn()
     render(
       <SearchableMultiSelect
         value={["react"]}
         onChange={handleChange}
+        onSearch={handleSearch}
         options={OPTIONS}
       />
     );
@@ -73,7 +78,8 @@ describe("SearchableMultiSelect", () => {
 
   it("creates a new option when not found", async () => {
     const handleCreate = jest.fn();
-    render(<SearchableMultiSelect value={[]} onChange={() => { }} onCreateOption={handleCreate} options={OPTIONS} />);
+    const handleSearch = jest.fn()
+    render(<SearchableMultiSelect onSearch={handleSearch} value={[]} onChange={() => { }} onCreateOption={handleCreate} options={OPTIONS} />);
 
     await userEvent.click(screen.getByRole("button"));
     await userEvent.type(screen.getByRole("combobox"), "NewTag");
@@ -83,8 +89,10 @@ describe("SearchableMultiSelect", () => {
 
 
   it("shows tag pills below trigger", () => {
+    const handleSearch = jest.fn()
     render(
       <SearchableMultiSelect
+        onSearch={handleSearch}
         value={["react"]}
         onChange={() => { }}
         options={OPTIONS}
@@ -96,8 +104,10 @@ describe("SearchableMultiSelect", () => {
 
   it("clears all tags on clear button click", async () => {
     const handleChange = jest.fn();
+    const handleSearch = jest.fn()
     render(
       <SearchableMultiSelect
+        onSearch={handleSearch}
         value={["react", "ts"]}
         onChange={handleChange}
         options={OPTIONS}
@@ -110,8 +120,10 @@ describe("SearchableMultiSelect", () => {
 
   it("removes last tag on backspace if input empty", async () => {
     const handleChange = jest.fn();
+    const handleSearch = jest.fn()
     render(
       <SearchableMultiSelect
+        onSearch={handleSearch}
         value={["react", "ts"]}
         onChange={handleChange}
         options={OPTIONS}
@@ -125,8 +137,10 @@ describe("SearchableMultiSelect", () => {
 
   it("respects maxSelected limit", async () => {
     const handleChange = jest.fn();
+    const handleSearch = jest.fn()
     render(
       <SearchableMultiSelect
+        onSearch={handleSearch}
         value={["react"]}
         onChange={handleChange}
         options={OPTIONS}
@@ -141,8 +155,10 @@ describe("SearchableMultiSelect", () => {
 
   it("removes tag when X is clicked", async () => {
     const handleChange = jest.fn();
+    const handleSearch = jest.fn()
     render(
       <SearchableMultiSelect
+        onSearch={handleSearch}
         value={["react"]}
         onChange={handleChange}
         options={OPTIONS}
@@ -165,8 +181,10 @@ describe("SearchableMultiSelect", () => {
 
 
   it("applies custom tag color", () => {
+    const handleSearch = jest.fn()
     render(
       <SearchableMultiSelect
+        onSearch={handleSearch}
         value={["react"]}
         onChange={() => { }}
         options={OPTIONS}
@@ -181,12 +199,14 @@ describe("SearchableMultiSelect", () => {
 
   it("renders custom icons from getTagIcon", async () => {
     const handleChange = jest.fn();
+    const handleSearch = jest.fn()
 
     const getTagIcon = (val: string) => <span data-testid={`icon-${val}`}>🔍</span>;
 
     render(
       <SearchableMultiSelect
         value={["react"]}
+        onSearch={handleSearch}
         onChange={handleChange}
         options={[
           { label: "React", value: "react" },
@@ -207,10 +227,12 @@ describe("SearchableMultiSelect", () => {
 
   it("renders static options when onSearch is not provided", async () => {
     const handleChange = jest.fn();
+    const handleSearch = jest.fn()
 
     render(
       <SearchableMultiSelect
         value={[]}
+        onSearch={handleSearch}
         onChange={handleChange}
         options={[
           { label: "Static Option", value: "static" },
@@ -229,10 +251,12 @@ describe("SearchableMultiSelect", () => {
 
   it("renders nothing if onSearch is not provided and options is empty", async () => {
     const handleChange = jest.fn();
+    const handleSearch = jest.fn()
 
     render(
       <SearchableMultiSelect
         value={[]}
+        onSearch={handleSearch}
         onChange={handleChange}
         options={[]}
       />
@@ -246,10 +270,12 @@ describe("SearchableMultiSelect", () => {
 
   it("does not crash without onSearch or options", async () => {
     const handleChange = jest.fn();
+    const handleSearch = jest.fn()
 
     render(
       <SearchableMultiSelect
         value={["nonexistent"]}
+        onSearch={handleSearch}
         onChange={handleChange}
       />
     );
@@ -262,6 +288,7 @@ describe("SearchableMultiSelect", () => {
 
   it("renders options returned from useDebouncedSearch when onSearch is provided", async () => {
     const handleChange = jest.fn();
+    const handleSearch = jest.fn()
 
     mockedUseDebouncedSearch.mockReturnValue([
       { label: "FromHook", value: "from-hook" },
@@ -270,8 +297,8 @@ describe("SearchableMultiSelect", () => {
     render(
       <SearchableMultiSelect
         value={[]}
+        onSearch={handleSearch}
         onChange={handleChange}
-        onSearch={jest.fn()}
       />
     );
 

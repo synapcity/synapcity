@@ -1,6 +1,9 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-/* @import "./base.css"; */
+@import "./shadcn-ui.css";
+@import "./base.css";
+@import "./colors.css";
+@import "./typography.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -35,6 +38,9 @@
 	--text-4xl: 2.25rem;
 	--text-5xl: 3rem;
 	--text-6xl: 3.75rem;
+	--text-7xl: 4rem;
+	--text-8xl: 6rem;
+	--text-9xl: 8rem;
 
 	--shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
 	--shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -48,134 +54,9 @@
 	--ease: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.light,
-[data-theme="light"] {
-	--background: white;
-	--foreground: black;
-}
-
-.dark,
-[data-theme="dark"] {
-	--background: black;
-	--foreground: white;
-}
-
-@layer base {
-	* {
-		/* @apply outline-ring/50; */
-	}
-	body {
-		@apply bg-[var(--background)] text-[var(--foreground)] font-sans antialiased;
-	}
-
-	html {
-		font-family: var(--font-sans);
-		background-color: var(--background);
-		color: var(--foreground);
-		@apply antialiased;
-	}
-	body {
-		@apply font-body text-base leading-relaxed;
-		@apply bg-[var(--background)] text-[var(--font-body)];
-		font-weight: var(--body-weight);
-		line-height: 1.6;
-	}
-
-	h1,
-	h2,
-	h3,
-	h4,
-	h5,
-	h6 {
-		@apply font-[var(--font-heading)] transition-[font-size] ease-linear duration-200;
-		font-weight: var(--heading-weight);
-	}
-
-	h1:hover,
-	h2:hover,
-	h3:hover,
-	h4:hover,
-	h5:hover,
-	a:hover {
-		color: text-[var(--accent)];
-	}
-
-	h1 {
-		@apply text-4xl md:text-5xl font-bold tracking-tight leading-tight;
-	}
-
-	h2 {
-		@apply text-3xl md:text-4xl font-semibold tracking-tight leading-snug;
-	}
-
-	h3 {
-		@apply text-2xl md:text-3xl font-semibold tracking-normal leading-snug;
-	}
-
-	h4 {
-		@apply text-xl md:text-2xl font-medium tracking-normal leading-snug;
-	}
-
-	h5 {
-		@apply text-lg md:text-xl font-medium leading-relaxed tracking-normal;
-	}
-
-	h6 {
-		@apply text-base md:text-lg font-medium leading-relaxed tracking-wide;
-	}
-
-	strong {
-		@apply font-semibold text-[var(--foreground)];
-	}
-
-	em {
-		@apply italic text-[var(--foreground)];
-	}
-
-	p {
-		@apply font-body;
-		@apply text-base leading-relaxed;
-	}
-
-	a {
-		@apply text-inherit;
-		text-decoration: none;
-	}
-
-	a:hover,
-	button:hover {
-		cursor: pointer;
-	}
-
-	.link {
-		@apply underline transition-colors ease-linear duration-200;
-		text-decoration: none;
-	}
-
-	blockquote {
-		@apply border-l-4 pl-4 italic text-[var(--muted-foreground)];
-		border-color: var(--color-muted);
-		margin: 1.5rem 0;
-	}
-
-	code {
-		@apply font-mono text-sm px-1 py-0.5 rounded bg-[var(--muted)] text-[var(--muted-foreground)];
-		font-weight: var(--code-weight);
-	}
-
-	pre {
-		@apply font-mono text-sm p-4 rounded-lg bg-[var(--muted)] text-[var(--muted-foreground)] overflow-x-auto;
-	}
-
-	hr {
-		@apply border-t my-6;
-	}
-
-	small {
-		/* @apply text-sm text-muted-foreground; */
-	}
-
-	mark {
-		/* @apply bg-accent text-accent-foreground px-1 py-0.5 rounded; */
-	}
+html,
+body {
+	min-height: 100vh;
+	height: 100%;
+	width: 100%;
 }

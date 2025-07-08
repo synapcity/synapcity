@@ -33,7 +33,8 @@ export const Switch = React.forwardRef<HTMLButtonElement, SwitchProps>(
     },
     ref
   ) => {
-    const switchId = id ?? React.useId()
+    const reactId = React.useId()
+    const switchId = id ?? reactId
     const describedBy = error ? `${switchId}-error` : `${switchId}-desc`
 
     return (

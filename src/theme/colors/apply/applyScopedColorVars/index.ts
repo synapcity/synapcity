@@ -1,1 +1,0 @@
-export { applyScopedColorVars } from "./applyScopedColorVars";

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 jest.mock("nanoid", () => ({
   nanoid: () => "mock-id",
 }));

@@ -9,7 +9,7 @@ import {
   CommandItem,
   CommandEmpty,
 } from "@/components/atoms/ui/command";
-import { SearchItem } from "@/types/search";
+import { SearchItem } from "@/theme/types/search";
 
 
 type GlobalSearchBarProps = {

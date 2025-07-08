@@ -1,1 +1,0 @@
-export { applyGlobalModeClass } from "./applyGlobalModeClass";

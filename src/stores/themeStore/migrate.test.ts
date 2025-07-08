@@ -1,20 +1,18 @@
 import { migrateThemeStore } from "@/stores/themeStore/migrate";
-import { DEFAULT_THEME } from "@/theme/defaults";
+import { DEFAULT } from "@/theme/defaults";
 
 describe("migrateThemeStore", () => {
 	it("adds fontFamilyHeading for version < 1", () => {
 		const legacyState = {
 			globalPreferences: {
-				...DEFAULT_THEME,
+				...DEFAULT.THEME,
 				fontFamilyBody: "Inter",
-				// fontFamilyHeading is missing
 			},
 			scopedPreferences: {
 				note: {
 					abc: {
-						...DEFAULT_THEME,
+						...DEFAULT.THEME,
 						fontFamilyBody: "Arial",
-						// fontFamilyHeading is missing
 					},
 				},
 				dashboard: {},
@@ -31,14 +29,14 @@ describe("migrateThemeStore", () => {
 	it("returns state unmodified for version >= 1", () => {
 		const state = {
 			globalPreferences: {
-				...DEFAULT_THEME,
+				...DEFAULT.THEME,
 				fontFamilyBody: "Inter",
 				fontFamilyHeading: "Grotesk",
 			},
 			scopedPreferences: {
 				note: {
 					abc: {
-						...DEFAULT_THEME,
+						...DEFAULT.THEME,
 						fontFamilyBody: "Arial",
 						fontFamilyHeading: "Georgia",
 					},

@@ -1,17 +1,20 @@
 import { create, StateCreator } from "zustand";
 import { persist } from "zustand/middleware";
 import { getDefaultTheme } from "@/theme/utils";
-import { DEFAULT_THEME } from "@/theme/defaults";
-import type { ThemePreferences } from "@/theme/types";
-import type { EntityType } from "@/types/entity";
+import { DEFAULT } from "@/theme/defaults";
+import type { ThemePreferences, ThemeScope, EntityType } from "@/theme/types";
 import { migrateThemeStore } from "./migrate";
+import {
+	resolveThemeMetadata,
+	type ThemeMetadataInfo,
+} from "@/theme/utils/resolveThemeMetadata";
 
 export interface ScopedThemeState {
 	hasHydrated: boolean;
 	setHasHydrated: (hasHydrated: boolean) => void;
 	globalPreferences: ThemePreferences;
 	scopedPreferences: Record<EntityType, Record<string, ThemePreferences>>;
-	getPreferences: (scope: EntityType, id?: string) => ThemePreferences;
+	getPreferences: (scope: ThemeScope, id?: string) => ThemeMetadataInfo;
 	setPreferences: (
 		scope: EntityType,
 		id: string,
@@ -31,7 +34,7 @@ export const themeStoreInitializer: StateCreator<ScopedThemeState> = (
 ) => ({
 	hasHydrated: false,
 	setHasHydrated: (hasHydrated) => set({ hasHydrated }),
-	globalPreferences: DEFAULT_THEME,
+	globalPreferences: DEFAULT.THEME,
 	scopedPreferences: {
 		note: {},
 		dashboard: {},
@@ -39,40 +42,44 @@ export const themeStoreInitializer: StateCreator<ScopedThemeState> = (
 	},
 
 	getPreferences: (scope, id) => {
-		if (!id) return get().globalPreferences;
-
-		const scopedPrefs = get().scopedPreferences[scope]?.[id];
-
-		if (!scopedPrefs || scopedPrefs.inheritsFromGlobalTheme === true) {
-			return get().globalPreferences;
-		}
-
-		return {
-			...getDefaultTheme(get().globalPreferences.mode),
-			...scopedPrefs,
-		};
+		const global = get().globalPreferences;
+		const scopedPreferences = get().scopedPreferences;
+		return resolveThemeMetadata({
+			globalPreferences: global,
+			scopedPreferences: scopedPreferences,
+			entityType: scope,
+			entityId: id,
+		});
 	},
 	initScopedPreferences: (scope, id) => {
-		const global = get().globalPreferences;
-		set((state) => ({
-			scopedPreferences: {
-				...state.scopedPreferences,
-				[scope]: {
-					...state.scopedPreferences[scope],
-					[id]: {
-						...global,
+		let global;
+		set((state) => {
+			global = state.globalPreferences;
+			return {
+				scopedPreferences: {
+					...state.scopedPreferences,
+					[scope]: {
+						...state.scopedPreferences[scope],
+						[id]: {
+							...global,
+						},
 					},
 				},
-			},
-		}));
-		return global;
+			};
+		});
+		return global as unknown as ThemePreferences;
 	},
 
 	setPreferences: (scope, id, updates) => {
 		set((state) => {
 			const prev =
 				state.scopedPreferences[scope]?.[id] ??
-				getDefaultTheme(get().globalPreferences.mode);
+				getDefaultTheme(state.globalPreferences.mode);
+			const updateSet = new Set(Object.keys(updates));
+			const useGlobalTheme = updateSet.has("inheritsFromGlobalTheme");
+			if (!useGlobalTheme && prev.inheritsFromGlobalTheme) {
+				updates.inheritsFromGlobalTheme = false;
+			}
 
 			return {
 				scopedPreferences: {
@@ -91,7 +98,7 @@ export const themeStoreInitializer: StateCreator<ScopedThemeState> = (
 
 	setGlobalPreferences: (updates) => {
 		set((state) => {
-			const prev = state.globalPreferences ?? { ...DEFAULT_THEME };
+			const prev = state.globalPreferences ?? { ...DEFAULT.THEME };
 			return {
 				globalPreferences: {
 					...prev,
@@ -102,11 +109,12 @@ export const themeStoreInitializer: StateCreator<ScopedThemeState> = (
 	},
 	resetGlobalPreferences: () => {
 		set(() => ({
-			globalPreferences: { ...DEFAULT_THEME },
+			globalPreferences: { ...DEFAULT.THEME },
 		}));
 	},
 	resetScopedPreferences: (scope: EntityType, id: string) => {
 		set((state) => {
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			const { [id]: _, ...rest } = state.scopedPreferences[scope];
 			return {
 				scopedPreferences: {

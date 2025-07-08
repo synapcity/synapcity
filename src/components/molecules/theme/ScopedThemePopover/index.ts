@@ -1,0 +1,1 @@
+export { ScopedThemePopover } from "./ScopedThemePopover";

@@ -1,7 +1,7 @@
 "use client";
 
 import { useTransition, useState, useEffect } from "react";
-import { Button, ButtonProps, Tooltip } from "@/components";
+import { Button, ButtonProps, Tooltip } from "@/components/atoms";
 import { Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import React from "react";

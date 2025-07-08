@@ -48,18 +48,18 @@ export function CommandMenu({
   const isControlled = controlledOpen !== undefined;
   const open = isControlled ? controlledOpen : internalOpen;
 
-  const handleOpenChange = (value: boolean) => {
+  const handleOpenChange = useCallback((value: boolean) => {
     if (isControlled) {
       onOpenChange?.(value);
     } else {
       setInternalOpen(value);
     }
-  };
+  }, [isControlled, onOpenChange])
 
   const handleSelect = useCallback((item: CommandMenuItem) => {
     item.onSelect?.();
     handleOpenChange(false);
-  }, []);
+  }, [handleOpenChange]);
 
   return (
     <CommandDialog
@@ -68,7 +68,7 @@ export function CommandMenu({
       title={title}
       description={description}
       showCloseButton={showCloseButton}
-      className="bg-white text-[var(--background)]"
+      className="bg-background text-foreground"
     >
       <CommandInput data-testid="command-input" placeholder={searchPlaceholder} />
       <CommandList>

@@ -1,11 +1,11 @@
-import { Button } from "@/components";
-import { ThemeSheet } from "@/components/molecules/theme/ThemeSheet/ThemeSheet";
+import { Spinner } from "@/components/atoms/Spinner/Spinner"
+import dynamic from "next/dynamic"
+
+const GlobalPage = dynamic(() => import("@/components/pages/GlobalPage").then((mod) => mod.default), {
+  ssr: true,
+  loading: () => <div className="absolute inset-0 flex items-center justify-center"><Spinner size={16} /></div>
+})
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <Button variant="outline">Click me</Button>
-      <ThemeSheet />
-    </div>
-  );
+  return <GlobalPage />
 }

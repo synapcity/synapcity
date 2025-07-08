@@ -1,30 +1,35 @@
 "use client";
 
-import { PopoverWrapper } from "@/components/molecules/PopoverWrapper";
-import { Button, Label } from "@/components/atoms";
+import { useMemo } from "react";
+import { useTheme } from "@/providers/ThemeProvider";
 import { Controller, useFormContext, useWatch } from "react-hook-form";
-import SwatchPickerComponent from "@/components/molecules/theme/color/SwatchPickerComponent";
-import { getContrastingColor, convertToHexColor } from "@/theme/colors/utils";
-import { useEffect, useState } from "react";
+import { getContrastingColor, convertToHexColor } from "@/theme/utils";
+import dynamic from "next/dynamic";
+
+const SwatchPickerComponent = dynamic(() => import("@/components/molecules/theme/color/SwatchPickerComponent").then((mod) => mod.default))
+const PopoverWrapper = dynamic(() => import("@/components/molecules/PopoverWrapper/PopoverWrapper").then(mod => mod.PopoverWrapper))
+const Button = dynamic(() => import("@/components/atoms/buttons/Button/Button").then((mod) => mod.Button))
+const Label = dynamic(() => import("@/components/atoms/Label/Label").then((mod) => mod.Label))
 
 export const ColorField = ({ name, label }: { name: string; label: string }) => {
   const { control } = useFormContext();
-  const [displayColor, setDisplayColor] = useState("#000000");
+  const { updatePrimaryColor, updateAccentColor } = useTheme();
+  const updateColor = name === "primary.base" ? updatePrimaryColor : updateAccentColor
+
+  const currentColor = useWatch({ control, name });
+
+  const displayColor = useMemo(() => convertToHexColor(currentColor), [currentColor]);
+
+  const handleChange = (newColor: string) => {
+    updateColor(newColor, true)
+  };
+
 
   return (
     <Controller
       control={control}
       name={name}
       render={({ field }) => {
-        useEffect(() => {
-          const hex = convertToHexColor(field.value);
-          setDisplayColor(hex);
-        }, [field.value]);
-
-        const handleChange = (newColor: string) => {
-          setDisplayColor(newColor);
-          field.onChange(newColor);
-        };
 
         return (
           <div className="space-y-2">
@@ -37,14 +42,16 @@ export const ColorField = ({ name, label }: { name: string; label: string }) => 
             >
               {label}
             </Label>
-            <SwatchPickerComponent value={displayColor} onChange={handleChange} />
+            <SwatchPickerComponent value={displayColor} onChange={(color: string) => {
+              handleChange(color)
+              field.onChange(color)
+            }} />
           </div>
         );
       }}
     />
   );
 };
-
 
 export function ColorFieldPopover({
   name,
@@ -65,7 +72,7 @@ export function ColorFieldPopover({
           className="w-full justify-start"
           style={{
             backgroundColor: currentColor,
-            color: currentColor ? "#fff" : undefined,
+            color: getContrastingColor(currentColor),
           }}
         >
           {label}

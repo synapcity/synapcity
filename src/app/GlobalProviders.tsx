@@ -1,9 +1,9 @@
-import { ThemeScopeProvider } from "@/providers/ThemeScopeProvider";
+import { ThemeProvider } from "@/providers/ThemeProvider";
 
 export default function GlobalProviders({ children }: { children: React.ReactNode; }) {
   return (
-    <ThemeScopeProvider entityType="global">
+    <ThemeProvider scope="global">
       {children}
-    </ThemeScopeProvider>
+    </ThemeProvider>
   )
 }

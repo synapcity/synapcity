@@ -1,1 +1,0 @@
-export { setGlobalFont } from "./setGlobalFont";

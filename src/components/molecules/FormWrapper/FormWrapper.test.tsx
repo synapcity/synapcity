@@ -299,7 +299,7 @@ describe("FormMessage and edge cases", () => {
 
       React.useEffect(() => {
         methods.setError("email", { type: "manual", message: undefined });
-      }, []);
+      }, [methods]);
 
       return (
         <FormProvider {...methods}>

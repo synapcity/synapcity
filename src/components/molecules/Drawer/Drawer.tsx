@@ -1,18 +1,19 @@
 "use client"
 
-import * as React from "react"
 import {
-  UISheet,
-  UISheetTrigger,
-  UISheetContent,
-  UISheetHeader,
-  UISheetFooter,
-  UISheetTitle,
-  UISheetDescription,
-  UISheetClose,
-} from "@/components/atoms"
+  Sheet as UISheet,
+  SheetTrigger as UISheetTrigger,
+  SheetContent as UISheetContent,
+  SheetHeader as UISheetHeader,
+  SheetTitle as UISheetTitle,
+  SheetDescription as UISheetDescription,
+  SheetFooter as UISheetFooter,
+  SheetClose as UISheetClose,
+} from "@/components/atoms/ui/sheet";
+import * as React from "react"
 import { Button } from "@/components/atoms"
 import { cn } from "@/utils"
+
 
 export interface DrawerProps {
   trigger?: React.ReactNode
@@ -50,7 +51,6 @@ export const Drawer: React.FC<DrawerProps> = ({
   return (
     <UISheet open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
       {trigger && <UISheetTrigger asChild>{trigger}</UISheetTrigger>}
-
       <UISheetContent side={side} className={cn("p-0", className)}>
         <UISheetHeader className={cn("border-b px-4 py-3", { "sr-only": !showTitle && !showDescription })}>
           <UISheetTitle className={cn({ "sr-only": !showTitle })}>
