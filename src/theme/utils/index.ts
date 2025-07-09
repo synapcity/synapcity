@@ -4,3 +4,4 @@ export * from "./updateTheme";
 export * from "./resolveThemeMetadata";
 export * from "./convertToHexColor";
 export * from "./getContrastingColor";
+export * from "./convertFormToPrefs";

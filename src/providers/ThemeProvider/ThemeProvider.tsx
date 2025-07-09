@@ -2,45 +2,21 @@
 
 import {
 	useRef,
-	useEffect,
-	useContext,
-	useState,
-	useCallback,
 	RefObject,
+	useEffect,
 } from "react";
-import {
-	resolveThemeMetadata,
-	applyThemeVars,
-	generateSemanticColor,
-} from "@/theme";
 import { useThemeStore } from "@/stores/themeStore/useThemeStore/useThemeStore";
-import { ThemeContext, ThemeContextType } from "./theme-context";
-import { cn, getUpdatedValues } from "@/utils";
-import isEqual from "lodash.isequal";
+import { ThemeContext } from "./theme-context";
+import { cn } from "@/utils";
+import { useThemeEngine } from "@/hooks/useThemeEngine";
 import type {
 	ThemeScope,
-	ThemeMode,
 	ThemePreferences,
-	FontFamilyName,
-	FontSizeToken,
 	EntityType,
 } from "@/theme/types";
-import { ThemePreferencesFormValues } from "@/components/molecules/theme/schema";
-
-export const useScopedPreferences = (scope: EntityType, id: string) =>
-	useThemeStore((s) => s.scopedPreferences?.[scope]?.[id]);
-
-export const useGlobalPreferences = () =>
-	useThemeStore((s) => s.globalPreferences);
-
-export interface ThemeProviderProps {
-	scope: ThemeScope;
-	entityId?: string;
-	className?: string;
-	children: React.ReactNode;
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	[key: string]: any;
-}
+import { Spinner } from "@/components";
+import { resolveThemeMetadata } from "@/theme";
+import { useApplyTheme } from "@/hooks";
 
 export const ThemeProvider = ({
 	scope,
@@ -48,17 +24,19 @@ export const ThemeProvider = ({
 	className,
 	children,
 	...props
-}: ThemeProviderProps) => {
-	const hasRendered = useRef(false);
-
+}: {
+	scope: ThemeScope;
+	entityId?: string;
+	className?: string;
+	children: React.ReactNode;
+}) => {
 	const hasHydrated = useThemeStore((s) => s.hasHydrated);
 	const hydratedScoped = useThemeStore((s) => s.scopedPreferences);
 	const hydratedGlobal = useThemeStore((s) => s.globalPreferences);
 	const setGlobalPreferences = useThemeStore((s) => s.setGlobalPreferences);
 	const setPreferences = useThemeStore((s) => s.setPreferences);
-	const resetGlobalPreferences = useThemeStore((s) => s.resetGlobalPreferences)
-	const resetScopedPreferences = useThemeStore((s) => s.resetScopedPreferences)
-
+	const resetGlobalPreferences = useThemeStore((s) => s.resetGlobalPreferences);
+	const resetScopedPreferences = useThemeStore((s) => s.resetScopedPreferences);
 	const {
 		preferences,
 		isGlobal,
@@ -80,157 +58,84 @@ export const ThemeProvider = ({
 				isCustom: false,
 			};
 
-	const scopedPrefs = entityId ? hydratedScoped?.[scope as EntityType]?.[entityId] : null;
-
-	const [previewTheme, setPreviewTheme] = useState<ThemePreferences>({} as ThemePreferences);
-
-	const previewRef = useRef<HTMLElement | null>(null);
+	const scopedPrefs = entityId
+		? hydratedScoped?.[scope as EntityType]?.[entityId]
+		: null;
 	const targetRef = useRef<HTMLElement | null>(null);
 
-	const updatePreview = (data: Partial<ThemePreferences>) => {
-		setPreviewTheme((prev) => {
-			const next = { ...prev, ...data };
-			return isEqual(next, prev) ? prev : next;
-		});
-	};
+	const element = isGlobal ? document.body : targetRef.current;
+	const {
+		updateThemePreferences,
+		applyThemeStyles,
+		updateColor,
+		updateFontSize,
+		updateFontFamily,
+		updateMode,
+	} = useThemeEngine({
+		preferences,
+		isGlobal,
+		targetRef,
+		persistGlobal: setGlobalPreferences,
+		persistScoped: (updates) => {
+			if (entityId) setPreferences(scope as EntityType, entityId, updates);
+		},
+	});
 
-	const setAndApplyPreview = useCallback((update: Partial<ThemePreferences>, element: HTMLElement) => {
-		const next = { ...previewTheme, ...update } as ThemePreferences
-		updatePreview(next);
-		applyThemeVars({ preferences: next, element });
-	}, [previewTheme])
-
-	const setAndApply = useCallback((data: Partial<ThemePreferences>, isPreview = false) => {
-		const element = (isPreview ? previewRef.current : isGlobal ? document.body : targetRef.current)!;
-		setAndApplyPreview(data, element);
-	}, [isGlobal, setAndApplyPreview])
-
-	const updateColor = (
-		color: string,
-		prefix: "primary" | "accent",
-		isPreview = false
-	) => {
-		const newColor = generateSemanticColor(color);
-		setAndApply({ [prefix]: newColor }, isPreview);
-	};
-
-	const updateFontSize = (fontSize: FontSizeToken, isPreview = false) => {
-		setAndApply({ fontSize }, isPreview);
-	};
-
-	const updateFontFamily = (
-		name: FontFamilyName,
-		fontFamily: string,
-		isPreview = false
-	) => {
-		setAndApply({ [name]: fontFamily }, isPreview);
-	};
-
-	const updateMode = (mode: ThemeMode, preview = false) => {
-		const next = { ...previewTheme, mode } as ThemePreferences
-		setAndApply(next, preview)
-	};
-
-	const updateTheme = (data?: Partial<ThemePreferences>) => {
-		if (!hasHydrated) return;
-		const merged = { ...previewTheme, ...data }
-		const updates = getUpdatedValues(preferences, merged);
-		if (!Object.keys(updates).length) return;
-
-		const updated = { ...preferences, ...updates } as ThemePreferences
-
-		setAndApply(updated, false)
-		if (isGlobal) {
-			setGlobalPreferences(updated)
-			applyThemeVars({ preferences: updated, element: targetRef.current as HTMLDivElement });
-		} else if (entityId) {
-			setPreferences(scope as EntityType, entityId, updates);
-		} else {
-			console.warn(`Missing entityId for scoped update [${scope}]`);
+	useEffect(() => {
+		if (hasHydrated) {
+			applyThemeStyles(preferences)
 		}
-	};
+	}, [applyThemeStyles, hasHydrated, preferences])
 
 	const resetTheme = () => {
 		if (isGlobal) {
 			resetGlobalPreferences();
 		} else if (entityId) {
 			resetScopedPreferences(scope as EntityType, entityId);
-		} else {
-			console.warn(`Missing entityId for scoped reset [${scope}]`);
 		}
 	};
 
-	const applyTheme = useCallback((data: ThemePreferencesFormValues) => {
-		const main = isGlobal ? document.body : targetRef.current;
-		const prefs = { ...previewTheme, ...data } as ThemePreferences;
-		if (main) applyThemeVars({ preferences: prefs, element: main });
-		if (previewRef.current)
-			applyThemeVars({ preferences: prefs, element: previewRef.current as HTMLElement });
-	}, [previewTheme, isGlobal]);
-
-	useEffect(() => {
-		if (hasHydrated) {
-			setPreviewTheme(preferences);
-		}
-	}, [preferences, hasHydrated]);
-
-	useEffect(() => {
-		if (!hasRendered.current && hasHydrated) {
-			hasRendered.current = true;
-			setPreviewTheme(preferences);
-			requestAnimationFrame(() => {
-				applyTheme(preferences as ThemePreferences);
-			});
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
-
-	useEffect(() => {
-		if (previewRef.current && hasRendered.current) {
-			applyThemeVars({ preferences: previewTheme as ThemePreferences, element: previewRef.current });
-		}
-	}, [previewTheme]);
-
 	const id = `${scope}-${entityId ?? "main"}`;
+
+	useApplyTheme(preferences, element)
+
+	if (!hasHydrated) return <Spinner />;
 
 	return (
 		<ThemeContext.Provider
 			value={{
-				previewRef,
 				targetRef,
 				isGlobal,
 				isInherited,
 				isScoped,
 				isCustom,
-				previewTheme: previewTheme as ThemePreferences,
 				prefs: scopedPrefs ?? hydratedGlobal,
-				updatePrimaryColor: (c, p) => updateColor(c, "primary", p),
-				updateAccentColor: (c, p) => updateColor(c, "accent", p),
+				updatePrimaryColor: (c) => updateColor(c, "primary"),
+				updateAccentColor: (c) => updateColor(c, "accent"),
 				updateFontSize,
 				updateFontFamily,
 				updateMode,
-				updateTheme,
-				updatePreviewTheme: (data: Partial<ThemePreferences>) => updatePreview(data),
 				resetTheme,
+				updateThemePreferences,
+				applyThemeStyles,
 				scope,
-				id
+				id,
+				element
 			}}
 		>
 			<div
 				ref={targetRef as RefObject<HTMLDivElement>}
 				data-id={id}
 				data-theme={preferences.mode}
-				className={cn("size-full text-[var(--foreground)] bg-[var(--background)]", className, preferences.mode)}
+				className={cn(
+					"size-full text-[var(--foreground)] bg-[var(--background)]",
+					className,
+					preferences.mode
+				)}
 				{...props}
 			>
 				{children}
 			</div>
 		</ThemeContext.Provider>
 	);
-};
-
-export const useTheme = (): ThemeContextType => {
-	const context = useContext(ThemeContext);
-	if (!context) throw new Error("useTheme must be used within a ThemeProvider");
-	return context;
 };

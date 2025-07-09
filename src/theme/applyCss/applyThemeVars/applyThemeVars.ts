@@ -1,8 +1,12 @@
-import type { ThemePreferences, ThemeMode } from "@/theme/types";
-import { applyVars } from "@/theme/applyCss/applyVars";
-import { generateColorVars } from "@/theme/generateCss/generateColorVars";
+import type {
+	ThemePreferences,
+	ThemeMode,
+	FontSizeToken,
+	SemanticColor,
+} from "@/theme/types";
 import { applyScopedFontVars, applyScopedModeVars } from "@/theme/applyCss";
-
+import { applyColorVars } from "@/theme/applyCss";
+import { DEFAULT } from "@/theme/defaults";
 /**
  * Applies all relevant theme variables to a given element.
  */
@@ -11,32 +15,56 @@ export function applyThemeVars({
 	element,
 	modeOverride,
 }: {
-	preferences: ThemePreferences;
+	preferences: Partial<ThemePreferences> | ThemePreferences;
 	element: HTMLElement;
 	modeOverride?: ThemeMode;
 }) {
-	const mode = modeOverride ?? preferences.mode;
+	const prefs = preferences;
+	if (!element) return;
+	const mode = modeOverride ?? preferences.mode ?? DEFAULT.MODE;
+	if (mode && prefs.mode) {
+		applyScopedModeVars(mode as ThemeMode, element);
+	}
 
-	applyScopedModeVars(mode, element);
+	if (prefs.primary) {
+		applyColorVars(
+			prefs.primary as SemanticColor,
+			mode as ThemeMode,
+			"primary",
+			element
+		);
+	}
 
-	applyVars(generateColorVars(preferences.primary, mode, "primary"), element);
-	applyVars(generateColorVars(preferences.accent, mode, "accent"), element);
+	if (prefs.accent) {
+		applyColorVars(
+			prefs.accent as SemanticColor,
+			mode as ThemeMode,
+			"accent",
+			element
+		);
+	}
 
-	applyScopedFontVars({
-		element,
-		postfix: "size",
-		size: preferences.fontSize,
-	});
+	if (prefs.fontSize) {
+		applyScopedFontVars({
+			element,
+			postfix: "size",
+			size: prefs.fontSize as FontSizeToken,
+		});
+	}
 
-	applyScopedFontVars({
-		element,
-		postfix: "body",
-		fontFamily: preferences.fontFamilyBody,
-	});
+	if (prefs.fontFamilyBody) {
+		applyScopedFontVars({
+			element,
+			postfix: "body",
+			fontFamily: prefs.fontFamilyBody,
+		});
+	}
 
-	applyScopedFontVars({
-		element,
-		postfix: "heading",
-		fontFamily: preferences.fontFamilyHeading,
-	});
+	if (prefs.fontFamilyHeading) {
+		applyScopedFontVars({
+			element,
+			postfix: "heading",
+			fontFamily: prefs.fontFamilyHeading,
+		});
+	}
 }

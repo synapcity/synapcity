@@ -1,40 +1,54 @@
 "use client";
 
-import { cn } from "@/utils";
+import { cn, getUpdatedValues } from "@/utils";
 import { RefObject, useEffect, useRef } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { ThemePreferencesFormValues } from "../schema";
 import { Button } from "@/components/atoms";
-import { useTheme } from "@/providers/ThemeProvider";
-import { isEqual } from "lodash";
-import { applyThemeVars, ThemePreferences } from "@/theme";
+import { applyThemeVars } from "@/theme";
+import { useTheme } from "@/providers";
+import { useLivePreviewTheme } from "@/hooks/useLivePreviewTheme";
 
 export function ThemePreview() {
   const { control } = useFormContext<ThemePreferencesFormValues>();
-  const liveValues = useWatch({ control }) as ThemePreferences;
-  const { previewRef, previewTheme, updatePreviewTheme } = useTheme();
-  const prevValuesRef = useRef<ThemePreferencesFormValues | null>(null);
+  const liveValues = useWatch({ control }) as ThemePreferencesFormValues;
+  const previewRef = useRef<HTMLDivElement | null>(null)
+  const { prefs } = useTheme()
+  const finalFormObject = useLivePreviewTheme()
+
 
   useEffect(() => {
-    if (!isEqual(prevValuesRef.current, liveValues)) {
-      updatePreviewTheme(liveValues);
-      prevValuesRef.current = liveValues;
-    }
-
     if (previewRef.current) {
+      console.log("[ThemePreview] first-finalFormObject", finalFormObject, "preview", previewRef.current)
       applyThemeVars({
-        preferences: liveValues,
-        element: previewRef.current,
+        preferences: finalFormObject,
+        element: previewRef.current as HTMLElement,
+        modeOverride: liveValues.mode
       });
     }
-  }, [liveValues, previewRef, previewTheme, updatePreviewTheme]);
+  }, [finalFormObject, previewRef, liveValues.mode]);
+
+  useEffect(() => {
+    console.log("[ThemePreview] second-finalFormObject", finalFormObject, "preview", previewRef.current)
+    const diffValues = getUpdatedValues(prefs, finalFormObject)
+    console.log("ThemePreview] second - diffValues", diffValues, "prefs", prefs, "finalForm", finalFormObject)
+    if (Object.values(diffValues).length > 0) {
+      console.log("[ThemePreview] inside", diffValues, "preview", previewRef.current)
+      applyThemeVars({
+        preferences: diffValues,
+        element: previewRef.current as HTMLElement,
+        modeOverride: liveValues.mode
+      })
+    }
+  }, [prefs, finalFormObject, liveValues.mode])
+
 
   return (
     <div
       ref={previewRef as RefObject<HTMLDivElement>}
       className={cn(
         "rounded-md border p-4 shadow-sm transition-all",
-        "text-[var(--foreground)] bg-[var(--background)]", liveValues.mode)}
+        "text-[var(--foreground)] bg-[var(--background)] ", liveValues.mode)}
       data-theme={liveValues.mode}
     >
       <div className="space-y-2">

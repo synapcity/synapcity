@@ -12,6 +12,10 @@ jest.mock("@/theme/applyCss/applyVars", () => ({
 	applyVars: jest.fn(),
 }));
 
+jest.mock("@/theme/applyCss/applyColorVars", () => ({
+	applyColorVars: jest.fn(),
+}));
+
 jest.mock("@/theme/generateCss/generateColorVars", () => ({
 	generateColorVars: jest.fn((color, mode, type) => ({
 		[`--${type}-color`]: `${color.base}-${mode}`,

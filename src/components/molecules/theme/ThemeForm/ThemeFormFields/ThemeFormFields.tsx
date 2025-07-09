@@ -22,8 +22,8 @@ export const ThemeFormFields = () => {
         label="Body Font"
       />
 
-      <ColorFieldPopover name="primary.base" label="Primary Base" />
-      <ColorFieldPopover name="accent.base" label="Accent Base" />
+      <ColorFieldPopover name="primary" label="Primary Base" />
+      <ColorFieldPopover name="accent" label="Accent Base" />
       {isScoped && <SwitchField name="useGlobalTheme" label="Use Global Theme" />}
     </div>
   )

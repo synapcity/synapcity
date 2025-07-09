@@ -13,7 +13,7 @@ jest.mock("../applyVars", () => ({
 	applyVars: jest.fn(),
 }));
 
-import { applyGlobalColorVars, applyScopedColorVars } from "./applyColorVars";
+import { applyColorVars } from "./applyColorVars";
 import { generateColorVars } from "@/theme/generateCss";
 import { applyVars } from "../applyVars";
 import type { SemanticColor } from "@/theme/types";
@@ -62,7 +62,7 @@ describe("applyGlobalColorVars", () => {
 	});
 
 	it("calls generateColorVars with correct arguments", () => {
-		applyGlobalColorVars(mockColor, "light", "primary");
+		applyColorVars(mockColor, "light", "primary", document.body);
 
 		expect(generateColorVars).toHaveBeenCalledWith(
 			mockColor,
@@ -79,7 +79,7 @@ describe("applyGlobalColorVars", () => {
 			"--foreground": mockColor.light.foreground,
 		};
 
-		applyGlobalColorVars(mockColor, "light", "primary");
+		applyColorVars(mockColor, "light", "primary", document.body);
 
 		expect(applyVars).toHaveBeenCalledWith(expected, document.body);
 	});
@@ -92,7 +92,7 @@ describe("applyGlobalColorVars", () => {
 			"--foreground": mockColor.dark.foreground,
 		};
 
-		applyGlobalColorVars(mockColor, "dark", "primary");
+		applyColorVars(mockColor, "dark", "primary", document.body);
 
 		expect(applyVars).toHaveBeenCalledWith(expected, document.body);
 	});
@@ -151,7 +151,7 @@ describe("applyScopedColorVars", () => {
 			"--foreground": mockColor.light.foreground,
 		};
 
-		applyScopedColorVars(mockColor, "light", "primary", mockElement);
+		applyColorVars(mockColor, "light", "primary", mockElement);
 
 		expect(generateColorVars).toHaveBeenCalledWith(
 			mockColor,

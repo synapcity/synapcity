@@ -9,7 +9,9 @@ interface SwatchPickerComponentProps {
 }
 
 const SwatchPickerComponent: React.FC<SwatchPickerComponentProps> = ({ value, onChange }) => {
+  console.log("SwatchPicker] value", value)
   const handleChange = (color: ColorResult) => {
+    console.log("[SwatchPicker].handleChange color", color, "hex", color.hex)
     onChange(color.hex);
   };
 

@@ -1,9 +1,7 @@
 "use client";
 
-import { useMemo } from "react";
-import { useTheme } from "@/providers/ThemeProvider";
 import { Controller, useFormContext, useWatch } from "react-hook-form";
-import { getContrastingColor, convertToHexColor } from "@/theme/utils";
+import { getContrastingColor } from "@/theme/utils";
 import dynamic from "next/dynamic";
 
 const SwatchPickerComponent = dynamic(() => import("@/components/molecules/theme/color/SwatchPickerComponent").then((mod) => mod.default))
@@ -13,17 +11,12 @@ const Label = dynamic(() => import("@/components/atoms/Label/Label").then((mod) 
 
 export const ColorField = ({ name, label }: { name: string; label: string }) => {
   const { control } = useFormContext();
-  const { updatePrimaryColor, updateAccentColor } = useTheme();
-  const updateColor = name === "primary.base" ? updatePrimaryColor : updateAccentColor
-
   const currentColor = useWatch({ control, name });
+  console.log("[ColorField] currentColor", currentColor)
+  console.log("[ColorField] name", name)
+  console.log("[ColorField] field value", control.getFieldState)
 
-  const displayColor = useMemo(() => convertToHexColor(currentColor), [currentColor]);
-
-  const handleChange = (newColor: string) => {
-    updateColor(newColor, true)
-  };
-
+  // const displayColor = useMemo(() => convertToHexColor(currentColor), [currentColor]);
 
   return (
     <Controller
@@ -36,16 +29,13 @@ export const ColorField = ({ name, label }: { name: string; label: string }) => 
             <Label
               className="size-full p-2"
               style={{
-                background: displayColor,
-                color: getContrastingColor(displayColor),
+                background: currentColor,
+                color: getContrastingColor(currentColor),
               }}
             >
               {label}
             </Label>
-            <SwatchPickerComponent value={displayColor} onChange={(color: string) => {
-              handleChange(color)
-              field.onChange(color)
-            }} />
+            <SwatchPickerComponent value={currentColor} onChange={field.onChange} />
           </div>
         );
       }}

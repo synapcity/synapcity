@@ -6,7 +6,7 @@ import { themePreferencesSchema, ThemePreferencesFormValues } from "../schema";
 import { cn } from "@/utils";
 import { resolveThemeMetadata } from "@/theme/utils/resolveThemeMetadata";
 import { useThemeStore } from "@/stores";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useTheme } from "@/providers/ThemeProvider";
 import type { ThemeScope } from "@/theme/types";
 import dynamic from "next/dynamic";
@@ -39,15 +39,26 @@ export const ThemeForm = ({
   const globalPreferences = useThemeStore(theme => theme.globalPreferences)
   const { preferences: theme } = resolveThemeMetadata({ entityType: scope, entityId, scopedPreferences, globalPreferences })
   const { resetTheme, isCustom } = useTheme()
+  const formTheme = useMemo(() => {
+    return {
+      ...theme,
+      primary: theme.primary.base,
+      accent: theme.accent.base
+    }
+  }, [theme])
   const methods = useForm<ThemePreferencesFormValues>({
-    defaultValues: theme,
+    defaultValues: {
+      ...formTheme,
+      primary: theme.primary.base,
+      accent: theme.accent.base
+    },
     resolver: zodResolver(themePreferencesSchema),
   });
   const { reset } = methods;
 
   useEffect(() => {
-    reset(theme);
-  }, [theme, reset]);
+    reset(formTheme);
+  }, [formTheme, reset]);
 
   return (
     <FormProvider {...methods}>

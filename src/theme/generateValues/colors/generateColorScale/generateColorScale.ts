@@ -8,7 +8,7 @@ extend([mixPlugin, labPlugin]);
 
 export function generateColorScale(base: string): Record<ColorShade, string> {
 	if (!colord(base).isValid()) {
-		console.warn(`[generateColorScale] Invalid base color: ${base}`);
+		console.warn(`[generateColorScale] Invalid base color: ${base}`, base);
 		base = "#999999";
 	}
 	const tints = colord(base)

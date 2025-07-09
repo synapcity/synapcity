@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { themePreferencesSchema, ThemePreferencesFormValues } from "../../schema";
 import { resolveThemeMetadata } from "@/theme/utils/resolveThemeMetadata";
 import { useThemeStore } from "@/stores";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useTheme } from "@/providers/ThemeProvider";
 import type { ThemeScope } from "@/theme/types";
 import { cn } from "@/utils";
@@ -37,18 +37,28 @@ export const ThemePopoverForm = ({
     globalPreferences,
   });
 
+  const formTheme = useMemo(() => {
+    return {
+      ...theme,
+      primary: theme.primary.base,
+      accent: theme.accent.base
+    }
+  }, [theme])
+
   const { resetTheme, isCustom } = useTheme();
 
   const methods = useForm<ThemePreferencesFormValues>({
-    defaultValues: theme,
+    defaultValues: {
+      ...formTheme
+    },
     resolver: zodResolver(themePreferencesSchema),
   });
 
   const { reset } = methods;
 
   useEffect(() => {
-    reset(theme);
-  }, [theme, reset]);
+    reset({ ...formTheme });
+  }, [formTheme, reset]);
 
   return (
     <FormProvider {...methods}>

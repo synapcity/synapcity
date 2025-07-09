@@ -1,10 +1,9 @@
 import {
 	applyGlobalFontVars,
 	applyGlobalModeVars,
-	applyGlobalColorVars,
 	applyScopedFontVars,
 	applyScopedModeVars,
-	applyScopedColorVars,
+	applyColorVars,
 } from "@/theme/applyCss";
 import { useThemeStore } from "@/stores";
 import { getUpdatedValues } from "@/utils";
@@ -22,8 +21,8 @@ export function updateScopedTheme(
 
 	useThemeStore.getState().setPreferences(scope, id, updates);
 
-	applyScopedColorVars(updated.primary, updated.mode, "primary", element);
-	applyScopedColorVars(updated.accent, updated.mode, "accent", element);
+	applyColorVars(updated.primary, updated.mode, "primary", element);
+	applyColorVars(updated.accent, updated.mode, "accent", element);
 
 	applyScopedFontVars({ postfix: "size", size: updated.fontSize, element });
 	applyScopedFontVars({
@@ -53,8 +52,8 @@ export function updateGlobalTheme(
 
 	store.setGlobalPreferences(updated);
 
-	applyGlobalColorVars(updated.primary, updated.mode, "primary");
-	applyGlobalColorVars(updated.accent, updated.mode, "accent");
+	applyColorVars(updated.primary, updated.mode, "primary", document.body);
+	applyColorVars(updated.accent, updated.mode, "accent", document.body);
 
 	applyGlobalFontVars({ postfix: "size", size: updated.fontSize });
 	applyGlobalFontVars({

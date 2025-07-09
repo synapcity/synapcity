@@ -2,8 +2,10 @@
 "use client"
 
 import { useTheme } from "@/providers/ThemeProvider"
+import { convertFormToPrefs } from "@/theme"
 import type { ThemeScope } from "@/theme/types"
 import dynamic from "next/dynamic"
+import { ThemePreferencesFormValues } from "../schema"
 
 const IconButtonSkeleton = dynamic(() => import("@/components/loading/buttons/IconButtonSkeleton").then((mod) => mod.IconButtonSkeleton), {
   ssr: true
@@ -20,9 +22,13 @@ const IconButton = dynamic(() => import("@/components/atoms/buttons/IconButton/I
 })
 
 export const ThemeSheet = ({ entityId, scope }: { entityId?: string; scope: ThemeScope; }) => {
-  const { updateTheme } = useTheme()
-  const handleSubmit = (data: any) => {
-    updateTheme(data)
+  const { updateThemePreferences, applyThemeStyles } = useTheme()
+  const handleSubmit = (data: ThemePreferencesFormValues) => {
+    console.log("[ThemeSheet] handleSubmit", data)
+    const finalData = convertFormToPrefs(data)
+    console.log("[ThemeSheet] finalData", finalData)
+    updateThemePreferences(finalData)
+    applyThemeStyles(finalData)
   }
   return (
     <Drawer

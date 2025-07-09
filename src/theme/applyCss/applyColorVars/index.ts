@@ -1,1 +1,1 @@
-export { applyGlobalColorVars, applyScopedColorVars } from "./applyColorVars";
+export { applyColorVars } from "./applyColorVars";

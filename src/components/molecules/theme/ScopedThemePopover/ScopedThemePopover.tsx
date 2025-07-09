@@ -3,6 +3,8 @@
 import dynamic from "next/dynamic";
 import type { ThemeScope } from "@/theme/types";
 import { useTheme } from "@/providers/ThemeProvider";
+import { convertFormToPrefs } from "@/theme";
+import { ThemePreferencesFormValues } from "../schema";
 
 const IconButton = dynamic(() => import("@/components/atoms/buttons/IconButton/IconButton").then(mod => mod.IconButton));
 const PopoverWrapper = dynamic(() => import("@/components/molecules/PopoverWrapper/PopoverWrapper").then(mod => mod.PopoverWrapper));
@@ -18,12 +20,14 @@ export const ScopedThemePopover = ({
   scope: ThemeScope;
   entityId: string;
 }) => {
-  const { updateTheme, updatePreviewTheme } = useTheme();
+  const { updateThemePreferences, applyThemeStyles } = useTheme()
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleSubmit = (data: any) => {
-    updatePreviewTheme(data);
-    updateTheme();
+  const handleSubmit = (data: ThemePreferencesFormValues) => {
+    console.log("[ScopedForm] submit", data)
+    const finalData = convertFormToPrefs(data)
+    console.log("[ScopedForm] finalForm", finalData)
+    updateThemePreferences(finalData)
+    applyThemeStyles(finalData)
   };
 
   return (
@@ -42,7 +46,7 @@ export const ScopedThemePopover = ({
       }
       content={
         <div className="w-[320px] h-128 max-h-[calc(100vh-12rem)] overflow-hidden p-2 flex flex-col">
-          <ThemeForm scope={scope} entityId={entityId} onSubmit={handleSubmit} />
+          <ThemeForm scope={scope} entityId={entityId} onSubmit={(data: ThemePreferencesFormValues) => handleSubmit(data)} />
         </div>
       }
     />

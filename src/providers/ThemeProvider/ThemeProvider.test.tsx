@@ -6,7 +6,8 @@ global.requestAnimationFrame = (cb) => {
 
 import React, { RefObject } from "react";
 import { act, render, screen } from "@testing-library/react";
-import { ThemeProvider, useTheme } from "./ThemeProvider";
+import { ThemeProvider } from "./ThemeProvider";
+import { useTheme } from "./useTheme"
 import { resolveThemeMetadata } from "@/theme/utils/resolveThemeMetadata";
 import { DEFAULT } from "@/theme";
 import type { FontSizeToken, ThemePreferences } from "@/theme/types";
