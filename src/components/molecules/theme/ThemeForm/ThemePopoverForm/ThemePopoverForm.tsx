@@ -54,15 +54,12 @@ export const ThemePopoverForm = ({
     <FormProvider {...methods}>
       <form
         onSubmit={methods.handleSubmit(onSubmit)}
-        className={cn("space-y-6", className)}
+        className={cn("space-y-6 flex-1 flex flex-col", className)}
       >
         <ThemeFormTabs />
 
         <div
-          className={cn("w-full flex items-center", {
-            "justify-between": isCustom,
-            "justify-end": !isCustom,
-          })}
+          className={cn("w-full flex items-end justify-between")}
         >
           {isCustom && <IconButton icon="RotateCcw" onClick={() => resetTheme()} />}
           <Button type="submit">Submit</Button>
