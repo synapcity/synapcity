@@ -1,7 +1,7 @@
 "use client";
 import { DarkModeField } from "@/components/molecules/theme/ThemeForm/ThemeFormFields/DarkMode";
 import { SwitchField, FontSizeField } from "@/components/molecules/theme"
-import { useTheme } from "@/providers";
+import { useTheme } from "@/providers/ThemeProvider";
 
 export function GeneralTab() {
   const { isScoped } = useTheme();

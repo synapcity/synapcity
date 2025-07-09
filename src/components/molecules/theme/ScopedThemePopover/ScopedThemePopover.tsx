@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import type { ThemeScope } from "@/theme/types";
-import { useTheme } from "@/providers";
+import { useTheme } from "@/providers/ThemeProvider";
 
 const IconButton = dynamic(() => import("@/components/atoms/buttons/IconButton/IconButton").then(mod => mod.IconButton));
 const PopoverWrapper = dynamic(() => import("@/components/molecules/PopoverWrapper/PopoverWrapper").then(mod => mod.PopoverWrapper));

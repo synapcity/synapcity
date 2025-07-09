@@ -1,4 +1,4 @@
-import { ThemeProvider } from "@/providers";
+import { ThemeProvider } from "@/providers/ThemeProvider";
 
 export default function TestWidgetLayout({ children }: { children: React.ReactNode }) {
   return (

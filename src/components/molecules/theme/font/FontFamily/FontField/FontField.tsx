@@ -3,7 +3,7 @@
 import { Controller, useFormContext } from "react-hook-form";
 import { FontFamilyCombobox } from "../FontFamilyComboBox";
 import { Label } from "@/components";
-import { useTheme } from "@/providers";
+import { useTheme } from "@/providers/ThemeProvider";
 import { FontFamilyName } from "@/theme";
 
 export const FontField = ({ name, label }: { name: FontFamilyName; label: string; }) => {

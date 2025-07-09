@@ -2,7 +2,7 @@
 
 import { Controller, useFormContext } from "react-hook-form";
 import { DarkModeRadioGroup } from "./DarkModeRadioGroup";
-import { useTheme } from "@/providers";
+import { useTheme } from "@/providers/ThemeProvider";
 import { ThemeMode } from "@/theme";
 
 export const DarkModeField = () => {

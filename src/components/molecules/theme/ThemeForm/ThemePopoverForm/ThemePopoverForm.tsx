@@ -6,7 +6,7 @@ import { themePreferencesSchema, ThemePreferencesFormValues } from "../../schema
 import { resolveThemeMetadata } from "@/theme/utils/resolveThemeMetadata";
 import { useThemeStore } from "@/stores";
 import { useEffect } from "react";
-import { useTheme } from "@/providers";
+import { useTheme } from "@/providers/ThemeProvider";
 import type { ThemeScope } from "@/theme/types";
 import { cn } from "@/utils";
 import dynamic from "next/dynamic";
