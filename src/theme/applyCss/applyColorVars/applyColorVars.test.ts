@@ -39,8 +39,8 @@ describe("applyGlobalColorVars", () => {
 			},
 		},
 		dark: {
-			background: "#000",
-			foreground: "#fff",
+			background: "#111",
+			foreground: "#eee",
 			scale: {
 				"50": "#0a0a0a",
 				"100": "#171717",
@@ -63,6 +63,7 @@ describe("applyGlobalColorVars", () => {
 
 	it("calls generateColorVars with correct arguments", () => {
 		applyGlobalColorVars(mockColor, "light", "primary");
+
 		expect(generateColorVars).toHaveBeenCalledWith(
 			mockColor,
 			"light",
@@ -70,14 +71,29 @@ describe("applyGlobalColorVars", () => {
 		);
 	});
 
-	it("calls applyVars with merged vars and document.body", () => {
+	it("calls applyVars with merged vars and document.body (light)", () => {
 		const expected = {
 			"--primary-50": "#fafafa",
 			"--primary-100": "#f5f5f5",
-			"--foreground": "#0a0a0a",
-			"--background": "#fafafa",
+			"--background": mockColor.light.background,
+			"--foreground": mockColor.light.foreground,
 		};
+
 		applyGlobalColorVars(mockColor, "light", "primary");
+
+		expect(applyVars).toHaveBeenCalledWith(expected, document.body);
+	});
+
+	it("calls applyVars with merged vars and document.body (dark)", () => {
+		const expected = {
+			"--primary-50": "#fafafa",
+			"--primary-100": "#f5f5f5",
+			"--background": mockColor.dark.background,
+			"--foreground": mockColor.dark.foreground,
+		};
+
+		applyGlobalColorVars(mockColor, "dark", "primary");
+
 		expect(applyVars).toHaveBeenCalledWith(expected, document.body);
 	});
 });
@@ -89,7 +105,8 @@ describe("applyScopedColorVars", () => {
 
 	it("calls generateColorVars and applyVars with correct arguments", () => {
 		const mockElement = document.createElement("div");
-		const color: SemanticColor = {
+
+		const mockColor: SemanticColor = {
 			base: "#ff0000",
 			light: {
 				background: "#fff",
@@ -126,8 +143,21 @@ describe("applyScopedColorVars", () => {
 				},
 			},
 		};
-		applyScopedColorVars(color, "light", "primary", mockElement);
 
-		expect(generateColorVars).toHaveBeenCalledWith(color, "light", "primary");
+		const expected = {
+			"--primary-50": "#fafafa",
+			"--primary-100": "#f5f5f5",
+			"--background": mockColor.light.background,
+			"--foreground": mockColor.light.foreground,
+		};
+
+		applyScopedColorVars(mockColor, "light", "primary", mockElement);
+
+		expect(generateColorVars).toHaveBeenCalledWith(
+			mockColor,
+			"light",
+			"primary"
+		);
+		expect(applyVars).toHaveBeenCalledWith(expected, mockElement);
 	});
 });

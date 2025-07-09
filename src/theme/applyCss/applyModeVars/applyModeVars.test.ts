@@ -11,6 +11,12 @@ describe("applyGlobalModeVars", () => {
 });
 
 describe("applyScopedModeVars", () => {
+	it("does nothing if the element is null", () => {
+		expect(() =>
+			applyScopedModeVars("light", null as unknown as HTMLElement)
+		).not.toThrow();
+	});
+
 	it("adds the mode class to the given element", () => {
 		const el = document.createElement("div");
 		el.classList.add("dark");

@@ -9,6 +9,7 @@ import {
 import { useThemeStore } from "@/stores";
 import { getUpdatedValues } from "@/utils";
 import type { EntityType, ThemePreferences } from "@/theme/types";
+import { DEFAULT } from "@/theme/defaults";
 
 export function updateScopedTheme(
 	scope: EntityType,
@@ -40,13 +41,17 @@ export function updateScopedTheme(
 }
 
 export function updateGlobalTheme(
-	preferences: ThemePreferences,
-	updates: Partial<ThemePreferences>
+	updates: Partial<ThemePreferences>,
+	overrideAll = false
 ) {
-	const updatedValues = getUpdatedValues(preferences, updates);
-	const updated = { ...preferences, ...updatedValues };
+	const store = useThemeStore.getState();
+	const current = store.globalPreferences;
 
-	useThemeStore.getState().setGlobalPreferences(updatedValues);
+	const updated = overrideAll
+		? { ...DEFAULT.THEME, ...updates }
+		: { ...current, ...getUpdatedValues(current, updates) };
+
+	store.setGlobalPreferences(updated);
 
 	applyGlobalColorVars(updated.primary, updated.mode, "primary");
 	applyGlobalColorVars(updated.accent, updated.mode, "accent");

@@ -1,1 +1,1 @@
-export { resetGlobalTheme, resetScopedTheme } from "./resetTheme";
+export { resetTheme } from "./resetTheme";

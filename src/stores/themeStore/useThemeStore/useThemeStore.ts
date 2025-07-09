@@ -3,7 +3,7 @@ import { persist } from "zustand/middleware";
 import { getDefaultTheme } from "@/theme/utils";
 import { DEFAULT } from "@/theme/defaults";
 import type { ThemePreferences, ThemeScope, EntityType } from "@/theme/types";
-import { migrateThemeStore } from "./migrate";
+import { migrateThemeStore } from "../migrate";
 import {
 	resolveThemeMetadata,
 	type ThemeMetadataInfo,
@@ -97,6 +97,7 @@ export const themeStoreInitializer: StateCreator<ScopedThemeState> = (
 	},
 
 	setGlobalPreferences: (updates) => {
+		console.log("updates", updates);
 		set((state) => {
 			const prev = state.globalPreferences ?? { ...DEFAULT.THEME };
 			return {

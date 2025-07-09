@@ -8,6 +8,7 @@ export function applyGlobalModeVars(mode: ThemeMode) {
 }
 
 export function applyScopedModeVars(mode: ThemeMode, el: HTMLElement) {
+	if (!el) return;
 	el.classList.remove("light", "dark");
 	el.classList.add(mode);
 	el.dataset.theme = mode;

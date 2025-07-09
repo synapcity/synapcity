@@ -18,8 +18,8 @@ export interface ThemeContextType {
   prefs: ThemePreferences
   resetTheme: () => void;
   isCustom: boolean;
-  updateTheme: () => void;
-  updatePreviewTheme: (data: ThemePreferences) => void;
+  updateTheme: (data?: Partial<ThemePreferences>) => void;
+  updatePreviewTheme: (data: Partial<ThemePreferences>) => void;
   scope: ThemeScope;
   id: string;
 }

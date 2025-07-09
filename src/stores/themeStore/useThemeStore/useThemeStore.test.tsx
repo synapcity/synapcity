@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createStore, StoreApi } from "zustand";
 import { ScopedThemeState, themeStoreInitializer } from "@/stores/themeStore";
 import { DEFAULT } from "@/theme/defaults";
@@ -102,7 +103,6 @@ describe('themeStore', () => {
 	});
 
 	it("uses fallback when globalPreferences is undefined", () => {
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		testStore.setState({ ...testStore.getState(), globalPreferences: undefined as any });
 		testStore.getState().setGlobalPreferences({ fontSize: "xl" });
 
@@ -126,7 +126,6 @@ describe('themeStore', () => {
 					...state.scopedPreferences.note,
 					["fallback-test"]: {
 						...state.scopedPreferences.note["fallback-test"],
-						// eslint-disable-next-line @typescript-eslint/no-explicit-any
 						mode: undefined as any,
 					},
 				},
@@ -152,5 +151,50 @@ describe('themeStore', () => {
 		).toBe("light");
 	});
 
+	it("removes inheritsFromGlobalTheme when previously true and not explicitly updated", () => {
+		testStore.getState().initScopedPreferences("note", "remove-inherit");
 
+		testStore.getState().setPreferences("note", "remove-inherit", {
+			inheritsFromGlobalTheme: true,
+		});
+
+		testStore.getState().setPreferences("note", "remove-inherit", {
+			fontSize: "xl",
+		});
+
+		expect(
+			testStore.getState().scopedPreferences.note["remove-inherit"]
+				.inheritsFromGlobalTheme
+		).toBe(false);
+	});
+
+	it("does not override inheritsFromGlobalTheme when already false", () => {
+		testStore.getState().initScopedPreferences("note", "keep-false");
+
+		testStore.getState().setPreferences("note", "keep-false", {
+			inheritsFromGlobalTheme: false,
+		});
+
+		testStore.getState().setPreferences("note", "keep-false", {
+			fontSize: "xl",
+		});
+
+		expect(
+			testStore.getState().scopedPreferences.note["keep-false"]
+				.inheritsFromGlobalTheme
+		).toBe(false);
+	});
+
+	it("uses getDefaultTheme fallback when scoped preference does not exist", () => {
+		const noteId = "missing-note";
+
+		expect(testStore.getState().scopedPreferences.note[noteId]).toBeUndefined();
+
+		testStore.getState().setPreferences("note", noteId, { fontSize: "sm" });
+
+		const result = testStore.getState().scopedPreferences.note[noteId];
+
+		expect(result.fontSize).toBe("sm");
+		expect(result.mode).toBe(DEFAULT.MODE);
+	});
 });

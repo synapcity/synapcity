@@ -13,7 +13,7 @@ import {
 	applyThemeVars,
 	generateSemanticColor,
 } from "@/theme";
-import { useThemeStore } from "@/stores/themeStore/useThemeStore";
+import { useThemeStore } from "@/stores/themeStore/useThemeStore/useThemeStore";
 import { ThemeContext, ThemeContextType } from "./theme-context";
 import { cn, getUpdatedValues } from "@/utils";
 import isEqual from "lodash.isequal";
@@ -54,13 +54,10 @@ export const ThemeProvider = ({
 	const hasHydrated = useThemeStore((s) => s.hasHydrated);
 	const hydratedScoped = useThemeStore((s) => s.scopedPreferences);
 	const hydratedGlobal = useThemeStore((s) => s.globalPreferences);
-
-	const {
-		setGlobalPreferences,
-		setPreferences,
-		resetGlobalPreferences,
-		resetScopedPreferences,
-	} = useThemeStore();
+	const setGlobalPreferences = useThemeStore((s) => s.setGlobalPreferences);
+	const setPreferences = useThemeStore((s) => s.setPreferences);
+	const resetGlobalPreferences = useThemeStore((s) => s.resetGlobalPreferences)
+	const resetScopedPreferences = useThemeStore((s) => s.resetScopedPreferences)
 
 	const {
 		preferences,
@@ -104,9 +101,9 @@ export const ThemeProvider = ({
 	}, [previewTheme])
 
 	const setAndApply = useCallback((data: Partial<ThemePreferences>, isPreview = false) => {
-		const element = (isPreview ? previewRef.current : targetRef.current)!;
+		const element = (isPreview ? previewRef.current : isGlobal ? document.body : targetRef.current)!;
 		setAndApplyPreview(data, element);
-	}, [setAndApplyPreview])
+	}, [isGlobal, setAndApplyPreview])
 
 	const updateColor = (
 		color: string,
@@ -130,32 +127,24 @@ export const ThemeProvider = ({
 	};
 
 	const updateMode = (mode: ThemeMode, preview = false) => {
-		const element = preview
-			? previewRef.current
-			: isGlobal
-				? document.body
-				: targetRef.current;
-
 		const next = { ...previewTheme, mode } as ThemePreferences
-		setAndApply({ mode }, preview)
-		if (element) {
-			applyThemeVars({ preferences: next, element });
-		}
+		setAndApply(next, preview)
 	};
 
-	const updateTheme = () => {
-		const updates = getUpdatedValues(preferences, previewTheme);
+	const updateTheme = (data?: Partial<ThemePreferences>) => {
+		if (!hasHydrated) return;
+		const merged = { ...previewTheme, ...data }
+		const updates = getUpdatedValues(preferences, merged);
 		if (!Object.keys(updates).length) return;
 
 		const updated = { ...preferences, ...updates } as ThemePreferences
 
-		setAndApply(updated)
+		setAndApply(updated, false)
 		if (isGlobal) {
 			setGlobalPreferences(updated)
 			applyThemeVars({ preferences: updated, element: targetRef.current as HTMLDivElement });
 		} else if (entityId) {
 			setPreferences(scope as EntityType, entityId, updates);
-			applyThemeVars({ preferences: updated, element: targetRef.current! });
 		} else {
 			console.warn(`Missing entityId for scoped update [${scope}]`);
 		}
@@ -186,12 +175,15 @@ export const ThemeProvider = ({
 	}, [preferences, hasHydrated]);
 
 	useEffect(() => {
-		if (hasHydrated && !hasRendered.current) {
-			setPreviewTheme(preferences)
-			applyTheme(preferences as ThemePreferences)
+		if (!hasRendered.current && hasHydrated) {
 			hasRendered.current = true;
+			setPreviewTheme(preferences);
+			requestAnimationFrame(() => {
+				applyTheme(preferences as ThemePreferences);
+			});
 		}
-	}, [setAndApply, hasHydrated, preferences, applyTheme]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	useEffect(() => {
 		if (previewRef.current && hasRendered.current) {
@@ -218,7 +210,7 @@ export const ThemeProvider = ({
 				updateFontFamily,
 				updateMode,
 				updateTheme,
-				updatePreviewTheme: (data: ThemePreferences) => updatePreview(data as ThemePreferences),
+				updatePreviewTheme: (data: Partial<ThemePreferences>) => updatePreview(data),
 				resetTheme,
 				scope,
 				id

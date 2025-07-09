@@ -14,4 +14,13 @@ describe("applyVars", () => {
     expect(element.style.getPropertyValue("--test-color")).toBe("#123456");
     expect(element.style.getPropertyValue("--test-bg")).toBe("#ffffff");
   });
+
+  it("does nothing if the element is null", () => {
+    const vars = {
+      "--should-not-apply": "#000000",
+    };
+
+    expect(() => applyVars(vars, null as unknown as HTMLElement)).not.toThrow();
+  });
+
 });

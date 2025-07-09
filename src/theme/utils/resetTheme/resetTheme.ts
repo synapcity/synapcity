@@ -1,19 +1,34 @@
 import { useThemeStore } from "@/stores";
-import { DEFAULT } from "@/theme/defaults";
 import { getDefaultTheme } from "../getDefaultTheme";
 import { updateGlobalTheme, updateScopedTheme } from "../updateTheme";
 import type { EntityType } from "@/theme/types/entity";
 
-export function resetGlobalTheme() {
-	updateGlobalTheme(DEFAULT.THEME, {});
-}
+type ResetThemeOptions =
+	| { scope?: undefined; id?: undefined; element?: undefined }
+	| { scope: EntityType; id: string; element: HTMLElement };
 
-export function resetScopedTheme(
-	scope: EntityType,
-	id: string,
-	element: HTMLElement
-) {
-	const mode = useThemeStore.getState().globalPreferences.mode;
+/**
+ * Resets theme to default.
+ * - Global if no `scope/id` provided.
+ * - Scoped if `scope`, `id`, and `element` are provided.
+ */
+export function resetTheme(options: ResetThemeOptions = {}) {
+	const store = useThemeStore.getState();
+	const mode = store.globalPreferences.mode;
+
 	const defaultTheme = getDefaultTheme(mode);
-	updateScopedTheme(scope, id, defaultTheme, {}, element);
+
+	if (options.scope && options.id && options.element) {
+		const current =
+			store.getPreferences(options.scope, options.id)?.preferences ?? {};
+		updateScopedTheme(
+			options.scope,
+			options.id,
+			current,
+			defaultTheme,
+			options.element
+		);
+	} else {
+		updateGlobalTheme(defaultTheme, true);
+	}
 }

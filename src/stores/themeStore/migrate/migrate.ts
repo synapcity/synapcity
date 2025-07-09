@@ -1,4 +1,4 @@
-import type { ScopedThemeState } from "./useThemeStore";
+import type { ScopedThemeState } from "../useThemeStore/useThemeStore";
 
 export const migrateThemeStore = (
 	persistedState: unknown,
