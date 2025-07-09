@@ -20,7 +20,13 @@ export function useDebouncedSearch<T>(
   );
 
   useEffect(() => {
-    if (query.trim()) debounced(query);
+    if (query.trim()) {
+      debounced(query);
+    } else {
+      debounced.cancel();
+      setResults([]);
+    }
+
     return () => debounced.cancel();
   }, [query, debounced]);
 

@@ -97,7 +97,6 @@ export const themeStoreInitializer: StateCreator<ScopedThemeState> = (
 	},
 
 	setGlobalPreferences: (updates) => {
-		console.log("updates", updates);
 		set((state) => {
 			const prev = state.globalPreferences ?? { ...DEFAULT.THEME };
 			return {

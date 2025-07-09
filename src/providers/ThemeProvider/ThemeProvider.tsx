@@ -82,7 +82,7 @@ export const ThemeProvider = ({
 
 	const scopedPrefs = entityId ? hydratedScoped?.[scope as EntityType]?.[entityId] : null;
 
-	const [previewTheme, setPreviewTheme] = useState({});
+	const [previewTheme, setPreviewTheme] = useState<ThemePreferences>({} as ThemePreferences);
 
 	const previewRef = useRef<HTMLElement | null>(null);
 	const targetRef = useRef<HTMLElement | null>(null);
@@ -162,10 +162,10 @@ export const ThemeProvider = ({
 
 	const applyTheme = useCallback((data: ThemePreferencesFormValues) => {
 		const main = isGlobal ? document.body : targetRef.current;
-		const prefs = { ...previewTheme, ...data } as ThemePreferences
+		const prefs = { ...previewTheme, ...data } as ThemePreferences;
 		if (main) applyThemeVars({ preferences: prefs, element: main });
 		if (previewRef.current)
-			applyThemeVars({ preferences: prefs, element: targetRef.current as HTMLElement });
+			applyThemeVars({ preferences: prefs, element: previewRef.current as HTMLElement });
 	}, [previewTheme, isGlobal]);
 
 	useEffect(() => {
