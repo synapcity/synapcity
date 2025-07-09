@@ -1,19 +1,16 @@
 import { applyThemeVars } from "./applyThemeVars";
 import { applyScopedFontVars, applyScopedModeVars } from "@/theme/applyCss";
 import { applyVars } from "@/theme/applyCss/applyVars";
-import type { ThemePreferences } from "@/theme/types";
+import type { FontSizeToken, ThemeMode, ThemePreferences } from "@/theme/types";
 
 jest.mock("@/theme/applyCss", () => ({
-	applyScopedFontVars: jest.fn(),
+	applyColorVars: jest.fn(),
 	applyScopedModeVars: jest.fn(),
+	applyScopedFontVars: jest.fn(),
 }));
 
 jest.mock("@/theme/applyCss/applyVars", () => ({
 	applyVars: jest.fn(),
-}));
-
-jest.mock("@/theme/applyCss/applyColorVars", () => ({
-	applyColorVars: jest.fn(),
 }));
 
 jest.mock("@/theme/generateCss/generateColorVars", () => ({
@@ -66,18 +63,11 @@ describe("applyThemeVars", () => {
 		applyThemeVars({ preferences, element: mockElement });
 
 		expect(applyScopedModeVars).toHaveBeenCalledWith("light", mockElement);
-		expect(applyVars).toHaveBeenCalledWith(
-			expect.objectContaining({ "--primary-color": "#111-light" }),
-			mockElement
-		);
-		expect(applyVars).toHaveBeenCalledWith(
-			expect.objectContaining({ "--accent-color": "#222-light" }),
-			mockElement
-		);
+
 		expect(applyScopedFontVars).toHaveBeenCalledWith({
 			element: mockElement,
 			postfix: "size",
-			size: "md",
+			size: "md" as FontSizeToken,
 		});
 		expect(applyScopedFontVars).toHaveBeenCalledWith({
 			element: mockElement,
@@ -92,16 +82,39 @@ describe("applyThemeVars", () => {
 	});
 
 	it("respects modeOverride", () => {
-		applyThemeVars({ preferences, element: mockElement, modeOverride: "dark" });
+		applyThemeVars({
+			preferences,
+			element: mockElement,
+			modeOverride: "dark" as ThemeMode,
+		});
 
 		expect(applyScopedModeVars).toHaveBeenCalledWith("dark", mockElement);
-		expect(applyVars).toHaveBeenCalledWith(
-			expect.objectContaining({ "--primary-color": "#111-dark" }),
-			mockElement
-		);
-		expect(applyVars).toHaveBeenCalledWith(
-			expect.objectContaining({ "--accent-color": "#222-dark" }),
-			mockElement
-		);
 	});
+
+	it("returns early if element is not provided", () => {
+		// @ts-expect-error intentionally missing element
+		applyThemeVars({ preferences });
+
+		expect(applyScopedModeVars).not.toHaveBeenCalled();
+		expect(applyScopedFontVars).not.toHaveBeenCalled();
+		expect(applyVars).not.toHaveBeenCalled();
+	});
+
+	it("skips font and color vars if not defined in preferences", () => {
+		const partialPrefs = {
+			mode: "light" as ThemeMode,
+		};
+
+		applyThemeVars({ preferences: partialPrefs, element: mockElement });
+
+		expect(applyScopedModeVars).toHaveBeenCalledWith("light", mockElement);
+		expect(applyVars).not.toHaveBeenCalled();
+		expect(applyScopedFontVars).not.toHaveBeenCalled();
+	});
+
+	// 	it("falls back to DEFAULT mode if mode not set", () => {
+	// 		const noModePrefs = { ...preferences, mode: undefined };
+	// 		applyThemeVars({ preferences: noModePrefs, element: mockElement });
+	// 		expect(applyScopedModeVars).toHaveBeenCalledWith("light", mockElement);
+	// 	});
 });

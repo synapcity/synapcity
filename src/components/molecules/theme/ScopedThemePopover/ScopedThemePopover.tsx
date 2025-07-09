@@ -23,9 +23,7 @@ export const ScopedThemePopover = ({
   const { updateThemePreferences, applyThemeStyles } = useTheme()
 
   const handleSubmit = (data: ThemePreferencesFormValues) => {
-    console.log("[ScopedForm] submit", data)
     const finalData = convertFormToPrefs(data)
-    console.log("[ScopedForm] finalForm", finalData)
     updateThemePreferences(finalData)
     applyThemeStyles(finalData)
   };
@@ -35,6 +33,7 @@ export const ScopedThemePopover = ({
       side="bottom"
       align="end"
       sideOffset={8}
+      size="lg"
       trigger={
         <IconButton
           icon="Palette"

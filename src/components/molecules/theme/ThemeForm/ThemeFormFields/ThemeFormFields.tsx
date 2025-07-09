@@ -1,6 +1,6 @@
 "use client"
 
-import { ColorFieldPopover } from "../Fields/ColorField/ColorField"
+import { ColorField } from "../Fields/ColorField/ColorField"
 import { FontField } from "../../font/FontFamily/FontField/FontField"
 import { FontSizeField } from "../../font/FontSize/FontSizeField/FontSizeField"
 import { DarkModeField } from "./DarkMode/DarkModeField"
@@ -15,15 +15,17 @@ export const ThemeFormFields = () => {
       <FontSizeField />
       <FontField
         name="fontFamilyHeading"
-        label="Heading Font"
+        label="Heading"
+        className="text-background"
       />
       <FontField
         name="fontFamilyBody"
-        label="Body Font"
+        label="Body"
+        className="text-background"
       />
 
-      <ColorFieldPopover name="primary" label="Primary Base" />
-      <ColorFieldPopover name="accent" label="Accent Base" />
+      <ColorField name="primary" label="Primary" />
+      <ColorField name="accent" label="Accent" />
       {isScoped && <SwitchField name="useGlobalTheme" label="Use Global Theme" />}
     </div>
   )

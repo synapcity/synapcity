@@ -8,8 +8,9 @@ import { Button } from "@/components/atoms";
 import { applyThemeVars } from "@/theme";
 import { useTheme } from "@/providers";
 import { useLivePreviewTheme } from "@/hooks/useLivePreviewTheme";
+import React from "react";
 
-export function ThemePreview() {
+export const ThemePreview = React.memo(function ThemePreview() {
   const { control } = useFormContext<ThemePreferencesFormValues>();
   const liveValues = useWatch({ control }) as ThemePreferencesFormValues;
   const previewRef = useRef<HTMLDivElement | null>(null)
@@ -19,7 +20,6 @@ export function ThemePreview() {
 
   useEffect(() => {
     if (previewRef.current) {
-      console.log("[ThemePreview] first-finalFormObject", finalFormObject, "preview", previewRef.current)
       applyThemeVars({
         preferences: finalFormObject,
         element: previewRef.current as HTMLElement,
@@ -29,11 +29,8 @@ export function ThemePreview() {
   }, [finalFormObject, previewRef, liveValues.mode]);
 
   useEffect(() => {
-    console.log("[ThemePreview] second-finalFormObject", finalFormObject, "preview", previewRef.current)
     const diffValues = getUpdatedValues(prefs, finalFormObject)
-    console.log("ThemePreview] second - diffValues", diffValues, "prefs", prefs, "finalForm", finalFormObject)
     if (Object.values(diffValues).length > 0) {
-      console.log("[ThemePreview] inside", diffValues, "preview", previewRef.current)
       applyThemeVars({
         preferences: diffValues,
         element: previewRef.current as HTMLElement,
@@ -63,4 +60,4 @@ export function ThemePreview() {
       </div>
     </div>
   );
-}
+})

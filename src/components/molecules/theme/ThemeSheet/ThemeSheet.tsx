@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 
 import { useTheme } from "@/providers/ThemeProvider"
@@ -24,9 +23,7 @@ const IconButton = dynamic(() => import("@/components/atoms/buttons/IconButton/I
 export const ThemeSheet = ({ entityId, scope }: { entityId?: string; scope: ThemeScope; }) => {
   const { updateThemePreferences, applyThemeStyles } = useTheme()
   const handleSubmit = (data: ThemePreferencesFormValues) => {
-    console.log("[ThemeSheet] handleSubmit", data)
     const finalData = convertFormToPrefs(data)
-    console.log("[ThemeSheet] finalData", finalData)
     updateThemePreferences(finalData)
     applyThemeStyles(finalData)
   }

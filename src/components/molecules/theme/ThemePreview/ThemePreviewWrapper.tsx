@@ -1,27 +1,26 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { applyThemeVars } from "@/theme/applyCss/applyThemeVars";
-import { useTheme } from "@/providers/ThemeProvider";
 import type { ThemePreferencesFormValues } from "../schema";
 import { Button } from "@/components/atoms";
 import { cn } from "@/utils";
 import { ThemePreferences } from "@/theme";
 
 export function ThemePreview() {
-  const { previewRef } = useTheme();
   const { control } = useFormContext<ThemePreferencesFormValues>();
   const liveValues = useWatch({ control });
+  const previewRef = useRef<HTMLElement | null>(null)
 
   useEffect(() => {
     if (previewRef.current) {
       applyThemeVars({
-        preferences: liveValues as ThemePreferences,
+        preferences: liveValues as unknown as ThemePreferences,
         element: previewRef.current,
       });
     }
-  }, [liveValues, previewRef]);
+  }, [liveValues]);
 
   return (
     <div

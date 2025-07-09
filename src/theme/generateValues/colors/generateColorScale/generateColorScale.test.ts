@@ -23,7 +23,8 @@ describe("generateColorScale", () => {
 		const warnSpy = jest.spyOn(console, "warn").mockImplementation(() => {});
 		const scale = generateColorScale("$%^^$%#");
 		expect(warnSpy).toHaveBeenCalledWith(
-			"[generateColorScale] Invalid base color: $%^^$%#"
+			"[generateColorScale] Invalid base color: $%^^$%#",
+			"$%^^$%#"
 		);
 
 		expect(

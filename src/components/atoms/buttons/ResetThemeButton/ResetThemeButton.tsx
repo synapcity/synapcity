@@ -2,6 +2,7 @@
 
 import { resetTheme } from "@/theme/utils/resetTheme";
 import type { EntityType } from "@/theme/types/entity";
+import { Tooltip } from "../../Tooltip";
 
 type Props =
   | { scope?: undefined; id?: undefined; element?: undefined }
@@ -13,8 +14,10 @@ export function ResetThemeButton(props: Props) {
   };
 
   return (
-    <button onClick={handleClick} data-testid="reset-theme-button">
-      Reset Theme
-    </button>
+    <Tooltip content="Reset Theme to Defaults" asChild>
+      <button onClick={handleClick} data-testid="reset-theme-button" className="link">
+        Reset
+      </button>
+    </Tooltip>
   );
 }

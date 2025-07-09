@@ -11,7 +11,7 @@ import type { ThemeScope } from "@/theme/types";
 import { cn } from "@/utils";
 import dynamic from "next/dynamic";
 
-const IconButton = dynamic(() => import("@/components/atoms/buttons/IconButton/IconButton").then(mod => mod.IconButton));
+const ResetThemeButton = dynamic(() => import("@/components/atoms/buttons/ResetThemeButton/ResetThemeButton").then(mod => mod.ResetThemeButton));
 const Button = dynamic(() => import("@/components/atoms/buttons/Button/Button").then(mod => mod.Button));
 const ThemeFormTabs = dynamic(() => import("../ThemeFormTabs/ThemeFormTabs").then(mod => mod.ThemeFormTabs), {
   ssr: false,
@@ -45,7 +45,7 @@ export const ThemePopoverForm = ({
     }
   }, [theme])
 
-  const { resetTheme, isCustom } = useTheme();
+  const { isCustom } = useTheme();
 
   const methods = useForm<ThemePreferencesFormValues>({
     defaultValues: {
@@ -71,7 +71,7 @@ export const ThemePopoverForm = ({
         <div
           className={cn("w-full flex items-end justify-between")}
         >
-          {isCustom && <IconButton icon="RotateCcw" onClick={() => resetTheme()} />}
+          {isCustom && <ResetThemeButton />}
           <Button type="submit">Submit</Button>
         </div>
       </form>

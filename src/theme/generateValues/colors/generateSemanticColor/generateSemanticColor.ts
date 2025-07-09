@@ -5,16 +5,18 @@ import { reverseColorScale } from "../reverseColorScale";
 /**
  * Generates a full SemanticColor from a single base hex string.
  */
+const semanticCache = new Map<string, SemanticColor>();
+
 export function generateSemanticColor(
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	base: any
 ): SemanticColor {
-	console.log("[generateSemanticColor] scale", base);
+	const key = (base as string).toLowerCase();
+	if (semanticCache.has(key)) return semanticCache.get(key)!;
 
 	const scale = generateColorScale(base as string);
-	console.log("[generateSemanticColor] scale", scale);
 
-	return {
+	const result: SemanticColor = {
 		base,
 		light: {
 			background: scale["100"],
@@ -27,4 +29,6 @@ export function generateSemanticColor(
 			scale: reverseColorScale(scale),
 		},
 	};
+	semanticCache.set(key, result);
+	return result;
 }

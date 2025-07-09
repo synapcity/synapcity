@@ -1,161 +1,164 @@
-import { defaultPrimary, defaultAccent, DEFAULT } from "@/theme/defaults";
-
-jest.mock("@/theme/applyCss", () => ({
-	applyScopedColorVars: jest.fn(),
-	applyScopedFontVars: jest.fn(),
-	applyScopedModeVars: jest.fn(),
-	applyGlobalColorVars: jest.fn(),
-	applyGlobalFontVars: jest.fn(),
-	applyGlobalModeVars: jest.fn(),
-}));
-
+// Mocks
 const mockSetPreferences = jest.fn();
 const mockSetGlobalPreferences = jest.fn();
-const mockGetPreferences = jest.fn();
-const mockResetScopedPreferences = jest.fn();
 
 jest.mock("@/stores", () => ({
 	useThemeStore: {
 		getState: () => ({
-			setPreferences: mockSetPreferences,
-			setGlobalPreferences: mockSetGlobalPreferences,
-			getPreferences: mockGetPreferences,
-			resetScopedPreferences: mockResetScopedPreferences,
 			globalPreferences: {
-				primary: {
-					...defaultPrimary,
-				},
-				accent: {
-					...defaultAccent,
-				},
-				mode: "light",
-				fontSize: "sm",
+				...DEFAULT.THEME,
+				mode: "dark",
+				fontSize: "md",
 				fontFamilyBody: "Inter",
 				fontFamilyHeading: "Grotesk",
-				inheritsFromGlobalTheme: true,
-				language: "en",
+				primary: { name: "blue", color: "#0000ff" },
+				accent: { name: "pink", color: "#ff00ff" },
 			},
-			scopedPreferences: {
-				note: {
-					abc: {
-						inheritsFromGlobalTheme: false,
-					},
-				},
-			},
+			setPreferences: mockSetPreferences,
+			setGlobalPreferences: mockSetGlobalPreferences,
 		}),
 	},
 }));
 
-import { defaultFontValues } from "@/theme/defaults";
-import { updateScopedTheme, updateGlobalTheme } from "./updateTheme";
+jest.mock("@/theme/applyCss", () => ({
+	applyColorVars: jest.fn(),
+	applyGlobalFontVars: jest.fn(),
+	applyScopedFontVars: jest.fn(),
+	applyGlobalModeVars: jest.fn(),
+	applyScopedModeVars: jest.fn(),
+}));
+
+jest.mock("@/utils", () => ({
+	getUpdatedValues: jest.fn(() => ({
+		fontSize: "lg",
+		fontFamilyBody: "Roboto",
+	})),
+}));
+
 import {
-	applyScopedColorVars as mockScopedColor,
-	applyScopedFontVars as mockScopedFont,
-	applyScopedModeVars as mockScopedMode,
-	applyGlobalColorVars as mockGlobalColor,
-	applyGlobalFontVars as mockGlobalFont,
-	applyGlobalModeVars as mockGlobalMode,
+	updateGlobalTheme,
+	updateScopedTheme,
+} from "@/theme/utils/updateTheme";
+import { DEFAULT, defaultAccent, defaultPrimary } from "@/theme/defaults";
+import type { ThemePreferences } from "@/theme/types";
+import {
+	applyColorVars,
+	applyScopedFontVars,
+	applyScopedModeVars,
+	applyGlobalFontVars,
+	applyGlobalModeVars,
 } from "@/theme/applyCss";
-import { FontSizeToken, ThemeMode } from "@/theme/types";
 
-describe("updateGlobalTheme", () => {
-	it("sets and applies global theme updates", () => {
-		const updates = {
-			fontSize: "md" as FontSizeToken,
+describe("updateScopedTheme", () => {
+	beforeEach(() => jest.clearAllMocks());
+
+	it("updates scoped preferences and applies styles", () => {
+		const el = document.createElement("div");
+		const preferences: ThemePreferences = {
+			...DEFAULT.THEME,
+			mode: "light",
+			fontSize: "sm",
+			fontFamilyBody: "Inter",
+			fontFamilyHeading: "Grotesk",
+			primary: defaultPrimary,
+			accent: defaultAccent,
+			language: "en",
 		};
 
-		updateGlobalTheme(updates);
+		updateScopedTheme("note", "123", preferences, { fontSize: "lg" }, el);
 
-		expect(mockSetGlobalPreferences).toHaveBeenCalledWith(
-			expect.objectContaining({
-				fontSize: "md",
-			})
-		);
+		expect(mockSetPreferences).toHaveBeenCalledWith("note", "123", {
+			fontSize: "lg",
+		});
 
-		expect(mockGlobalColor).toHaveBeenCalledWith(
-			defaultPrimary,
+		expect(applyColorVars).toHaveBeenCalledWith(
+			preferences.primary,
 			"light",
-			"primary"
+			"primary",
+			el
 		);
-		expect(mockGlobalColor).toHaveBeenCalledWith(
-			defaultAccent,
+		expect(applyColorVars).toHaveBeenCalledWith(
+			preferences.accent,
 			"light",
-			"accent"
+			"accent",
+			el
 		);
 
-		expect(mockGlobalFont).toHaveBeenCalledWith({
+		expect(applyScopedFontVars).toHaveBeenCalledWith({
 			postfix: "size",
-			size: "md",
+			size: "lg",
+			element: el,
 		});
-		expect(mockGlobalFont).toHaveBeenCalledWith({
+
+		expect(applyScopedFontVars).toHaveBeenCalledWith({
 			postfix: "body",
-			fontFamily: defaultFontValues.fontFamilyBody,
+			fontFamily: "Inter",
+			element: el,
 		});
-		expect(mockGlobalFont).toHaveBeenCalledWith({
+
+		expect(applyScopedFontVars).toHaveBeenCalledWith({
 			postfix: "heading",
-			fontFamily: defaultFontValues.fontFamilyHeading,
+			fontFamily: "Grotesk",
+			element: el,
 		});
 
-		expect(mockGlobalMode).toHaveBeenCalledWith("light");
-	});
-	it("applies full theme when overrideAll is true", () => {
-		const updates = {
-			fontFamilyBody: "NewFont",
-			mode: "dark" as ThemeMode,
-		};
-
-		updateGlobalTheme(updates, true);
-
-		expect(mockSetGlobalPreferences).toHaveBeenCalledWith(
-			expect.objectContaining({
-				...DEFAULT.THEME,
-				...updates,
-			})
-		);
-
-		expect(mockGlobalColor).toHaveBeenCalledWith(
-			expect.anything(),
-			"dark",
-			"primary"
-		);
-
-		expect(mockGlobalFont).toHaveBeenCalledWith({
-			postfix: "body",
-			fontFamily: "NewFont",
-		});
-		expect(mockGlobalMode).toHaveBeenCalledWith("dark");
+		expect(applyScopedModeVars).toHaveBeenCalledWith("light", el);
 	});
 });
 
-describe("updateScopedTheme", () => {
-	beforeEach(() => {
-		jest.clearAllMocks();
+describe("updateGlobalTheme", () => {
+	beforeEach(() => jest.clearAllMocks());
 
-		mockGetPreferences.mockReturnValue({
-			preferences: {
-				primary: "p",
-				accent: "a",
-				mode: "light",
-				fontSize: "sm",
-				fontFamilyBody: "body",
-				fontFamilyHeading: "heading",
-				inheritsFromGlobalTheme: false,
-			},
+	it("updates global theme with diff and applies styles", () => {
+		updateGlobalTheme({ fontSize: "lg", fontFamilyBody: "Roboto" });
+
+		expect(mockSetGlobalPreferences).toHaveBeenCalledWith(
+			expect.objectContaining({
+				fontSize: "lg",
+				fontFamilyBody: "Roboto",
+			})
+		);
+
+		expect(applyColorVars).toHaveBeenCalledWith(
+			expect.anything(),
+			expect.anything(),
+			"primary",
+			document.body
+		);
+		expect(applyColorVars).toHaveBeenCalledWith(
+			expect.anything(),
+			expect.anything(),
+			"accent",
+			document.body
+		);
+
+		expect(applyGlobalFontVars).toHaveBeenCalledWith({
+			postfix: "size",
+			size: "lg",
 		});
+
+		expect(applyGlobalFontVars).toHaveBeenCalledWith({
+			postfix: "body",
+			fontFamily: "Roboto",
+		});
+
+		expect(applyGlobalFontVars).toHaveBeenCalledWith({
+			postfix: "heading",
+			fontFamily: expect.any(String),
+		});
+
+		expect(applyGlobalModeVars).toHaveBeenCalledWith(expect.any(String));
 	});
 
-	it("applies scoped theme updates", () => {
-		const el = document.createElement("div");
-		const preferences = mockGetPreferences().preferences;
+	it("overrides global theme with defaults if overrideAll = true", () => {
+		updateGlobalTheme({ fontSize: "xs" }, true);
 
-		updateScopedTheme("note", "abc", preferences, { fontSize: "sm" }, el);
-
-		expect(mockSetPreferences).toHaveBeenCalledWith("note", "abc", {
-			fontSize: "sm",
-		});
-
-		expect(mockScopedColor).toHaveBeenCalledTimes(2);
-		expect(mockScopedFont).toHaveBeenCalledTimes(3);
-		expect(mockScopedMode).toHaveBeenCalledWith("light", el);
+		expect(mockSetGlobalPreferences).toHaveBeenCalledWith(
+			expect.objectContaining({
+				fontSize: "xs",
+				primary: expect.any(Object),
+				mode: expect.any(String),
+			})
+		);
 	});
 });

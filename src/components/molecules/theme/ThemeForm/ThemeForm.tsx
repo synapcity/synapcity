@@ -10,6 +10,7 @@ import { useEffect, useMemo } from "react";
 import { useTheme } from "@/providers/ThemeProvider";
 import type { ThemeScope } from "@/theme/types";
 import dynamic from "next/dynamic";
+import { ResetThemeButton } from "@/components/atoms/buttons/ResetThemeButton";
 
 const ThemeFormFields = dynamic(() => import("@/components/molecules/theme/ThemeForm/ThemeFormFields/ThemeFormFields").then((mod) => mod.ThemeFormFields), {
   ssr: true,
@@ -21,7 +22,6 @@ const ThemePreview = dynamic(() => import("@/components/molecules/theme/ThemePre
   loading: () => <div>Loading...</div>
 })
 
-const IconButton = dynamic(() => import("@/components/atoms/buttons/IconButton/IconButton").then((mod) => mod.IconButton))
 const Button = dynamic(() => import("@/components/atoms/buttons/Button/Button").then((mod) => mod.Button))
 
 export const ThemeForm = ({
@@ -38,7 +38,7 @@ export const ThemeForm = ({
   const scopedPreferences = useThemeStore(theme => theme.scopedPreferences)
   const globalPreferences = useThemeStore(theme => theme.globalPreferences)
   const { preferences: theme } = resolveThemeMetadata({ entityType: scope, entityId, scopedPreferences, globalPreferences })
-  const { resetTheme, isCustom } = useTheme()
+  const { isCustom } = useTheme()
   const formTheme = useMemo(() => {
     return {
       ...theme,
@@ -76,10 +76,7 @@ export const ThemeForm = ({
           "justify-end": !isCustom
         })}>
           {isCustom && (
-            <IconButton
-              icon="RotateCcw"
-              onClick={() => resetTheme()}
-            />
+            <ResetThemeButton />
           )}
           <Button type="submit">Submit</Button>
         </div>

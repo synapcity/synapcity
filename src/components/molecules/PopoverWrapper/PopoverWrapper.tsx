@@ -23,6 +23,7 @@ interface PopoverWrapperProps {
   className?: string;
   withAnchor?: boolean;
   anchorEl?: React.ReactNode;
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'default';
 }
 
 export function PopoverWrapper({
@@ -38,7 +39,17 @@ export function PopoverWrapper({
   className,
   withAnchor = false,
   anchorEl,
+  size = "default"
 }: PopoverWrapperProps) {
+  const sizeClasses = {
+    default: 'w-96',
+    xs: 'w-32',
+    sm: 'w-48',
+    md: 'w-64',
+    lg: 'w-80',
+    xl: 'w-96',
+  };
+
   return (
     <UIPopover open={open} onOpenChange={onOpenChange} defaultOpen={defaultOpen}>
       {withAnchor && anchorEl && <UIPopoverAnchor>{anchorEl}</UIPopoverAnchor>}
@@ -50,7 +61,7 @@ export function PopoverWrapper({
         align={align}
         side={side}
         sideOffset={sideOffset}
-        className={cn(className)}
+        className={cn(className, sizeClasses[size])}
       >
         {content}
       </UIPopoverContent>

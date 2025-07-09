@@ -4,8 +4,8 @@ import { FontField } from "@/components/molecules/theme/font/FontFamily/FontFiel
 export function FontsTab() {
   return (
     <div className="grid gap-4">
-      <FontField name="fontFamilyHeading" label="Heading Font" />
-      <FontField name="fontFamilyBody" label="Body Font" />
+      <FontField name="fontFamilyHeading" label="Heading" />
+      <FontField name="fontFamilyBody" label="Body" />
     </div>
   );
 }

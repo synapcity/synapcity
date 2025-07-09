@@ -1,12 +1,12 @@
 "use client";
 
-import { ColorFieldPopover } from "@/components/molecules/theme/ThemeForm";
+import { ColorField } from "@/components/molecules/theme/ThemeForm";
 
 export function ColorsTab() {
   return (
     <div className="grid gap-4">
-      <ColorFieldPopover name="primary" label="Primary Base" />
-      <ColorFieldPopover name="accent" label="Accent Base" />
+      <ColorField name="primary" label="Primary" />
+      <ColorField name="accent" label="Accent" />
     </div>
   );
 }

@@ -1,10 +1,10 @@
-import _ from "lodash";
+import { isEqual, transform } from "lodash";
 
 function getUpdatedValues<T extends object>(oldObj: T, newObj: T): Partial<T> {
-	return _.transform(
+	return transform(
 		newObj,
 		(result, newValue, key) => {
-			if (!_.isEqual(oldObj[key as keyof T], newValue)) {
+			if (!isEqual(oldObj[key as keyof T], newValue)) {
 				result[key as keyof T] = newValue;
 			}
 		},
