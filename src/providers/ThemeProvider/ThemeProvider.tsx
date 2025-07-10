@@ -8,15 +8,14 @@ import {
 import { useThemeStore } from "@/stores/themeStore/useThemeStore/useThemeStore";
 import { ThemeContext } from "./theme-context";
 import { cn } from "@/utils";
-import { useThemeEngine } from "@/hooks/useThemeEngine";
+import { useThemeEngine } from "@/hooks/theme/useThemeEngine";
 import type {
 	ThemeScope,
 	ThemePreferences,
 	EntityType,
 } from "@/theme/types";
 import { Spinner } from "@/components";
-import { resolveThemeMetadata } from "@/theme";
-import { useApplyTheme } from "@/hooks";
+import { resolveThemeMetadata, applyThemeVars } from "@/theme";
 
 export const ThemeProvider = ({
 	scope,
@@ -37,6 +36,7 @@ export const ThemeProvider = ({
 	const setPreferences = useThemeStore((s) => s.setPreferences);
 	const resetGlobalPreferences = useThemeStore((s) => s.resetGlobalPreferences);
 	const resetScopedPreferences = useThemeStore((s) => s.resetScopedPreferences);
+
 	const {
 		preferences,
 		isGlobal,
@@ -63,7 +63,6 @@ export const ThemeProvider = ({
 		: null;
 	const targetRef = useRef<HTMLElement | null>(null);
 
-	const element = isGlobal ? document.body : targetRef.current;
 	const {
 		updateThemePreferences,
 		applyThemeStyles,
@@ -81,12 +80,6 @@ export const ThemeProvider = ({
 		},
 	});
 
-	useEffect(() => {
-		if (hasHydrated) {
-			applyThemeStyles(preferences)
-		}
-	}, [applyThemeStyles, hasHydrated, preferences])
-
 	const resetTheme = () => {
 		if (isGlobal) {
 			resetGlobalPreferences();
@@ -97,7 +90,18 @@ export const ThemeProvider = ({
 
 	const id = `${scope}-${entityId ?? "main"}`;
 
-	useApplyTheme(preferences, element)
+	useEffect(() => {
+		if (hasHydrated) {
+			applyThemeStyles(preferences);
+		}
+	}, [applyThemeStyles, hasHydrated, preferences]);
+
+	useEffect(() => {
+		const el = isGlobal ? document.body : targetRef.current;
+		if (el) {
+			applyThemeVars({ preferences, element: el });
+		}
+	}, [preferences, isGlobal]);
 
 	if (!hasHydrated) return <Spinner />;
 
@@ -120,13 +124,14 @@ export const ThemeProvider = ({
 				applyThemeStyles,
 				scope,
 				id,
-				element
+				element: isGlobal ? document.body : targetRef.current,
 			}}
 		>
 			<div
 				ref={targetRef as RefObject<HTMLDivElement>}
 				data-id={id}
 				data-theme={preferences.mode}
+				data-testid="theme-wrapper"
 				className={cn(
 					"size-full text-[var(--foreground)] bg-[var(--background)]",
 					className,

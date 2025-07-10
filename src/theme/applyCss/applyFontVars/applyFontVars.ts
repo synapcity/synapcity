@@ -1,7 +1,7 @@
 import type { FontSizeToken } from "@/theme/types";
 import { generateFontSizeVars } from "@/theme/generateCss";
 import { applyVars } from "@/theme/applyCss";
-import { loadGoogleFont } from "@/components/molecules/theme/font/FontFamily/loadGoogleFont";
+import { loadGoogleFont } from "@/components/theme/font/FontFamily/loadGoogleFont";
 
 /**
  * Applies font-related CSS variables to a scoped element.

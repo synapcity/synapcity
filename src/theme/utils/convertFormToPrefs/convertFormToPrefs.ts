@@ -1,4 +1,4 @@
-import { ThemePreferencesFormValues } from "@/components/molecules/theme/schema";
+import { ThemePreferencesFormValues } from "@/components/theme/schema";
 import { generateSemanticColor } from "@/theme/generateValues";
 import { FontSizeToken } from "@/theme/types";
 

@@ -1,24 +1,29 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { ThemeProvider } from "./ThemeProvider";
 import { useTheme } from "./useTheme";
-import { resolveThemeMetadata } from "@/theme/utils/resolveThemeMetadata";
-import { applyThemeVars, DEFAULT } from "@/theme";
+import { DEFAULT, applyThemeVars, resolveThemeMetadata } from "@/theme";
 import { useThemeStore } from "@/stores";
-// import type { ThemePreferences } from "@/theme/types";
-// const mockTheme: ThemePreferences = { ...DEFAULT.THEME };
 
+// Mocks
 jest.mock("@/theme", () => ({
 	...jest.requireActual("@/theme"),
 	applyThemeVars: jest.fn(),
-}));
-
-jest.mock("@/theme/utils/resolveThemeMetadata", () => ({
 	resolveThemeMetadata: jest.fn(),
 }));
 
+jest.mock("@/hooks/theme/useThemeEngine", () => ({
+	useThemeEngine: jest.fn(() => ({
+		updateThemePreferences: jest.fn(),
+		applyThemeStyles: jest.fn(),
+		updateColor: jest.fn(),
+		updateFontSize: jest.fn(),
+		updateFontFamily: jest.fn(),
+		updateMode: jest.fn(),
+	})),
+}));
 
-describe("ThemeProvider Additional Tests", () => {
+describe("ThemeProvider", () => {
 	beforeEach(() => {
 		jest.clearAllMocks();
 		useThemeStore.setState({
@@ -48,16 +53,18 @@ describe("ThemeProvider Additional Tests", () => {
 		expect(screen.getByRole("status")).toBeInTheDocument();
 	});
 
-	it("applies styles to document.body for global scope", () => {
+	it("applies styles to document.body for global scope", async () => {
 		render(
 			<ThemeProvider scope="global">
 				<div data-testid="child">Hello</div>
 			</ThemeProvider>
 		);
 
-		expect(applyThemeVars).toHaveBeenCalledWith({
-			preferences: DEFAULT.THEME,
-			element: document.body,
+		await waitFor(() => {
+			expect(applyThemeVars).toHaveBeenCalledWith({
+				preferences: DEFAULT.THEME,
+				element: document.body,
+			});
 		});
 	});
 
@@ -76,13 +83,11 @@ describe("ThemeProvider Additional Tests", () => {
 			</ThemeProvider>
 		);
 
-		const wrapper = screen.getByTestId("child").parentElement!;
-		expect(applyThemeVars).toHaveBeenCalledWith(
-			expect.objectContaining({
-				preferences: expect.any(Object),
-				element: wrapper,
-			})
-		);
+		const wrapper = screen.getByTestId("theme-wrapper");
+		expect(applyThemeVars).toHaveBeenCalledWith({
+			preferences: DEFAULT.THEME,
+			element: wrapper,
+		});
 	});
 
 	it("generates correct id based on scope and entityId", () => {
@@ -92,7 +97,7 @@ describe("ThemeProvider Additional Tests", () => {
 			</ThemeProvider>
 		);
 
-		const wrapper = screen.getByTestId("id-check").parentElement!;
+		const wrapper = screen.getByTestId("theme-wrapper");
 		expect(wrapper).toHaveAttribute("data-id", "note-xyz");
 	});
 
@@ -110,8 +115,8 @@ describe("ThemeProvider Additional Tests", () => {
 			</ThemeProvider>
 		);
 
-		expect(context?.updateFontFamily).toBeInstanceOf(Function);
-		expect(context?.resetTheme).toBeInstanceOf(Function);
+		expect(typeof context?.updateFontFamily).toBe("function");
+		expect(typeof context?.resetTheme).toBe("function");
 		expect(context?.scope).toBe("global");
 		expect(context?.id).toBe("global-main");
 	});
