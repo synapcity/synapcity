@@ -11,9 +11,9 @@ import {
 } from "@dnd-kit/core";
 import { sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const isTestEnv = typeof window !== "undefined" && (window as any).Cypress;
 export const useSortableSetup = () => {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const isTestEnv = typeof window !== "undefined" && (window as any).Cypress;
 	const sensors = useSensors(
 		useSensor(isTestEnv ? MouseSensor : PointerSensor, {
 			activationConstraint: {

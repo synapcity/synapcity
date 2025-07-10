@@ -14,15 +14,15 @@ import {
   SidebarMenuItem,
 } from "@/components/atoms/ui/sidebar"
 import clsx from "clsx"
-import { PanelModule } from "@/types/panels"
 import { Label } from "@/components/atoms"
 
-type ContextSelectorProps = {
-  items: PanelModule[];
-  activeItem?: PanelModule;
-  setActiveItem: (item?: PanelModule) => void;
-}
-export function ContextSelector({ items, activeItem, setActiveItem }: ContextSelectorProps) {
+type Props<T extends { id: string, label: string }> = {
+  items: T[];
+  activeItem?: T;
+  setActiveItemId: (id?: string) => void;
+};
+export function ContextSelector<T extends { id: string, label: string; }>({ items, activeItem, setActiveItemId }: Props<T>) {
+
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -48,12 +48,12 @@ export function ContextSelector({ items, activeItem, setActiveItem }: ContextSel
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start">
-            {items.map((item) => !item.layout?.isHidden && (
-              <DropdownMenuItem key={item.id} onSelect={() => setActiveItem(item)}>
+            {items.map((item) => item && (
+              <DropdownMenuItem key={item?.id} onSelect={() => setActiveItemId(item?.id)}>
                 <Label>
-                  {item.label}
+                  {item?.label}
                 </Label>
-                {item.id === activeItem?.id && <Check className="ml-auto size-4 dark:text-accent-100" />}
+                {item?.id === activeItem?.id && <Check className="ml-auto size-4 dark:text-accent-100" />}
               </DropdownMenuItem>
             ))}
           </DropdownMenuContent>

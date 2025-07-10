@@ -39,8 +39,8 @@ export function SortableContainer<T extends { id: string }>({
     const { active, over } = event;
     if (!active || !over || active.id === over.id) return;
 
-    const oldIndex = items.findIndex((i) => i.id === active.id);
-    const newIndex = items.findIndex((i) => i.id === over.id);
+    const oldIndex = items.findIndex((i) => i?.id === active.id);
+    const newIndex = items.findIndex((i) => i?.id === over.id);
     const sorted = arrayMove(items, oldIndex, newIndex);
     onReorder?.(sorted);
     clearOverlay();

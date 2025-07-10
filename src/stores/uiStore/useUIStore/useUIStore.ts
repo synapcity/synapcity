@@ -37,14 +37,13 @@ export const uiStoreInitializer: StateCreator<UIState & UIActions> = (set) => ({
 	setHasHydrated: (hasHydrated) => set({ hasHydrated }),
 	setComponent: (id, updates) => {
 		set((state) => {
-			let comp = state.components[id];
-			if (!comp) {
-				comp = { ...defaultComponentState, ...updates };
-			}
+			const prev = state.components[id] ?? { ...defaultComponentState };
 			return {
 				components: {
+					...state.components,
 					[id]: {
-						...comp,
+						...prev,
+						...updates,
 					},
 				},
 			};
@@ -52,15 +51,13 @@ export const uiStoreInitializer: StateCreator<UIState & UIActions> = (set) => ({
 	},
 	setCompState: (id, key, value) => {
 		set((state) => {
-			let comp = state.components[id];
-			if (!comp) {
-				comp = { ...defaultComponentState, [key]: value };
-			}
+			const prev = state.components[id] ?? { ...defaultComponentState };
 			return {
 				components: {
 					...state.components,
 					[id]: {
-						...comp,
+						...prev,
+						[key]: value,
 					},
 				},
 			};
@@ -68,16 +65,13 @@ export const uiStoreInitializer: StateCreator<UIState & UIActions> = (set) => ({
 	},
 	toggleCompState: (id, key) => {
 		set((state) => {
-			let comp = state.components[id];
-			if (!comp) {
-				comp = { ...defaultComponentState };
-			}
+			const prev = state.components[id] ?? { ...defaultComponentState };
 			return {
 				components: {
 					...state.components,
 					[id]: {
-						...comp,
-						[key]: !comp[key],
+						...prev,
+						[key]: !prev[key],
 					},
 				},
 			};

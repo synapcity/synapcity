@@ -7,7 +7,7 @@ export const migrateUserPanelStore = (
 	const state = persistedState as UserPanelState;
 
 	if (version < 1) {
-		state.activeSection = USER_PANEL_MODULES[0];
+		state.activeModuleId = USER_PANEL_MODULES[0].id;
 	}
 
 	return state;

@@ -4,3 +4,4 @@ export * from "./Drawer";
 export * from "./FormWrapper";
 export * from "./Switch";
 export * from "./PopoverWrapper";
+export * from "./IdleControlled";

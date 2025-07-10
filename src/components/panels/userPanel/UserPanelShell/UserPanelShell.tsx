@@ -6,23 +6,18 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useClickAway } from "react-use";
 import { Collapsible, CollapsibleContent } from "@/components/atoms/ui/collapsible";
 import { SidebarProvider } from "@/components/atoms/ui/sidebar";
-import { useComponentUIState, useUIStore, useUserPanelStore } from "@/stores";
 import { UserPanelHeader } from "../UserPanelHeader/UserPanelHeader";
 import { SidebarWrapper } from "@/components/menus/sidebar/SidebarWrapper";
-import { UserPanelSidebarContent } from "../UserPanelSidebarContent";
-import { UserPanelIconSidebarContent } from "../UserPanelIconSidebarContent/UserPanelIconSidebarContent";
-import { USER_PANEL_MODULES } from "../../userPanelModules";
-import { PanelModule } from "@/types/panels";
+import { UserPanelSidebar } from "../UserPanelSidebar/UserPanelSidebar";
+import { UserPanelIconSidebar } from "../UserPanelIconSidebar/UserPanelIconSidebar";
 import { cn } from "@/utils";
-import { UserPanelRenderer } from "../UserPanelRenderer";
+import { ActivePanelRenderer } from "../ActivePanelRenderer/ActivePanelRenderer";
+import { useComponentUIState, useUIStore } from "@/stores";
 
-export const UserPanelContainer = ({ children }: PropsWithChildren) => {
+export const UserPanelShell = ({ children }: PropsWithChildren) => {
   const isOpen = useUIStore((s) => s.components)["user-panel"].isVisible ?? false;
-  const isLocked = useUIStore((s) => s.components)["user-panel"].isVisible ?? false;
+  const isLocked = useUIStore((s) => s.components)["user-panel"].isLocked ?? false;
   const setComponentUIState = useUIStore((s) => s.setComponent);
-  const activeItem = useUserPanelStore((s) => s.activeSection);
-  const setActiveItem = useUserPanelStore((s) => s.setActiveSection);
-  const customOrder = useUserPanelStore((s) => s.customOrder);
   const header = useComponentUIState("main-header")
   const isHeaderOpen = !header.isCollapsed
 
@@ -30,10 +25,6 @@ export const UserPanelContainer = ({ children }: PropsWithChildren) => {
   useClickAway(clickAwayRef, () => {
     if (!isLocked) setComponentUIState("user-panel", { isVisible: false });
   });
-
-  const items = customOrder
-    .map((id) => USER_PANEL_MODULES.find((m) => m.id === id))
-    .filter((item): item is PanelModule => !!item);
 
   return (
     <Collapsible open={isOpen} onOpenChange={(v) => setComponentUIState("user-panel", { isVisible: v })} ref={clickAwayRef} className="h-full max-h-full">
@@ -62,14 +53,11 @@ export const UserPanelContainer = ({ children }: PropsWithChildren) => {
 
                   <div className="flex-1 flex h-full">
                     <SidebarWrapper
-                      items={items}
-                      activeItem={activeItem}
-                      setActiveItem={setActiveItem}
-                      iconSidebarContent={<UserPanelIconSidebarContent />}
+                      iconSidebarContent={<UserPanelIconSidebar />}
                     >
-                      <UserPanelSidebarContent />
+                      <UserPanelSidebar />
                     </SidebarWrapper>
-                    <UserPanelRenderer />
+                    <ActivePanelRenderer />
                   </div>
                 </div>
               </SidebarProvider>

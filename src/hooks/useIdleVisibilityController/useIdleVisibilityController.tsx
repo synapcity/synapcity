@@ -17,7 +17,7 @@ export function useIdleVisibilityController(
     enabled = true,
     delay = 10000,
     elementEvents = ["mousemove", "mouseenter", "mouseleave"],
-    globalEvents = ["click", "keydown"], // removed scroll by default
+    globalEvents = ["click", "keydown"],
   }: Options = {}
 ) {
   const setCompState = useUIStore((s) => s.setCompState);
@@ -29,22 +29,31 @@ export function useIdleVisibilityController(
   const setState = useCallback(
     (val: boolean) => setCompState(id, key, val),
     [id, key, setCompState]
-  );
+  )
 
   const resetTimer = useCallback(() => {
     if (!enabled) return;
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
+
     timeoutRef.current = setTimeout(() => {
-      if (!isHovering.current) setState(true);
+      if (!isHovering.current) {
+        console.log("[Idle] Timer expired, collapsing");
+        setState(true);
+      }
     }, delay);
   }, [enabled, delay, setState]);
 
   const handleActivity = useCallback(() => {
     if (!enabled) return;
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    if (isActive) setState(false);
+
     resetTimer();
-  }, [enabled, isActive, setState, resetTimer]);
+
+    if (isActive) {
+      setState(false);
+    }
+  }, [enabled, isActive, resetTimer, setState]);
+
 
   const onMouseEnter = () => {
     isHovering.current = true;
@@ -57,18 +66,17 @@ export function useIdleVisibilityController(
     resetTimer();
   };
 
+
   useEffect(() => {
     if (!enabled) return;
 
     const node = ref.current;
     if (!node) return;
 
-    // Bind element-level events
     for (const event of elementEvents) {
       node.addEventListener(event, handleActivity);
     }
 
-    // Bind window/global events
     for (const event of globalEvents) {
       window.addEventListener(event, handleActivity);
     }

@@ -7,17 +7,14 @@ import { AvatarDropdown } from "@/components/menus/dropdown/AvatarDropdown"
 import { ExtendedSidebar } from "./ExtendedSidebar"
 import { cn } from "@/utils"
 import { useUserStore } from "@/stores"
-import { PanelModule } from "@/types/panels"
 
 interface SidebarWrapperProps {
-  items: PanelModule[];
-  activeItem: PanelModule;
-  setActiveItem: (item?: PanelModule) => void;
+
   iconSidebarContent: React.ReactNode;
   children: React.ReactNode;
 }
 
-export const SidebarWrapper = ({ items, activeItem, setActiveItem, iconSidebarContent, children, ...props }: SidebarWrapperProps & React.ComponentProps<typeof Sidebar>) => {
+export const SidebarWrapper = ({ iconSidebarContent, children, ...props }: SidebarWrapperProps & React.ComponentProps<typeof Sidebar>) => {
   const ref = React.useRef<HTMLDivElement>(null)
   const user = useUserStore(state => state.user)
   const logout = useUserStore(state => state.logout)
@@ -37,11 +34,7 @@ export const SidebarWrapper = ({ items, activeItem, setActiveItem, iconSidebarCo
           />
         </SidebarFooter>
       </Sidebar>
-      <ExtendedSidebar
-        items={items}
-        activeItem={activeItem}
-        setActiveItem={setActiveItem}
-      >
+      <ExtendedSidebar>
         {children}
       </ExtendedSidebar>
     </Sidebar>

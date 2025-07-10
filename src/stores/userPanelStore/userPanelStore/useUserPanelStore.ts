@@ -1,5 +1,4 @@
 import { USER_PANEL_MODULES } from "@/components/panels/userPanelModules";
-import { PanelModule } from "@/types/panels";
 import debounce from "lodash.debounce";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
@@ -10,8 +9,8 @@ import { RefObject } from "react";
 export interface UserPanelState {
 	hasHydrated: boolean;
 	setHasHydrated: (hasHydrated: boolean) => void;
-	activeSection: PanelModule;
-	setActiveSection: (section?: PanelModule) => void;
+	activeModuleId: string;
+	setActiveModuleId: (id?: string) => void;
 	customOrder: string[];
 	setCustomOrder: (order: string[]) => void;
 	resetOrderToDefault: () => void;
@@ -22,14 +21,14 @@ export interface UserPanelState {
 export const useUserPanelStore = create<UserPanelState>()(
 	persist(
 		(set) => {
-			const debouncedSet = debounce((section?: PanelModule) => {
-				set({ activeSection: section ?? USER_PANEL_MODULES[0] });
+			const debouncedSet = debounce((id?: string) => {
+				set({ activeModuleId: id ?? USER_PANEL_MODULES[0].id });
 			}, 100);
 
 			return {
-				activeSection: USER_PANEL_MODULES[0],
-				setActiveSection: (section) => {
-					debouncedSet(section);
+				activeModuleId: USER_PANEL_MODULES[0].id,
+				setActiveModuleId: (id) => {
+					debouncedSet(id);
 				},
 				hasHydrated: false,
 				setHasHydrated: (hasHydrated) => set({ hasHydrated }),
@@ -49,7 +48,7 @@ export const useUserPanelStore = create<UserPanelState>()(
 				state?.setHasHydrated(true);
 			},
 			partialize: (state) => ({
-				activeSection: state.activeSection,
+				activeModuleId: state.activeModuleId,
 				customOrder: state.customOrder,
 			}),
 		}

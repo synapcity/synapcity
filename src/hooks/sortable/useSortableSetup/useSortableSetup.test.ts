@@ -26,8 +26,15 @@ describe("useSortableSetup", () => {
 
 		expect(useSensorSpy).toHaveBeenCalledTimes(2);
 
-		expect(useSensorSpy).toHaveBeenCalledWith(dndKitCore.PointerSensor);
-		expect(useSensorSpy).toHaveBeenCalledWith(
+		expect(useSensorSpy).toHaveBeenNthCalledWith(
+			1,
+			dndKitCore.MouseSensor,
+			expect.objectContaining({
+				activationConstraint: expect.any(Object),
+			})
+		);
+		expect(useSensorSpy).toHaveBeenNthCalledWith(
+			2,
 			dndKitCore.KeyboardSensor,
 			expect.objectContaining({
 				coordinateGetter: expect.any(Function),
@@ -54,10 +61,15 @@ describe("useSortableSetup", () => {
 
 		expect(useSensorSpy).toHaveBeenCalledTimes(2);
 
-		// Check that one of the calls used PointerSensor
-		expect(useSensorSpy).toHaveBeenCalledWith(dndKitCore.PointerSensor);
-		// And the other used KeyboardSensor with the coordinateGetter option
-		expect(useSensorSpy).toHaveBeenCalledWith(
+		expect(useSensorSpy).toHaveBeenNthCalledWith(
+			1,
+			dndKitCore.PointerSensor,
+			expect.objectContaining({
+				activationConstraint: expect.any(Object),
+			})
+		);
+		expect(useSensorSpy).toHaveBeenNthCalledWith(
+			2,
 			dndKitCore.KeyboardSensor,
 			expect.objectContaining({
 				coordinateGetter: expect.any(Function),

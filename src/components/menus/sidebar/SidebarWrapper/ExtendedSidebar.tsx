@@ -10,27 +10,23 @@ import {
 } from "@/components/atoms/ui/sidebar"
 import { ContextSelector } from "./ContextSelector"
 import { PanelModule } from "@/types/panels";
-import { useState } from "react";
+import { PropsWithChildren, useState } from "react";
 import { IconButton } from "@/components/atoms";
+import { useUserPanel } from "@/hooks/useUserPanel/useUserPanel";
 
-interface ExtendedSidebarProps {
-  items: PanelModule[];
-  activeItem: PanelModule;
-  setActiveItem: (item?: PanelModule) => void;
-  children: React.ReactNode;
-}
 
-export const ExtendedSidebar = ({ children, items, activeItem, setActiveItem }: ExtendedSidebarProps) => {
+export const ExtendedSidebar = ({ children }: PropsWithChildren) => {
   const [showSearch, setShowSearch] = useState(false)
   const toggleSearch = () => setShowSearch(prev => !prev)
+  const { modules, activeModule, setActiveModuleId } = useUserPanel()
   return (
     <Sidebar auto collapsible="none" className="hidden flex-1 md:flex">
       <SidebarHeader className="gap-3.5 p-2">
         <div className="flex item-center gap-2 justify-center h-full">
           <ContextSelector
-            items={items}
-            activeItem={activeItem}
-            setActiveItem={setActiveItem}
+            items={modules as PanelModule[]}
+            activeItem={activeModule}
+            setActiveItemId={setActiveModuleId}
           />
           <IconButton
             icon="Search"

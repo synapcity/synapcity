@@ -1,132 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// /* eslint-disable @typescript-eslint/no-explicit-any */
-// "use client";
-
-// import { useIdleVisibilityController } from "@/hooks/useIdleVisibilityController";
-// import { cn } from "@/utils";
-// import { motion } from "framer-motion";
-// import { RefObject, type PropsWithChildren } from "react";
-
-// interface IdleControlledProps extends PropsWithChildren {
-//   id: string;
-//   stateKey?: string;
-//   delay?: number;
-//   enabled?: boolean;
-//   className?: string;
-//   animation?: {
-//     initial?: Record<string, any>;
-//     animate?: Record<string, any>;
-//     exit?: Record<string, any>;
-//     transition?: Record<string, any>;
-//   };
-//   hoverOverlay?: boolean;
-//   shouldEnable?: () => boolean;
-//   elementEvents?: (keyof HTMLElementEventMap)[] | undefined
-//   globalEvents?: (keyof WindowEventMap)[] | undefined
-// }
-
-// // export const IdleControlled = ({
-// //   id,
-// //   children,
-// //   stateKey = "isCollapsed",
-// //   delay = 10000,
-// //   enabled = true,
-// //   className,
-// //   hoverOverlay = false,
-// //   shouldEnable,
-// //   animation = {
-// //     initial: { opacity: 1, y: 0 },
-// //     animate: { opacity: 1, y: 0 },
-// //     exit: { opacity: 0, y: -10 },
-// //     transition: { duration: 0.25 },
-// //   },
-// // }: IdleControlledProps) => {
-// //   const ref = useRef<HTMLDivElement | null>(null)
-// //   const isEnabled = enabled && (shouldEnable ? shouldEnable() : true);
-// //   const { isActive } = useIdleVisibilityController(id, stateKey, { enabled: isEnabled, delay });
-
-// //   return (
-// //     <>
-// //       {hoverOverlay && isActive && (
-// //         <div
-// //           className="fixed top-0 left-0 right-0 h-6 z-40"
-// //         />
-// //       )}
-// //       <motion.div
-// //         initial={animation.initial}
-// //         animate={isActive ? animation.exit : animation.animate}
-// //         transition={animation.transition}
-// //         className={className}
-// //       >
-// //         {children}
-// //       </motion.div>
-// //     </>
-// //   );
-// // };
-// export const IdleControlled = ({
-//   id,
-//   children,
-//   stateKey = "isCollapsed",
-//   delay = 10000,
-//   enabled = true,
-//   className,
-//   hoverOverlay = false,
-//   shouldEnable,
-//   animation = {
-//     initial: { opacity: 1, y: 0 },
-//     animate: { opacity: 1, y: 0 },
-//     exit: { opacity: 0, y: -10 },
-//     transition: { duration: 0.25 },
-//   },
-//   globalEvents,
-//   elementEvents
-// }: IdleControlledProps) => {
-//   const isEnabled = enabled && (shouldEnable ? shouldEnable() : true);
-
-//   const { ref, isActive, onMouseEnter, onMouseLeave } = useIdleVisibilityController(id, stateKey, {
-//     delay,
-//     enabled,
-//     globalEvents,
-//     elementEvents 
-//   });
-
-
-//   return (
-//     <>
-//       {hoverOverlay && (
-//         <div
-//           className={cn(
-//             "fixed top-0 left-0 right-0 h-6 z-40 transition-opacity duration-200",
-//             isActive ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-//           )}
-//           onMouseEnter={onMouseEnter}
-//           onMouseLeave={onMouseLeave}
-//         />
-//       )}
-
-
-//       <motion.div
-//         ref={ref as RefObject<HTMLDivElement>}
-//         initial={{ opacity: 1, y: 0, height: "auto" }}
-//         animate={isActive
-//           ? { opacity: 0, y: -20, height: 0 }
-//           : { opacity: 1, y: 0, height: "auto" }}
-//         transition={{ duration: 0.3 }}
-//         className={cn("overflow-hidden", className)}
-//       >
-//         {children}
-//       </motion.div>
-
-//     </>
-//   );
-// };
-
 "use client";
 
 import { useIdleVisibilityController } from "@/hooks/useIdleVisibilityController";
 import { cn } from "@/utils";
 import { motion } from "framer-motion";
-import { type PropsWithChildren, RefObject, useMemo } from "react";
+import {
+  type PropsWithChildren,
+  useMemo,
+  isValidElement,
+  cloneElement,
+  ReactElement,
+  HTMLAttributes,
+  RefObject,
+} from "react";
 
 interface IdleControlledProps extends PropsWithChildren {
   id: string;
@@ -177,10 +63,10 @@ export const IdleControlled = ({
   });
 
   const anim = animation ?? {
-    initial: { opacity: 1, y: 0 },
-    animate: { opacity: 1, y: 0 },
-    exit: { opacity: 0, y: -10 },
-    transition: { duration: 0.25 },
+    initial: { opacity: 1, height: "auto" },
+    animate: { opacity: 1, height: "auto" },
+    exit: { opacity: 0, height: 0 },
+    transition: { duration: 0.3 },
   };
 
   return (
@@ -188,8 +74,8 @@ export const IdleControlled = ({
       {hoverOverlay && (
         <div
           className={cn(
-            "fixed top-0 left-0 right-0 h-6 z-40 transition-opacity duration-200",
-            isActive ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+            "fixed top-0 left-0 right-0 h-6 transition-opacity duration-200 z-[9999]",
+            isActive ? "opacity-100 h-auto pointer-events-none" : "opacity-0 h-0 pointer-events-auto"
           )}
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
@@ -202,8 +88,14 @@ export const IdleControlled = ({
         animate={isActive ? anim.exit : anim.animate}
         transition={anim.transition}
         className={cn("overflow-hidden", className)}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
       >
-        {children}
+        {isValidElement(children)
+          ? cloneElement(children as ReactElement<HTMLAttributes<any>>, {
+            className: cn((children as any).props?.className),
+          })
+          : children}
       </motion.div>
     </>
   );
