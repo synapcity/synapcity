@@ -19,6 +19,7 @@ export const Spinner = ({
   return (
     <div
       role="status"
+      data-testid="spinner"
       aria-live="polite"
       aria-busy="true"
       className="inline-flex items-center"

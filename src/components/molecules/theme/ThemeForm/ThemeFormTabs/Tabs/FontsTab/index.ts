@@ -1,1 +1,0 @@
-export { FontsTab } from "./FontsTab";

@@ -1,0 +1,65 @@
+"use client"
+
+import { useUISidebar, LockTrigger } from "@/components/atoms"
+import { Separator } from "@/components/atoms/ui/separator"
+import { useComponentUIState, useUserStore } from "@/stores"
+import { cn } from "@/utils"
+import { motion } from "framer-motion"
+import { format } from "date-fns"
+import { useState, useEffect } from "react"
+
+const getGreeting = () => {
+  const hour = new Date().getHours();
+  if (hour < 12) return "Good morning";
+  if (hour < 18) return "Good afternoon";
+  return "Good evening";
+};
+
+export const UserPanelHeader = () => {
+  const [time, setTime] = useState(new Date());
+  const [weather, setWeather] = useState<string | null>(null);
+  const user = useUserStore(state => state.user)
+  const state = useComponentUIState("user-panel-header")
+  const isVisible = state.isVisible ?? true
+
+  const { open } = useUISidebar()
+  useEffect(() => {
+    const interval = setInterval(() => setTime(new Date()), 60_000);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    // Mock weather fetch (replace with real later)
+    setTimeout(() => setWeather("72°F • Sunny"), 500);
+  }, []);
+
+  return isVisible && (
+    <header
+      className={cn(
+        "h-32 sticky top-0 z-10 flex items-center justify-between px-4 py-2",
+        "border-b transition-shadow duration-300",
+        open ? "shadow-md" : "shadow-none"
+      )}
+    >
+      <div className="w-full flex justify-between">
+
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="w-full flex flex-col md:flex-row md:items-center md:justify-between gap-2"
+        >
+          <h1 className="text-2xl font-semibold">{getGreeting()}, {user?.name}</h1>
+          <div className="text-sm text-muted-foreground">
+            {format(time, "EEEE, MMMM do yyyy • HH:mm zzz")} • {weather ?? "Loading..."}
+          </div>
+        </motion.div>
+
+        <div className="flex items-center">
+          <Separator orientation="vertical" className="mr-2 h-4" />
+          <LockTrigger size="sm" />
+        </div>
+      </div>
+    </header>
+  )
+}
