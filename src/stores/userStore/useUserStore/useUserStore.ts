@@ -1,5 +1,6 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { persist, PersistOptions } from "zustand/middleware";
+import { migrateUserStore } from "../migrate";
 
 export type User = {
 	id: string;
@@ -10,11 +11,12 @@ export type User = {
 };
 
 export type UserState = {
-	user: User | null;
+	user: User | null | undefined;
 	isLoggedIn: boolean;
 	token: string | null;
 	loading: boolean;
 	error: string | null;
+	hasHydrated: boolean;
 };
 
 export type UserActions = {
@@ -23,6 +25,7 @@ export type UserActions = {
 	setLoading: (loading: boolean) => void;
 	setError: (error: string | null) => void;
 	updateUser: (data: Partial<User>) => void;
+	setHasHydrated: (hasHydrated: boolean) => void;
 };
 
 export type UserStore = UserState & UserActions;
@@ -33,6 +36,7 @@ export const defaultUserStore: UserState = {
 	token: null,
 	loading: false,
 	error: null,
+	hasHydrated: false,
 };
 
 export const userJane: User = {
@@ -43,8 +47,8 @@ export const userJane: User = {
 	username: "hanaa",
 };
 
-export const useUserStore = create(
-	persist<UserStore>(
+export const useUserStore = create<UserStore>()(
+	persist(
 		(set) => ({
 			...defaultUserStore,
 			login: (user: User) => {
@@ -64,9 +68,23 @@ export const useUserStore = create(
 					user: { ...state.user, ...data } as User,
 				}));
 			},
+			setHasHydrated: (hasHydrated) => set({ hasHydrated }),
 		}),
 		{
 			name: "user-state",
-		}
+			version: 2,
+			migrate: migrateUserStore,
+			onRehydrateStorage: () => (state) => {
+				state?.setHasHydrated(true);
+			},
+			partialize: (state) => ({
+				user: state.user,
+				isLoggedIn: state.isLoggedIn,
+				token: state.token,
+				loading: state.loading,
+				error: state.error,
+				hasHydrated: state.hasHydrated,
+			}),
+		} satisfies PersistOptions<UserStore, UserState>
 	)
 );
