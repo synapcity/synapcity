@@ -46,10 +46,11 @@ export const UserPanelHeader = () => {
           transition={{ duration: 0.5 }}
           className="w-full flex flex-col md:flex-row md:items-center md:justify-between gap-2 px-2"
         >
-          <h1 className="text-2xl font-semibold">{getGreeting()}, {user?.name}</h1>
-          •
-          <UserWeather />
-          <div className="text-lg text-[var(--muted-foreground)] flex gap-4">
+          <div className="flex gap-2 items-center">
+            <h1 className="text-2xl font-semibold">{getGreeting()}, {user?.name}</h1>
+            <UserWeather />
+          </div>
+          <div className="text-sm text-[var(--muted-foreground)] flex gap-4">
             {format(time, "EEEE, MMMM do yyyy • HH:mm zzz")}
           </div>
         </motion.div>

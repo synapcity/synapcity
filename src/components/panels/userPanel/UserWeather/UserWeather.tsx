@@ -66,14 +66,14 @@ export const UserWeather = () => {
     <button
       onClick={() => openModal("weatherSettings")}
       className={cn(
-        "flex items-center gap-2 px-3 py-2 rounded-md",
-        "bg-background text-foreground border border-border shadow-sm text-sm hover:bg-muted"
+        "flex items-center gap-2 px-3 py-2 rounded-md group",
+        "bg-background text-foreground border border-transparent hover:border-border shadow-sm text-sm hover:bg-muted"
       )}
     >
-      <span className="text-xl">{data.icon}</span>
+      <span className="text-lg">{data.icon}</span>
       <span className="flex items-center gap-4">
         {temperature}°{preferences.unit === "fahrenheit" ? "F" : "C"}
-        <span className="text-muted-foreground flex gap-2"> <Icon name="mapPin" tooltip={locationLabel ?? undefined} /></span>
+        <span className="text-muted-foreground hidden group-hover:flex gap-2"> <Icon name="mapPin" tooltip={locationLabel ?? undefined} /></span>
       </span>
     </button>
   );
