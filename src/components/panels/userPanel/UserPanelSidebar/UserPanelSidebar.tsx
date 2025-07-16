@@ -6,7 +6,7 @@ import {
   SidebarGroup,
   SidebarGroupContent,
 } from "@/components/atoms/ui/sidebar";
-import { useUserPanel } from "@/hooks/useUserPanel/useUserPanel";
+import { useUserPanel } from "@/hooks/features/useUserPanel/useUserPanel";
 
 export const UserPanelSidebar = () => {
   const { activeModule } = useUserPanel()

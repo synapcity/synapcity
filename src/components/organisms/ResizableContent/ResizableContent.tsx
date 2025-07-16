@@ -12,6 +12,11 @@ export const ResizableContent = ({ children }: { children: React.ReactNode; }) =
   const isOpen = useUIStore((s) =>
     s.components?.userPanel?.isVisible ?? false
   );
+  const isLocked = useUIStore(s =>
+    s.components?.userPanel?.isLocked ?? false
+  )
+  const setCompState = useUIStore(s => s.setCompState)
+
   return (
     <ResizablePanelGroup direction="vertical" className="flex-1">
       {isOpen && (
@@ -23,6 +28,10 @@ export const ResizableContent = ({ children }: { children: React.ReactNode; }) =
             order={1}
             minSize={10}
             maxSize={90}
+            onResize={() => {
+              if (isLocked) return;
+              setCompState("userPanel", "isLocked", true)
+            }}
           >
             <UserPanel />
           </ResizablePanel>

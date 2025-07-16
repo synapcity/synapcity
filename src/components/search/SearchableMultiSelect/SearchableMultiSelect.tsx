@@ -17,7 +17,7 @@ import {
 import { PopoverWrapper } from "@/components/molecules/PopoverWrapper";
 import { cn } from "@/utils";
 import { X } from "lucide-react";
-import { useDebouncedSearch } from "@/hooks/useDebouncedSearch";
+import { useDebouncedSearch } from "@/hooks/search/useDebouncedSearch";
 
 export type SearchableMultiSelectOption = {
   label: string;

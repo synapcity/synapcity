@@ -1,6 +1,6 @@
 "use client"
 
-import { useUserPanel } from "@/hooks/useUserPanel/useUserPanel";
+import { useUserPanel } from "@/hooks/features/useUserPanel/useUserPanel";
 
 export function ActivePanelRenderer() {
   const { activeModule } = useUserPanel()

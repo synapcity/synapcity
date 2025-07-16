@@ -2,7 +2,7 @@
 
 import { IconButton } from "@/components/atoms";
 import { SidebarMenuItem, SidebarMenuButton, useSidebar } from "@/components/atoms/ui/sidebar";
-import { useUserPanel } from "@/hooks/useUserPanel/useUserPanel";
+import { useUserPanel } from "@/hooks/features/useUserPanel/useUserPanel";
 import { PanelModule } from "@/types/panels";
 import { cn } from "@/utils";
 

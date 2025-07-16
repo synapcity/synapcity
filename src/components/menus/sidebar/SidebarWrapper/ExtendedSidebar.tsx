@@ -10,7 +10,7 @@ import {
 import { ContextSelector } from "./ContextSelector"
 import { PanelModule } from "@/types/panels";
 import { PropsWithChildren } from "react"
-import { useUserPanel } from "@/hooks/useUserPanel/useUserPanel";
+import { useUserPanel } from "@/hooks/features/useUserPanel/useUserPanel";
 
 
 export const ExtendedSidebar = ({ children }: PropsWithChildren) => {

@@ -8,6 +8,7 @@ import { UserPanelIconSidebar } from "./UserPanelIconSidebar/UserPanelIconSideba
 import { ActivePanelRenderer } from "./ActivePanelRenderer/ActivePanelRenderer";
 import { motion } from "framer-motion";
 import { Suspense } from "react";
+import { ModalRenderer } from "@/components/modals";
 
 export const UserPanel = () => {
   return (
@@ -26,12 +27,13 @@ export const UserPanel = () => {
           <motion.div
             layout
             transition={{ type: "spring", duration: 0.3 }}
-            className="flex-1 flex flex-col overflow-y-auto"
+            className="flex-1 flex flex-col overflow-y-auto relative"
           >
             <UserPanelHeader />
             <Suspense fallback={<div>Loading...</div>}>
               <ActivePanelRenderer />
             </Suspense>
+            <ModalRenderer />
           </motion.div>
         </div>
       </div>

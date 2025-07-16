@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useIdleVisibilityController } from "@/hooks/ui/useIdleVisibilityController";
+import { useIdleVisibilityController } from "@/hooks/interaction/useIdleVisibilityController";
 import { cn } from "@/utils";
 import { motion } from "framer-motion";
 import {

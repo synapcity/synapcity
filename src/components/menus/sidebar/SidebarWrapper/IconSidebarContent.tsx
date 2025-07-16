@@ -8,7 +8,7 @@ import {
 } from "@/components/atoms/ui/sidebar";
 import { ExtendedSidebarItem } from "./ExtendedSidebarItem";
 import { SortableContainer } from "@/components/sortable";
-import { useUserPanel } from "@/hooks/useUserPanel/useUserPanel";
+import { useUserPanel } from "@/hooks/features/useUserPanel/useUserPanel";
 import { PanelModule } from "@/types/panels";
 
 export const IconSidebarContent = () => {

@@ -8,7 +8,7 @@ jest.mock("lodash.debounce", () => {
   };
 });
 
-jest.mock("@/hooks/useDebouncedSearch", () => ({
+jest.mock("@/hooks/search/useDebouncedSearch", () => ({
   useDebouncedSearch: jest.fn(),
 }));
 
@@ -16,7 +16,7 @@ jest.mock("@/hooks/useDebouncedSearch", () => ({
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { SearchableMultiSelect, SearchableMultiSelectOption } from "./SearchableMultiSelect";
-import { useDebouncedSearch } from "@/hooks/useDebouncedSearch";
+import { useDebouncedSearch } from "@/hooks/search/useDebouncedSearch";
 
 const mockedUseDebouncedSearch = useDebouncedSearch as jest.Mock;
 
