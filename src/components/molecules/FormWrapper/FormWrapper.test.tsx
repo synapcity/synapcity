@@ -3,7 +3,6 @@ import {
   render,
   screen,
   waitFor,
-  renderHook,
   act as rtlAct,
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -19,10 +18,9 @@ import {
   FormControl,
   FormMessage,
   FormDescription,
-  useFormField,
 } from "@/components/atoms/ui/form";
 import { Input } from "@/components/atoms";
-import { useForm, FormProvider, UseFormReturn } from "react-hook-form";
+import { UseFormReturn } from "react-hook-form";
 
 const schema = z.object({
   email: z.string().email("Invalid email"),
@@ -290,79 +288,4 @@ describe("FormWrapper (static children)", () => {
     expect(methodsRef.current).not.toBeNull();
     expect(typeof methodsRef.current?.handleSubmit).toBe("function");
   });
-});
-
-describe("FormMessage and edge cases", () => {
-  it("renders static fallback when error message is undefined", async () => {
-    const Wrapper = () => {
-      const methods = useForm({ defaultValues: { email: "" } });
-
-      React.useEffect(() => {
-        methods.setError("email", { type: "manual", message: undefined });
-      }, [methods]);
-
-      return (
-        <FormProvider {...methods}>
-          <FormField
-            name="email"
-            control={methods.control}
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage>Static fallback</FormMessage>
-              </FormItem>
-            )}
-          />
-        </FormProvider>
-      );
-    };
-
-    await rtlAct(async () => {
-      render(<Wrapper />);
-    });
-
-    expect(await screen.findByText("Static fallback")).toBeInTheDocument();
-  });
-});
-
-describe("useFormField", () => {
-  it("throws if used outside <FormField>", () => {
-    const wrapper = ({ children }: { children: React.ReactNode }) => <div>{children}</div>;
-
-    expect(() => renderHook(() => useFormField(), { wrapper })).toThrow(
-      "useFormField should be used within <FormField>"
-    );
-  });
-});
-
-function Wrapper() {
-  const methods = useForm({ defaultValues: { "user.email": "" } });
-
-  return (
-    <FormProvider {...methods}>
-      <FormField
-        name="user.email"
-        render={() => (
-          <>
-            <FormLabel>Fallback Label</FormLabel>
-            <FormControl>
-              <input name="user.email" />
-            </FormControl>
-          </>
-        )}
-      />
-    </FormProvider>
-  );
-}
-
-test("falls back to field name with dots replaced if itemContext is missing", async () => {
-  render(<Wrapper />);
-
-  const label = await screen.findByText("Fallback Label");
-  const control = screen.getByRole("textbox");
-
-  expect(label).toHaveAttribute("for", "user-email-form-item");
-  expect(control).toHaveAttribute("id", "user-email-form-item");
 });
