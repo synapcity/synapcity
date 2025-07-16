@@ -24,7 +24,7 @@ export const ExtendedSidebarItem = ({ module, isActive, isDragging, ...sortableP
           hidden: false,
         }}
         isActive={isActive}
-        className="bg-black/50 hover:bg-accent dark:hover:bg-black text-white"
+        className="bg-[var(--accent-background)] hover:bg-[var(--accent-foreground)] active:bg-[var(--accent-background)] text-[var(--accent-foreground)] hover:text-[var(--accent-background)] active:text-[var(--accent-foreground)]"
         asChild
       >
 

@@ -40,7 +40,7 @@ export const Switch = React.forwardRef<HTMLButtonElement, SwitchProps>(
     return (
       <div className="space-y-1">
         {label && (
-          <label htmlFor={switchId} className="text-sm font-medium text-foreground">
+          <label htmlFor={switchId} className="text-sm font-medium text-[var(--foreground)]">
             {label}
           </label>
         )}
@@ -63,7 +63,7 @@ export const Switch = React.forwardRef<HTMLButtonElement, SwitchProps>(
         </div>
 
         {description && !error && (
-          <p id={`${switchId}-desc`} className="text-xs text-muted-foreground">
+          <p id={`${switchId}-desc`} className="text-xs text-[var(--primary-foreground)]">
             {description}
           </p>
         )}

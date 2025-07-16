@@ -1,5 +1,5 @@
-import { setDragging, useSortableMock } from "@/__mocks__/dnd-kit-sortable";
-import { mockCSS } from "@/__mocks__/dnd-kit-utilities";
+import { setDragging, useSortableMock } from "../../../__mocks__/dnd-kit-sortable";
+import { mockCSS } from "../../../__mocks__/dnd-kit-utilities";
 
 jest.mock("@dnd-kit/utilities", () => ({
   ...jest.requireActual("@dnd-kit/utilities"),

@@ -6,18 +6,14 @@ import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarHeader,
-  SidebarInput,
 } from "@/components/atoms/ui/sidebar"
 import { ContextSelector } from "./ContextSelector"
 import { PanelModule } from "@/types/panels";
-import { PropsWithChildren, useState } from "react";
-import { IconButton } from "@/components/atoms";
+import { PropsWithChildren } from "react"
 import { useUserPanel } from "@/hooks/useUserPanel/useUserPanel";
 
 
 export const ExtendedSidebar = ({ children }: PropsWithChildren) => {
-  const [showSearch, setShowSearch] = useState(false)
-  const toggleSearch = () => setShowSearch(prev => !prev)
   const { modules, activeModule, setActiveModuleId } = useUserPanel()
   return (
     <Sidebar auto collapsible="none" className="hidden flex-1 md:flex">
@@ -28,13 +24,7 @@ export const ExtendedSidebar = ({ children }: PropsWithChildren) => {
             activeItem={activeModule}
             setActiveItemId={setActiveModuleId}
           />
-          <IconButton
-            icon="Search"
-            size="sm"
-            onClick={() => toggleSearch()}
-          />
         </div>
-        {showSearch && <SidebarInput placeholder="Type to search..." />}
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>

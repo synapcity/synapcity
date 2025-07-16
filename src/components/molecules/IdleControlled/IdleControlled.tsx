@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useIdleVisibilityController } from "@/hooks/useIdleVisibilityController";
+import { useIdleVisibilityController } from "@/hooks/ui/useIdleVisibilityController";
 import { cn } from "@/utils";
 import { motion } from "framer-motion";
 import {
@@ -65,7 +65,7 @@ export const IdleControlled = ({
   const anim = animation ?? {
     initial: { opacity: 1, height: "auto" },
     animate: { opacity: 1, height: "auto" },
-    exit: { opacity: 0, height: 0 },
+    exit: { opacity: 1, height: "auto" },
     transition: { duration: 0.3 },
   };
 
@@ -75,7 +75,7 @@ export const IdleControlled = ({
         <div
           className={cn(
             "fixed top-0 left-0 right-0 h-6 transition-opacity duration-200 z-[9999]",
-            isActive ? "opacity-100 h-auto pointer-events-none" : "opacity-0 h-0 pointer-events-auto"
+            isActive ? "opacity-100 h-auto pointer-events-auto" : "opacity-0 h-8 pointer-events-auto"
           )}
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}

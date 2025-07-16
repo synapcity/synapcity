@@ -1,6 +1,7 @@
 import { PanelModule } from "@/types/panels";
 import { OverviewSidebar } from "./modules/overview/OverviewSidebar";
 import { OverviewPanel } from "./modules/overview/OverviewPanel";
+import { InboxPanel, InboxSidebar } from "./modules";
 
 export const USER_PANEL_MODULES: PanelModule[] = [
 	{
@@ -21,8 +22,8 @@ export const USER_PANEL_MODULES: PanelModule[] = [
 		label: "Inbox",
 		icon: "Inbox",
 		description: "Capture anything quickly",
-		component: () => null,
-		sidebar: () => null,
+		component: () => <InboxPanel />,
+		sidebar: () => <InboxSidebar />,
 		layout: {
 			isFavorite: true,
 		},

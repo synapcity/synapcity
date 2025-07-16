@@ -31,7 +31,7 @@ export function ContextSelector<T extends { id: string, label: string; }>({ item
             <SidebarMenuButton
               size="lg"
               className={clsx(
-                "data-[state=open]:text-sidebar-accent-foreground bg-accent dark:bg-accent-800 text-accent-200 hover:text-accent-50 dark:hover:text-white",
+                "data-[state=open]:text-[var(--accent-foreground)] bg-[var(--accent-background)] hover:cursor-pointer",
               )}
             >
               <div className={clsx(
@@ -53,7 +53,7 @@ export function ContextSelector<T extends { id: string, label: string; }>({ item
                 <Label>
                   {item?.label}
                 </Label>
-                {item?.id === activeItem?.id && <Check className="ml-auto size-4 dark:text-accent-100" />}
+                {item?.id === activeItem?.id && <Check className="ml-auto size-4 text-[var(--accent-background)]" />}
               </DropdownMenuItem>
             ))}
           </DropdownMenuContent>
