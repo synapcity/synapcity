@@ -21,17 +21,20 @@ export type UIActions = {
 	toggleCompState: (id: string, key: string) => void;
 };
 
-const defaultUIState: UIState = {
-	hasHydrated: false,
-	components: {},
-};
-
 const defaultComponentState: ComponentUIState = {
 	isVisible: true,
 	isExpanded: false,
 	isLocked: false,
 };
 
+const defaultUIState: UIState = {
+	hasHydrated: false,
+	components: {
+		header: { ...defaultComponentState },
+		userPanel: { ...defaultComponentState },
+		userPanelSidebar: { ...defaultComponentState },
+	},
+};
 export const uiStoreInitializer: StateCreator<UIState & UIActions> = (set) => ({
 	...defaultUIState,
 	setHasHydrated: (hasHydrated) => set({ hasHydrated }),

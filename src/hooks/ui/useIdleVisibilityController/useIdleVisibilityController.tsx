@@ -16,8 +16,8 @@ export function useIdleVisibilityController(
   {
     enabled = true,
     delay = 10000,
-    elementEvents = ["mousemove", "mouseenter", "mouseleave"],
-    globalEvents = ["click", "keydown"],
+    elementEvents = ["mousemove", "mouseenter", "click"],
+    globalEvents = [],
   }: Options = {}
 ) {
   const setCompState = useUIStore((s) => s.setCompState);

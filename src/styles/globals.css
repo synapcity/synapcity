@@ -83,6 +83,16 @@ body {
 	--sidebar-ring: hsl(217.2 91.2% 59.8%);
 }
 
+.light,
+[data-theme="light"] {
+	--sidebar: var(--primary-800);
+	--sidebar-foreground: var(--primary-200);
+	--sidebar-primary: var(--primary-50);
+	--sidebar-accent: var(--accent-800);
+	--sidebar-accent-foreground: var(--accent-200);
+	--sidebar-ring: var(--accent);
+}
+
 @theme inline {
 	--color-sidebar: var(--sidebar);
 	--color-sidebar-foreground: var(--sidebar-foreground);
