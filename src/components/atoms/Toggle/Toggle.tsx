@@ -40,7 +40,7 @@ const Toggle = React.forwardRef<
         id={id}
         aria-invalid={error || undefined}
         pressed={pressed}
-        className={cn(error && "border-destructive hover:cursor-pointer", className)}
+        className={cn("border border-[var(--accent)] hover:cursor-pointer", className)}
         {...props}
       >
         {showIcons ? (
@@ -49,7 +49,7 @@ const Toggle = React.forwardRef<
           <Icon
             name={icon}
             source={source}
-            className={cn(pressed ? "text-white" : "text-accent")}
+            className={cn(pressed ? "text-white" : "text-[var(--accent)]")}
           />
         )}
 

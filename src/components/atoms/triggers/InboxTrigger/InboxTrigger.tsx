@@ -1,9 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import { Toggle } from "@/components/atoms/Toggle";
-import { CollapsibleTrigger } from "@/components/atoms/ui/collapsible";
 import { cn } from "@/utils";
+import { useUIStore } from "@/stores";
 
 interface InboxTriggerProps {
   label?: string;
@@ -11,27 +10,24 @@ interface InboxTriggerProps {
 }
 
 export const InboxTrigger = ({ label = "Panel", className }: InboxTriggerProps) => {
-  // const isOpen = useUIStore((state) => state.visibleComp.inbox)
-  // const setIsOpen = useUIStore((state) => state.setCompVisible)
-  const [isOpen, setIsOpen] = useState(false)
+  const isOpen = useUIStore((state) => state.components.userPanel.isVisible ?? false)
+  const setOpen = useUIStore((state) => state.setCompState)
 
   const toggleOpen = () => {
-    setIsOpen(prev => !prev)
+    setOpen("userPanel", "isVisible", !isOpen)
   }
 
   return (
-    <CollapsibleTrigger className="flex items-center justify-center" asChild>
-      <Toggle
-        icon="Inbox"
-        isIconOnly
-        showIcons={false}
-        className={cn(className)}
-        variant={isOpen ? "default" : "outline"}
-        onClick={() => toggleOpen()}
-        size="default"
-      >
-        {label}
-      </Toggle>
-    </CollapsibleTrigger>
+    <Toggle
+      icon="Inbox"
+      isIconOnly
+      showIcons={false}
+      className={cn(className)}
+      variant={isOpen ? "outline" : "default"}
+      onClick={() => toggleOpen()}
+      size="default"
+    >
+      {label}
+    </Toggle>
   );
 };

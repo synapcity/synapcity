@@ -127,3 +127,5 @@ export {
 	ResizablePanel as UIResizablePanel,
 	ResizableHandle as UIResizableHandle,
 } from "./resizable";
+export { Checkbox as UICheckbox } from "./checkbox";
+export { Textarea as UITextarea } from "./textarea";
