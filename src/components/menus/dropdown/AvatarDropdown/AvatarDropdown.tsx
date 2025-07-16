@@ -17,13 +17,13 @@ export const AvatarDropdown: React.FC<{ avatarUrl: string; username: string; onE
       items={[
         {
           label: "Profile",
-          icon: "User",
+          icon: "user",
           onSelect: onEdit,
         },
         "separator",
         {
           label: "Log Out",
-          icon: "LogOut",
+          icon: "logOut",
           destructive: true,
           onSelect: onLogout,
         },

@@ -32,7 +32,7 @@ export const ThemeSheet = ({ entityId, scope }: { entityId?: string; scope: Them
       trigger={
         <IconButton
           variant="ghost"
-          icon="Palette"
+          icon="palette"
           aria-label="Font & Theme"
           tooltip="Font & Theme"
         />

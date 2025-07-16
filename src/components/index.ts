@@ -6,7 +6,7 @@ export * from "./atoms";
 export * from "./molecules";
 export * from "./loading";
 export * from "./organisms";
-export * from "./panels/UserPanel";
+export * from "./panels";
 export * from "./menus";
 export * from "./pages";
 export * from "./theme";

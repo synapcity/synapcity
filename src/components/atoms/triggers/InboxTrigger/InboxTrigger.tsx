@@ -19,7 +19,7 @@ export const InboxTrigger = ({ label = "Panel", className }: InboxTriggerProps) 
 
   return (
     <Toggle
-      icon="Inbox"
+      icon="inbox"
       isIconOnly
       showIcons={false}
       className={cn(className)}

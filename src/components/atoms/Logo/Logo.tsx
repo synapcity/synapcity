@@ -11,7 +11,7 @@ export const Logo = () => (
     isIconOnly
     isLoading={false}
     isActive={false}
-    icon="Boxes"
+    icon="boxes"
     tooltip="Synapcity"
   >Synapcity</LinkButton>
 

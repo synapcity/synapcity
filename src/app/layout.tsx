@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
 import { Inter, Space_Mono, Space_Grotesk } from "next/font/google";
 import "../styles/globals.css";
-import GlobalProvider from "./GlobalProvider";
-import GlobalLayout from "./GlobalLayout";
 import { defaultOG, defaultTwitter } from "@/lib/metadata";
 import { Toaster } from "sonner";
 import { Suspense } from "react";
-import { Spinner } from "@/components";
+import dynamic from "next/dynamic";
+import { Loading } from "@/components/loading/Loading/Loading";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -41,12 +40,14 @@ export const metadata: Metadata = {
     description: "Capture, connect, and create with your digital thoughtspace.",
   },
 };
+
+const GlobalProvider = dynamic(() => import("./GlobalProvider").then((mod) => mod.default), { ssr: true })
+const GlobalLayout = dynamic(() => import("./GlobalLayout").then((mod) => mod.default), { ssr: true })
+
 export default function RootLayout({
-  children,
-  modal
+  children
 }: Readonly<{
   children: React.ReactNode;
-  modal: React.ReactNode;
 }>) {
 
   return (
@@ -56,10 +57,9 @@ export default function RootLayout({
       >
         <GlobalProvider>
           <GlobalLayout>
-            <Suspense fallback={<div className="size-full flex items-center justify-center"><Spinner size={48} /></div>}>
+            <Suspense fallback={<Loading />}>
               {children}
             </Suspense>
-            {modal}
             <Toaster position="top-left" />
           </GlobalLayout>
         </GlobalProvider>

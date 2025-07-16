@@ -9,9 +9,10 @@ import { Logo } from '@/components/atoms/Logo';
 import { InboxTrigger } from '@/components/atoms/triggers';
 import { DarkModeSwitch } from '@/components/atoms/DarkModeSwitch';
 import { Separator } from '@/components/atoms/ui/separator';
-import { useThemeStore } from '@/stores';
+import { useThemeStore, useUIStore } from '@/stores';
 import { ThemeSheet } from '@/components/theme';
 import { AuthLinks } from '../Links/AuthLinks';
+import { cn } from '@/utils';
 
 const links = [
   { href: '/', label: 'Home' },
@@ -26,12 +27,16 @@ const NavMenuLink = dynamic(() => import('@/components/menus/navigation/NavItem/
 });
 
 export function TopNavMenu() {
+  const isHeaderOpen = useUIStore(s => s.components.heading.isVisible)
+
   const toggleMode = useThemeStore(state => state.toggleGlobalMode)
 
   const globalPrefs = useThemeStore(state => state.globalPreferences)
   const mode = globalPrefs.mode
   return (
-    <div className="w-full border-b bg-[var(--background)] text-[var(--foreground)] shadow-sm py-2 flex justify-center items-center px-4 gap-4">
+    <div className={cn("w-full border-b bg-[var(--background)] text-[var(--foreground)] shadow-sm py-2 flex justify-center items-center px-4 gap-4 transition-[opacity, transform] duration-500 ease-linear opacity-100 translate-y-0", {
+      "-translate-y-full opacity-0": !isHeaderOpen
+    })}>
       <Logo />
       <NavigationMenu className="mx-auto w-full flex justify-between items-center">
         <NavigationMenuList>

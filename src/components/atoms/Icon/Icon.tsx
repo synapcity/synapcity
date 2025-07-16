@@ -3,7 +3,7 @@
 
 import React, { ComponentType, HTMLAttributes } from "react";
 import { Icon as IconifyIcon } from "@iconify/react";
-import * as LucideIcons from "lucide-react";
+import { lucideIcons } from "./lucideIcons";
 import { UITooltip, UITooltipContent, UITooltipProvider, UITooltipTrigger } from "@/components/atoms";
 import { AlertCircle } from "lucide-react";
 import { testId } from "@/utils/testId/testId";
@@ -12,7 +12,7 @@ export type IconSource = "lucide" | "iconify" | "undefined";
 export type IconSize = "xs" | "sm" | "md" | "lg" | "xl" | number;
 
 export interface IconProps extends HTMLAttributes<HTMLElement> {
-  name?: string;
+  name?: keyof typeof lucideIcons | string; // support fallback
   icon?: ComponentType<any>;
   source?: IconSource;
   size?: IconSize;
@@ -45,7 +45,7 @@ export const Icon = ({
   const ariaLabel = label ?? tooltip;
   const ariaHidden = !ariaLabel;
 
-  const renderFallback = () => (
+  const renderFallback = () =>
     fallbackIcon ?? (
       <AlertCircle
         size={resolvedSize}
@@ -54,9 +54,7 @@ export const Icon = ({
         style={{ width: resolvedSize, height: resolvedSize }}
         className={`shrink-0 text-red-500 ${className}`}
       />
-    )
-  );
-
+    );
 
   const renderIcon = () => {
     if (IconComponent) {
@@ -72,9 +70,7 @@ export const Icon = ({
       );
     }
 
-    if (!name) {
-      return renderFallback();
-    }
+    if (!name) return renderFallback();
 
     if (source === "iconify" || name.includes(":")) {
       return (
@@ -85,13 +81,12 @@ export const Icon = ({
           aria-hidden={ariaHidden}
           aria-label={ariaLabel}
           className={`shrink-0 ${className}`}
-
           {...(props as any)}
         />
       );
     }
 
-    const LucideIcon = ((LucideIcons as unknown) as Record<string, ComponentType<any>>)[name];
+    const LucideIcon = lucideIcons[name as keyof typeof lucideIcons];
 
     if (LucideIcon) {
       return (
@@ -106,7 +101,7 @@ export const Icon = ({
       );
     }
 
-    console.warn(`Icon "${name}" not found in lucide-react icons.`);
+    console.warn(`Icon "${name}" not found in lucideIcons registry.`);
     return renderFallback();
   };
 
@@ -116,7 +111,9 @@ export const Icon = ({
     return (
       <UITooltipProvider>
         <UITooltip>
-          <UITooltipTrigger asChild data-testid="UItooltip-trigger">{iconElement}</UITooltipTrigger>
+          <UITooltipTrigger asChild data-testid="UItooltip-trigger">
+            {iconElement}
+          </UITooltipTrigger>
           <UITooltipContent>{tooltip}</UITooltipContent>
         </UITooltip>
       </UITooltipProvider>

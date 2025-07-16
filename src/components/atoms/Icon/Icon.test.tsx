@@ -23,7 +23,7 @@ jest.mock("@iconify/react", () => ({
 
 describe("Icon component", () => {
   it("renders a Lucide icon by name", () => {
-    render(<Icon name="Settings" size="md" />);
+    render(<Icon name="settings" size="md" />);
     expect(screen.getByTestId("custom-icon")).toBeInTheDocument();
   });
 
@@ -53,7 +53,7 @@ describe("Icon component", () => {
   });
 
   it("renders tooltip when tooltip prop is provided", async () => {
-    render(<Icon name="Settings" tooltip="Settings tooltip" data-testid="lucide-settings" />);
+    render(<Icon name="settings" tooltip="Settings tooltip" data-testid="lucide-settings" />);
 
     const icon = screen.getByTestId("lucide-settings");
     expect(icon).toBeInTheDocument();
@@ -77,7 +77,7 @@ describe("Icon component", () => {
   });
 
   it("sets aria-hidden true if no label or tooltip", () => {
-    render(<Icon name="Settings" />);
+    render(<Icon name="settings" />);
     const icon = screen.getByTestId("custom-icon");
     expect(icon).toHaveAttribute("aria-hidden", "true");
   });

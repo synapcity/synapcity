@@ -3,7 +3,6 @@
 import dynamic from "next/dynamic";
 import { cn } from "@/utils";
 import { useUIStore } from "@/stores";
-import { IdleControlled } from "@/components/molecules";
 import { useEffect } from "react";
 
 const TopNavMenu = dynamic(() =>
@@ -15,38 +14,48 @@ export const Header = () => {
   const isLocked = useUIStore((s) =>
     s.components.userPanel.isLocked ?? false
   );
-  const isOpen = useUIStore((s) =>
+  const isPanelOpen = useUIStore((s) =>
     s.components.userPanel.isVisible ?? false
   );
+  const isHeaderVisible = useUIStore((s) =>
+    s.components.heading.isVisible ?? true
+  )
   const setCompState = useUIStore((s) => s.setCompState)
 
   useEffect(() => {
-    if (!isLocked || !isOpen) {
-      setCompState("heading", "isCollapsed", false);
+    if (isHeaderVisible) return;
+    if (!isLocked || !isPanelOpen) {
+      setCompState("heading", "isVisible", true);
     }
-  }, [isLocked, isOpen, setCompState]);
+  }, [isLocked, isPanelOpen, setCompState, isHeaderVisible]);
 
 
   return (
-    <IdleControlled
-      id="heading"
-      delay={5000}
-      hoverOverlay
-      enabled={isLocked && isOpen}
-      shouldEnable={() => isLocked ?? false}
-      elementEvents={["mouseover", "mouseenter"]}
-    >
-      <div className="w-full">
-        <header
-          style={{ "--header-height": "3.5rem" } as React.CSSProperties}
-          className={cn(
-            "w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/70",
-            "border-b border-border shadow-sm sticky top-0 flex items-center px-4 z-[9999]"
-          )}
-        >
-          <TopNavMenu />
-        </header>
-      </div>
-    </IdleControlled>
+    <div className="w-full">
+      <header
+        style={{ "--header-height": "3.5rem" } as React.CSSProperties}
+        className={cn(
+          "w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/70",
+          "border-b border-border shadow-sm sticky top-0 flex items-center z-50 transition-[height] duration-500 ease-linear delay-500",
+          {
+            "h-4": isLocked && isPanelOpen && !isHeaderVisible
+          }
+        )}
+        onMouseEnter={() => {
+          if (!isHeaderVisible) {
+            setCompState("heading", "isVisible", true)
+          }
+        }}
+        onMouseLeave={() => {
+          if (isLocked && isPanelOpen) {
+            setTimeout(() => {
+              setCompState("heading", "isVisible", false)
+            }, 7500)
+          }
+        }}
+      >
+        <TopNavMenu />
+      </header>
+    </div>
   );
 };

@@ -20,7 +20,7 @@ export const LockTrigger = ({ component = "userPanel", label = "Lock", className
   }
   return (
     <Toggle
-      icon={isLocked ? "Lock" : "LockOpen"}
+      icon={isLocked ? "lock" : "lockOpen"}
       isIconOnly
       showIcons={false}
       className={cn(className)}
