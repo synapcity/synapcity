@@ -1,6 +1,15 @@
 import { create, StateCreator } from "zustand";
 import { persist } from "zustand/middleware";
 import { migrateUIStore } from "../migrate/migrate";
+import {
+	createSelectionSlice,
+	createHydrationSlice,
+	createStatusSlice,
+	createSidebarPrefsSlice,
+	createPanelEntitySlice,
+} from "@/stores/slices";
+import type { SidebarPrefsSlice, PanelEntitySlice } from "@/types/sidebar";
+import type { StatusSlice, SelectionSlice, HydrationSlice } from "@/types/ui";
 
 type KnownKeys = "isVisible" | "isLocked" | "isExpanded";
 export type ComponentUIState = Partial<Record<KnownKeys, boolean>> & {
@@ -9,12 +18,10 @@ export type ComponentUIState = Partial<Record<KnownKeys, boolean>> & {
 };
 
 export type UIState = {
-	hasHydrated: boolean;
 	components: Record<string, ComponentUIState>;
 };
 
 export type UIActions = {
-	setHasHydrated: (hasHydrated: boolean) => void;
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	setCompState: <T = any>(id: string, key: string, value: T) => void;
 	setComponent: (id: string, updates: Partial<ComponentUIState>) => void;
@@ -28,16 +35,22 @@ const defaultComponentState: ComponentUIState = {
 };
 
 const defaultUIState: UIState = {
-	hasHydrated: false,
 	components: {
 		header: { ...defaultComponentState },
 		userPanel: { ...defaultComponentState },
 		userPanelSidebar: { ...defaultComponentState },
 	},
 };
-export const uiStoreInitializer: StateCreator<UIState & UIActions> = (set) => ({
+
+export type UIStore = UIState &
+	UIActions &
+	SelectionSlice &
+	StatusSlice &
+	HydrationSlice &
+	SidebarPrefsSlice &
+	PanelEntitySlice;
+export const uiStoreInitializer: StateCreator<UIStore> = (set, get, store) => ({
 	...defaultUIState,
-	setHasHydrated: (hasHydrated) => set({ hasHydrated }),
 	setComponent: (id, updates) => {
 		set((state) => {
 			const prev = state.components[id] ?? { ...defaultComponentState };
@@ -80,9 +93,15 @@ export const uiStoreInitializer: StateCreator<UIState & UIActions> = (set) => ({
 			};
 		});
 	},
+	...createHydrationSlice(set, get, store),
+	...createStatusSlice(set, get, store),
+	...createSelectionSlice(set, get, store),
+
+	...createPanelEntitySlice(set, get, store),
+	...createSidebarPrefsSlice(set, get, store),
 });
 
-export const useUIStore = create<UIState & UIActions>()(
+export const useUIStore = create<UIStore>()(
 	persist(uiStoreInitializer, {
 		name: "ui-store",
 		version: 2,
@@ -90,5 +109,10 @@ export const useUIStore = create<UIState & UIActions>()(
 		onRehydrateStorage: () => (state) => {
 			state?.setHasHydrated(true);
 		},
+		partialize: (state) => ({
+			prefsByKey: state.prefsByKey,
+			panels: state.panels,
+			components: state.components,
+		}),
 	})
 );

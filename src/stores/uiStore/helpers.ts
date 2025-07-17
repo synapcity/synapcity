@@ -13,6 +13,5 @@ export const isComponentVisible = (id: string): boolean =>
 export const useComponentUIState = (id: string): ComponentUIState =>
 	useUIStore((state) => state.components[id] ?? emptyComponentState);
 
-// ✅ Safe getter for non-reactive contexts
 export const getComponentUIState = (id: string): ComponentUIState =>
 	useUIStore.getState().components[id] ?? emptyComponentState;
