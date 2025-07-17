@@ -1,11 +1,9 @@
-// import { Spinner } from "@/components/atoms/Spinner/Spinner"
 import dynamic from "next/dynamic"
 
-const NotesPage = dynamic(() => import("@/components/pages/NotesPage").then((mod) => mod.default), {
+const NotesPage = dynamic(() => import("@/components/pages/notes/NotesGridPage").then((mod) => mod.default), {
   ssr: true,
-  // loading: () => <div className="absolute inset-0 flex items-center justify-center"><Spinner size={16} /></div>
 })
 
-export default function Notes() {
+export default function NotesGridPage() {
   return <NotesPage />
 }
