@@ -18,14 +18,14 @@ export const Header = () => {
     s.components.userPanel.isVisible ?? false
   );
   const isHeaderVisible = useUIStore((s) =>
-    s.components.heading.isVisible ?? true
+    s.components.header.isVisible ?? true
   )
   const setCompState = useUIStore((s) => s.setCompState)
 
   useEffect(() => {
     if (isHeaderVisible) return;
     if (!isLocked || !isPanelOpen) {
-      setCompState("heading", "isVisible", true);
+      setCompState("header", "isVisible", true);
     }
   }, [isLocked, isPanelOpen, setCompState, isHeaderVisible]);
 
@@ -43,13 +43,13 @@ export const Header = () => {
         )}
         onMouseEnter={() => {
           if (!isHeaderVisible) {
-            setCompState("heading", "isVisible", true)
+            setCompState("header", "isVisible", true)
           }
         }}
         onMouseLeave={() => {
           if (isLocked && isPanelOpen) {
             setTimeout(() => {
-              setCompState("heading", "isVisible", false)
+              setCompState("header", "isVisible", false)
             }, 7500)
           }
         }}

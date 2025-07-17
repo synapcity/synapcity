@@ -32,6 +32,7 @@ export const ThemeProvider = ({
 	const hasHydrated = useThemeStore((s) => s.hasHydrated);
 	const hydratedScoped = useThemeStore((s) => s.scopedPreferences);
 	const hydratedGlobal = useThemeStore((s) => s.globalPreferences);
+	const initScopedPreferences = useThemeStore((s) => s.initScopedPreferences);
 	const setGlobalPreferences = useThemeStore((s) => s.setGlobalPreferences);
 	const setPreferences = useThemeStore((s) => s.setPreferences);
 	const resetGlobalPreferences = useThemeStore((s) => s.resetGlobalPreferences);
@@ -60,9 +61,15 @@ export const ThemeProvider = ({
 
 	const scopedPrefs =
 		entityId && hasHydrated
-			? hydratedScoped?.[scope as EntityType]?.[entityId] ??
-			useThemeStore.getState().initScopedPreferences(scope as EntityType, entityId)
+			? hydratedScoped[scope as EntityType]?.[entityId] ?? null
 			: null;
+
+	useEffect(() => {
+		if (entityId && hasHydrated && !hydratedScoped[scope as EntityType]?.[entityId]) {
+			console.debug(`[ThemeProvider] Initializing scoped theme for ${scope}:${entityId}`);
+			initScopedPreferences(scope as EntityType, entityId);
+		}
+	}, [entityId, hasHydrated, hydratedScoped, initScopedPreferences, scope]);
 
 	const targetRef = useRef<HTMLElement | null>(null);
 
