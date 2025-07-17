@@ -34,7 +34,7 @@ export const UserPanelHeader = () => {
   return isVisible && (
     <header
       className={cn(
-        "min-h-[3.5rem] md:min-h-[4rem] px-4 py-2 flex items-center justify-around bg-background/90 backdrop-blur border-b sticky top-0 transition-shadow shadow-sm z-[99999]",
+        "min-h-[3.5rem] md:min-h-[4rem] px-4 py-2 flex items-center justify-around bg-background/90 backdrop-blur border-b sticky top-0 transition-shadow shadow-sm z-[99999] @container",
         open ? "shadow-md" : "shadow-none"
       )}
     >
@@ -46,8 +46,8 @@ export const UserPanelHeader = () => {
           transition={{ duration: 0.5 }}
           className="w-full flex flex-col md:flex-row md:items-center md:justify-between gap-2 px-2"
         >
-          <div className="flex gap-2 items-center">
-            <h1 className="text-2xl font-semibold">{getGreeting()}, {user?.name}</h1>
+          <div className="flex gap-2 items-center justify-between">
+            <h1 className="@sm:text-lg @md:text-xl @lg:text-2xl font-semibold">{getGreeting()}, {user?.name}</h1>
             <UserWeather />
           </div>
           <div className="text-sm text-[var(--muted-foreground)] flex gap-4">

@@ -8,10 +8,13 @@ export const createStatusSlice: StateCreator<
 	[],
 	StatusSlice
 > = (set, get) => ({
-	// global fallback status
 	status: {
-		isLoadingPage: false,
+		isLoading: false,
 		isSaving: false,
+		isDeleting: false,
+		isEditing: false,
+		isSearching: false,
+		isLoadingPage: false,
 		error: null,
 		lastSavedAt: null,
 	},

@@ -14,6 +14,7 @@ export type SidebarPanel = {
 	onClick?: () => void;
 	defaultPinned?: boolean;
 	defaultHidden?: boolean;
+	__dynamic?: boolean;
 };
 
 export interface SidebarPrefs {

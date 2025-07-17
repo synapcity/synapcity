@@ -1,6 +1,7 @@
 import {
 	Activity,
 	AlertCircle,
+	BellDot,
 	Bookmark,
 	BookOpen,
 	Boxes,
@@ -60,6 +61,7 @@ import {
 export const lucideIcons = {
 	activity: Activity,
 	alertCircle: AlertCircle,
+	bellDot: BellDot,
 	bookmark: Bookmark,
 	bookOpen: BookOpen,
 	boxes: Boxes,

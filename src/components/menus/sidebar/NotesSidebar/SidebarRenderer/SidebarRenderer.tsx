@@ -12,7 +12,6 @@ interface SidebarRendererProps {
 }
 
 export function SidebarRenderer({ scope, id }: SidebarRendererProps) {
-  // wait for the whole UI store to rehydrate
   const isHydrated = useUIStore((s) => s.hasHydrated);
   const { activePanel } = usePanels(scope, id);
 
@@ -22,11 +21,15 @@ export function SidebarRenderer({ scope, id }: SidebarRendererProps) {
 
   if (!activePanel) {
     console.warn(`No active panel for ${scope}:${id}`);
-    return null;
+    // return null;
   }
 
-  const PanelComponent = activePanel.component;
-  const panelProps = activePanel.props ?? {};
+  const PanelComponent = activePanel?.component;
+  const panelProps = activePanel?.props ?? {};
+
+  if (!PanelComponent) {
+    return null;
+  }
 
   return (
     <Suspense fallback={<Skeleton className="w-full h-full" />}>

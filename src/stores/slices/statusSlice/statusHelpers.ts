@@ -2,11 +2,11 @@ import { capitalize } from "lodash";
 import type { UILocalStatus, StatusKeys, StatusField } from "@/types/ui";
 
 export const defaultStatus: UILocalStatus = {
-	isSearching: false,
-	isEditing: false,
-	isDeleting: false,
-	isSaving: false,
 	isLoading: false,
+	isSaving: false,
+	isDeleting: false,
+	isEditing: false,
+	isSearching: false,
 	error: null,
 	lastSavedAt: null,
 };

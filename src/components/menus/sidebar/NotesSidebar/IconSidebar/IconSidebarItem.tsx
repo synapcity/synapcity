@@ -21,16 +21,15 @@ export const IconSidebarItem = ({ item, isActive, onOpen }: SidebarIconItemProps
           hidden: false,
         }}
         isActive={isActive}
-        className="bg-primary/50 hover:text-accent text-white"
+        className="bg-(--primary)/50 hover:text-(--accent) text-white"
         asChild
       >
         <IconButton
           variant="ghost"
           size="xs"
           isIconOnly
-          icon={item.icon ?? "FileText"}
-          // className="hover:text-white"
-          className="inline-flex justify-center items-center hover:bg-accent border border-accent/50 data-[state=open]:bg-accent/50 dark:text-white"
+          icon={item.icon ?? "fileText"}
+          className="inline-flex justify-center items-center hover:bg-(--accent border) border-(--accent)/50 data-[state=open]:bg-(--accent)/50 dark:text-white"
           onClick={() => {
             onOpen()
             if (isActive) {

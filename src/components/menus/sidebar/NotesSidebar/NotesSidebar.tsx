@@ -55,7 +55,6 @@ export function NotesSidebar({ id, ...props }: NotesSidebarProps & React.Compone
               <SidebarHeader className="gap-3.5 border-b p-4">
                 <div className="flex w-full items-center justify-between">
                   <span className="text-foreground text-base font-medium">
-                    {/* {activePanel.label} */}
                     Notes
                   </span>
                 </div>

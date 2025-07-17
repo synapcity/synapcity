@@ -7,6 +7,7 @@ const ResizableSidebarWrapper = dynamic(() => import("@/components/menus/sidebar
 const NotesSidebar = dynamic(() => import("@/components/menus/sidebar/NotesSidebar/NotesSidebar").then((mod) => mod.NotesSidebar), { ssr: false, loading: () => <SkeletonOrLoading isLoading={true} /> })
 
 export default function NoteEditorLayout({ noteId, children }: { noteId: string; children: React.ReactNode }) {
+
   return (
     <ResizableSidebarWrapper
       id={noteId}
