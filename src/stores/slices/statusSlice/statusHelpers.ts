@@ -1,5 +1,5 @@
 import { capitalize } from "lodash";
-import type { UILocalStatus, StatusKeys, StatusField } from "./types";
+import type { UILocalStatus, StatusKeys, StatusField } from "@/types/ui";
 
 export const defaultStatus: UILocalStatus = {
 	isSearching: false,

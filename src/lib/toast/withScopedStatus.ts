@@ -1,6 +1,6 @@
 import { useUIStore } from "@/stores";
 import { showToast } from "./showToast";
-import type { UIStatusField } from "@/types/ui";
+import type { StatusField } from "@/types/ui";
 
 type Messages = {
 	loading?: string;
@@ -41,7 +41,7 @@ export async function withToast<T>(
 }
 
 export async function withStatusAndToast<T>(
-	type: UIStatusField,
+	type: StatusField,
 	action: () => Promise<T>,
 	messages: Messages
 ): Promise<T | undefined> {
@@ -60,7 +60,7 @@ export async function withStatusAndToast<T>(
 }
 
 export async function withScopedStatusToast<T>(
-	field: UIStatusField,
+	field: StatusField,
 	type: string,
 	id: string,
 	action: () => Promise<T>,

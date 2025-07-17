@@ -1,4 +1,4 @@
-import type { EntityState } from "../createEntityStore";
+import type { EntityState } from "@/stores/factory";
 import type { Note } from "@/types/note";
 
 export const migrateNotesStore = (

@@ -11,7 +11,7 @@ export default async function Layout({
   const { noteId } = noteParams
   return (
     <NoteProvider noteId={noteId}>
-      <NoteEditorLayout>{children}</NoteEditorLayout>
+      <NoteEditorLayout noteId={noteId}>{children}</NoteEditorLayout>
     </NoteProvider>
   );
 }

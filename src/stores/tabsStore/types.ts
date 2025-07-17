@@ -1,5 +1,5 @@
-import { StatusSlice, SelectionSlice } from "@/stores/slices";
-import { EntityType } from "@/types/entity";
+import type { StatusSlice, SelectionSlice } from "@/types/ui";
+import type { EntityType } from "@/types/entity";
 
 export type Tab = {
 	id: string;

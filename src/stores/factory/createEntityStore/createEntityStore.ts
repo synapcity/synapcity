@@ -4,13 +4,10 @@ import { nanoid } from "nanoid";
 import { withScopedStatusToast, showToast } from "@/lib/toast";
 import {
 	createHydrationSlice,
-	HydrationSlice,
-} from "@/stores/slices/hydrationSlice";
-import { createStatusSlice, StatusSlice } from "@/stores/slices/statusSlice";
-import {
+	createStatusSlice,
 	createSelectionSlice,
-	SelectionSlice,
-} from "@/stores/slices/selectionSlice";
+} from "@/stores/slices";
+import { HydrationSlice, SelectionSlice, StatusSlice } from "@/types/ui";
 
 export interface EntityBase {
 	id: string;

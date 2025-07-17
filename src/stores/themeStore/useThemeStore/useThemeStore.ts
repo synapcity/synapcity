@@ -115,7 +115,6 @@ export const themeStoreInitializer: StateCreator<ThemeStore> = (
 	},
 	resetScopedPreferences: (scope: EntityType, id: string) => {
 		set((state) => {
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			const { [id]: _, ...rest } = state.scopedPreferences[scope];
 			return {
 				scopedPreferences: {

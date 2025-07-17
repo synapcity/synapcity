@@ -102,6 +102,7 @@ export const createTabEntitySlice: StateCreator<
 	},
 
 	getTab: (entity, entityId, tabId) => {
+		if (!tabId) return;
 		return get().tabs[entity]?.[entityId]?.[tabId];
 	},
 });

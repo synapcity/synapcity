@@ -8,17 +8,16 @@ import {
   SidebarMenuItem,
   SidebarTrigger,
 } from "@/components/atoms/ui/sidebar";
-import { AddButton } from "@/components/atoms/buttons/AddButton/AddButton";
 import { IconSidebarContent } from "./IconSidebarContent";
 import type { SidebarScope } from "@/types/sidebar";
 
 interface IIconSidebarProps {
   scope: SidebarScope;
   id: string;
-  onAdd: () => void;
+  onAdd?: () => void;
 }
 
-export function IconSidebar({ scope, id, onAdd }: IIconSidebarProps) {
+export function IconSidebar({ scope, id }: IIconSidebarProps) {
   return (
     <Sidebar
       collapsible="none"
@@ -30,7 +29,6 @@ export function IconSidebar({ scope, id, onAdd }: IIconSidebarProps) {
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
               <SidebarTrigger />
-              {/* <AddButton onSubmit={() => onAdd()} /> */}
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

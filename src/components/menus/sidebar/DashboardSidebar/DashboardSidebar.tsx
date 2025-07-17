@@ -9,7 +9,7 @@ import {
   SidebarGroup,
   SidebarGroupContent,
   useSidebar,
-} from "@/components";
+} from "@/components/atoms/ui/sidebar";
 import { Label } from "@/components/atoms";
 import { Switch } from "@/components/molecules";
 import { IconSidebar, SidebarRenderer } from "@/components/menus/sidebar/NotesSidebar";
@@ -57,7 +57,7 @@ export function DashboardSidebar({
     <Sidebar
       collapsible="icon"
       side="right"
-      variant="responsive"
+      variant="inset"
       className="w-full overflow-hidden *:data-[sidebar=sidebar]:flex-row bg-[var(--background)] text-[var(--foreground)]"
       style={
         {
