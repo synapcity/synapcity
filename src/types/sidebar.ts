@@ -26,6 +26,7 @@ export interface SidebarPrefs {
 export type SidebarPrefsSlice = {
 	/** key = `${scope}:${entityId}` */
 	prefsByKey: Record<string, SidebarPrefs>;
+	getPrefs: (scope: SidebarScope, id: string) => SidebarPrefs;
 	setActivePanel: (
 		scope: SidebarScope,
 		entityId: string,

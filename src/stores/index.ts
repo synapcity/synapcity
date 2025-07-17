@@ -8,5 +8,7 @@ export * from "./modalStore";
 export * from "./toastStore";
 export * from "./notesStore";
 export * from "./tabsStore";
+export * from "./metadataStore";
+export * from "./editorStore";
 
 export * from "./factory";

@@ -150,7 +150,25 @@ export const createSidebarPrefsSlice: StateCreator<SidebarPrefsSlice> = (
 	get
 ) => ({
 	prefsByKey: {},
+	getPrefs: (scope, id) => {
+		const key = generateScopeKey(scope, id);
+		const stored = get().prefsByKey[key];
+		if (stored) return stored;
 
+		const defaultPanels =
+			scope === "note"
+				? defaultNotePanels
+				: scope === "dashboard"
+				? defaultDashboardPanels
+				: [];
+
+		return {
+			activePanel: null,
+			panels: defaultPanels,
+			pinned: [],
+			hidden: [],
+		};
+	},
 	setPanels: (scope, id, panels) => {
 		const key = generateScopeKey(scope, id);
 		set((state) => ({
