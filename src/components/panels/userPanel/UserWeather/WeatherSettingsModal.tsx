@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/atoms/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/atoms/ui/dialog";
 import { Input, Label, IconButton } from "@/components/atoms";
 import { Switch } from "@/components/molecules";
 import { useWeatherStore } from "@/stores/weatherStore";
@@ -9,8 +9,8 @@ import { useModalStore } from "@/stores/modalStore";
 import { getWeather } from "@/lib";
 
 export function WeatherSettingsModal() {
-  const isOpen = useModalStore((s) => s.openModal === "weatherSettings");
-  const close = useModalStore((s) => s.close);
+  const isOpen = useModalStore((s) => s.modalType) === "weatherSettings";
+  const close = useModalStore((s) => s.closeModal);
   const setPreferences = useWeatherStore((s) => s.setPreferences);
   const preferences = useWeatherStore((s) => s.preferences);
   const setLoading = useWeatherStore(s => s.setLoading)
@@ -33,9 +33,9 @@ export function WeatherSettingsModal() {
         <DialogHeader>
           <DialogTitle>Weather Settings</DialogTitle>
         </DialogHeader>
-        <p id="weather-settings-description" className="sr-only">
+        <DialogDescription id="weather-settings-description" className="sr-only">
           Customize your local weather settings.
-        </p>
+        </DialogDescription>
 
         <div className="space-y-4">
           <div className="space-y-1">

@@ -6,6 +6,7 @@ import { useWeatherStore } from "@/stores";
 import { cn } from "@/utils";
 import { useModalStore } from "@/stores/modalStore";
 import { Icon, SkeletonOrLoading } from "@/components";
+import { WeatherSettingsModal } from "./WeatherSettingsModal";
 
 export const UserWeather = () => {
   const { setLocationLabel, setGpsCoords, setLoading: setWeatherLoading } = useWeatherStore();
@@ -15,9 +16,9 @@ export const UserWeather = () => {
   const weatherLoading = useWeatherStore(s => s.loading)
   const [locationPermission, setLocationPermission] = useLocalStorage("location-permission", false);
   const [error, setError] = useState<string | null>(null);
-  const openModal = useModalStore((s) => s.open);
+  const openModal = useModalStore((s) => s.openModal);
 
-  useWeatherEffect();
+  const { fetchAndUpdate } = useWeatherEffect();
 
   useEffect(() => {
     if (data) {
@@ -64,7 +65,11 @@ export const UserWeather = () => {
 
   return (
     <button
-      onClick={() => openModal("weatherSettings")}
+      onClick={() => openModal("weatherSettings", {
+        title: "Weather Settings",
+        component: () => <WeatherSettingsModal />,
+        onSubmit: () => fetchAndUpdate()
+      })}
       className={cn(
         "flex items-center gap-2 px-3 py-2 rounded-md group",
         "bg-background text-foreground border border-transparent hover:border-border shadow-sm text-sm hover:bg-muted"

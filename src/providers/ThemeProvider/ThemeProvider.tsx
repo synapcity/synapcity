@@ -14,7 +14,7 @@ import type {
 	ThemePreferences,
 	EntityType,
 } from "@/theme/types";
-import { Spinner } from "@/components";
+import { Loading } from "@/components";
 import { resolveThemeMetadata, applyThemeVars } from "@/theme";
 
 export const ThemeProvider = ({
@@ -58,9 +58,12 @@ export const ThemeProvider = ({
 				isCustom: false,
 			};
 
-	const scopedPrefs = entityId
-		? hydratedScoped?.[scope as EntityType]?.[entityId]
-		: null;
+	const scopedPrefs =
+		entityId && hasHydrated
+			? hydratedScoped?.[scope as EntityType]?.[entityId] ??
+			useThemeStore.getState().initScopedPreferences(scope as EntityType, entityId)
+			: null;
+
 	const targetRef = useRef<HTMLElement | null>(null);
 
 	const {
@@ -103,7 +106,10 @@ export const ThemeProvider = ({
 		}
 	}, [preferences, isGlobal]);
 
-	if (!hasHydrated) return <Spinner />;
+	if (!hasHydrated) return <Loading fullScreen size={6} />;
+	if (entityId && hasHydrated && !scopedPrefs) {
+		console.debug(`[ThemeProvider] Initializing scoped theme for ${scope}:${entityId}`);
+	}
 
 	return (
 		<ThemeContext.Provider

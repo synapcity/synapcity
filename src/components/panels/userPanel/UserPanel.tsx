@@ -2,7 +2,7 @@
 
 import { SidebarProvider } from "@/components/atoms/ui/sidebar";
 import { UserPanelHeader } from "./UserPanelHeader/UserPanelHeader";
-import { SidebarWrapper } from "@/components/menus/sidebar/SidebarWrapper";
+import { SidebarWrapper } from "@/components/menus/sidebar/UserPanelSidebar/SidebarWrapper";
 import { UserPanelSidebar } from "./UserPanelSidebar/UserPanelSidebar";
 import { UserPanelIconSidebar } from "./UserPanelIconSidebar/UserPanelIconSidebar";
 import { ActivePanelRenderer } from "./ActivePanelRenderer/ActivePanelRenderer";

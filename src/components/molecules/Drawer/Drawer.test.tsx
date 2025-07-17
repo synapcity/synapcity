@@ -2,7 +2,6 @@ import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { Drawer } from "./Drawer"
 import { Button } from "@/components/atoms"
-import React from "react"
 
 describe("Drawer", () => {
   it("renders trigger and opens on click", async () => {
