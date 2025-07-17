@@ -99,6 +99,7 @@ const config: Config = {
 	// A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
 	moduleNameMapper: {
 		"^@/(.*)$": "<rootDir>/src/$1",
+		"^nanoid$": "<rootDir>/__mocks__/nanoid.ts",
 		"^react-resizable-panels$":
 			"<rootDir>/__mocks__/react-resizable-panels.tsx",
 	},
@@ -171,10 +172,8 @@ const config: Config = {
 	//   "**/?(*.)+(spec|test).?([mc])[jt]s?(x)"
 	// ],
 
-	// An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
-	// testPathIgnorePatterns: [
-	//   "/node_modules/"
-	// ],
+	// // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
+	testPathIgnorePatterns: ["/node_modules/", "/archives/"],
 
 	// The regexp pattern or array of patterns that Jest uses to detect test files
 	// testRegex: [],
