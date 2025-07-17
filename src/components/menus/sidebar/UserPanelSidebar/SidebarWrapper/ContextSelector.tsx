@@ -25,17 +25,17 @@ export function ContextSelector<T extends { id: string, label: string; }>({ item
 
   return (
     <SidebarMenu>
-      <SidebarMenuItem>
+      <SidebarMenuItem className="w-full">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
               className={clsx(
-                "data-[state=open]:text-[var(--accent-foreground)] bg-[var(--accent-background)] hover:cursor-pointer",
+                "data-[state=open]:text-[var(--accent-foreground)] bg-[var(--accent-background)] hover:cursor-pointer w-full",
               )}
             >
               <div className={clsx(
-                "flex aspect-square size-8 items-center justify-center rounded-lg font-inherit ",
+                "flex aspect-square items-center justify-center rounded-lg font-inherit",
               )}>
                 <Layers className="size-4" />
               </div>
@@ -49,7 +49,7 @@ export function ContextSelector<T extends { id: string, label: string; }>({ item
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start">
             {items.map((item) => item && (
-              <DropdownMenuItem key={item?.id} onSelect={() => setActiveItemId(item?.id)}>
+              <DropdownMenuItem key={item?.id} onSelect={() => setActiveItemId(item?.id)} className="w-full">
                 <Label>
                   {item?.label}
                 </Label>

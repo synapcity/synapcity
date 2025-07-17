@@ -9,7 +9,7 @@ import {
 import { ExtendedSidebarItem } from "./ExtendedSidebarItem";
 import { SortableContainer } from "@/components/sortable";
 import { useUserPanel } from "@/hooks/features/useUserPanel/useUserPanel";
-import { PanelModule } from "@/types/panels";
+import type { PanelModule } from "@/types/panels";
 
 export const IconSidebarContent = () => {
   const { setCustomOrder, activeModuleId, modules } = useUserPanel()
