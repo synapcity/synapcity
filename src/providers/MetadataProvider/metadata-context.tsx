@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createContext } from "react";
-import { EntityType, ThemeMode } from "@/theme";
-import { UIStatus } from "@/types/ui";
+import { ThemeMode } from "@/theme";
+import { UILocalStatus } from "@/types/ui";
+import { SidebarScope } from "@/types/sidebar";
 
 export type MetadataContextType = {
   language: string;
@@ -10,9 +11,9 @@ export type MetadataContextType = {
   setThemeMode: (mode: ThemeMode) => void;
   selected: Record<string, any>;
   setSelected: (scope: string, id: string | null) => void
-  status: UIStatus;
+  status: UILocalStatus;
   hasHydrated: boolean;
-  scope: EntityType;
+  scope: SidebarScope;
   entityId: string;
 }
 export const MetadataContext = createContext<MetadataContextType | null>(null);
