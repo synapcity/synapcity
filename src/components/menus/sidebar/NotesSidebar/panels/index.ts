@@ -1,5 +1,5 @@
 export { default as ConnectionsPanel } from "./ConnectionsPanel";
-export { default as CommentsPanel } from "./CommentsPanel";
+export { default as AnnotationsPanel } from "./AnnotationsPanel";
 export { default as InfoPanel } from "./InfoPanel";
 export { default as OutlinePanel } from "./OutlinePanel";
 export { default as ResourcesPanel } from "./ResourcesPanel";

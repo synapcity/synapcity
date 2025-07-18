@@ -1,2 +1,2 @@
 export * from "./NoteEditorPage";
-export * from "./NotesGridPage";
+export * from "./NotesMasonry";

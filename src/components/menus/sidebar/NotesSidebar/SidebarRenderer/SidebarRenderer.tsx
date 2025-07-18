@@ -21,7 +21,6 @@ export function SidebarRenderer({ scope, id }: SidebarRendererProps) {
 
   if (!activePanel) {
     console.warn(`No active panel for ${scope}:${id}`);
-    // return null;
   }
 
   const PanelComponent = activePanel?.component;

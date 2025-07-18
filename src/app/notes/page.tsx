@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic"
 
-const NotesPage = dynamic(() => import("@/components/pages/notes/NotesGridPage").then((mod) => mod.default), {
+const NotesPage = dynamic(() => import("@/components/pages/notes/NotesMasonry").then((mod) => mod.NotesMasonry), {
   ssr: true,
 })
 

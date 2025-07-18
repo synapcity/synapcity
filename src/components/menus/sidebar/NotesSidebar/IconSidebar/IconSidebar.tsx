@@ -15,9 +15,10 @@ interface IIconSidebarProps {
   scope: SidebarScope;
   id: string;
   onAdd?: () => void;
+  onClose?: () => void;
 }
 
-export function IconSidebar({ scope, id }: IIconSidebarProps) {
+export function IconSidebar({ scope, id, onClose }: IIconSidebarProps) {
   return (
     <Sidebar
       collapsible="none"

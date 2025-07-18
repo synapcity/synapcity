@@ -1,61 +1,63 @@
-"use client";
+'use client'
 
-import dynamic from "next/dynamic";
-import { cn } from "@/utils";
-import { useUIStore } from "@/stores";
-import { useEffect } from "react";
+import dynamic from 'next/dynamic'
+import { cn } from '@/utils'
+import { useUIStore } from '@/stores'
+import { useEffect, useRef } from 'react'
 
-const TopNavMenu = dynamic(() =>
-  import("@/components/menus/navigation/TopNavMenu/TopNavMenu").then((mod) => mod.TopNavMenu),
+const TopNavMenu = dynamic(
+  () =>
+    import(
+      '@/components/menus/navigation/TopNavMenu/TopNavMenu'
+    ).then((mod) => mod.TopNavMenu),
   { ssr: false }
-);
+)
 
 export const Header = () => {
-  const isLocked = useUIStore((s) =>
-    s.components.userPanel.isLocked ?? false
-  );
-  const isPanelOpen = useUIStore((s) =>
-    s.components.userPanel.isVisible ?? false
-  );
-  const isHeaderVisible = useUIStore((s) =>
-    s.components.header.isVisible ?? true
-  )
+  const isLocked = useUIStore((s) => s.components.userPanel.isLocked)
+  const isPanelOpen = useUIStore((s) => s.components.userPanel.isVisible)
+  const isSiteFocused = useUIStore((s) => s.isSiteFocus)
+  const isHeaderVisible = useUIStore((s) => s.components.header.isVisible)
   const setCompState = useUIStore((s) => s.setCompState)
 
-  useEffect(() => {
-    if (isHeaderVisible) return;
-    if (!isLocked || !isPanelOpen) {
-      setCompState("header", "isVisible", true);
-    }
-  }, [isLocked, isPanelOpen, setCompState, isHeaderVisible]);
+  const shouldHide = isSiteFocused || (isLocked && isPanelOpen)
 
+  useEffect(() => {
+    setCompState(
+      'header',
+      'isVisible',
+      !shouldHide
+    )
+  }, [shouldHide, setCompState])
+
+  const timeoutRef = useRef<number>(0)
+  const showHeader = () => {
+    window.clearTimeout(timeoutRef.current)
+    setCompState('header', 'isVisible', true)
+  }
+  const hideHeaderDelayed = () => {
+    if (!shouldHide) return
+    timeoutRef.current = window.setTimeout(() => {
+      setCompState('header', 'isVisible', false)
+    }, 2000)
+  }
 
   return (
     <div className="w-full">
       <header
-        style={{ "--header-height": "3.5rem" } as React.CSSProperties}
+        style={{ '--header-height': '3.5rem' } as React.CSSProperties}
         className={cn(
-          "w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/70",
-          "border-b border-border shadow-sm sticky top-0 flex items-center z-50 transition-[height] duration-500 ease-linear delay-500",
+          'sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/70 border-b border-border shadow-sm flex items-center transition-[height] duration-300',
           {
-            "h-4": isLocked && isPanelOpen && !isHeaderVisible
+            'h-4': !isHeaderVisible,
+            'h-[var(--header-height)]': isHeaderVisible,
           }
         )}
-        onMouseEnter={() => {
-          if (!isHeaderVisible) {
-            setCompState("header", "isVisible", true)
-          }
-        }}
-        onMouseLeave={() => {
-          if (isLocked && isPanelOpen) {
-            setTimeout(() => {
-              setCompState("header", "isVisible", false)
-            }, 7500)
-          }
-        }}
+        onMouseEnter={showHeader}
+        onMouseLeave={hideHeaderDelayed}
       >
         <TopNavMenu />
       </header>
     </div>
-  );
-};
+  )
+}
