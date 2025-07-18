@@ -8,11 +8,11 @@ import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
 import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin";
 import { useMetadata } from "@/providers";
-import { LanguagePlugin, MultipleEditorStorePlugin, LanguageDetectionPlugin, DubeolsikComposerPlugin } from "../../plugins";
+import { LanguagePlugin, MultipleEditorStorePlugin } from "../../plugins";
 
 export const BasicEditor: React.FC<{ id: string }> = ({ id }) => {
   const [config, setConfig] = useState<InitialConfigType | null>(null);
-  const { language } = useMetadata();
+  const { theme: { language } } = useMetadata();
 
   useEffect(() => {
     setConfig({
@@ -25,18 +25,15 @@ export const BasicEditor: React.FC<{ id: string }> = ({ id }) => {
   if (!config) return <div>Loading editor…</div>;
   return (
     <div className="flex-1 size-full">
-      {/* <LanguageSwitcher /> */}
       <LexicalComposer initialConfig={config}>
         <HistoryPlugin />
         <AutoFocusPlugin />
         <MultipleEditorStorePlugin id={id} />
-        <LanguageDetectionPlugin />
-        {language === "ko" && <DubeolsikComposerPlugin />}
         <LanguagePlugin language={language} />
         <RichTextPlugin
           contentEditable={
             <div className="block size-full">
-              <ContentEditable className="editor size-full" lang={language} spellCheck />
+              <ContentEditable className="editor size-full overflow-y-auto" lang={language} spellCheck />
             </div>
 
           }

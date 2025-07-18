@@ -1,11 +1,16 @@
-export type SidebarScope = "note" | "dashboard";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export type SidebarScope =
+	| "note"
+	| "dashboard"
+	| "resource"
+	| "annotation"
+	| "connection";
 
 export type SidebarPanel = {
 	id: string;
 	label: string;
 	icon?: string;
 	tooltip?: string;
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	component: React.ComponentProps<any>;
 	order?: number;
 	props?: Record<string, unknown>;
@@ -49,26 +54,21 @@ export type SidebarPrefsSlice = {
 };
 
 export type PanelEntitySlice = {
-	/** panels[scope][entityId][panelId] = SidebarPanel */
 	panels: Record<SidebarScope, Record<string, Record<string, SidebarPanel>>>;
 
-	/** Create or add a dynamic panel */
 	createPanel: (
 		scope: SidebarScope,
 		entityId: string,
 		data: Partial<Omit<SidebarPanel, "id">>
 	) => SidebarPanel;
 
-	/** Remove a dynamic panel */
 	deletePanel: (scope: SidebarScope, entityId: string, panelId: string) => void;
 
-	/** Replace all panels for this scope+entity */
 	setPanels: (
 		scope: SidebarScope,
 		entityId: string,
 		panels: SidebarPanel[]
 	) => void;
 
-	/** Get raw panels (dynamic only) */
 	getPanelsRaw: (scope: SidebarScope, entityId: string) => SidebarPanel[];
 };

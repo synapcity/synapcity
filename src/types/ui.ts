@@ -25,7 +25,7 @@ export interface UIStatus {
 export type StatusKeys = keyof UILocalStatus;
 
 export interface StatusSlice {
-	status: UIStatus;
+	status: UILocalStatus;
 	localStatus: Record<string, Record<string, UILocalStatus>>;
 	getStatus: (type?: string, id?: string) => UILocalStatus;
 	startStatus: (field: StatusField, type?: string, id?: string) => void;

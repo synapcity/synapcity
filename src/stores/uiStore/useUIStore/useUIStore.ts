@@ -19,9 +19,11 @@ export type ComponentUIState = Partial<Record<KnownKeys, boolean>> & {
 
 export type UIState = {
 	components: Record<string, ComponentUIState>;
+	isSiteFocus: boolean;
 };
 
 export type UIActions = {
+	toggleSiteFocus: () => void;
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	setCompState: <T = any>(id: string, key: string, value: T) => void;
 	setComponent: (id: string, updates: Partial<ComponentUIState>) => void;
@@ -35,6 +37,7 @@ const defaultComponentState: ComponentUIState = {
 };
 
 const defaultUIState: UIState = {
+	isSiteFocus: false,
 	components: {
 		header: { ...defaultComponentState },
 		userPanel: { ...defaultComponentState },
@@ -93,6 +96,8 @@ export const uiStoreInitializer: StateCreator<UIStore> = (set, get, store) => ({
 			};
 		});
 	},
+	toggleSiteFocus: () => set((s) => ({ isSiteFocus: !s.isSiteFocus })),
+	isSiteFocus: false,
 	...createHydrationSlice(set, get, store),
 	...createStatusSlice(set, get, store),
 	...createSelectionSlice(set, get, store),
@@ -109,10 +114,13 @@ export const useUIStore = create<UIStore>()(
 		onRehydrateStorage: () => (state) => {
 			state?.setHasHydrated(true);
 		},
-		partialize: (state) => ({
-			prefsByKey: state.prefsByKey,
-			panels: state.panels,
-			components: state.components,
-		}),
+		partialize: (state) => {
+			return {
+				...state,
+				prefsByKey: state.prefsByKey,
+				panels: state.panels,
+				components: state.components ?? {},
+			} as UIStore;
+		},
 	})
 );

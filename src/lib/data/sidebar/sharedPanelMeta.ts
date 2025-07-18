@@ -39,10 +39,10 @@ export const sharedPanelMeta: SharedMeta[] = [
 		tooltip: "files & external links",
 	},
 	{
-		id: "comments",
-		label: "Comments",
+		id: "annotations",
+		label: "Annotations",
 		icon: "messageCircle",
-		tooltip: "comments & discussions",
+		tooltip: "annotations & notes",
 	},
 	{
 		id: "trash",

@@ -4,8 +4,7 @@ import { EditorStore, useEditorStore } from "@/stores";
 import { PropsWithChildren, useMemo } from "react";
 import { EditorContext } from "./editor-context";
 
-// Pick the selectors/actions we want to expose
-type EditorContextType = Pick<
+export type EditorContextType = Pick<
   EditorStore,
   |
   "editors"
