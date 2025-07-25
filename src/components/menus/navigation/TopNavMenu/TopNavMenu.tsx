@@ -33,9 +33,11 @@ const NavMenuLink = dynamic(
 
 export function TopNavMenu() {
   const isSiteFocused = useUIStore((s) => s.isSiteFocus)
-  const isHeaderVisible = useUIStore(
-    (s) => s.components.header.isVisible
-  )
+  const header = useUIStore((s) => s.components.header)
+  const getCompState = useUIStore((s) => s.getCompState)
+
+  const isHeaderVisible = header ? getCompState("header", "isVisible") : true
+
   const toggleFocus = useUIStore((s) => s.toggleSiteFocus)
   const toggleMode = useThemeStore((s) => s.toggleGlobalMode)
   const mode = useThemeStore((s) => s.globalPreferences.mode)
@@ -71,7 +73,9 @@ export function TopNavMenu() {
         <ThemeSheet scope="global" />
         <IconButton
           icon={isSiteFocused ? 'eyeOff' : 'eye'}
+          iconClassName={isSiteFocused ? "text-[var(--background)]" : ""}
           onClick={toggleFocus}
+          variant={isSiteFocused ? 'primary' : 'ghost'}
           aria-label="Toggle site focus mode"
         />
         <Separator orientation="vertical" className="h-4" />

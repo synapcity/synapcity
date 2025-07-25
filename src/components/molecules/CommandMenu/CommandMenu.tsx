@@ -68,7 +68,7 @@ export function CommandMenu({
       title={title}
       description={description}
       showCloseButton={showCloseButton}
-      className="bg-background text-foreground"
+      className="bg-white"
     >
       <CommandInput data-testid="command-input" placeholder={searchPlaceholder} />
       <CommandList>
@@ -77,12 +77,13 @@ export function CommandMenu({
         {groups.map((group, groupIdx) => (
           <React.Fragment key={group.heading}>
             {groupIdx > 0 && <CommandSeparator />}
-            <CommandGroup heading={group.heading}>
+            <CommandGroup heading={group.heading} className={`bg-white`}>
               {group.items.map((item) => (
                 <CommandItem
                   key={item.label}
                   onSelect={() => handleSelect(item)}
                   disabled={item.disabled}
+                  className="hover:bg-gray-800 hover:text-gray-200 transition-all duration-300 ease-in-out"
                 >
                   {item.icon}
                   {item.label}

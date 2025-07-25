@@ -1,14 +1,14 @@
 "use client"
 
-import { useFormEngine } from "../../formEngine/useFormEngine"
 import { parseSchemaWithResolver } from "../../formEngine/parseSchemaWithResolver"
 import { DynamicFormFields } from "../DynamicFormFields"
-import { DynamicErrorDisplay } from "../DynamicErrorDisplay"
+import { DynamicFormErrorsDisplay } from "../DynamicErrorDisplay"
 import { Button } from "@/components/atoms"
 
 import type { FieldDefinitionMap, FieldMeta } from "@/types/form"
-import type { z, ZodObject, ZodRawShape } from "zod"
-import { DefaultValues } from "react-hook-form"
+import type { z, ZodObject, ZodRawShape, ZodTypeAny } from "zod"
+import { DefaultValues, FormProvider, useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 
 interface DynamicFormProps<Schema extends ZodObject<ZodRawShape>> {
@@ -32,7 +32,6 @@ export function DynamicForm<Schema extends ZodObject<ZodRawShape>>({
   defaultValues,
   onSubmit,
   onCancel,
-  className,
   layout = "vertical",
   submitLabel = "Submit",
   cancelLabel = "Cancel",
@@ -41,39 +40,64 @@ export function DynamicForm<Schema extends ZodObject<ZodRawShape>>({
   meta = {}
 }: DynamicFormProps<Schema>) {
   const fields = parseSchemaWithResolver(schema, key => fieldMap[key])
-
-  const { form } = useFormEngine({
-    schema,
-    defaultValues,
-    onSubmit,
-  })
+  const methods = useForm({
+    resolver: zodResolver(schema as ZodTypeAny),
+    defaultValues
+  });
 
   return (
-    <div className={className}>
-      <DynamicFormFields form={form} fields={fields} layout={layout} meta={meta} />
-      <DynamicErrorDisplay />
-      {(showSubmit || showCancel) && (
-        <div className="flex justify-end gap-2">
-          {showCancel && (
-            <Button
-              type="button"
-              variant="ghost"
-              onClick={onCancel}
-            >
-              {cancelLabel}
-            </Button>
-          )}
-          {showSubmit && (
-            <Button type="submit" className="btn btn-primary">
-              {submitLabel}
-            </Button>
-          )}
-        </div>
-      )}
-    </div>
+    <FormProvider {...methods}>
+      <form
+        onSubmit={methods.handleSubmit(onSubmit)}
+        className="size-full flex flex-col justify-space-around"
+        onKeyDown={(e) => {
+          console.log("Key pressed:", e.key, e.target);
+        }}
+      >
+        <DynamicFormErrorsDisplay />
+        <DynamicFormFields fields={fields} layout={layout} meta={meta} />
+        {(showSubmit || showCancel) && (
+          <div className="flex justify-end gap-2">
+            {showCancel && (
+              <Button
+                type="button"
+                variant="ghost"
+                onClick={onCancel}
+              >
+                {cancelLabel}
+              </Button>
+            )}
+            {showSubmit && (
+              <Button type="submit" className="btn btn-primary">
+                {submitLabel}
+              </Button>
+            )}
+          </div>
+        )}
+        <button type="submit" style={{ display: "none" }} aria-hidden="true" />
+      </form>
+    </FormProvider>
 
   )
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // /* eslint-disable @typescript-eslint/no-explicit-any */
 

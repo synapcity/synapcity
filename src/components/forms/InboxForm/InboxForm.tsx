@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 
-import { DynamicErrorDisplay, DynamicFormFields } from "../components"
+import { DynamicFormErrorsDisplay, DynamicFormFields } from "../components"
 import { useFormEngine } from "../formEngine/useFormEngine"
 import { parseSchemaWithResolver } from "../formEngine/parseSchemaWithResolver"
 import { inboxFormSchema } from "./inboxFormSchema"
@@ -39,7 +39,7 @@ export const InboxForm = ({
           cancelLabel="Cancel"
         >
           <DynamicFormFields fields={fields} layout={layout} meta={{}} />
-          <DynamicErrorDisplay />
+          <DynamicFormErrorsDisplay />
         </FormLayoutWrapper>
       </form>
     </FormProvider>

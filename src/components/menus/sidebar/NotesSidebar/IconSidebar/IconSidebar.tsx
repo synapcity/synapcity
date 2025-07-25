@@ -9,16 +9,15 @@ import {
   SidebarTrigger,
 } from "@/components/atoms/ui/sidebar";
 import { IconSidebarContent } from "./IconSidebarContent";
-import type { SidebarScope } from "@/types/sidebar";
+import type { SidebarScope } from "@/stores/sidebarStore/types";
 
 interface IIconSidebarProps {
   scope: SidebarScope;
   id: string;
   onAdd?: () => void;
-  onClose?: () => void;
 }
 
-export function IconSidebar({ scope, id, onClose }: IIconSidebarProps) {
+export function IconSidebar({ scope, id }: IIconSidebarProps) {
   return (
     <Sidebar
       collapsible="none"

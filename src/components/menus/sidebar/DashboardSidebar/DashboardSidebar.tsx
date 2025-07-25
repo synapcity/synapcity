@@ -14,7 +14,7 @@ import { Label } from "@/components/atoms";
 import { Switch } from "@/components/molecules";
 import { IconSidebar, SidebarRenderer } from "@/components/menus/sidebar/NotesSidebar";
 // import { useDashboardStore } from "@/stores";
-import { SidebarPanel } from "@/types/sidebar";
+import { SidebarPanel } from "@/types/refactor/sidebar-old";
 import { usePanels } from "@/hooks/sidebar";
 import { useTabsForEntity } from "@/hooks/features/useTabsForEntity";
 // import { useTabsForEntity } from "@/hooks/suseTabsForEntity";

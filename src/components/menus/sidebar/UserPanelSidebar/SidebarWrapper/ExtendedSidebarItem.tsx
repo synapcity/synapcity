@@ -24,7 +24,10 @@ export const ExtendedSidebarItem = ({ module, isActive, isDragging, ...sortableP
           hidden: false,
         }}
         isActive={isActive}
-        className="bg-[var(--accent-background)] hover:bg-[var(--accent-foreground)] active:bg-[var(--accent-background)] text-[var(--accent-foreground)] hover:text-[var(--accent-background)] active:text-[var(--accent-foreground)]"
+        className={cn(
+          "group flex items-center justify-center size-9 rounded-md text-muted-foreground hover:text-foreground transition-colors",
+          // isActive && "active:bg-[var(--accent-200)] active:text-[var(--accent)]"
+        )}
         asChild
       >
 
@@ -40,6 +43,7 @@ export const ExtendedSidebarItem = ({ module, isActive, isDragging, ...sortableP
           }}
         />
       </SidebarMenuButton>
+      {isActive && <span className="absolute left-1.5 h-1.5 w-1.5 bg-accent rounded-full" />}
 
     </SidebarMenuItem>
   )

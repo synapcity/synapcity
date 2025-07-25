@@ -5,7 +5,8 @@ import { SidebarInset, useSidebar } from "@/components/atoms/ui/sidebar";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/atoms/ui/resizable";
 import { useEffect, useRef } from "react";
 import type { ImperativePanelHandle } from "react-resizable-panels";
-import type { SidebarScope } from "@/types/sidebar";
+import type { SidebarScope } from "@/stores/sidebarStore";
+import { useUIStore } from "@/stores";
 
 interface ResizableSidebarWrapperProps {
   id: string;
@@ -15,7 +16,18 @@ interface ResizableSidebarWrapperProps {
 }
 export function ResizableSidebarWrapper({ id, scope, children, sidebar }: ResizableSidebarWrapperProps) {
   const panelRef = useRef<ImperativePanelHandle>(null);
-  const { open } = useSidebar()
+  const { open, setOpen } = useSidebar()
+  const notesSidebar = useUIStore(state => state.components.notesSidebar)
+  const setComponent = useUIStore(state => state.setComponent)
+  const isNotesVisible = notesSidebar ? notesSidebar.isVisible : false
+
+  useEffect(() => {
+    if (!notesSidebar) {
+      setComponent("notesSidebar", { isVisible: false, isExpanded: false })
+    }
+  }, [notesSidebar, setComponent])
+
+  const isVisible = scope === "note" && isNotesVisible
 
   useEffect(() => {
     const panel = panelRef.current;
@@ -28,16 +40,32 @@ export function ResizableSidebarWrapper({ id, scope, children, sidebar }: Resiza
     }
   }, [open]);
 
+  useEffect(() => {
+    const panel = panelRef.current;
+    if (!panel) return;
+    if (!isVisible && !open && panel.isCollapsed()) return;
+
+    if (isVisible && panel.isCollapsed()) {
+      panel.expand()
+      setOpen(true)
+    }
+
+    if (!isVisible && panel.isExpanded()) {
+      panel.collapse()
+      setOpen(false)
+    }
+  }, [isVisible, open, setOpen])
+
   return (
     <ResizablePanelGroup direction="horizontal" className="bg-[var(--background)] text-[var(--foreground)] flex-1 overflow-hidden flex">
-      <ResizablePanel className={cn("flex-1 min-w-0 overflow-hidden transition-all duration-300 h-full", {
+      <ResizablePanel className={cn("flex-1 min-w-0 overflow-hidden transition-all duration-300 flex flex-col", {
         "shrink-0": open,
         "mx-auto w-full": !open
       })}>
         <SidebarInset>
           <div
             data-id={`${scope}-${id}`}
-            className={cn("flex flex-col bg-[var(--background)] text-[var(--foreground)]")}
+            className={cn("flex flex-col flex-1 bg-[var(--background)] text-[var(--foreground)]")}
           >
             {children}
           </div>

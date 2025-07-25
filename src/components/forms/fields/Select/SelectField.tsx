@@ -1,8 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import {
-  // UIFormControl,
   UISelect,
   UISelectTrigger,
   UISelectValue,
@@ -13,26 +11,12 @@ import {
   UITooltipContent,
   UIFormMessage,
 } from "@/components/atoms/ui";
-import { FieldConfig, FieldMeta } from "@/types/form";
 import { useFieldError } from "@/hooks";
+import { SelectFieldProps } from "@/types/form";
 
-interface Props {
-  config: FieldConfig;
-  meta?: FieldMeta;
-  field: {
-    name: string;
-    value: any;
-    onChange: (value: any) => void;
-    onBlur: () => void;
-    ref?: React.Ref<any>;
-    [key: string]: any;
-  };
-}
-
-export function SelectField({ config, meta, field }: Props) {
+export function SelectField({ config, meta, field }: SelectFieldProps) {
   const { message } = useFieldError(config.name);
   const {
-    name,
     placeholder,
     options = [],
   } = config;
@@ -43,15 +27,14 @@ export function SelectField({ config, meta, field }: Props) {
     disabled,
   } = meta ?? {};
 
-  const id = `select-${name}`;
+  const id = `select-${field.name}`;
   const labelId = `${id}-label`;
 
   const selectElement = (
     <UISelect
-      name={name}
-      value={field.value}
-      onValueChange={field.onChange}
-      defaultValue={field.value}
+      {...field}
+      {...config}
+      {...meta}
       disabled={disabled}
     >
       <UISelectTrigger id={id} aria-labelledby={labelId}>
@@ -73,9 +56,7 @@ export function SelectField({ config, meta, field }: Props) {
   );
 
   return (
-    // <UIFormControl>
     <div>
-
       {tooltip ? (
         <UITooltip>
           <UITooltipTrigger asChild>{selectElement}</UITooltipTrigger>
@@ -86,7 +67,7 @@ export function SelectField({ config, meta, field }: Props) {
       )}
 
       {helpText && (
-        <p id={`${name}-help`} className="mt-1 text-xs text-muted-foreground">
+        <p id={`${config.name}-help`} className="mt-1 text-xs text-muted-foreground">
           {helpText}
         </p>
       )}
@@ -96,6 +77,5 @@ export function SelectField({ config, meta, field }: Props) {
         </UIFormMessage>
       )}
     </div>
-    // </UIFormControl>
   );
 }

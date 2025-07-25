@@ -47,7 +47,7 @@ export function MobileDropdown({
   return (
     <Accordion type="single" collapsible className={cn("w-full", className)}>
       <AccordionItem value={value} className="relative">
-        <AccordionTrigger className="text-base font-medium px-4 py-3 rounded-md hover:bg-muted">
+        <AccordionTrigger className="text-base font-medium px-4 py-3 rounded-md hover:bg-gray-900 hover:text-gray-200">
           {isIconOnly ? (<Icon name={trigger?.icon} />) : (
             <Label icon={trigger?.icon}>
               {trigger?.label}

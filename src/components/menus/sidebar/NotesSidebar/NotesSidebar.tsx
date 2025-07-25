@@ -4,9 +4,10 @@ import * as React from "react";
 import { Sidebar, SidebarContent, SidebarHeader, SidebarGroup, SidebarGroupContent, useSidebar } from "@/components/atoms/ui/sidebar";
 import { IconSidebar } from "./IconSidebar/IconSidebar";
 import { SidebarRenderer } from "./SidebarRenderer";
-import { useNotesStore } from "@/stores/notesStore";
-import { usePanels } from "@/hooks/sidebar/usePanels";
-import { useNodeStore } from "@/stores/nodeStore";
+import { useNoteStore } from "@/stores/resources";
+import { usePanels } from "@/hooks";
+// import { usePanels } from "@/hooks/sidebar/usePanels";
+// import { useNodeStore } from "@/stores/nodeStore";
 
 interface NotesSidebarProps {
   id: string;
@@ -14,9 +15,10 @@ interface NotesSidebarProps {
 
 export function NotesSidebar({ id, ...props }: NotesSidebarProps & React.ComponentProps<typeof Sidebar>) {
   const { open } = useSidebar();
-  const noteExists = useNotesStore((s) => Boolean(s.getItemById(id)));
-  const createNote = useNotesStore(s => s.addItem)
-  const clearActiveNode = useNodeStore((s) => s.clearActiveNode);
+  const getItemById = useNoteStore(s => s.getResourceById)
+  const currentNote = getItemById(id)
+  const noteExists = !!currentNote
+  const createNote = useNoteStore(s => s.addResource)
   const { panels, activePanel } = usePanels("note", id);
 
   React.useEffect(() => {
@@ -25,11 +27,6 @@ export function NotesSidebar({ id, ...props }: NotesSidebarProps & React.Compone
       createNote({ id });
     }
   }, [noteExists, id, createNote]);
-
-
-  function onClosePanel() {
-    clearActiveNode();
-  }
 
   return (
     <Sidebar
@@ -47,8 +44,8 @@ export function NotesSidebar({ id, ...props }: NotesSidebarProps & React.Compone
         key={id}
         scope="note"
         id={id}
-        // onAdd={noteTabs.handleAddTab}
-        onClose={onClosePanel}
+      // onAdd={noteTabs.handleAddTab}
+      // onClose={onClosePanel}
       />
       {open && (
         <>

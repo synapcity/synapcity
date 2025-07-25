@@ -28,10 +28,16 @@ export function ContextSelector<T extends { id: string, label: string; }>({ item
       <SidebarMenuItem className="w-full">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <SidebarMenuButton
+            {/* <SidebarMenuButton
               size="lg"
               className={clsx(
                 "data-[state=open]:text-[var(--accent-foreground)] bg-[var(--accent-background)] hover:cursor-pointer w-full",
+              )}
+            > */}
+            <SidebarMenuButton
+              className={clsx(
+                "w-full flex items-center gap-2 p-2 text-sm bg-transparent text-muted-foreground hover:bg-muted/10 hover:text-foreground rounded-md transition",
+                "data-[state=open]:text-accent-foreground data-[state=open]:bg-accent/10"
               )}
             >
               <div className={clsx(

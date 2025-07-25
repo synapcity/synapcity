@@ -2,7 +2,7 @@
 
 import { IconButton } from "@/components/atoms";
 import { SidebarMenuItem, SidebarMenuButton, useSidebar } from "@/components/atoms/ui/sidebar";
-import { SidebarPanel } from "@/types/sidebar";
+import type { SidebarPanel } from "@/stores/sidebarStore";
 
 interface SidebarIconItemProps {
   item: SidebarPanel;
