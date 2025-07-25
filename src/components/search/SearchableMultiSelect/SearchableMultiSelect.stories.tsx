@@ -6,7 +6,7 @@ import { SearchableMultiSelect, SearchableMultiSelectOption } from "./Searchable
 import { BookOpen, Code, PenTool } from "lucide-react";
 
 const meta: Meta<typeof SearchableMultiSelect> = {
-  title: "Molecules/SearchableMultiSelect",
+  title: "Search/SearchableMultiSelect",
   component: SearchableMultiSelect,
   parameters: {
     layout: "centered",

@@ -145,7 +145,7 @@ export function SearchableMultiSelect({
   );
 
   return (
-    <div className="space-y-1">
+    <div className="space-y-1 bg-white">
       <PopoverWrapper
         open={open}
         onOpenChange={(o) => {
@@ -183,7 +183,7 @@ export function SearchableMultiSelect({
           </div>
         }
         content={
-          <Command className="min-w-[200px] max-h-60" data-testid="popover-content">
+          <Command className="min-w-[200px] max-h-60 bg-white" data-testid="popover-content">
             <CommandInput
               ref={inputRef}
               placeholder={placeholder}
