@@ -1,0 +1,98 @@
+[
+  {
+    "id": "note1-tab1",
+    "entity": "note",
+    "entityId": "note1",
+    "type": "editor",
+    "label": "Project Kickoff Meeting – Editor",
+    "content": "Meeting held on July 20, 2025. Discussed project goals, scope, and timeline. Key takeaways: agree on MVP features, finalize stakeholder list, set bi‑weekly check‑ins.",
+    "editorState": "{\"root\":{\"children\":[{\"type\":\"paragraph\",\"children\":[{\"text\":\"Meeting held on July 20, 2025. Discussed project goals, scope, and timeline. Key takeaways: agree on MVP features, finalize stakeholder list, set bi‑weekly check‑ins.\",\"type\":\"text\",\"version\":1}],\"direction\":null,\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1}],\"direction\":null,\"format\":\"\",\"indent\":0,\"type\":\"root\",\"version\":1},\"namespace\":\"\",\"type\":\"root\",\"version\":1}",
+    "createdAt": "2025-07-20T12:00:00.000Z",
+    "updatedAt": "2025-07-20T12:00:00.000Z",
+    "deletedAt": null
+  },
+  {
+    "id": "note1-tab2",
+    "entity": "note",
+    "entityId": "note1",
+    "type": "editor",
+    "label": "Project Kickoff Meeting – Action Items",
+    "content": "- Alice to draft project charter by July 25.\n- Bob to set up Git repository and CI/CD pipeline by July 22.\n- Carol to prepare initial UI mockups by July 27.",
+    "editorState": "{\"root\":{\"children\":[{\"type\":\"paragraph\",\"children\":[{\"text\":\"- Alice to draft project charter by July 25.\\n- Bob to set up Git repository and CI/CD pipeline by July 22.\\n- Carol to prepare initial UI mockups by July 27.\",\"type\":\"text\",\"version\":1}],\"direction\":null,\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1}],\"direction\":null,\"format\":\"\",\"indent\":0,\"type\":\"root\",\"version\":1},\"namespace\":\"\",\"type\":\"root\",\"version\":1}",
+    "createdAt": "2025-07-20T12:05:00.000Z",
+    "updatedAt": "2025-07-20T12:05:00.000Z",
+    "deletedAt": null
+  },
+  {
+    "id": "note2-tab1",
+    "entity": "note",
+    "entityId": "note2",
+    "type": "editor",
+    "label": "Market Research Findings – Editor",
+    "content": "Review of Q2 reports indicates a 15% growth in engagement on mobile platforms. Key competitor features: real-time collaboration, AI-driven recommendations.",
+    "editorState": "{\"root\":{\"children\":[{\"type\":\"paragraph\",\"children\":[{\"text\":\"Review of Q2 reports indicates a 15% growth in engagement on mobile platforms. Key competitor features: real-time collaboration, AI-driven recommendations.\",\"type\":\"text\",\"version\":1}],\"direction\":null,\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1}],\"direction\":null,\"format\":\"\",\"indent\":0,\"type\":\"root\",\"version\":1},\"namespace\":\"\",\"type\":\"root\",\"version\":1}",
+    "createdAt": "2025-07-20T12:10:00.000Z",
+    "updatedAt": "2025-07-20T12:10:00.000Z",
+    "deletedAt": null
+  },
+  {
+    "id": "note2-tab2",
+    "entity": "note",
+    "entityId": "note2",
+    "type": "editor",
+    "label": "Market Research Findings – Key Metrics",
+    "content": "- Monthly active users: 1.2M (+10% QoQ)\n- Average session duration: 5m 30s\n- Top 3 markets: US, EU, APAC\n- Churn rate: 3.5%",
+    "editorState": "{\"root\":{\"children\":[{\"type\":\"paragraph\",\"children\":[{\"text\":\"- Monthly active users: 1.2M (+10% QoQ)\\n- Average session duration: 5m 30s\\n- Top 3 markets: US, EU, APAC\\n- Churn rate: 3.5%\",\"type\":\"text\",\"version\":1}],\"direction\":null,\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1}],\"direction\":null,\"format\":\"\",\"indent\":0,\"type\":\"root\",\"version\":1},\"namespace\":\"\",\"type\":\"root\",\"version\":1}",
+    "createdAt": "2025-07-20T12:15:00.000Z",
+    "updatedAt": "2025-07-20T12:15:00.000Z",
+    "deletedAt": null
+  },
+  {
+    "id": "note3-tab1",
+    "entity": "note",
+    "entityId": "note3",
+    "type": "editor",
+    "label": "Development Roadmap – Overview",
+    "content": "Outline of milestones for the next four sprints: sprint 1 - project setup and CI/CD; sprint 2 - core API implementation; sprint 3 - frontend integration; sprint 4 - testing and optimization.",
+    "editorState": "{\"root\":{\"children\":[{\"type\":\"paragraph\",\"children\":[{\"text\":\"Outline of milestones for the next four sprints: sprint 1 - project setup and CI/CD; sprint 2 - core API implementation; sprint 3 - frontend integration; sprint 4 - testing and optimization.\",\"type\":\"text\",\"version\":1}],\"direction\":null,\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1}],\"direction\":null,\"format\":\"\",\"indent\":0,\"type\":\"root\",\"version\":1},\"namespace\":\"\",\"type\":\"root\",\"version\":1}",
+    "createdAt": "2025-07-21T09:00:00.000Z",
+    "updatedAt": "2025-07-21T09:00:00.000Z",
+    "deletedAt": null
+  },
+  {
+    "id": "note3-tab2",
+    "entity": "note",
+    "entityId": "note3",
+    "type": "editor",
+    "label": "Development Roadmap – Milestones",
+    "content": "1. Setup repo and CI (Jul 22)\n2. Implement REST API (Jul 29)\n3. Build React frontend (Aug 5)\n4. Write unit/integration tests (Aug 12)",
+    "editorState": "{\"root\":{\"children\":[{\"type\":\"paragraph\",\"children\":[{\"text\":\"1. Setup repo and CI (Jul 22)\\n2. Implement REST API (Jul 29)\\n3. Build React frontend (Aug 5)\\n4. Write unit/integration tests (Aug 12)\",\"type\":\"text\",\"version\":1}],\"direction\":null,\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1}],\"direction\":null,\"format\":\"\",\"indent\":0,\"type\":\"root\",\"version\":1},\"namespace\":\"\",\"type\":\"root\",\"version\":1}",
+    "createdAt": "2025-07-21T09:05:00.000Z",
+    "updatedAt": "2025-07-21T09:05:00.000Z",
+    "deletedAt": null
+  },
+  {
+    "id": "note4-tab1",
+    "entity": "note",
+    "entityId": "note4",
+    "type": "editor",
+    "label": "Design Mockups Feedback – Editor",
+    "content": "UX review notes: adjust button contrast, increase font size on cards, refine iconography, ensure mobile responsiveness for header menu.",
+    "editorState": "{\"root\":{\"children\":[{\"type\":\"paragraph\",\"children\":[{\"text\":\"UX review notes: adjust button contrast, increase font size on cards, refine iconography, ensure mobile responsiveness for header menu.\",\"type\":\"text\",\"version\":1}],\"direction\":null,\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1}],\"direction\":null,\"format\":\"\",\"indent\":0,\"type\":\"root\",\"version\":1},\"namespace\":\"\",\"type\":\"root\",\"version\":1}",
+    "createdAt": "2025-07-21T11:30:00.000Z",
+    "updatedAt": "2025-07-21T11:30:00.000Z",
+    "deletedAt": null
+  },
+  {
+    "id": "note5-tab1",
+    "entity": "note",
+    "entityId": "note5",
+    "type": "editor",
+    "label": "Sprint To‑Do List – Editor",
+    "content": "- Configure Kubernetes cluster\n- Write authentication service tests\n- Create initial UI components for dashboard\n- Prepare demo environment for stakeholder review",
+    "editorState": "{\"root\":{\"children\":[{\"type\":\"paragraph\",\"children\":[{\"text\":\"- Configure Kubernetes cluster\\n- Write authentication service tests\\n- Create initial UI components for dashboard\\n- Prepare demo environment for stakeholder review\",\"type\":\"text\",\"version\":1}],\"direction\":null,\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1}],\"direction\":null,\"format\":\"\",\"indent\":0,\"type\":\"root\",\"version\":1},\"namespace\":\"\",\"type\":\"root\",\"version\":1}",
+    "createdAt": "2025-07-21T14:00:00.000Z",
+    "updatedAt": "2025-07-21T14:00:00.000Z",
+    "deletedAt": null
+  }
+]

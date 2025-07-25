@@ -5,7 +5,7 @@ import { updateNoteTabUrl as updateUrl } from "@/lib/notes/updateNoteTabUrl";
 import { confirmDelete } from "@/lib/modal/confirmDelete";
 import { showToast } from "@/lib/toast";
 import { Tab, useTabsFor, useTabsStore } from "@/stores";
-import type { EntityType } from "@/types/entity";
+import type { EntityType } from "@/types/refactor/entity";
 
 export function useTabsForEntity(entityType: EntityType, entityId: string) {
 	const tabs = useTabsFor(entityType, entityId);

@@ -5,8 +5,10 @@ import {
 	createHydrationSlice,
 	createStatusSlice,
 	createSelectionSlice,
+	type HydrationSlice,
+	type StatusSlice,
+	type SelectionSlice,
 } from "@/stores/slices";
-import type { HydrationSlice, StatusSlice, SelectionSlice } from "@/types/ui";
 
 type MetadataSlice = {
 	language: string;

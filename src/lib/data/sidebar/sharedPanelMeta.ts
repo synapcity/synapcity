@@ -1,4 +1,4 @@
-import type { SidebarPanel } from "@/types/sidebar";
+import type { SidebarPanel } from "@/types/refactor/sidebar-old";
 
 type SharedMeta = Pick<
 	SidebarPanel,

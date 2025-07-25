@@ -1,6 +1,6 @@
 import { defaultNotePanels } from "./defaultNotePanels";
 import { defaultDashboardPanels } from "./defaultDashboardPanels";
-import type { SidebarPanel, SidebarScope } from "@/types/sidebar";
+import type { SidebarPanel, SidebarScope } from "@/stores/sidebarStore";
 import { sharedPanelMeta } from "./sharedPanelMeta";
 
 export function getDefaultPanels(scope: SidebarScope): SidebarPanel[] {

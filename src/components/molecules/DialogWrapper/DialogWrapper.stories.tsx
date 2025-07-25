@@ -10,11 +10,8 @@ const meta: Meta<typeof DialogWrapper> = {
   args: {
     title: "Confirm Action",
     description: "Are you sure you want to perform this action?",
-    confirmLabel: "Yes, do it",
-    cancelLabel: "Cancel",
     showTitle: true,
-    showDescription: true,
-    variant: "primary",
+    showDescription: true
   },
 };
 
@@ -25,6 +22,7 @@ export const Default: Story = {
   args: {
     trigger: <Button>Open Dialog</Button>,
     children: <p>This is some content inside the dialog.</p>,
+    asChild: true
   },
 };
 
@@ -38,14 +36,15 @@ export const WithCustomFooter: Story = {
       </div>
     ),
     children: <p>You can insert any custom footer actions.</p>,
+    asChild: true
   },
 };
 
 export const LoadingState: Story = {
   args: {
     trigger: <Button>Open Dialog</Button>,
-    loading: true,
     children: <p>Simulating a pending state while confirming.</p>,
+    asChild: true
   },
 };
 
@@ -55,6 +54,7 @@ export const NoTitleOrDescription: Story = {
     showTitle: false,
     showDescription: false,
     children: <p>The title and description are visually hidden.</p>,
+    asChild: true
   },
 };
 
@@ -67,8 +67,6 @@ export const ControlledOpenState: Story = {
         onOpenChange={setOpen}
         title="Controlled Dialog"
         description="This dialog is controlled via state."
-        confirmLabel="Close"
-        onConfirm={() => setOpen(false)}
       >
         <p>This dialog is opened by default and can be closed via button.</p>
       </DialogWrapper>

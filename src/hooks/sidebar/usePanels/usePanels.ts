@@ -1,57 +1,94 @@
 "use client";
 
-import { useUIStore } from "@/stores/uiStore";
-import type { SidebarPanel, SidebarScope } from "@/types/sidebar";
+import { useMemo, useCallback } from "react";
+import {
+	useSidebarStore,
+	SidebarPanel,
+	SidebarScope,
+} from "@/stores/sidebarStore";
 import { getDefaultPanels } from "@/lib/data/sidebar";
 
+// 📦 module‐level constant for an empty panels list
+const EMPTY_PANELS: SidebarPanel[] = [];
+
 export function usePanels(scope: SidebarScope, entityId: string) {
-	const getRaw = useUIStore((s) => s.getPanelsRaw);
-	// 1) dynamic panels you added at runtime
-	const dynamicPanels = getRaw(scope, entityId);
+	// 1) static defaults—memoized once per scope
+	const defaults = useMemo(() => getDefaultPanels(scope), [scope]);
 
-	// 2) panel *prefs* (active/pinned/hidden) for this scope+entity
-	const key = `${scope}:${entityId}`;
-	const prefs = useUIStore((s) => s.prefsByKey[key]) ?? {
-		activePanel: null,
-		pinned: [],
-		hidden: [],
-		panels: [],
-	};
+	// 2) stable default‐prefs object per scope+entity
+	const defaultPrefs = useMemo(
+		() => ({
+			activePanel: null,
+			pinned: [] as string[],
+			hidden: [] as string[],
+			panels: defaults,
+		}),
+		[defaults]
+	);
 
-	// 3) helper to overwrite panels en masse, if you ever need to
-	const setPanels = useUIStore((s) => s.setPanels);
+	// 3) subscribe directly to the *data* you need—never return a new array/object here
+	const dynamicPanels = useSidebarStore((s) => {
+		// pick out the stored array, or fall back to our constant
+		const arr = s.definitions[scope]?.[entityId];
+		return arr ?? EMPTY_PANELS;
+	});
 
-	// 4) pick the right static defaults
-	const defaults = getDefaultPanels(scope);
+	const prefs = useSidebarStore((s) => {
+		const key = `${scope}:${entityId}`;
+		// if stored, return it; otherwise return our memoized default
+		return s.prefsByKey[key] ?? defaultPrefs;
+	});
 
-	// 5) merge static defaults + dynamic panels
-	const all = [
-		...defaults.map((p: SidebarPanel) => ({ ...p, __dynamic: false })),
-		...dynamicPanels.map((p: SidebarPanel) => ({ ...p, __dynamic: true })),
-	];
+	// 4) now you can safely merge
+	const all = useMemo(
+		() => [
+			...defaults.map((p) => ({ ...p, __dynamic: false })),
+			...dynamicPanels.map((p) => ({ ...p, __dynamic: true })),
+		],
+		[defaults, dynamicPanels]
+	);
 
-	// 6) annotate each one with pinned/hidden from prefs
-	const panels: SidebarPanel[] = all.map((p) => ({
-		...p,
-		pinned: prefs.pinned.includes(p.id),
-		hidden: prefs.hidden.includes(p.id),
-	}));
+	const panels = useMemo(
+		() =>
+			all.map((p) => ({
+				...p,
+				pinned: prefs.pinned.includes(p.id),
+				hidden: prefs.hidden.includes(p.id),
+			})),
+		[all, prefs.pinned, prefs.hidden]
+	);
 
-	// 7) derive the active ID (prefs → defaultPinned → first panel)
-	const activeId =
-		prefs.activePanel ??
-		defaults.find((p) => p.defaultPinned)?.id ??
-		panels[0]?.id ??
-		null;
+	const activeId = useMemo(() => {
+		if (prefs.activePanel) return prefs.activePanel;
+		const firstPinned = defaults.find((p) => p.defaultPinned)?.id;
+		if (firstPinned) return firstPinned;
+		return panels[0]?.id ?? null;
+	}, [prefs.activePanel, defaults, panels]);
 
-	// 8) look up the active panel object
-	const activePanel = panels.find((p) => p.id === activeId) ?? null;
+	const activePanel = useMemo(
+		() => panels.find((p) => p.id === activeId) ?? null,
+		[panels, activeId]
+	);
+
+	// 5) grab your setters (these are stable references)
+	const setPanels = useSidebarStore((s) => s.setPanels);
+	const setActivePanel = useSidebarStore((s) => s.setActivePanel);
+
+	// 6) wrap in callbacks
+	const updatePanels = useCallback(
+		(pbs: SidebarPanel[]) => setPanels(scope, entityId, pbs),
+		[setPanels, scope, entityId]
+	);
+	const updateActive = useCallback(
+		(panelId: string | null) => setActivePanel(scope, entityId, panelId),
+		[setActivePanel, scope, entityId]
+	);
 
 	return {
 		panels,
 		activeId,
 		activePanel,
-		setPanels: (newPanels: SidebarPanel[]) =>
-			setPanels(scope, entityId, newPanels),
+		setPanels: updatePanels,
+		setActive: updateActive,
 	};
 }

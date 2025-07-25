@@ -1,6 +1,6 @@
 import { lazy } from "react";
 import { sharedPanelMeta } from "./sharedPanelMeta";
-import type { SidebarPanel } from "@/types/sidebar";
+import type { SidebarPanel } from "@/types/refactor/sidebar-old";
 
 export const defaultDashboardPanels: SidebarPanel[] = sharedPanelMeta.map(
 	(meta) => ({
