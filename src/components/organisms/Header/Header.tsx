@@ -14,11 +14,16 @@ const TopNavMenu = dynamic(
 )
 
 export const Header = () => {
-  const isLocked = useUIStore((s) => s.components.userPanel.isLocked)
-  const isPanelOpen = useUIStore((s) => s.components.userPanel.isVisible)
+  const userPanel = useUIStore((s) => s.components.userPanel)
+  const header = useUIStore((s) => s.components.header)
   const isSiteFocused = useUIStore((s) => s.isSiteFocus)
-  const isHeaderVisible = useUIStore((s) => s.components.header.isVisible)
   const setCompState = useUIStore((s) => s.setCompState)
+  const getCompState = useUIStore((s) => s.getCompState)
+
+  const isLocked = userPanel ? getCompState("userPanel", "isLocked") : false
+  const isPanelOpen = userPanel ? getCompState("userPanel", "isVisible") : false
+  const isHeaderVisible = header ? getCompState("header", "isVisible") : true
+
 
   const shouldHide = isSiteFocused || (isLocked && isPanelOpen)
 
@@ -45,11 +50,12 @@ export const Header = () => {
   return (
     <div className="w-full">
       <header
-        style={{ '--header-height': '3.5rem' } as React.CSSProperties}
+        style={{ '--header-height': '4rem' } as React.CSSProperties}
         className={cn(
-          'sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/70 border-b border-border shadow-sm flex items-center transition-[height] duration-300',
+          // 'sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/70 border-b border-border shadow-sm flex items-center transition-[height] duration-300',
+          "sticky top-0 z-[100] backdrop-blur bg-background/80 text-foreground transition-shadow px-4 py-1.5 @container",
           {
-            'h-4': !isHeaderVisible,
+            'h-2': !isHeaderVisible,
             'h-[var(--header-height)]': isHeaderVisible,
           }
         )}

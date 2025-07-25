@@ -52,6 +52,8 @@
 
 	--transition: 0.2s ease-in-out;
 	--ease: cubic-bezier(0.4, 0, 0.2, 1);
+	--border: hsl(var(--accent) / 0.1);
+	--muted: hsl(var(--foreground) / 0.04);
 }
 
 html,
@@ -121,6 +123,7 @@ body {
 	body {
 		@apply bg-background text-foreground;
 		@apply relative flex flex-col;
+		font-size: 14px;
 	}
 
 	[data-slot="nav-menu-link"]:focus-visible {

@@ -20,7 +20,7 @@ export function MainEditorLayout({
   lastSavedAt,
   children,
 }: MainEditorLayoutProps) {
-  const { theme: { themeMode, setThemeMode } } = useMetadata()
+  const { themeMode, setThemeMode } = useMetadata()
   return (
     <div className="flex h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-50">
       <aside className="hidden md:flex flex-shrink-0 w-16 flex-col bg-gray-100 dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 p-2 space-y-2">
@@ -43,8 +43,8 @@ export function MainEditorLayout({
           </div>
         </header>
 
-        <div className="flex-1 flex overflow-hidden">
-          <main className="flex-1 overflow-y-auto p-8">
+        <div className="flex-1 flex flex-col overflow-x-hidden">
+          <main className="flex-1 flex flex-col overflow-y-auto p-8">
             {children}
           </main>
 

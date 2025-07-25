@@ -18,9 +18,9 @@ export function generateColorVars(
 		vars[`--${prefix}-${shade}`] = scale[shade];
 	});
 
-	vars[`--${prefix}-foreground`] = scale[800];
-	vars[`--${prefix}-background`] = scale[200];
-	vars[`--${prefix}`] = scale[600];
+	vars[`--${prefix}-foreground`] = scale[900];
+	vars[`--${prefix}-background`] = scale[100];
+	vars[`--${prefix}`] = scale[700];
 
 	return vars;
 }

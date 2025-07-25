@@ -1,15 +1,13 @@
 "use client"
 
 import { SkeletonOrLoading } from "@/components"
-import { MainEditorLayout } from "@/components/pages/MainEditorLayout"
-import { useMetadataStore, useNotesStore } from "@/stores"
+import { useMetadataStore } from "@/stores"
 import dynamic from "next/dynamic"
 
 const ResizableSidebarWrapper = dynamic(() => import("@/components/menus/sidebar/NotesSidebar/ResizableSidebarWrapper/ResizableSidebarWrapper").then((mod) => mod.ResizableSidebarWrapper), { ssr: false })
 const NotesSidebar = dynamic(() => import("@/components/menus/sidebar/NotesSidebar/NotesSidebar").then((mod) => mod.NotesSidebar), { ssr: false, loading: () => <SkeletonOrLoading isLoading={true} /> })
 
 export default function NoteEditorLayout({ noteId, children }: { noteId: string; children: React.ReactNode }) {
-  const noteById = useNotesStore(s => s.getItemById)(noteId)
   const hasHydrated = useMetadataStore(s => s.hasHydrated)
 
   if (!hasHydrated) {
@@ -21,9 +19,9 @@ export default function NoteEditorLayout({ noteId, children }: { noteId: string;
       scope="note"
       sidebar={<NotesSidebar id={noteId} />}
     >
-      <MainEditorLayout title={noteById?.title ?? "Untitled"} noteId={noteById?.id ?? crypto.randomUUID()} createdAt={noteById?.createdAt}>
+      <div className="size-full flex flex-col">
         {children}
-      </MainEditorLayout>
+      </div>
     </ResizableSidebarWrapper>
   )
 }
