@@ -19,7 +19,7 @@ const meta: Meta<typeof Icon> = {
     tooltip: { control: "text" },
   },
   args: {
-    name: "AlertCircle",
+    name: "alert",
     source: "lucide",
     size: 24,
     className: "text-primary-foreground",
@@ -32,7 +32,7 @@ type Story = StoryObj<typeof Icon>;
 
 export const Lucide: Story = {
   args: {
-    name: "ArrowRight",
+    name: "arrowRight",
     source: "lucide",
     label: "Arrow right",
   },
@@ -63,7 +63,7 @@ export const CustomIconComponent: Story = {
 // Icon with tooltip
 export const WithTooltip: Story = {
   args: {
-    name: "Info",
+    name: "info",
     source: "lucide",
     tooltip: "Information icon tooltip",
     label: "Info icon",
@@ -73,7 +73,7 @@ export const WithTooltip: Story = {
 // Icon without label or tooltip should be aria-hidden
 export const NoLabelNoTooltip: Story = {
   args: {
-    name: "Settings",
+    name: "settings",
     source: "lucide",
     label: "",
     tooltip: undefined,
@@ -109,7 +109,7 @@ export const AllSizesLucide: Story = {
     <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
       {["xs", "sm", "md", "lg", "xl"].map((size) => (
         <div key={size} style={{ textAlign: "center" }}>
-          <Icon name="Star" size={size as IconProps["size"]} source="lucide" label={`Star ${size}`} />
+          <Icon name="star" size={size as IconProps["size"]} source="lucide" label={`Star ${size}`} />
           <div style={{ fontSize: 12 }}>{size}</div>
         </div>
       ))}
@@ -138,7 +138,7 @@ export const NumericSizes: Story = {
       {[10, 18, 24, 36, 48].map((size) => (
         <Icon
           key={size}
-          name="Star"
+          name="star"
           source="lucide"
           size={size}
           label={`Star size ${size}`}
@@ -152,7 +152,7 @@ export const NumericSizes: Story = {
 // Icon with additional className for styling
 export const ColoredIcon: Story = {
   args: {
-    name: "CheckCircle",
+    name: "checkCircle2",
     source: "lucide",
     size: 40,
     className: "text-green-600",

@@ -128,4 +128,14 @@ export {
 	ResizableHandle as UIResizableHandle,
 } from "./resizable";
 export { Checkbox as UICheckbox } from "./checkbox";
+export {
+	Table as UITable,
+	TableHeader as UITableHeader,
+	TableBody as UITableBody,
+	TableFooter as UITableFooter,
+	TableHead as UITableHead,
+	TableRow as UITableRow,
+	TableCell as UITableCell,
+	TableCaption as UITableCaption,
+} from "./table";
 export { Textarea as UITextarea } from "./textarea";

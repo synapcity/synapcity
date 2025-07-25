@@ -10,7 +10,11 @@ interface InboxTriggerProps {
 }
 
 export const InboxTrigger = ({ label = "Panel", className }: InboxTriggerProps) => {
-  const isOpen = useUIStore((state) => state.components.userPanel.isVisible ?? false)
+  // const userPanel = useUIStore((s) => s.components.userPanel)
+  const setCompState = useUIStore((s) => s.setCompState)
+  const isOpen = useUIStore((s) => s.components.userPanel?.isVisible ?? false);
+
+  // const isOpen = userPanel ? getCompState("userPanel", "isVisible") : false
   const setOpen = useUIStore((state) => state.setCompState)
 
   const toggleOpen = () => {
@@ -22,10 +26,12 @@ export const InboxTrigger = ({ label = "Panel", className }: InboxTriggerProps) 
       icon="inbox"
       isIconOnly
       showIcons={false}
-      className={cn(className)}
-      variant={isOpen ? "outline" : "default"}
+      className={cn(className, { "text-[var(--background)]": isOpen })}
+      variant={isOpen ? "outline" : "ghost"}
       onClick={() => toggleOpen()}
       size="default"
+      pressed={isOpen}
+      onPressedChange={(val) => setCompState("userPanel", "isVisible", val)}
     >
       {label}
     </Toggle>

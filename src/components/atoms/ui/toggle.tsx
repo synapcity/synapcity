@@ -7,23 +7,24 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/utils/index"
 
 const toggleVariants = cva(
-  "inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium hover:bg-[var(--accent-background)] hover:text-[var(--accent-foreground)] disabled:pointer-events-none disabled:opacity-50 data-[state=on]:bg-[var(--accent-background)] data-[state-on]:text-[var(--accent-foreground)] data-[state=on]:text-[var(--accent-foreground)] [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 [&_svg]:shrink-0 focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] outline-none transition-[color,box-shadow] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive whitespace-nowrap border border-[var(--accent-background)]",
+  "inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium transition-all outline-none focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:ring-offset-1 aria-invalid:ring-destructive/30 aria-invalid:border-destructive disabled:pointer-events-none disabled:opacity-50 data-[state=on]:bg-[var(--accent)] data-[state=off]:hover:text-[var(--accent-foreground)] border border-transparent [&_svg:not([class*='size-'])]:size-4 [&_svg]:shrink-0 data-[state=on]:text-[var(--background)]",
   {
     variants: {
       variant: {
-        default: "bg-transparent",
+        default: "bg-muted text-muted-foreground hover:bg-muted/70",
         outline:
-          "border border-[var(--accent-400)] bg-[var(--accent-background)] text-[var(--accent-foreground)] hover:bg-[var(--accent-foreground)] hover:text-[var(--accent-background)]"
+          "border border-[var(--accent)] text-[var(--foreground)] hover:bg-muted/50 data-[state=on]:bg-[var(--accent-muted)]",
+        ghost: "bg-transparent hover:bg-muted text-muted-foreground data-[state=on]:text-[var(--primary-background)]"
       },
       size: {
-        default: "h-9 px-2 min-w-9",
-        sm: "h-8 px-1.5 min-w-8",
-        lg: "h-10 px-2.5 min-w-10",
+        default: "h-8 px-2 min-w-8",
+        sm: "h-7 px-2 text-sm min-w-7",
+        lg: "h-9 px-3 text-base min-w-9",
       },
     },
     defaultVariants: {
-      variant: "outline",
-      size: "sm",
+      variant: "default",
+      size: "default",
     },
   }
 )
