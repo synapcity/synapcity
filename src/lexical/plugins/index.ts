@@ -1,2 +1,1 @@
-export * from "./LanguagePlugin";
-export * from "./MultipleEditorStorePlugin";
+export * from "./Plugins";

@@ -3,16 +3,17 @@
 import React from "react";
 import { useUIStore } from "@/stores/uiStore";
 import { useMetadata } from "@/providers/MetadataProvider";
-import { useNodeStore } from "@/stores/nodeStore";
-import { SidebarScope } from "@/types/sidebar";
+// import { useNodeStore } from "@/stores/nodeStore";
+import { SidebarScope } from "@/types/refactor/sidebar-old";
 
-export function SidebarTrigger({ persistentKey }: { persistentKey: string }) {
-  const { info: { id, scope } } = useMetadata();
-  const setActiveNode = useNodeStore((s) => s.setActiveNode);
+// { persistentKey }: { persistentKey: string }
+export function SidebarTrigger() {
+  const { entityId: id, scope } = useMetadata();
+  // const setActiveNode = useNodeStore((s) => s.setActiveNode);
   const setActivePanel = useUIStore((s) => s.setActivePanel);
 
   const onClick = () => {
-    setActiveNode(persistentKey);
+    // setActiveNode(persistentKey);
     setActivePanel(scope as SidebarScope, id, "notes");
   };
 
