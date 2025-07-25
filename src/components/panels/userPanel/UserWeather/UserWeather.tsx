@@ -4,9 +4,8 @@ import { useEffect, useState } from "react";
 import { useWeatherEffect, useLocalStorage } from "@/hooks";
 import { useWeatherStore } from "@/stores";
 import { cn } from "@/utils";
-import { useModalStore } from "@/stores/modalStore";
+import { useModalStore } from "@/stores/modalStore/useModalStore";
 import { Icon, SkeletonOrLoading } from "@/components";
-import { WeatherSettingsModal } from "./WeatherSettingsModal";
 
 export const UserWeather = () => {
   const { setLocationLabel, setGpsCoords, setLoading: setWeatherLoading } = useWeatherStore();
@@ -65,14 +64,18 @@ export const UserWeather = () => {
 
   return (
     <button
-      onClick={() => openModal("weatherSettings", {
-        title: "Weather Settings",
-        component: () => <WeatherSettingsModal />,
-        onSubmit: () => fetchAndUpdate()
-      })}
+      onClick={() => openModal(
+        "weatherSettings",
+        "userPanelMain",
+        "user-weather-settings",
+        {
+          title: "Weather Settings",
+          onSubmit: () => fetchAndUpdate()
+        })}
       className={cn(
-        "flex items-center gap-2 px-3 py-2 rounded-md group",
-        "bg-background text-foreground border border-transparent hover:border-border shadow-sm text-sm hover:bg-muted"
+        "flex items-center gap-2 px-2.5 py-1.5 rounded-sm text-sm text-muted-foreground transition-colors hover:text-foreground hover:bg-muted"
+        // "flex items-center gap-2 px-3 py-2 rounded-md group",
+        // "bg-background text-foreground border border-transparent hover:border-border shadow-sm text-sm hover:bg-muted"
       )}
     >
       <span className="text-lg">{data.icon}</span>

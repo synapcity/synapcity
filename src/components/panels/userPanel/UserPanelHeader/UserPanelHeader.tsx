@@ -1,8 +1,8 @@
 "use client"
 
-import { useUISidebar, LockTrigger } from "@/components/atoms"
+import { useUISidebar, LockTrigger, IconButton } from "@/components/atoms"
 import { Separator } from "@/components/atoms/ui/separator"
-import { useComponentUIState, useUserStore } from "@/stores"
+import { useComponentUIState, useUIStore, useUserStore } from "@/stores"
 import { cn } from "@/utils"
 import { motion } from "framer-motion"
 import { format } from "date-fns"
@@ -23,6 +23,8 @@ export const UserPanelHeader = () => {
   const state = useComponentUIState("userPanel")
   const isVisible = state.isVisible ?? true
   const logout = useUserStore(state => state.logout)
+  // const isModalVisible = useUIStore(state => state.components)["scheduleModal"]?.["isVisible"] ?? false
+  const toggleModal = useUIStore(state => state.toggleCompState)
 
   const { open } = useUISidebar()
 
@@ -34,12 +36,11 @@ export const UserPanelHeader = () => {
   return isVisible && (
     <header
       className={cn(
-        "min-h-[3.5rem] md:min-h-[4rem] px-4 py-2 flex items-center justify-around bg-background/90 backdrop-blur border-b sticky top-0 transition-shadow shadow-sm z-[99999] @container",
+        "min-h-[3.5rem] md:min-h-[4rem] px-4 py-2 flex items-center justify-around bg-(--background) text-(--foreground) backdrop-blur border-b sticky top-0 transition-shadow shadow-sm z-[100] @container",
         open ? "shadow-md" : "shadow-none"
       )}
     >
       <div className="w-full flex justify-between">
-
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -50,11 +51,14 @@ export const UserPanelHeader = () => {
             <h1 className="@sm:text-lg @md:text-xl @lg:text-2xl font-semibold">{getGreeting()}, {user?.name}</h1>
             <UserWeather />
           </div>
-          <div className="text-sm text-[var(--muted-foreground)] flex gap-4">
+          <div className="text-sm text-[var(--background)] flex gap-4">
             {format(time, "EEEE, MMMM do yyyy • HH:mm zzz")}
           </div>
         </motion.div>
-
+        <IconButton
+          icon="schedule"
+          onClick={() => toggleModal("scheduleModal", "isVisible")}
+        />
         <div className="flex items-center gap-2">
           <Separator orientation="vertical" className="mr-2 h-4" />
           <LockTrigger size="sm" />
