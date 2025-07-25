@@ -16,6 +16,7 @@ import type {
 } from "@/theme/types";
 import { Loading } from "@/components";
 import { resolveThemeMetadata, applyThemeVars } from "@/theme";
+import { ModalRenderer } from "@/components/modals/ModalRenderer/ModalRenderer";
 
 export const ThemeProvider = ({
 	scope,
@@ -146,13 +147,14 @@ export const ThemeProvider = ({
 				data-theme={preferences.mode}
 				data-testid="theme-wrapper"
 				className={cn(
-					"size-full text-[var(--foreground)] bg-[var(--background)]",
+					"size-full text-[var(--foreground)] bg-[var(--background)] relative",
 					className,
 					preferences.mode
 				)}
 				{...props}
 			>
 				{children}
+				<ModalRenderer scope="global" />
 			</div>
 		</ThemeContext.Provider>
 	);

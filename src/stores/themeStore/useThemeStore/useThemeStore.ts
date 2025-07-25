@@ -9,7 +9,7 @@ import {
 	type ThemeMetadataInfo,
 } from "@/theme/utils/resolveThemeMetadata";
 import { createHydrationSlice } from "@/stores/slices";
-import { HydrationSlice } from "@/types/ui";
+import { HydrationSlice } from "@/stores/slices";
 
 export interface ScopedThemeState {
 	globalPreferences: ThemePreferences;
@@ -26,6 +26,8 @@ export interface ScopedThemeState {
 	resetScopedPreferences: (scope: EntityType, id: string) => void;
 	toggleGlobalMode: () => void;
 	toggleScopedMode: (scope: EntityType, id: string) => void;
+	hasHydrated: boolean;
+	setHasHydrated: (hasHydrated: boolean) => void;
 }
 
 export type ThemeStore = ScopedThemeState & HydrationSlice;

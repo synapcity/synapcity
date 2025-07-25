@@ -1,11 +1,18 @@
-"use client"
+"use client";
 
-import { useMetadataStore } from "@/stores";
 import { ReactNode } from "react";
 import { MetadataContext } from "./metadata-context";
-import { SidebarScope } from "@/types/sidebar";
+import { useMetadataStore } from "@/stores";
+// import { EntityType } from "@/schemas/resources";
+// import { useTabSync } from "@/hooks/notes/useNoteViews";
 
-export const MetadataProvider: React.FC<{ scope: SidebarScope; entityId: string; children: ReactNode }> = ({ scope, entityId, children }) => {
+export type MetadataScope = "global" | "dashboard" | "note"
+
+export const MetadataProvider: React.FC<{
+  scope: MetadataScope
+  entityId?: string;
+  children: ReactNode;
+}> = ({ scope = "global", entityId, children }) => {
   const {
     language,
     setLanguage,
@@ -17,9 +24,13 @@ export const MetadataProvider: React.FC<{ scope: SidebarScope; entityId: string;
     hasHydrated,
   } = useMetadataStore();
 
+  // useTabSync(scope as EntityType, entityId)
+
   return (
     <MetadataContext.Provider
       value={{
+        scope,
+        id: entityId,
         language,
         setLanguage,
         themeMode,
@@ -27,9 +38,7 @@ export const MetadataProvider: React.FC<{ scope: SidebarScope; entityId: string;
         selected,
         setSelected,
         status,
-        hasHydrated,
-        scope,
-        entityId
+        hasHydrated
       }}
     >
       {children}

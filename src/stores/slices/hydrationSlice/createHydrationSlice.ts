@@ -1,5 +1,9 @@
 import type { StateCreator } from "zustand";
-import { HydrationSlice } from "@/types/ui";
+
+export interface HydrationSlice {
+	hasHydrated: boolean;
+	setHasHydrated: (hasHydrated: boolean) => void;
+}
 
 export const createHydrationSlice: StateCreator<
 	HydrationSlice,

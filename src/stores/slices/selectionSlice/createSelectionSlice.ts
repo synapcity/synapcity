@@ -1,5 +1,16 @@
 import type { StateCreator } from "zustand";
-import type { SelectionSlice } from "@/types/ui";
+
+export interface SelectionSlice {
+	selected: Record<string, string | null>;
+	setSelected: (scope: string, id: string | null) => void;
+
+	sidebar: Record<string, { activeItem: string | null }>;
+	setSidebarItem: (scope: string, item: string | null) => void;
+
+	clearSelected: (scope?: string) => void;
+	clearSidebarItem: (scope?: string) => void;
+	getSelected?: (scope: string) => string | null;
+}
 
 export const createSelectionSlice: StateCreator<
 	SelectionSlice,

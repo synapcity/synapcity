@@ -1,7 +1,22 @@
 import type { StateCreator } from "zustand";
-import type { StatusSlice } from "@/types/ui";
 import { defaultStatus, toStatusKey } from "./statusHelpers";
+import { UILocalStatus, StatusField } from "@/types/ui";
 
+export interface StatusSlice {
+	status: UILocalStatus;
+	localStatus: Record<string, Record<string, UILocalStatus>>;
+	getStatus: (type?: string, id?: string) => UILocalStatus;
+	startStatus: (field: StatusField, type?: string, id?: string) => void;
+	finishStatus: (field: StatusField, type?: string, id?: string) => void;
+	failStatus: (
+		field: StatusField,
+		error: Error,
+		type?: string,
+		id?: string
+	) => void;
+	clearError: (type?: string, id?: string) => void;
+	resetStatus: (type?: string, id?: string) => void;
+}
 export const createStatusSlice: StateCreator<
 	StatusSlice,
 	[],
@@ -10,15 +25,15 @@ export const createStatusSlice: StateCreator<
 > = (set, get) => ({
 	status: {
 		isLoading: false,
+		isCreating: false,
 		isSaving: false,
 		isDeleting: false,
 		isEditing: false,
 		isSearching: false,
-		isLoadingPage: false,
+		isSyncing: false,
 		error: null,
 		lastSavedAt: null,
 	},
-	// per-entity status: localStatus[entityType][entityId] → partial Status
 	localStatus: {},
 
 	getStatus: (type, id) => {
@@ -35,15 +50,17 @@ export const createStatusSlice: StateCreator<
 		const key = toStatusKey(field);
 		if (type && id) {
 			set((state) => {
-				const local = state.localStatus[type] || {};
+				const existingMap = state.localStatus[type] || {};
+				const existingStatus = existingMap[id] || {};
+
 				return {
 					localStatus: {
 						...state.localStatus,
 						[type]: {
-							...local,
+							...existingMap,
 							[id]: {
 								...defaultStatus,
-								...local[id],
+								...existingStatus,
 								[key]: true,
 								error: null,
 							},
@@ -80,6 +97,8 @@ export const createStatusSlice: StateCreator<
 					!current.isLoading &&
 					!current.isDeleting &&
 					!current.isEditing &&
+					!current.isSyncing &&
+					!current.isCreating &&
 					!current.error;
 				const updatedType = { ...local };
 				if (isClean) {
@@ -183,11 +202,13 @@ export const createStatusSlice: StateCreator<
 			set(() => ({
 				status: {
 					isLoadingPage: false,
+					isCreating: false,
 					isSearching: false,
 					isEditing: false,
 					isDeleting: false,
 					isSaving: false,
 					isLoading: false,
+					isSyncing: false,
 					error: null,
 					lastSavedAt: null,
 				},

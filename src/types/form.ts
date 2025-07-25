@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { SelectOption } from "@/components";
+
 export type FieldDefinition = {
 	name: string;
 	label: string;
@@ -18,31 +20,34 @@ export type FieldDefinitionMap = {
 	[key: string]: FieldDefinition;
 };
 
-export type FieldType =
-	| "text"
-	| "password"
-	| "textarea"
-	| "select"
-	| "checkbox"
-	| "radio"
-	| "date"
-	| "url"
-	| "file"
-	| "color"
-	| "number"
-	| "toggle"
-	| "slider"
-	| "tags"
-	| "textarea"
-	| "bio"
-	| "icon"
-	| "richText"
-	| "linkPreview"
-	| "resourceUrl_previewMeta"
-	| "code"
-	| "fileGallery"
-	| "duration"
-	| "title";
+// export type FieldType =
+// 	| "text"
+// 	| "password"
+// 	| "textarea"
+// 	| "select"
+// 	| "checkbox"
+// 	| "radio"
+// 	| "date"
+// 	| "url"
+// 	| "file"
+// 	| "color"
+// 	| "number"
+// 	| "toggle"
+// 	| "slider"
+// 	| "tags"
+// 	| "textarea"
+// 	| "bio"
+// 	| "icon"
+// 	| "richText"
+// 	| "linkPreview"
+// 	| "resourceUrl_previewMeta"
+// 	| "code"
+// 	| "fileGallery"
+// 	| "duration"
+// 	| "title"
+// 	| "exportFormat";
+
+export type FieldType = "text" | "select" | "exportType" | "password";
 
 export interface FieldOption {
 	label: string;
@@ -84,7 +89,22 @@ export interface FieldMeta {
 	mode?: "delta" | "range" | "iso";
 }
 
-// export interface FieldDefinition extends FieldConfig {
-// 	schema: z.ZodTypeAny;
-// 	meta?: FieldMeta;
-// }
+export type SelectFieldProps = BaseFieldComponent & {
+	value: string;
+	onValueChange: (value: string) => void;
+	options: SelectOption[];
+};
+
+export type BaseFieldComponent = {
+	config: FieldConfig;
+	meta?: FieldMeta;
+	field: {
+		name: string;
+		value: string;
+		onChange: (value: string) => void;
+		onBlur: () => void;
+		ref?: React.Ref<HTMLElement>;
+		[key: string]: any;
+	};
+	trigger?: (name: string) => void;
+};

@@ -1,38 +1,22 @@
-import { SerializedLexicalEditorState } from "./editor";
+// import type { z } from "zod";
+// import { NoteSchema } from "@/schemas/data/note-schema";
+// import type { BaseEntity } from "@/types/refactor/entity";
+// import type { SerializedLexicalEditorState } from "./editor";
 
-export interface Note {
-	id: string;
-	title: string;
-	icon: string;
-	summary?: string;
-	preview?: string;
-	tags: string[];
-	createdAt: string;
-	updatedAt: string;
-	deletedAt: string | null;
-}
+// export type Note = z.infer<typeof NoteSchema>;
 
-export type NoteTabType =
-	| "markdown"
-	| "code"
-	| "draft"
-	| "reference"
-	| "editor";
+// export type NoteTabType = "markdown" | "code" | "gallery" | "files" | "editor";
 
-export interface NoteTab {
-	id: string;
-	noteId: string;
-	label: string;
-	type: NoteTabType;
-	editorState?: SerializedLexicalEditorState;
-	content?: string;
-	icon?: string;
-	color?: string;
-	isDefault: boolean;
-	createdAt: string;
-	updatedAt: string;
-	deletedAt?: string | null;
-	component?: React.ComponentType;
-	isPinned?: boolean;
-	viewMode?: "editor" | "preview";
-}
+// export interface NoteTab extends BaseEntity {
+// 	noteId: string;
+// 	label: string;
+// 	type: NoteTabType;
+// 	editorState?: SerializedLexicalEditorState;
+// 	content?: string;
+// 	icon?: string;
+// 	color?: string;
+// 	isDefault: boolean;
+// 	component?: React.ComponentType;
+// 	isPinned?: boolean;
+// 	viewMode?: "editor" | "preview";
+// }
