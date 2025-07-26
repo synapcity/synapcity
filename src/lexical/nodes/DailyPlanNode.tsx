@@ -1,21 +1,16 @@
 "use client";
 
-import { JSX, useEffect } from "react";
-import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import {
   DecoratorNode,
-  $getRoot,
-  $createParagraphNode,
   type NodeKey,
   type SerializedLexicalNode,
 } from "lexical";
+import { JSX } from "react";
 
-// Serialized shape for copy/paste support (optional)
 interface SerializedPlanNode extends SerializedLexicalNode {
   date: string;
 }
 
-// Helper to format today’s date
 function getToday(): string {
   return new Date().toLocaleDateString(undefined, {
     month: "short",
@@ -24,7 +19,6 @@ function getToday(): string {
   });
 }
 
-// Your DecoratorNode subclass
 export class PlanNode extends DecoratorNode<JSX.Element> {
   __date: string;
 
@@ -35,7 +29,6 @@ export class PlanNode extends DecoratorNode<JSX.Element> {
     return new PlanNode(node.__date, node.getKey());
   }
 
-  // Provide a default so importJSON isn't strictly required
   constructor(date: string = getToday(), key?: NodeKey) {
     super(key);
     this.__date = date;

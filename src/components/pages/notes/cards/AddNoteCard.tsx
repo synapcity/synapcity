@@ -1,6 +1,5 @@
 "use client"
 
-import { useNoteViewStore } from "@/stores/resources/noteViewStore";
 import { useNoteStore } from "@/stores/resources/noteStore";
 import { NoteResource } from "@/types";
 import { PlusCircle } from "lucide-react";

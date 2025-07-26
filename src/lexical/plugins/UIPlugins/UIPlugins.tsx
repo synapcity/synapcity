@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import { loadPluginByName } from "../pluginLoader";
 import dynamic from "next/dynamic";
@@ -45,32 +45,30 @@ const EditorPlaceholder = dynamic(
 );
 
 function Editable() {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-
-  // return useMemo(() => {
-  if (!mounted) {
-    return null;
-  }
   return (
-    <DraggableWrapper>
-      <div className="relative size-full">
-        <ContentEditable
-          aria-placeholder="Loading Content..."
-          placeholder={<EditorPlaceholder />}
-          className="min-h-[150px] h-[85vh] w-full p-4 overflow-y-auto border border-gray-300 rounded-md outline-none"
-        />
-      </div>
-    </DraggableWrapper>
+    // <DraggableWrapper>
+    <div className="relative size-full">
+      <ContentEditable
+        aria-placeholder="Loading Content..."
+        placeholder={<EditorPlaceholder />}
+        className="min-h-[150px] h-[85vh] w-full p-4 overflow-y-auto border border-gray-300 rounded-md outline-none"
+      />
+    </div>
+    // </DraggableWrapper>
   );
   // }, [mounted])
 }
 
 export default function CoreUIPlugins() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
+
   return (
     <>
       <Toolbar />

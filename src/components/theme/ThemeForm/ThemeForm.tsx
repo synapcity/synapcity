@@ -64,7 +64,7 @@ export const ThemeForm = ({
     <FormProvider {...methods}>
       <form
         onSubmit={methods.handleSubmit(onSubmit)}
-        className={cn("space-y-6", className)}
+        className={cn("space-y-6 text-[var(--foreground", className)}
       >
         <ThemeFormFields />
         <div className="border rounded-md p-4">

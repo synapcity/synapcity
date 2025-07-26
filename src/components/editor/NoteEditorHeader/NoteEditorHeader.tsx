@@ -7,12 +7,12 @@ import {
 } from 'lucide-react';
 import { DynamicTabsBar } from '@/components/tables/Table/TableControls/DynamicTabsBar/DynamicTabsBar';
 import { TagPills } from '@/components/tables/pills/TagPills';
-import { useNoteViews } from '@/hooks/notes';
+import { useNoteTabs } from '@/hooks/notes';
 import { useNoteStore, useNoteViewStore } from '@/stores';
 import { EditableText } from '@/components/molecules/EditableText/EditableText';
 import { StatusWrapper } from '@/components/molecules/StatusWrapper/StatusWrapper';
 import { useUpdateNote } from '@/hooks/notes/useUpdateNote/useUpdateNote';
-import { CombinedEditor } from '@/schemas';
+import { ViewResource } from '@/schemas';
 
 export interface NoteEditorHeaderProps {
   noteId: string;
@@ -33,15 +33,15 @@ export function NoteEditorHeader({
 }: NoteEditorHeaderProps) {
   const getNotes = useNoteStore(s => s.getResourceById)
   const note = getNotes(noteId)
-  const noteViews = useNoteViews(noteId!)
+  const { views } = useNoteTabs(noteId)
   const {
     editNote,
     updateNote
   } = useUpdateNote(noteId);
-  const tabOptions = noteViews.map((view: CombinedEditor) => {
+  const tabOptions = Object.values(views).map((view) => {
     return {
-      label: view.label,
-      value: view.id
+      label: (view as ViewResource)?.label,
+      value: (view as ViewResource)?.id
     }
   })
 

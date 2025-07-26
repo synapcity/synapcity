@@ -1,257 +1,70 @@
 "use client";
 
-import { useNoteStore, useNoteViewStore } from "@/stores/resources";
+import { ViewResource } from "@/schemas/resources";
+import { useNoteViewStore, useNoteStore } from "@/stores";
 import { useSearchParams } from "next/navigation";
-import { useState, useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
+import { useShallow } from "zustand/shallow";
 
-// // import { useState, useEffect } from "react";
-// // import { useNoteViewStore } from "@/stores/resources/noteViewStore/useNoteViewStore";
-// // import type { View } from "@/stores/resources/noteViewStore/useNoteViewStore";
-// // import { useShallow } from "zustand/shallow";
-// // import { useSearchParams } from "next/navigation";
-// // import { ViewResource } from "@/schemas";
+export function useNoteTabs(noteId: string) {
+	const params = useSearchParams();
+	const tabParam = params.get("tab");
 
-// // export function useNoteActiveTab(noteId: string) {
-// // 	const searchParams = useSearchParams();
-// // 	const tabParam = searchParams.get("tab");
-// // 	const setActive = useNoteViewStore((s) => s.setActive);
-// // 	const activeById = useNoteViewStore(useShallow((s) => s.activeByScope));
-// // 	const activeTabId = activeById[noteId];
-// // 	const getTabs = useNoteViewStore((s) => s.getViewsFor);
-// // 	const noteViews = getTabs(noteId);
-// // 	const defaultTabId = activeTabId ?? noteViews[0]?.id ?? "";
-
-// // 	useEffect(() => {
-// // 		if (!noteId || !tabParam || !setActive) return;
-// // 		if (!activeTabId && tabParam !== activeTabId) {
-// // 			setActive(noteId, tabParam);
-// // 		}
-// // 	}, [activeTabId, noteId, noteViews, setActive, tabParam]);
-
-// // 	useEffect(() => {
-// // 		if (!noteId) return;
-// // 		const url = new URL(window.location.href);
-// // 		if (activeTabId) {
-// // 			url.searchParams.set("tab", activeTabId);
-// // 		} else {
-// // 			setActive(noteId, defaultTabId);
-// // 			url.searchParams.set("tab", defaultTabId);
-// // 		}
-// // 		window.history.replaceState(null, "", url.toString());
-// // 	}, [noteId, activeTabId, setActive, defaultTabId]);
-
-// // 	return {
-// // 		activeTabId: activeTabId ?? defaultTabId,
-// // 		activeTab: noteViews.find(
-// // 			(view: ViewResource) =>
-// // 				view.id === activeTabId || view.id === defaultTabId
-// // 		),
-// // 	};
-// // }
-
-// // export function useNoteViews(noteId: string) {
-// // 	const [views, setViews] = useState<View[]>(
-// // 		() => useNoteViewStore.getState().getViewsFor(noteId) ?? []
-// // 	);
-
-// // 	useEffect(() => {
-// // 		const unsub = useNoteViewStore.subscribe((state) => {
-// // 			const next = state.getViewsFor(noteId) ?? [];
-// // 			setViews((prev) => (prev === next ? prev : next));
-// // 		});
-// // 		return unsub;
-// // 	}, [noteId]);
-
-// // 	return views;
-// // }
-
-// "use client";
-
-// import { useEffect, useMemo, useRef, useState } from "react";
-// import { useSearchParams } from "next/navigation";
-// import { useNoteViewStore } from "@/stores/resources/noteViewStore/useNoteViewStore";
-// // import type { View } from "@/stores/resources/noteViewStore/useNoteViewStore";
-// // import type { ViewResource } from "@/schemas";
-// import { subscribeWithSelector } from "zustand/middleware";
-
-// // Helper to subscribe to a single key
-// function subscribeToActiveTab(noteId: string, onChange: (activeTabId: string | undefined) => void) {
-// 	return useNoteViewStore.subscribeWithSelector(
-// 		(state) => state.activeByScope[noteId],
-// 		onChange
-// 	);
-// }
-
-// export function useNoteActiveTab(noteId: string) {
-// 	const searchParams = useSearchParams();
-// 	const tabParam = searchParams.get("tab");
-
-// 	const getViewsFor = useNoteViewStore.getState().getViewsFor;
-// 	const setActive = useNoteViewStore.getState().setActive;
-
-// 	const views = useMemo(() => getViewsFor(noteId) ?? [], [noteId, getViewsFor]);
-// 	const firstTabId = views[0]?.id ?? "";
-// 	const [activeTabId, setActiveTabId] = useState<string | undefined>(
-// 		() => useNoteViewStore.getState().activeByScope[noteId] ?? tabParam ?? firstTabId
-// 	);
-
-// 	// Subscribe to updates for the active tab
-// 	useEffect(() => {
-// 		const unsub = subscribeToActiveTab(noteId, (newId) => {
-// 			setActiveTabId((prev) => (prev === newId ? prev : newId));
-// 		});
-// 		return unsub;
-// 	}, [noteId]);
-
-// 	// Sync tabParam to state
-// 	useEffect(() => {
-// 		if (!noteId || !tabParam) return;
-// 		const current = useNoteViewStore.getState().activeByScope[noteId];
-// 		if (!current && tabParam !== current) {
-// 			setActive(noteId, tabParam);
-// 		}
-// 	}, [noteId, tabParam]);
-
-// 	// Sync state to URL if missing
-// 	useEffect(() => {
-// 		if (!noteId || !activeTabId) return;
-// 		const url = new URL(window.location.href);
-// 		const currentTab = url.searchParams.get("tab");
-
-// 		if (currentTab !== activeTabId) {
-// 			url.searchParams.set("tab", activeTabId);
-// 			window.history.replaceState(null, "", url.toString());
-// 		}
-// 	}, [noteId, activeTabId]);
-
-// 	const activeTab = useMemo(
-// 		() => views.find((view) => view.id === activeTabId) ?? views.find((v) => v.id === firstTabId),
-// 		[views, activeTabId, firstTabId]
-// 	);
-
-// 	return {
-// 		activeTabId: activeTabId ?? firstTabId,
-// 		activeTab,
-// 	};
-// }
-
-// export function useNoteViews(noteId: string): View[] {
-// 	const [views, setViews] = useState<View[]>(
-// 		() => useNoteViewStore.getState().getViewsFor(noteId) ?? []
-// 	);
-
-// 	useEffect(() => {
-// 		const unsub = useNoteViewStore.subscribe(
-// 			(state) => state.getViewsFor(noteId),
-// 			(next) => {
-// 				setViews((prev) => (prev === next ? prev : next));
-// 			}
-// 		);
-// 		return unsub;
-// 	}, [noteId]);
-
-// 	return views;
-// }
-// export function useNoteViews(noteId: string) {
-// 	const [views, setViews] = useState(
-// 		() => useNoteViewStore.getState().getViewsFor(noteId) ?? []
-// 	);
-
-// 	useEffect(() => {
-// 		const unsub = useNoteViewStore.subscribe(
-// 			(state) => state.items
-// 			() => {
-// 				const updated = useNoteViewStore.getState().getViewsFor(noteId) ?? [];
-// 				setViews(updated);
-// 			}
-// 		);
-// 		return unsub;
-// 	}, [noteId]);
-
-// 	return views;
-// }
-export function subscribeToActiveTab(
-	noteId: string,
-	onChange: (activeTabId: string | undefined) => void
-) {
-	return useNoteViewStore.subscribe(
-		(state) => state.activeByScope[noteId],
-		onChange,
-		{ equalityFn: Object.is }
+	// Zustand selectors
+	const views = useNoteViewStore(
+		useShallow((s) => s.getViewsFor(noteId) ?? [])
 	);
-}
+	const hasHydrated = useNoteViewStore((s) => s.hasHydrated);
+	const addView = useNoteViewStore((s) => s.addView);
+	const setActiveStore = useNoteViewStore((s) => s.setActive);
+	const activeByScope = useNoteViewStore(useShallow((s) => s.activeByScope));
+	const note = useNoteStore(useShallow((s) => s.items[noteId]));
 
-export function useNoteViews(noteId: string) {
-	const [views, setViews] = useState(() => {
-		return useNoteViewStore.getState().getViewsFor(noteId) ?? [];
-	});
-
+	// Auto-add an "editor" view if none exist
 	useEffect(() => {
-		const unsubscribe = useNoteViewStore.subscribe(
-			(state) => state.items, // subscribe to the whole items map
-			() => {
-				const updated = useNoteViewStore.getState().getViewsFor(noteId) ?? [];
-				setViews(updated);
-			},
-			{ equalityFn: Object.is } // optional: avoids double-calling
-		);
-		return unsubscribe;
-	}, [noteId]);
-
-	return views;
-}
-
-export function useNoteById(noteId: string) {
-	const [note, setNote] = useState(() => useNoteStore.getState().items[noteId]);
-
-	useEffect(() => {
-		const unsub = useNoteStore.subscribe(
-			(state) => state.items[noteId],
-			(newNote) => {
-				setNote(newNote);
-			}
-		);
-		return unsub;
-	}, [noteId]);
-
-	return note;
-}
-
-export function useNoteActiveTab(noteId: string) {
-	const searchParams = useSearchParams();
-	const tabParam = searchParams.get("tab");
-
-	const views = useNoteViews(noteId);
-	const firstTabId = views[0]?.id ?? "";
-
-	const setActive = useNoteViewStore((s) => s.setActive);
-	const activeTabId = useNoteViewStore((s) => s.activeByScope[noteId]);
-
-	useEffect(() => {
-		if (!noteId || !tabParam) return;
-		if (!activeTabId && tabParam !== activeTabId) {
-			setActive(noteId, tabParam);
+		if (!hasHydrated) return;
+		if (views.length === 0 && noteId) {
+			const newView = addView(noteId, "editor");
+			setActiveStore(noteId, newView.id);
 		}
-	}, [noteId, tabParam, activeTabId, setActive]);
+	}, [hasHydrated, views.length, addView, noteId, setActiveStore]);
 
+	// Determine active ID: store > URL > first view
+	const firstViewId = views[0]?.id;
+	const activeId = activeByScope[noteId] ?? tabParam ?? firstViewId;
+
+	// Sync store when activeId changes
 	useEffect(() => {
-		if (!noteId || !activeTabId) return;
+		if (!activeId) return;
+		if (activeByScope[noteId] !== activeId) {
+			setActiveStore(noteId, activeId);
+		}
+	}, [activeId, noteId, setActiveStore, activeByScope]);
+
+	// Sync URL 'tab' param
+	useEffect(() => {
+		if (!activeId) return;
 		const url = new URL(window.location.href);
-		const currentTab = url.searchParams.get("tab");
-
-		if (currentTab !== activeTabId) {
-			url.searchParams.set("tab", activeTabId);
-			window.history.replaceState(null, "", url.toString());
+		if (url.searchParams.get("tab") !== activeId) {
+			url.searchParams.set("tab", activeId);
+			window.history.replaceState(null, "", url);
 		}
-	}, [noteId, activeTabId]);
+	}, [activeId]);
 
-	const activeTab = useMemo(
-		() => views.find((view) => view.id === activeTabId) ?? views[0],
-		[views, activeTabId]
-	);
+	// Find the active view object
+	const activeTab = useMemo(() => {
+		return views.find((v: ViewResource) => v.id === activeId) ?? views[0];
+	}, [views, activeId]);
+
+	const setActiveTab = (id: string) => {
+		setActiveStore(noteId, id);
+	};
 
 	return {
-		activeTabId: activeTabId ?? firstTabId,
+		note,
+		views,
 		activeTab,
+		activeTabId: activeId,
+		setActiveTab,
 	};
 }

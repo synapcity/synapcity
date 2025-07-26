@@ -18,22 +18,22 @@ import {
 	type StatusSlice,
 } from "@/stores/slices";
 import { mergeSlices } from "@/stores/slices/mergeSlices";
-import { useNoteViewStore } from "@/stores/resources";
 
 export interface ResourceStore<T extends BaseResource>
 	extends HydrationSlice,
 		StatusSlice,
 		SelectionSlice {
 	items: Record<string, T>;
-
-	addResource(data?: unknown): Promise<T>;
+	addResource(data?: Partial<T>): Promise<T>;
 	updateResource(id: string, patch: Partial<T>): Promise<void>;
 	deleteResource(id: string): void;
 	softDeleteResource(id: string): void;
 	getResourceById(id: string): T | undefined;
 	getAllResources(): T[];
-
-	initItems?(raw: unknown[]): void;
+	/**
+	 * Optionally initialize the store with a raw list of items (used in afterHydrate).
+	 */
+	initItems?(raw: T[]): void;
 	[key: string]: any;
 }
 
@@ -42,25 +42,38 @@ export interface ResourceStoreConfig<T extends BaseResource> {
 	schema: ZodTypeAny;
 	persistKey?: string;
 	version?: number;
-	createItem: (partial?: Partial<T>) => T;
-
-	partialize?: (s: ResourceStore<T>) => Partial<ResourceStore<T>>;
-	migrate?: PersistOptions<
-		ResourceStore<T>,
-		Partial<ResourceStore<T>>
-	>["migrate"];
-	afterHydrate?: (state: ResourceStore<T>, error?: unknown) => void;
-	initItems?: (
-		set: (s: Partial<ResourceStore<T>>) => void,
-		get: () => ResourceStore<T>
-	) => (raw: unknown[]) => void;
-
-	customActions?: (
-		set: (patch: Partial<ResourceStore<T>>) => void,
-		get: () => ResourceStore<T>,
-		store: StoreApi<ResourceStore<T>>
-	) => Partial<ResourceStore<T>>;
+	createItem: (partial: any) => T;
+	/**
+	 * Additional slices to merge into the store
+	 */
 	slices?: Array<StateCreator<any, any, any, any>>;
+	/**
+	 * Pick which pieces of state to persist (besides items)
+	 */
+	partialize?: (state: ResourceStore<T>) => Partial<ResourceStore<T>>;
+	/**
+	 * Optional migration strategy for persisted state
+	 */
+	migrate?: PersistOptions<ResourceStore<T>, any>["migrate"];
+	/**
+	 * Called after rehydration if no persisted items present
+	 */
+	afterHydrate?: (state: ResourceStore<T>, err?: unknown) => void;
+	/**
+	 * Initialize the store with raw data (e.g. on first load)
+	 */
+	initItems?: (
+		set: (patch: Partial<ResourceStore<T>>, replace?: boolean) => void,
+		get: () => ResourceStore<T>
+	) => (raw: T[]) => void;
+	/**
+	 * Custom actions to merge into the store
+	 */
+	customActions?: (
+		set: StoreApi<ResourceStore<T>>["setState"],
+		get: StoreApi<ResourceStore<T>>["getState"],
+		api: StoreApi<ResourceStore<T>>
+	) => Partial<ResourceStore<T>>;
 }
 
 export function createResourceStore<T extends BaseResource>(
@@ -71,25 +84,25 @@ export function createResourceStore<T extends BaseResource>(
 	const {
 		resourceName,
 		schema,
+		createItem,
+		persistKey,
+		version = 1,
 		partialize = (s: RS) => ({ items: s.items }),
 		migrate,
-		afterHydrate = () => {},
-		initItems: makeInit,
-		createItem,
+		afterHydrate,
 		slices = [],
 	} = config;
 
-	const baseCreator: StateCreator<RS, any, any, any> = (set, get, store) => {
+	const baseCreator: StateCreator<RS> = (set, get, api) => {
 		const slice: RS = {
 			items: {} as Record<string, T>,
+			...createHydrationSlice(set, get, api),
+			...createStatusSlice(set, get, api),
+			...createSelectionSlice(set, get, api),
 
-			...createHydrationSlice(set, get, store),
-			...createStatusSlice(set, get, store),
-			...createSelectionSlice(set, get, store),
-
-			async addResource(data: Partial<T>) {
+			async addResource(data = {}) {
 				const now = new Date().toISOString();
-				const id = data.id ?? nanoid();
+				const id = (data as any).id ?? nanoid();
 				const raw = {
 					...data,
 					id,
@@ -103,11 +116,10 @@ export function createResourceStore<T extends BaseResource>(
 			},
 
 			async updateResource(id, patch) {
-				const ex = get().items[id];
-				console.log("PATCH", patch);
-				if (!ex) throw new Error(`${resourceName} ${id} not found`);
+				const existing = get().items[id];
+				if (!existing) throw new Error(`${resourceName} ${id} not found`);
 				const now = new Date().toISOString();
-				const updated = schema.parse({ ...ex, ...patch, updatedAt: now });
+				const updated = schema.parse({ ...existing, ...patch, updatedAt: now });
 				set((s) => ({ items: { ...s.items, [id]: updated } }));
 			},
 
@@ -119,10 +131,10 @@ export function createResourceStore<T extends BaseResource>(
 			},
 
 			softDeleteResource(id) {
-				const ex = get().items[id];
-				if (!ex) return;
+				const existing = get().items[id];
+				if (!existing) return;
 				const now = new Date().toISOString();
-				const soft = schema.parse({ ...ex, deletedAt: now });
+				const soft = schema.parse({ ...existing, deletedAt: now });
 				set((s) => ({ items: { ...s.items, [id]: soft } }));
 			},
 
@@ -135,60 +147,53 @@ export function createResourceStore<T extends BaseResource>(
 			},
 		};
 
-		if (makeInit) {
-			slice.initItems = makeInit(set, get);
+		// support initItems config
+		if (config.initItems) {
+			slice.initItems = config.initItems(
+				set as unknown as (patch: Partial<RS>, replace?: boolean) => void,
+				() => get()
+			);
 		}
-
+		// support customActions config
 		if (config.customActions) {
-			Object.assign(slice, config.customActions(set, get, store));
+			Object.assign(
+				slice,
+				config.customActions(
+					set as StoreApi<RS>["setState"],
+					get as StoreApi<RS>["getState"],
+					api
+				)
+			);
 		}
 
-		mergeSlices(slice, slices, set, get, store);
-
+		// merge any extra slices
+		mergeSlices(slice, slices, set, get, api);
 		return slice;
 	};
-	let opts: PersistOptions<RS, Partial<RS>> = {
-		name: config.persistKey || resourceName,
-	};
-	// let pipeline: StateCreator<RS> = baseCreator;
 
-	if (config.persistKey) {
-		opts = {
-			name: config.persistKey,
-			version: config.version ?? 1,
+	let pipeline: StateCreator<any> = baseCreator;
+	if (persistKey) {
+		const opts: PersistOptions<any, any> = {
+			name: persistKey,
+			version,
 			partialize: (state) => ({ ...partialize(state), items: state.items }),
 			migrate,
-			onRehydrateStorage: (state) => (persisted, err) => {
+			onRehydrateStorage: (state) => (storage, err) => {
 				state.setHasHydrated(true);
-				if (persisted?.items && Object.keys(persisted.items).length > 0) {
-					return;
+				if (!storage?.items || Object.keys(storage.items).length === 0) {
+					afterHydrate?.(state, err);
 				}
-				afterHydrate?.(state, err);
 			},
 		};
-		// pipeline = persist(baseCreator, opts) as StateCreator<RS>;
+		pipeline = (set, get, api) => persist(baseCreator, opts)(set, get, api);
 	}
 
-	// const withSelectors = subscribeWithSelector<RS>(pipeline);
-
-	return create(
-		devtools(
-			subscribeWithSelector(
-				persist(baseCreator, {
-					...opts,
-					name: config.persistKey || resourceName,
-					version: config.version ?? 1,
-					partialize: (state) => ({ ...partialize(state), items: state.items }),
-					migrate,
-					onRehydrateStorage: (state) => (persisted, err) => {
-						state.setHasHydrated(true);
-						if (persisted?.items && Object.keys(persisted.items).length > 0) {
-							return;
-						}
-						afterHydrate?.(state, err);
-					},
-				})
-			)
-		)
+	const finalCreator = subscribeWithSelector(
+		devtools(pipeline, { name: resourceName })
 	);
+
+	return create<
+		RS,
+		[["zustand/subscribeWithSelector", never], ["zustand/devtools", never]]
+	>(finalCreator);
 }

@@ -52,8 +52,7 @@ export const Header = () => {
       <header
         style={{ '--header-height': '4rem' } as React.CSSProperties}
         className={cn(
-          // 'sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/70 border-b border-border shadow-sm flex items-center transition-[height] duration-300',
-          "sticky top-0 z-[100] backdrop-blur bg-background/80 text-foreground transition-shadow px-4 py-1.5 @container",
+          "sticky top-0 z-[50] backdrop-blur bg-background/80 text-foreground transition-shadow px-4 py-1.5 @container",
           {
             'h-2': !isHeaderVisible,
             'h-[var(--header-height)]': isHeaderVisible,

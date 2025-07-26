@@ -1,38 +1,50 @@
 import rawTabs from "@/lib/data/tabs.json";
 import { initItems } from "@/utils/initItems";
-import { createResourceStore } from "@/stores/factories";
-import { BaseResource } from "@/schemas";
+import { createResourceStore, ResourceStore } from "@/stores/factories";
 import {
 	createView,
-	ViewResource,
+	type ViewResource,
 	ViewResourceSchema,
 } from "@/schemas/resources/view-schema";
 import {
-	createActiveSlice,
-	createDirtySlice,
 	createViewSlice,
-} from "../../slices";
+	createDirtySlice,
+	createActiveSlice,
+} from "@/stores/slices";
+import type { StoreApi, UseBoundStore } from "zustand";
 
-export type View = ViewResource & BaseResource;
-export const useNoteViewStore = createResourceStore<View>({
+export type NoteViewStore = ResourceStore<ViewResource> &
+	ReturnType<typeof createViewSlice<ViewResource>> &
+	ReturnType<typeof createDirtySlice> &
+	ReturnType<typeof createActiveSlice>;
+
+const _useNoteViewStore = createResourceStore<ViewResource>({
 	resourceName: "note-views",
 	schema: ViewResourceSchema,
 	persistKey: "synapcity-note-views",
 	createItem: createView,
+
 	initItems: (set) => (raw) => {
 		const parsed = initItems<ViewResource>(raw, ViewResourceSchema, createView);
 		set({ items: parsed });
 	},
+
 	afterHydrate: (state, err) => {
 		state.setHasHydrated(true);
 		if (!err && Object.values(state.items).length === 0) {
-			state.initItems?.(rawTabs);
+			state.initItems?.(rawTabs as ViewResource[]);
 		}
 	},
-	slices: [createViewSlice<View>(), createDirtySlice, createActiveSlice],
-	partialize: (state) => {
-		return {
-			activeByScope: state.activeByScope,
-		};
-	},
+
+	slices: [
+		createViewSlice<ViewResource>(),
+		createDirtySlice,
+		createActiveSlice,
+	],
+
+	partialize: (state) => ({ activeByScope: state.activeByScope }),
 });
+
+export const useNoteViewStore = _useNoteViewStore as unknown as UseBoundStore<
+	StoreApi<NoteViewStore>
+>;

@@ -8,7 +8,6 @@ import { useNoteStore, useNoteViewStore } from "@/stores";
 import { createInitialConfig } from "@/lexical/createInitialConfig";
 import { SetEditorStatePlugin } from "@/lexical/plugins/FoundationPlugins/SetEditorState/SetEditorStatePlugin";
 import Plugins from "@/lexical/plugins/Plugins";
-import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 
 export const fallbackEditorState = JSON.stringify({
   root: {
@@ -50,7 +49,6 @@ export default function NoteEditor({ noteId, viewId, content }: { noteId: string
   const updateNote = useNoteStore(s => s.updateResource)
   const latestEditorState = useRef(content ?? fallbackEditorState);
   const hasHydrated = useNoteViewStore(s => s.hasHydrated)
-  const [editor] = useLexicalComposerContext()
 
   useEffect(() => {
     if (!hasHydrated || !noteId || !viewId) return;
@@ -85,12 +83,6 @@ export default function NoteEditor({ noteId, viewId, content }: { noteId: string
   );
 
   const resolvedContent = content ?? fallbackEditorState;
-
-  useEffect(() => {
-    const editorState = editor.parseEditorState(JSON.parse(resolvedContent));
-    queueMicrotask(() => editor.setEditorState(editorState));
-  }, [resolvedContent, editor]);
-
 
   try {
     const parsed = JSON.parse(resolvedContent);
