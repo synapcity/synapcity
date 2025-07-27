@@ -121,6 +121,7 @@ export function createResourceStore<T extends BaseResource>(
 				const now = new Date().toISOString();
 				const updated = schema.parse({ ...existing, ...patch, updatedAt: now });
 				set((s) => ({ items: { ...s.items, [id]: updated } }));
+				return updated;
 			},
 
 			deleteResource(id) {

@@ -17,12 +17,12 @@ const FeaturePlugins = dynamic(() => import("./Features/FeaturePlugins").then((m
 	ssr: false,
 });
 
-export default function PluginsWrapper({ editorId }: { editorId: string; noteId: string; viewId: string; }) {
+export default function PluginsWrapper({ noteId, viewId }: { editorId: string; noteId: string; viewId: string; }) {
 
 	return (
 		<div className="flex flex-col flex-1 size-full overflow-hidden relative">
 			<HistoryPlugin />
-			<FoundationPlugins editorId={editorId} />
+			<FoundationPlugins noteId={noteId} viewId={viewId} />
 			<CoreUIPlugins />
 			<BehaviorPlugins />
 			<FeaturePlugins />

@@ -3,10 +3,6 @@ import { useNoteViewStore } from "@/stores/resources";
 import type { ViewResource } from "@/schemas/resources";
 import { useShallow } from "zustand/shallow";
 
-/**
- * Always returns an array of views for `noteId`.
- * If none exist yet, auto‑adds a new "editor" view.
- */
 export function useNoteViewsByNoteId(noteId: string): ViewResource[] {
 	const views = useNoteViewStore(
 		useShallow((s) => s.getViewsFor(noteId) ?? [])
@@ -20,21 +16,11 @@ export function useNoteViewsByNoteId(noteId: string): ViewResource[] {
 			const view = addView(noteId, "editor");
 			setActive(noteId, view.id);
 		}
-	}, [noteId, views.length, addView, hasHydrated]);
+	}, [noteId, views.length, addView, hasHydrated, setActive]);
 
 	return views;
 }
 
-/**
- * Returns the active ViewResource for a note.
- * Priority:
- *  1) store.activeByScope[noteId]
- *  2) passed-in preferredViewId
- *  3) view in views[] with isDefault===true
- *  4) first view in array
- *
- * Also writes back into the store if we fell back to (3) or (4).
- */
 export function useNoteActiveView(
 	noteId: string,
 	preferredViewId?: string

@@ -1,20 +1,23 @@
 "use client";
 
 import React from "react";
-import { useUIStore } from "@/stores/uiStore";
+// import { useUIStore } from "@/stores/uiStore";
 import { useMetadata } from "@/providers/MetadataProvider";
-// import { useNodeStore } from "@/stores/nodeStore";
-import { SidebarScope } from "@/types/refactor/sidebar-old";
+import { useNodeStore } from "@/lexical/stores/nodeStore";
+// import { SidebarScope } from "@/stores/sidebarStore";
 
-// { persistentKey }: { persistentKey: string }
-export function SidebarTrigger() {
-  const { entityId: id, scope } = useMetadata();
-  // const setActiveNode = useNodeStore((s) => s.setActiveNode);
-  const setActivePanel = useUIStore((s) => s.setActivePanel);
+export function SidebarTrigger({ persistentKey }: {
+  persistentKey?: string;
+}) {
+  const { id, scope } = useMetadata();
+  const setActiveNode = useNodeStore((s) => s.setNodeKeyForPersistentKey);
+  // const setActivePanel = useUIStore((s) => s.setCompState)("noteSidebar", "isVisible)", false);
 
   const onClick = () => {
-    // setActiveNode(persistentKey);
-    setActivePanel(scope as SidebarScope, id, "notes");
+    if (persistentKey) {
+      setActiveNode(persistentKey);
+      // setActivePanel(scope as SidebarScope, id, "notes");
+    }
   };
 
   return (
