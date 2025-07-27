@@ -101,7 +101,7 @@ export function SetEditorStatePlugin({ content }: { content: string }) {
         root.append($createParagraphNode());
       }
     });
-  }, [editor, content]); // 🚩 DO NOT ADD CONTENT HERE OR IT WILL RESET CONSTANTLY
+  }, [editor, content]);
 
   return null;
 }

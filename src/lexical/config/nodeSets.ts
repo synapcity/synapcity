@@ -8,28 +8,28 @@ export const commonNodes: Array<() => Promise<any>> = [
 	() => import("@lexical/mark").then((m) => m.MarkNode),
 ];
 
-export const persistentNodes: Array<() => Promise<any>> = [
-	() =>
-		import("../nodes/persistent-toolkit/MetadataNode").then(
-			(m) => m.MetadataNode
-		),
-	() =>
-		import("../nodes/persistent-toolkit/PersistentDecoratorNode").then(
-			(m) => m.PersistentDecoratorNode
-		),
-	() =>
-		import("../nodes/persistent-toolkit/PersistentHeadingNode").then(
-			(m) => m.PersistentHeadingNode
-		),
-	() =>
-		import("../nodes/persistent-toolkit/PersistentParagraphNode").then(
-			(m) => m.PersistentParagraphNode
-		),
-	() =>
-		import("../nodes/persistent-toolkit/SidebarTriggerNode").then(
-			(m) => m.SidebarTriggerNode
-		),
-];
+// export const persistentNodes: Array<() => Promise<any>> = [
+// 	() =>
+// 		import("../nodes/persistent-toolkit/MetadataNode").then(
+// 			(m) => m.MetadataNode
+// 		),
+// 	() =>
+// 		import("../nodes/persistent-toolkit/PersistentDecoratorNode").then(
+// 			(m) => m.PersistentDecoratorNode
+// 		),
+// 	() =>
+// 		import("../nodes/persistent-toolkit/PersistentHeadingNode").then(
+// 			(m) => m.PersistentHeadingNode
+// 		),
+// 	() =>
+// 		import("../nodes/persistent-toolkit/PersistentParagraphNode").then(
+// 			(m) => m.PersistentParagraphNode
+// 		),
+// 	() =>
+// 		import("../nodes/persistent-toolkit/SidebarTriggerNode").then(
+// 			(m) => m.SidebarTriggerNode
+// 		),
+// ];
 
 export const readonlyNodes: Array<() => Promise<any>> = [
 	() => import("lexical/nodes/LexicalElementNode").then((m) => m.ElementNode),

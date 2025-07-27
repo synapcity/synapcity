@@ -21,23 +21,13 @@ export default function FoundationPlugins({
   const [editor] = useLexicalComposerContext()
   const hasHydrated = useNoteViewStore(s => s.hasHydrated)
 
-  // 1) Pass *both* noteId + viewId:
   const activeView = useNoteActiveView(noteId, viewId) as CombinedEditor;
 
-  // 2) Only grab the content string (guarded by optional chaining):
   const content = activeView?.content;
 
   useEffect(() => {
-    // never run until we have everything
     if (!hasHydrated || !noteId || !viewId || !content) {
       return;
-    }
-
-    // parse & set editor state
-    const parsed = JSON.parse(content);
-    if (parsed) {
-      const editorState = editor.parseEditorState(parsed);
-      queueMicrotask(() => editor.setEditorState(editorState));
     }
   }, [content, editor, hasHydrated, noteId, viewId]);
 

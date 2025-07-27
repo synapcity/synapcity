@@ -2,10 +2,10 @@
 
 import { useState } from 'react';
 import { Button } from '@/components';
-import { useNotesStore } from '@/stores/refactor/notesStore';
+import { useNoteStore } from '@/stores/resources/noteStore';
 
 export function NoteSidebar() {
-  const { items, addItem } = useNotesStore();
+  const { items } = useNoteStore();
   const [draft, setDraft] = useState('');
 
   const handleAdd = () => {
@@ -31,10 +31,10 @@ export function NoteSidebar() {
       <ul className="flex-1 overflow-auto space-y-2">
         {Object.values(items).map((item) => (
           <li
-            key={item.id}
+            key={item?.id}
             className="flex items-center justify-between rounded bg-gray-50 dark:bg-gray-700 px-3 py-2"
           >
-            <span className="break-words flex-1">{item.preview}</span>
+            <span className="break-words flex-1">{item?.summary}</span>
             <Button variant="ghost" size="sm" onClick={() => console.log("removing")}>
               ✕
             </Button>
