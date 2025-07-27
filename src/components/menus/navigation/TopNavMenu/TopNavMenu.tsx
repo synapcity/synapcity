@@ -27,7 +27,7 @@ const NavMenuLink = dynamic(() => import('@/components/menus/navigation/NavItem/
 });
 
 export function TopNavMenu() {
-  const isHeaderOpen = useUIStore(s => s.components.heading.isVisible)
+  const isHeaderOpen = useUIStore(s => s.components.header.isVisible)
 
   const toggleMode = useThemeStore(state => state.toggleGlobalMode)
 
