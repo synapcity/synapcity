@@ -31,7 +31,7 @@ type State = {
 	setFocusId: (id?: string) => void;
 };
 
-export const useScheduleStore = create<State>((set, get) => ({
+export const useScheduleStore = create<State>((set) => ({
 	events: [],
 	focusId: undefined,
 	setEvents: (events) => set({ events }),

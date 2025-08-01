@@ -1,6 +1,6 @@
 "use client";
-import { useMemo } from "react";
-import type { SidebarScope } from "@/types/refactor/sidebar-old";
+import { SidebarScope } from "@/stores/sidebarStore";
+// import { useMemo } from "react";
 // import { generateScopeKey } from "@/stores/";
 import type { UseBoundStore, StoreApi } from "zustand";
 // import type { Annotation, Connection, Resource } from "@/stores";

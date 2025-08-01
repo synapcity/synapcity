@@ -1,12 +1,12 @@
 "use client"
 
-import { useSidebarStore } from "@/stores/sidebarStore";
+// import { useSidebarStore } from "@/stores/sidebarStore";
 import { useNodeRelationsStore } from "./nodeRelationsStore";
 
 export function NodeTrigger({ nodeId }: { nodeId: string }) {
-  const openPanel = useSidebarStore((s) => s.getPanels);
+  // const openPanel = useSidebarStore((s) => s.getPanels);
   const { connections, annotations, resources } = useNodeRelationsStore.getState()
-
+  console.log("nodeId", nodeId)
   // Only render when there’s something to manage
   if (
     Object.values(connections).length === 0 &&

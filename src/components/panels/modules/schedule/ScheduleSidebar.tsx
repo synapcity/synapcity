@@ -7,7 +7,7 @@ import { useScheduleStore } from "@/stores/scheduleStore";
 import { PlusIcon } from "lucide-react";
 
 export function ScheduleSidebar() {
-  const { events, focusId, updateEvent, reorderEvents, setFocusId, addEvent } = useScheduleStore();
+  const { events, reorderEvents, addEvent } = useScheduleStore();
   const [openId, setOpenId] = useState<string | null>(null);
 
   // DnD order

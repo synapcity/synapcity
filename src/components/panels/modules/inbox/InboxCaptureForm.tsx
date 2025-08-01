@@ -10,7 +10,7 @@ export const InboxCaptureForm = () => {
   const handleSubmit = (data: InboxFormValues) => {
     const item = {
       ...data,
-      // processed: data.processed ?? false,
+      processed: data.processed ?? false,
     }
     addItem(item)
   }

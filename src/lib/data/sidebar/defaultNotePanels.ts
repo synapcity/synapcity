@@ -1,6 +1,6 @@
 import { lazy } from "react";
 import { sharedPanelMeta } from "./sharedPanelMeta";
-import type { SidebarPanel } from "@/types/refactor/sidebar-old";
+import { SidebarPanel } from "@/stores/sidebarStore";
 
 export const defaultNotePanels: SidebarPanel[] = sharedPanelMeta.map(
 	(meta) => ({

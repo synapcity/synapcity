@@ -3,7 +3,7 @@
 import { Loading } from "../Loading/Loading";
 
 interface Props {
-  isLoading: boolean;
+  isLoading?: boolean;
   skeleton?: React.ReactNode;
   delayMs?: number;
   children?: React.ReactNode;

@@ -2,6 +2,7 @@ import type { UIState } from "../useUIStore";
 
 const defaultUIState: UIState = {
 	components: {},
+	isSiteFocus: false,
 };
 
 export const migrateUIStore = (

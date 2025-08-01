@@ -8,11 +8,11 @@ import React, {
 import ReactDOM from "react-dom";
 import type { Table, RowData } from "@tanstack/react-table";
 
-interface InlineSearchItem {
-  id: string;
-  label: string;
-  onSelect: () => void;
-}
+// interface InlineSearchItem {
+//   id: string;
+//   label: string;
+//   onSelect: () => void;
+// }
 
 /**
  * Renders a text input and a list of matching rows inline (or into
@@ -25,7 +25,7 @@ export function TableGlobalSearchInline<TData extends RowData>({
   resultsClassName = "mt-1 border rounded bg-white shadow max-h-60 overflow-auto",
 }: {
   table: Table<TData>;
-  resultsContainerRef?: RefObject<HTMLElement>;
+  resultsContainerRef?: RefObject<HTMLElement | null>;
   inputClassName?: string;
   resultsClassName?: string;
 }) {

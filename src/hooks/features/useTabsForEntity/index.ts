@@ -1,1 +1,1 @@
-export * from "./useTabsForEntity";
+// export * from "./useTabsForEntity";

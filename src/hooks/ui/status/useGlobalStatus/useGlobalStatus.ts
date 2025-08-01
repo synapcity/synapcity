@@ -10,7 +10,7 @@ export function useGlobalStatusFlags() {
 	const status = useGlobalStatus();
 	return {
 		isSaving: status.isSaving,
-		isLoading: status.isLoadingPage,
+		isLoading: status.isLoading,
 		isDirty: false,
 		error: status.error,
 		lastSavedAt: status.lastSavedAt,

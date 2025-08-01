@@ -14,9 +14,10 @@ import { Label } from "@/components/atoms";
 import { Switch } from "@/components/molecules";
 import { IconSidebar, SidebarRenderer } from "@/components/menus/sidebar/NotesSidebar";
 // import { useDashboardStore } from "@/stores";
-import { SidebarPanel } from "@/types/refactor/sidebar-old";
+// import { SidebarPanel } from "@/types";
 import { usePanels } from "@/hooks/sidebar";
-import { useTabsForEntity } from "@/hooks/features/useTabsForEntity";
+// import { useTabsForEntity } from "@/hooks/features/useTabsForEntity";
+import { SidebarPanel } from "@/stores/sidebarStore";
 // import { useTabsForEntity } from "@/hooks/suseTabsForEntity";
 
 // ---- Types ----
@@ -30,9 +31,9 @@ export function DashboardSidebar({
 }: AppSidebarProps) {
   const { open } = useSidebar();
   const { panels, activePanel } = usePanels("dashboard", id);
-  const dashTabs = useTabsForEntity(
-    "dashboard", id
-  )
+  // const dashTabs = useTabsForEntity(
+  //   "dashboard", id
+  // )
   // const dashboard = useDashboardStore(state => state.getDashboardById(id))
   // const sidebarByScope = useSidebarStore(state => state.sidebarByScope)
   // const addPanels = useSidebarStore(state => state.hydratePanels)
@@ -71,7 +72,7 @@ export function DashboardSidebar({
         key={id}
         scope="dashboard"
         id={id}
-        onAdd={dashTabs.handleAddTab}
+      // onAdd={dashTabs.handleAddTab}
       />
 
       {(open) ? (

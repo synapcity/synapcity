@@ -1,86 +1,86 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-export type PluginLoader<P> = () => Promise<{
-	default: React.ComponentType<P>;
-}>;
+// /* eslint-disable @typescript-eslint/no-explicit-any */
+// export type PluginLoader<P> = () => Promise<{
+// 	default: React.ComponentType<P>;
+// }>;
 
-export type PluginMap<T> = {
-	[key: string]: PluginLoader<T>;
-};
+// export type PluginMap<T> = {
+// 	[key: string]: PluginLoader<T>;
+// };
 
-interface RichTextPluginProps {
-	contentEditable: JSX.Element<ContentEditableProps>;
-	placeholder?:
-		| JSX.Element
-		| ((isEditable: boolean) => JSX.Element | null)
-		| null;
-	ErrorBoundary: React.ComponentType;
-}
+// interface RichTextPluginProps {
+// 	contentEditable: JSX.Element<ContentEditableProps>;
+// 	placeholder?:
+// 		| JSX.Element
+// 		| ((isEditable: boolean) => JSX.Element | null)
+// 		| null;
+// 	ErrorBoundary: React.ComponentType;
+// }
 
-interface ContentEditableProps {
-	className?: string;
-}
+// interface ContentEditableProps {
+// 	className?: string;
+// }
 
-interface OnChangeProps {
-	onChange: (editorState: EditorState) => void;
-}
+// interface OnChangeProps {
+// 	onChange: (editorState: EditorState) => void;
+// }
 
-type PluginLoader<P> = () => Promise<{ default: React.ComponentType<P> }>;
+// type PluginLoader<P> = () => Promise<{ default: React.ComponentType<P> }>;
 
-type PluginMap = {
-	[key: string]: PluginLoader;
-};
+// // type PluginMap = {
+// // 	[key: string]: PluginLoader;
+// // };
 
-interface RichTextPluginProps {
-	contentEditable: JSX.Element<ContentEditableProps>;
-	placeholder?:
-		| JSX.Element
-		| ((isEditable: boolean) => JSX.Element | null)
-		| null;
-	ErrorBoundary: React.ComponentType;
-}
+// interface RichTextPluginProps {
+// 	contentEditable: JSX.Element<ContentEditableProps>;
+// 	placeholder?:
+// 		| JSX.Element
+// 		| ((isEditable: boolean) => JSX.Element | null)
+// 		| null;
+// 	ErrorBoundary: React.ComponentType;
+// }
 
-interface ContentEditableProps {
-	className?: string;
-}
+// interface ContentEditableProps {
+// 	className?: string;
+// }
 
-interface OnChangeProps {
-	onChange: (editorState: EditorState) => void;
-}
+// interface OnChangeProps {
+// 	onChange: (editorState: EditorState) => void;
+// }
 
-interface ToolbarProps {
-	note: NoteWithAnnotations;
-}
+// interface ToolbarProps {
+// 	note: NoteWithAnnotations;
+// }
 
-interface EditorProps {
-	entity: any;
-	isAdvanced?: boolean;
-	isFile?: boolean;
-	isNote?: boolean;
-}
-interface Comment {
-	id: string;
-	noteId: string;
-	content: string;
-	persistentKey?: string | null;
-	updatedAt: Date;
-}
+// interface EditorProps {
+// 	entity: any;
+// 	isAdvanced?: boolean;
+// 	isFile?: boolean;
+// 	isNote?: boolean;
+// }
+// interface Comment {
+// 	id: string;
+// 	noteId: string;
+// 	content: string;
+// 	persistentKey?: string | null;
+// 	updatedAt: Date;
+// }
 
-export interface EditorProps {
-	entity: Note | File;
-}
-interface Note {
-	id: string;
-	fileId: string;
-	content: string | null;
-	title: string;
-	persistentKey?: string | null;
-}
+// export interface EditorProps {
+// 	entity: Note | File;
+// // }
+// interface Note {
+// 	id: string;
+// 	fileId: string;
+// 	content: string | null;
+// 	title: string;
+// 	persistentKey?: string | null;
+// }
 
-interface File {
-	id: string;
-	content: string;
-	title: string;
-}
+// interface File {
+// 	id: string;
+// 	content: string;
+// 	title: string;
+// }
 
 // interface NoteWithMetadata extends Note {
 // 	comments: Comment[];

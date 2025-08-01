@@ -16,7 +16,6 @@ import { ViewResource } from '@/schemas';
 
 export interface NoteEditorHeaderProps {
   noteId: string;
-  viewId: string;
   onTitleSave?: (newTitle: string) => void;
   tags: { label: string; value: string; color?: string }[];
   onTagClick?: (value: string) => void;
@@ -27,7 +26,6 @@ export interface NoteEditorHeaderProps {
 }
 
 export function NoteEditorHeader({
-  viewId,
   noteId,
   onTagRemove,
   onTagClick,
@@ -83,8 +81,6 @@ export function NoteEditorHeader({
         <DynamicTabsBar
           tabs={tabOptions}
           onAdd={() => useNoteViewStore.getState().addView(noteId, "editor")}
-          noteId={noteId}
-          viewId={viewId}
         />
       </div>
     </div>

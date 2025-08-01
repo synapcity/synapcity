@@ -47,7 +47,7 @@ export type FieldDefinitionMap = {
 // 	| "title"
 // 	| "exportFormat";
 
-export type FieldType = "text" | "select" | "exportType" | "password";
+export type FieldType = "text" | "select" | "password";
 
 export interface FieldOption {
 	label: string;

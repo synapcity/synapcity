@@ -58,7 +58,6 @@ export default function NotePage() {
       >
         <NoteEditorHeader
           noteId={noteId}
-          viewId={activeTabId}
           onTitleSave={(newTitle: string) => {
             startStatus("saving", "note", noteId)
             handleUpdate({ title: newTitle }, "saving"

@@ -24,8 +24,8 @@ export function FormatSelect({ value, options: rawOptions, field, config, ...pro
   return (
     <SelectField
       {...props}
-      value={value}
-      options={options}
+      // value={value}
+      // options={options}
       config={{
         ...config,
         name,

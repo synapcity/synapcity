@@ -1,1 +1,1 @@
-export * from "./useSyncTabsWithUrl";
+// export * from "./useSyncTabsWithUrl";

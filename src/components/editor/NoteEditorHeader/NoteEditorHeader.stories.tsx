@@ -16,7 +16,6 @@ type Story = StoryObj<NoteEditorHeaderProps>;
 
 const baseArgs: NoteEditorHeaderProps = {
   noteId: 'note-123',
-  title: 'My Note Title',
   onTitleSave: (savedTitle) => console.log('Title saved', savedTitle),
   tags: [
     { label: 'Research', value: 'research', color: '#6366f1' },
@@ -35,7 +34,6 @@ function withTabsList(status?: 'idle' | 'saving' | 'syncing' | 'error') {
     const noteId = args.noteId || "note-123";
     const store = useNoteStore.getState();
 
-    // Set status via correct method
     if (status === "saving") {
       store.startStatus("saving", "note", noteId);
     } else if (status === "syncing") {
@@ -86,10 +84,17 @@ export const NoTags: Story = {
 export const LongTitle: Story = {
   args: {
     ...baseArgs,
-    title:
-      'This is an extremely long note title to test wrapping and overflow behavior in the header component which might break layouts',
   },
-  render: withTabsList(),
+  render: () => {
+    const store = useNoteStore.getState()
+    store.updateTitle("note-123",
+      'This is an extremely long note title to test wrapping and overflow behavior in the header component which might break layouts')
+    return (
+      <>
+        {withTabsList()}
+      </>
+    )
+  },
 };
 
 export const MinimalMetadata: Story = {

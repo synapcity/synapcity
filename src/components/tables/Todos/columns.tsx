@@ -2,8 +2,8 @@
 
 import { ComponentUIState } from "@/stores";
 import { ThemePreferences } from "@/theme";
-import type { BaseEntity } from "@/types/refactor/entity";
 import { ColumnDef } from "@tanstack/react-table"
+import { BaseResource as BaseEntity } from "@/schemas";
 
 export type ItemStatus = "done" | "not-started" | "in-progress";
 

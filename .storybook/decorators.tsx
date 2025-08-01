@@ -1,5 +1,5 @@
 import React from 'react'
-import NoteProvider from '../src/app/notes/[noteId]/NoteProvider'
+import NoteProvider from '../src/app/user/notes/[noteId]/NoteProvider'
 import { DecoratorFunction } from 'storybook/internal/types';
 
 export type ArgsWithId = {

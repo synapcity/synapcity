@@ -46,15 +46,15 @@ const EditorPlaceholder = dynamic(
 
 function Editable() {
   return (
-    // <DraggableWrapper>
-    <div className="relative size-full">
-      <ContentEditable
-        aria-placeholder="Loading Content..."
-        placeholder={<EditorPlaceholder />}
-        className="min-h-[150px] h-[85vh] w-full p-4 overflow-y-auto border border-gray-300 rounded-md outline-none"
-      />
-    </div>
-    // </DraggableWrapper>
+    <DraggableWrapper>
+      <div className="relative size-full">
+        <ContentEditable
+          aria-placeholder="Loading Content..."
+          placeholder={<EditorPlaceholder />}
+          className="min-h-[150px] h-[85vh] w-full p-4 overflow-y-auto border border-gray-300 rounded-md outline-none"
+        />
+      </div>
+    </DraggableWrapper>
   );
   // }, [mounted])
 }

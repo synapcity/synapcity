@@ -16,7 +16,7 @@ import {
 import { useState } from "react";
 
 function SortableItem({ id, children }: { id: string; children: React.ReactNode }) {
-  return <div>{children}</div>;
+  return <div key={id} data-sortable-item-id={id}>{children}</div>;
 }
 
 export function SortableList({ items }: { items: string[] }) {

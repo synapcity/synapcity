@@ -41,7 +41,7 @@ export function EventModal({
         ...event,
         start: event.start ? new Date(event.start).toISOString().slice(0, 16) : "",
         end: event.end ? new Date(event.end).toISOString().slice(0, 16) : "",
-        date: event.date ? new Date(event.date).toISOString().slice(0, 10) : ""
+        // date: event. ? new Date(eve nt.date).toISOString().slice(0, 10) : ""
       });
     } else if (slot && slot.start) {
       reset({
@@ -98,7 +98,8 @@ export function EventModal({
           <Input {...register("notes")} />
           <div className="flex gap-2 mt-6">
             {isEdit && event && (
-              <Button variant="destructive" type="button" onClick={() => { deleteEvent(event.id!); onClose(); }}>
+              // <Button variant="destructive" type="button" onClick={() => { deleteEvent(event.id!); onClose(); }}>
+              <Button variant="destructive" type="button" onClick={() => { console.log("deleting:", event.id) }}>
                 Delete
               </Button>
             )}

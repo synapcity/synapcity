@@ -4,39 +4,39 @@ import { OverviewPanel } from "./modules/overview/OverviewPanel";
 import { InboxPanel, InboxSidebar, ScheduleSidebar } from "./modules";
 // import { ScheduleSidebar } from "./modules/schedule/ScheduleSidebar";
 // import { ScheduleEvent } from "@/types/schedule";
-import { ScheduleEvent } from "@/stores/scheduleStore";
+// import { ScheduleEvent } from "@/stores/scheduleStore";
 
-const sampleEvents: ScheduleEvent[] = [
-	{
-		id: "1",
-		title: "Morning Standup",
-		start: "2025-07-18T09:30:00.000Z",
-		end: "2025-07-18T10:00:00.000Z",
-		tags: [{ label: "Work", value: "work", color: "#6366f1" }],
-		resources: [],
-		done: false,
-	},
-	{
-		id: "2",
-		title: "Focus Block: UI Kit",
-		start: "2025-07-18T10:15:00.000Z",
-		end: undefined,
-		allDay: true,
-		tags: [{ label: "Focus", value: "focus", color: "#10b981" }],
-		resources: [],
-		done: false,
-		// isFocus: true,
-	},
-	{
-		id: "3",
-		title: "Lunch Break",
-		start: "2025-07-18T17:00:00.000Z",
-		end: "2025-07-18T18:00:00.000Z",
-		tags: [{ label: "Break", value: "break", color: "#f59e42" }],
-		resources: [],
-		done: false,
-	},
-];
+// const sampleEvents: ScheduleEvent[] = [
+// 	{
+// 		id: "1",
+// 		title: "Morning Standup",
+// 		start: "2025-07-18T09:30:00.000Z",
+// 		end: "2025-07-18T10:00:00.000Z",
+// 		tags: [{ label: "Work", value: "work", color: "#6366f1" }],
+// 		resources: [],
+// 		done: false,
+// 	},
+// 	{
+// 		id: "2",
+// 		title: "Focus Block: UI Kit",
+// 		start: "2025-07-18T10:15:00.000Z",
+// 		end: undefined,
+// 		allDay: true,
+// 		tags: [{ label: "Focus", value: "focus", color: "#10b981" }],
+// 		resources: [],
+// 		done: false,
+// 		// isFocus: true,
+// 	},
+// 	{
+// 		id: "3",
+// 		title: "Lunch Break",
+// 		start: "2025-07-18T17:00:00.000Z",
+// 		end: "2025-07-18T18:00:00.000Z",
+// 		tags: [{ label: "Break", value: "break", color: "#f59e42" }],
+// 		resources: [],
+// 		done: false,
+// 	},
+// ];
 
 export const USER_PANEL_MODULES: PanelModule[] = [
 	{

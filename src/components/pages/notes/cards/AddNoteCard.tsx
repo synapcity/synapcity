@@ -19,7 +19,7 @@ export const AddNoteCard = () => {
     let newNote = null;
 
     try {
-      newNote = await addNote({ title: "", summary: "", preview: "" });
+      newNote = await addNote({ title: "", summary: "" });
     } catch (err) {
       failStatus("creating", err as Error);
       return;

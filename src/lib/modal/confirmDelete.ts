@@ -1,4 +1,4 @@
-import { useModalStore } from "@/stores";
+// import { useModalStore } from "@/stores";
 /**
  * Opens a confirm modal and resolves to true/false.
  */
@@ -14,27 +14,38 @@ export function confirmDelete({
 	cancelText?: string;
 }): Promise<boolean> {
 	return new Promise((resolve) => {
-		const openModal = useModalStore.getState().openModal;
-
-		openModal("confirm", {
-			id: "confirm-delete",
+		// const openModal = useModalStore.getState().openModal;
+		// 	openModal("confirm", {
+		// 		id: "confirm-delete",
+		// 		title,
+		// 		description,
+		// 		actions: [
+		// 			{
+		// 				label: cancelText,
+		// 				variant: "ghost",
+		// 				onClick: () => resolve(false),
+		// 			},
+		// 			{
+		// 				label: confirmText,
+		// 				variant: "primary",
+		// 				onClick: () => resolve(true),
+		// 			},
+		// 		],
+		// 		onCancel: () => resolve(false),
+		// 		onConfirm: () => resolve(true),
+		// 	});
+		console.log(
+			"resolve modal",
+			resolve,
+			"title",
 			title,
+			"desc",
 			description,
-			actions: [
-				{
-					label: cancelText,
-					variant: "ghost",
-					onClick: () => resolve(false),
-				},
-				{
-					label: confirmText,
-					variant: "primary",
-					onClick: () => resolve(true),
-				},
-			],
-			onCancel: () => resolve(false),
-			onConfirm: () => resolve(true),
-		});
+			"confirmText",
+			confirmText,
+			"cancelext",
+			cancelText
+		);
 	});
 }
 

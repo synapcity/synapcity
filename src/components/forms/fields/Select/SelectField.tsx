@@ -1,6 +1,89 @@
+// "use client";
+
+// import {
+//   UISelect,
+//   UISelectTrigger,
+//   UISelectValue,
+//   UISelectContent,
+//   UISelectItem,
+//   UITooltip,
+//   UITooltipTrigger,
+//   UITooltipContent,
+//   UIFormMessage,
+// } from "@/components/atoms/ui";
+// import { useFieldError } from "@/hooks";
+// import { SelectFieldProps } from "@/types/form";
+
+// export function SelectField({ config, meta, field }: SelectFieldProps) {
+//   const { message } = useFieldError(config.name);
+//   const {
+//     placeholder,
+//     options = [],
+//   } = config;
+
+//   const {
+//     tooltip,
+//     helpText,
+//     disabled,
+//   } = meta ?? {};
+
+//   const id = `select-${field.name}`;
+//   const labelId = `${id}-label`;
+
+//   const selectElement = (
+//     <UISelect
+//       {...field}
+//       {...config}
+//       {...meta}
+//       disabled={disabled}
+//     >
+//       <UISelectTrigger id={id} aria-labelledby={labelId}>
+//         <UISelectValue placeholder={placeholder ?? "Select one..."} />
+//       </UISelectTrigger>
+//       <UISelectContent role="listbox">
+//         {options.map((opt) => (
+//           <UISelectItem
+//             key={opt.value}
+//             value={opt.value}
+//             aria-label={opt.label}
+//             className="cursor-pointer"
+//           >
+//             {opt.label}
+//           </UISelectItem>
+//         ))}
+//       </UISelectContent>
+//     </UISelect>
+//   );
+
+//   return (
+//     <div>
+//       {tooltip ? (
+//         <UITooltip>
+//           <UITooltipTrigger asChild>{selectElement}</UITooltipTrigger>
+//           <UITooltipContent>{tooltip}</UITooltipContent>
+//         </UITooltip>
+//       ) : (
+//         selectElement
+//       )}
+
+//       {helpText && (
+//         <p id={`${config.name}-help`} className="mt-1 text-xs text-muted-foreground">
+//           {helpText}
+//         </p>
+//       )}
+//       {message && (
+//         <UIFormMessage id={`${id}-error`} className="text-red-600 mt-1">
+//           {message}
+//         </UIFormMessage>
+//       )}
+//     </div>
+//   );
+// }
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import {
+  // UIFormControl,
   UISelect,
   UISelectTrigger,
   UISelectValue,
@@ -11,12 +94,26 @@ import {
   UITooltipContent,
   UIFormMessage,
 } from "@/components/atoms/ui";
+import { FieldConfig, FieldMeta } from "@/types/form";
 import { useFieldError } from "@/hooks";
-import { SelectFieldProps } from "@/types/form";
 
-export function SelectField({ config, meta, field }: SelectFieldProps) {
+interface Props {
+  config: FieldConfig;
+  meta?: FieldMeta;
+  field: {
+    name: string;
+    value: any;
+    onChange: (value: any) => void;
+    onBlur: () => void;
+    ref?: React.Ref<any>;
+    [key: string]: any;
+  };
+}
+
+export function SelectField({ config, meta, field }: Props) {
   const { message } = useFieldError(config.name);
   const {
+    name,
     placeholder,
     options = [],
   } = config;
@@ -27,14 +124,15 @@ export function SelectField({ config, meta, field }: SelectFieldProps) {
     disabled,
   } = meta ?? {};
 
-  const id = `select-${field.name}`;
+  const id = `select-${name}`;
   const labelId = `${id}-label`;
 
   const selectElement = (
     <UISelect
-      {...field}
-      {...config}
-      {...meta}
+      name={name}
+      value={field.value}
+      onValueChange={field.onChange}
+      defaultValue={field.value}
       disabled={disabled}
     >
       <UISelectTrigger id={id} aria-labelledby={labelId}>
@@ -56,7 +154,9 @@ export function SelectField({ config, meta, field }: SelectFieldProps) {
   );
 
   return (
+    // <UIFormControl>
     <div>
+
       {tooltip ? (
         <UITooltip>
           <UITooltipTrigger asChild>{selectElement}</UITooltipTrigger>
@@ -67,7 +167,7 @@ export function SelectField({ config, meta, field }: SelectFieldProps) {
       )}
 
       {helpText && (
-        <p id={`${config.name}-help`} className="mt-1 text-xs text-muted-foreground">
+        <p id={`${name}-help`} className="mt-1 text-xs text-muted-foreground">
           {helpText}
         </p>
       )}
@@ -77,5 +177,6 @@ export function SelectField({ config, meta, field }: SelectFieldProps) {
         </UIFormMessage>
       )}
     </div>
+    // </UIFormControl>
   );
 }

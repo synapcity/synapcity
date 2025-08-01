@@ -6,7 +6,7 @@ import type { ThemeScope } from "@/theme/types"
 import dynamic from "next/dynamic"
 import { ThemePreferencesFormValues } from "../schema"
 
-const IconButtonSkeleton = dynamic(() => import("@/components/loading/buttons/IconButtonSkeleton").then((mod) => mod.IconButtonSkeleton), {
+const IconButtonSkeleton = dynamic(() => import("../../../../archives/components/loading/skeletons/buttons/IconButtonSkeleton").then((mod) => mod.IconButtonSkeleton), {
   ssr: true
 })
 

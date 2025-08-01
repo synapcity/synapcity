@@ -1,6 +1,5 @@
 import { create } from "zustand";
-import { createStatusSlice } from "@/stores/slices";
-import type { StatusSlice } from "@/types/ui";
+import { createStatusSlice, type StatusSlice } from "@/stores/slices";
 import type { LexicalEditor } from "lexical";
 
 export type EditorStore = {

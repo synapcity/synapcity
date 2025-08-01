@@ -118,7 +118,7 @@ import {
   useReactTable,
   Table,
 } from '@tanstack/react-table';
-import { BaseTab } from '@/stores';
+import { BaseTab } from '@/schemas/data/tab-schema';
 
 type Person = {
   firstName: string;
