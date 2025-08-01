@@ -14,8 +14,9 @@ import type {
 	ThemePreferences,
 	EntityType,
 } from "@/theme/types";
-import { Spinner } from "@/components";
+import { Loading } from "@/components";
 import { resolveThemeMetadata, applyThemeVars } from "@/theme";
+import { ModalRenderer } from "@/components/modals/ModalRenderer/ModalRenderer";
 
 export const ThemeProvider = ({
 	scope,
@@ -32,6 +33,7 @@ export const ThemeProvider = ({
 	const hasHydrated = useThemeStore((s) => s.hasHydrated);
 	const hydratedScoped = useThemeStore((s) => s.scopedPreferences);
 	const hydratedGlobal = useThemeStore((s) => s.globalPreferences);
+	const initScopedPreferences = useThemeStore((s) => s.initScopedPreferences);
 	const setGlobalPreferences = useThemeStore((s) => s.setGlobalPreferences);
 	const setPreferences = useThemeStore((s) => s.setPreferences);
 	const resetGlobalPreferences = useThemeStore((s) => s.resetGlobalPreferences);
@@ -58,9 +60,18 @@ export const ThemeProvider = ({
 				isCustom: false,
 			};
 
-	const scopedPrefs = entityId
-		? hydratedScoped?.[scope as EntityType]?.[entityId]
-		: null;
+	const scopedPrefs =
+		entityId && hasHydrated
+			? hydratedScoped[scope as EntityType]?.[entityId] ?? null
+			: null;
+
+	useEffect(() => {
+		if (entityId && hasHydrated && !hydratedScoped[scope as EntityType]?.[entityId]) {
+			console.debug(`[ThemeProvider] Initializing scoped theme for ${scope}:${entityId}`);
+			initScopedPreferences(scope as EntityType, entityId);
+		}
+	}, [entityId, hasHydrated, hydratedScoped, initScopedPreferences, scope]);
+
 	const targetRef = useRef<HTMLElement | null>(null);
 
 	const {
@@ -103,7 +114,10 @@ export const ThemeProvider = ({
 		}
 	}, [preferences, isGlobal]);
 
-	if (!hasHydrated) return <Spinner />;
+	if (!hasHydrated) return <Loading fullScreen size={6} />;
+	if (entityId && hasHydrated && !scopedPrefs) {
+		console.debug(`[ThemeProvider] Initializing scoped theme for ${scope}:${entityId}`);
+	}
 
 	return (
 		<ThemeContext.Provider
@@ -133,13 +147,14 @@ export const ThemeProvider = ({
 				data-theme={preferences.mode}
 				data-testid="theme-wrapper"
 				className={cn(
-					"size-full text-[var(--foreground)] bg-[var(--background)]",
+					"size-full text-[var(--foreground)] bg-[var(--background)] relative",
 					className,
 					preferences.mode
 				)}
 				{...props}
 			>
 				{children}
+				<ModalRenderer scope="global" />
 			</div>
 		</ThemeContext.Provider>
 	);

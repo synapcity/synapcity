@@ -83,11 +83,11 @@ export function Dropdown({ trigger, items, align = "end", children }: DropdownPr
               }}
               disabled={item.disabled}
               className={cn(
-                "flex items-center justify-between gap-2 group",
+                "flex items-center justify-between gap-2 group group-hover:bg-black/50 group-hover:text-white",
                 item.destructive && "text-red-500 focus:text-red-600"
               )}
             >
-              <span className="flex items-center gap-2 group-hover:text-white dark:group-hover:text-background">
+              <span className="flex items-center gap-2  group-hover:bg-black/50 group-hover:text-white dark:group-hover:text-background">
                 {item.icon && <Icon name={item.icon} size="sm" />}
                 {item.label}
               </span>

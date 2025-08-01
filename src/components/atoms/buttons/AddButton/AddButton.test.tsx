@@ -29,7 +29,7 @@ describe("AddButton", () => {
 	it("renders wrapper with correct styles", () => {
 		render(<AddButton onSubmit={() => { }} />);
 		const wrapper = screen.getByTestId("add-button-wrapper");
-		expect(wrapper).toHaveClass("bg-sidebar-primary");
+		expect(wrapper).toHaveClass("bg-(--sidebar-primary)");
 		expect(wrapper).toHaveClass("rounded-lg");
 	});
 });

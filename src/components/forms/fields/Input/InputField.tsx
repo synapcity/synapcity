@@ -4,15 +4,14 @@
 import React, { useState } from "react";
 import {
   UIInput,
-  UIFormControl,
   UITooltip,
   UITooltipTrigger,
   UITooltipContent,
   IconButton,
   UIFormMessage,
 } from "@/components";
-import { getInputIcon } from "@/utils";
-import type { FieldConfig, FieldMeta } from "@/types/form";
+import { getInputIcon } from "./getInputIcon";
+import type { FieldConfig, FieldMeta, FieldType } from "@/types/form";
 import { useFormContext } from "react-hook-form";
 import { useFieldError } from "@/hooks";
 
@@ -43,7 +42,6 @@ export function InputField({
     placeholder,
     readOnly = false,
     type: baseType = "text",
-    autoFocus = true,
   } = config;
 
   const {
@@ -59,7 +57,12 @@ export function InputField({
   const disabled = metaDisabled ?? false;
 
   const [visible, setVisible] = useState(false);
-  const type = baseType === "password" && toggleVisible ? (visible ? "text" : "password") : baseType;
+  const shouldShowReset = !readOnly && showReset && !!field.value;
+  const shouldShowToggle = baseType === "password" as FieldType && toggleVisible;
+
+  const showActionButton = shouldShowReset || shouldShowToggle;
+
+  const type = shouldShowToggle ? (visible ? "text" : "password") : baseType;
   const id = `input-${name}`;
   const labelId = `${id}-label`;
 
@@ -72,10 +75,6 @@ export function InputField({
     setVisible((prev) => !prev);
   };
 
-  const shouldShowReset = !readOnly && showReset && !!field.value;
-  const shouldShowToggle = baseType === "password" && toggleVisible;
-
-  const showActionButton = shouldShowReset || shouldShowToggle;
 
   const ActionButton = () => {
     const isReset = shouldShowReset;
@@ -138,12 +137,11 @@ export function InputField({
         disabled={disabled}
         required={required}
         aria-labelledby={labelId}
-        autoFocus={autoFocus}
+        autoFocus
         className="pr-10"
         aria-invalid={!!message}
         aria-describedby={message ? `${id}-error` : undefined}
         onChange={(e) => {
-          console.log("InputField onChange", e.target.value);
           field.onChange(e);
           trigger?.(name);
         }}
@@ -165,17 +163,11 @@ export function InputField({
 
 
   return tooltip ? (
-    <UIFormControl>
-      <UITooltip>
-        <UITooltipTrigger asChild>{inputEl}</UITooltipTrigger>
-        <UITooltipContent>{tooltip}</UITooltipContent>
-      </UITooltip>
-    </UIFormControl>
-  ) : (
-    <UIFormControl>
-      {inputEl}
-    </UIFormControl>
-  );
+    <UITooltip>
+      <UITooltipTrigger asChild>{inputEl}</UITooltipTrigger>
+      <UITooltipContent>{tooltip}</UITooltipContent>
+    </UITooltip>
+  ) : inputEl
 }
 
 InputField.displayName = "InputField";

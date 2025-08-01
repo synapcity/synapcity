@@ -1,7 +1,6 @@
-import { UIState } from "../useUIStore";
+import type { UIState } from "../useUIStore";
 
 const defaultUIState: UIState = {
-	hasHydrated: false,
 	components: {},
 };
 

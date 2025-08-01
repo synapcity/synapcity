@@ -1,0 +1,158 @@
+[
+  {
+    "id": "daily-todos",
+    "name": "Daily To‑Dos",
+    "type": "todo",
+    "parentType": "dashboard",
+    "parentId": "home",
+    "description": "Tasks to knock out today",
+    "tags": [
+      "urgent",
+      "morning"
+    ],
+    "theme": {
+      "icon": "check-circle",
+      "mode": "light"
+    },
+    "config": {
+      "itemsPerPage": 10,
+      "defaultSort": "createdAt",
+      "defaultFilter": {
+        "status": "not-started"
+      },
+      "defaultView": "list"
+    },
+    "items": [
+      {
+        "id": "1",
+        "content": "Set up project scaffold",
+        "status": "done",
+        "createdAt": "2025-07-21T08:00:00Z",
+        "updatedAt": "2025-07-21T08:00:00Z",
+        "deletedAt": null
+      },
+      {
+        "id": "2",
+        "content": "Implement authentication flow",
+        "status": "in-progress",
+        "createdAt": "2025-07-21T08:10:00Z",
+        "updatedAt": "2025-07-21T08:10:00Z",
+        "deletedAt": null
+      },
+      {
+        "id": "3",
+        "content": "Design database schema",
+        "status": "not-started",
+        "createdAt": "2025-07-21T08:20:00Z",
+        "updatedAt": "2025-07-21T08:20:00Z",
+        "deletedAt": null
+      }
+    ],
+    "meta": {
+      "collapsed": false,
+      "sortBy": "createdAt",
+      "sortOrder": "asc",
+      "selectedId": null,
+      "batchSelectedIds": []
+    }
+  },
+  {
+    "id": "dev-backlog",
+    "name": "Dev Backlog",
+    "type": "task",
+    "parentType": "dashboard",
+    "parentId": "home",
+    "description": "Features & improvements queued up",
+    "tags": [
+      "backend",
+      "frontend"
+    ],
+    "theme": {
+      "icon": "clipboard-list",
+      "mode": "dark"
+    },
+    "config": {
+      "itemsPerPage": 5,
+      "defaultSort": "status",
+      "defaultFilter": {},
+      "defaultView": "board"
+    },
+    "items": [
+      {
+        "id": "4",
+        "content": "Create REST API endpoints",
+        "status": "not-started",
+        "createdAt": "2025-07-20T09:00:00Z",
+        "updatedAt": "2025-07-20T09:00:00Z",
+        "deletedAt": null
+      },
+      {
+        "id": "5",
+        "content": "Build UI components",
+        "status": "in-progress",
+        "createdAt": "2025-07-20T09:30:00Z",
+        "updatedAt": "2025-07-20T09:30:00Z",
+        "deletedAt": null
+      },
+      {
+        "id": "6",
+        "content": "Write unit tests",
+        "status": "not-started",
+        "createdAt": "2025-07-20T10:00:00Z",
+        "updatedAt": "2025-07-20T10:00:00Z",
+        "deletedAt": null
+      }
+    ],
+    "meta": {
+      "collapsed": false,
+      "sortBy": "status",
+      "sortOrder": "desc",
+      "selectedId": null,
+      "batchSelectedIds": []
+    }
+  },
+  {
+    "id": "archive",
+    "name": "Archived Items",
+    "type": "todo",
+    "parentType": "dashboard",
+    "parentId": "home",
+    "description": "Completed and deprecated tasks",
+    "tags": [],
+    "theme": {
+      "icon": "archive",
+      "mode": "light"
+    },
+    "config": {
+      "itemsPerPage": 20,
+      "defaultSort": "updatedAt",
+      "defaultFilter": {},
+      "defaultView": "list"
+    },
+    "items": [
+      {
+        "id": "9",
+        "content": "Deploy to staging",
+        "status": "done",
+        "createdAt": "2025-07-19T15:00:00Z",
+        "updatedAt": "2025-07-19T15:00:00Z",
+        "deletedAt": null
+      },
+      {
+        "id": "10",
+        "content": "Release v1.0",
+        "status": "done",
+        "createdAt": "2025-07-18T12:00:00Z",
+        "updatedAt": "2025-07-18T12:00:00Z",
+        "deletedAt": null
+      }
+    ],
+    "meta": {
+      "collapsed": true,
+      "sortBy": "updatedAt",
+      "sortOrder": "desc",
+      "selectedId": null,
+      "batchSelectedIds": []
+    }
+  }
+]

@@ -52,6 +52,8 @@
 
 	--transition: 0.2s ease-in-out;
 	--ease: cubic-bezier(0.4, 0, 0.2, 1);
+	--border: hsl(var(--accent) / 0.1);
+	--muted: hsl(var(--foreground) / 0.04);
 }
 
 html,
@@ -93,6 +95,16 @@ body {
 	--sidebar-ring: var(--accent);
 }
 
+.dark,
+[data-theme="dark"] {
+	--sidebar: var(--primary-800);
+	--sidebar-foreground: var(--primary-200);
+	--sidebar-primary: var(--primary-50);
+	--sidebar-accent: var(--accent-800);
+	--sidebar-accent-foreground: var(--accent-200);
+	--sidebar-ring: var(--accent);
+}
+
 @theme inline {
 	--color-sidebar: var(--sidebar);
 	--color-sidebar-foreground: var(--sidebar-foreground);
@@ -111,9 +123,20 @@ body {
 	body {
 		@apply bg-background text-foreground;
 		@apply relative flex flex-col;
+		font-size: 14px;
 	}
 
 	[data-slot="nav-menu-link"]:focus-visible {
 		outline: 2px solid var(--ring);
+	}
+
+	.no-scrollbar {
+		-ms-overflow-style: none;
+		scrollbar-width: none;
+	}
+	.no-scrollbar::-webkit-scrollbar {
+		display: none;
+		width: 0;
+		height: 0;
 	}
 }

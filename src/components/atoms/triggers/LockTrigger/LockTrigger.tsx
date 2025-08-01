@@ -14,19 +14,21 @@ interface LcokTriggerProps {
 
 export const LockTrigger = ({ component = "userPanel", label = "Lock", className, size = "lg" }: LcokTriggerProps) => {
   const isLocked = useUIStore((state) => state.components[component].isLocked ?? false)
-  const setIsLocked = useUIStore((state) => state.setCompState)
+  const setCompState = useUIStore((state) => state.setCompState)
   const toggleLock = () => {
-    setIsLocked(component, "isLocked", !isLocked)
+    setCompState(component, "isLocked", !isLocked)
   }
   return (
     <Toggle
       icon={isLocked ? "lock" : "lockOpen"}
       isIconOnly
       showIcons={false}
-      className={cn(className)}
-      variant={isLocked ? "outline" : "default"}
+      className={cn(className, { "text-[var(--background)]": isLocked })}
+      variant={isLocked ? "outline" : "ghost"}
       onClick={() => toggleLock?.()}
       size={size}
+      pressed={isLocked}
+      onPressedChange={(val) => setCompState(component, "isLocked", val)}
     >
       {label}
     </Toggle>

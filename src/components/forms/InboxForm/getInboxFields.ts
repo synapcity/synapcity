@@ -18,13 +18,13 @@ export const getInboxFieldMap = (type: string): FieldDefinitionMap => {
 		content: {
 			name: "content",
 			label: type === "link" ? "url" : "text",
-			type: type === "link" ? "url" : type === "text" ? "text" : "textarea",
+			type: "text",
 			meta: { required: true },
 		},
-		processed: {
-			name: "processed",
-			label: "Marked as Done",
-			type: "checkbox",
-		},
+		// processed: {
+		// 	name: "processed",
+		// 	label: "Marked as Done",
+		// 	type: "text",
+		// },
 	};
 };

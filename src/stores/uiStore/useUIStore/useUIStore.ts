@@ -1,6 +1,16 @@
 import { create, StateCreator } from "zustand";
 import { persist } from "zustand/middleware";
 import { migrateUIStore } from "../migrate/migrate";
+import {
+	createSelectionSlice,
+	createHydrationSlice,
+	createStatusSlice,
+} from "@/stores/slices";
+import type {
+	HydrationSlice,
+	StatusSlice,
+	SelectionSlice,
+} from "@/stores/slices";
 
 type KnownKeys = "isVisible" | "isLocked" | "isExpanded";
 export type ComponentUIState = Partial<Record<KnownKeys, boolean>> & {
@@ -9,14 +19,15 @@ export type ComponentUIState = Partial<Record<KnownKeys, boolean>> & {
 };
 
 export type UIState = {
-	hasHydrated: boolean;
 	components: Record<string, ComponentUIState>;
+	isSiteFocus: boolean;
 };
 
 export type UIActions = {
-	setHasHydrated: (hasHydrated: boolean) => void;
+	toggleSiteFocus: () => void;
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	setCompState: <T = any>(id: string, key: string, value: T) => void;
+	getCompState: (id: string, key: string) => void;
 	setComponent: (id: string, updates: Partial<ComponentUIState>) => void;
 	toggleCompState: (id: string, key: string) => void;
 };
@@ -28,16 +39,24 @@ const defaultComponentState: ComponentUIState = {
 };
 
 const defaultUIState: UIState = {
-	hasHydrated: false,
+	isSiteFocus: false,
 	components: {
 		header: { ...defaultComponentState },
 		userPanel: { ...defaultComponentState },
 		userPanelSidebar: { ...defaultComponentState },
+		scheduleModal: { isVisible: false },
+		notesSidebar: { ...defaultComponentState },
 	},
 };
-export const uiStoreInitializer: StateCreator<UIState & UIActions> = (set) => ({
+
+export type UIStore = UIState &
+	UIActions &
+	SelectionSlice &
+	StatusSlice &
+	HydrationSlice;
+
+export const uiStoreInitializer: StateCreator<UIStore> = (set, get, store) => ({
 	...defaultUIState,
-	setHasHydrated: (hasHydrated) => set({ hasHydrated }),
 	setComponent: (id, updates) => {
 		set((state) => {
 			const prev = state.components[id] ?? { ...defaultComponentState };
@@ -66,6 +85,16 @@ export const uiStoreInitializer: StateCreator<UIState & UIActions> = (set) => ({
 			};
 		});
 	},
+	getCompState: (id, key) => {
+		const compState = get().components[id];
+		if (!compState) {
+			set((state) => ({
+				...state,
+				components: { ...state.components, [id]: { ...defaultComponentState } },
+			}));
+		}
+		return get().components[id][key];
+	},
 	toggleCompState: (id, key) => {
 		set((state) => {
 			const prev = state.components[id] ?? { ...defaultComponentState };
@@ -80,15 +109,34 @@ export const uiStoreInitializer: StateCreator<UIState & UIActions> = (set) => ({
 			};
 		});
 	},
+	toggleScheduleModal: () =>
+		set((state) => ({
+			components: {
+				scheduleModal: {
+					isVisible: !state.components.scheduleModal.isVisible,
+				},
+			},
+		})),
+	toggleSiteFocus: () => set((s) => ({ isSiteFocus: !s.isSiteFocus })),
+	isSiteFocus: false,
+	...createHydrationSlice(set, get, store),
+	...createStatusSlice(set, get, store),
+	...createSelectionSlice(set, get, store),
 });
 
-export const useUIStore = create<UIState & UIActions>()(
+export const useUIStore = create<UIStore>()(
 	persist(uiStoreInitializer, {
 		name: "ui-store",
 		version: 2,
 		migrate: migrateUIStore,
 		onRehydrateStorage: () => (state) => {
 			state?.setHasHydrated(true);
+		},
+		partialize: (state) => {
+			return {
+				...state,
+				components: state.components ?? {},
+			} as UIStore;
 		},
 	})
 );

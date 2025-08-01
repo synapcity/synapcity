@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useWeatherEffect, useLocalStorage } from "@/hooks";
 import { useWeatherStore } from "@/stores";
 import { cn } from "@/utils";
-import { useModalStore } from "@/stores/modalStore";
+import { useModalStore } from "@/stores/modalStore/useModalStore";
 import { Icon, SkeletonOrLoading } from "@/components";
 
 export const UserWeather = () => {
@@ -15,9 +15,9 @@ export const UserWeather = () => {
   const weatherLoading = useWeatherStore(s => s.loading)
   const [locationPermission, setLocationPermission] = useLocalStorage("location-permission", false);
   const [error, setError] = useState<string | null>(null);
-  const openModal = useModalStore((s) => s.open);
+  const openModal = useModalStore((s) => s.openModal);
 
-  useWeatherEffect();
+  const { fetchAndUpdate } = useWeatherEffect();
 
   useEffect(() => {
     if (data) {
@@ -64,10 +64,18 @@ export const UserWeather = () => {
 
   return (
     <button
-      onClick={() => openModal("weatherSettings")}
+      onClick={() => openModal(
+        "weatherSettings",
+        "userPanelMain",
+        "user-weather-settings",
+        {
+          title: "Weather Settings",
+          onSubmit: () => fetchAndUpdate()
+        })}
       className={cn(
-        "flex items-center gap-2 px-3 py-2 rounded-md group",
-        "bg-background text-foreground border border-transparent hover:border-border shadow-sm text-sm hover:bg-muted"
+        "flex items-center gap-2 px-2.5 py-1.5 rounded-sm text-sm text-muted-foreground transition-colors hover:text-foreground hover:bg-muted"
+        // "flex items-center gap-2 px-3 py-2 rounded-md group",
+        // "bg-background text-foreground border border-transparent hover:border-border shadow-sm text-sm hover:bg-muted"
       )}
     >
       <span className="text-lg">{data.icon}</span>

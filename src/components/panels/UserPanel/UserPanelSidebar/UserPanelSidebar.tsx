@@ -6,12 +6,13 @@ import {
   SidebarGroup,
   SidebarGroupContent,
 } from "@/components/atoms/ui/sidebar";
+import { ModalRenderer } from "@/components/modals";
 import { useUserPanel } from "@/hooks/features/useUserPanel/useUserPanel";
 
 export const UserPanelSidebar = () => {
   const { activeModule } = useUserPanel()
   return (
-    <Sidebar auto collapsible="none" className="hidden flex-1 md:flex">
+    <Sidebar auto collapsible="none" className="hidden flex-1 md:flex relative">
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupContent>
@@ -24,6 +25,7 @@ export const UserPanelSidebar = () => {
             )}
           </SidebarGroupContent>
         </SidebarGroup>
+        <ModalRenderer scope="userPanelSidebar" />
       </SidebarContent>
     </Sidebar>
   );

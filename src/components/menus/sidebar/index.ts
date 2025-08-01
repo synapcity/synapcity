@@ -1,1 +1,3 @@
-export * from "./SidebarWrapper";
+export * from "./DashboardSidebar";
+export * from "./UserPanelSidebar";
+export * from "./NotesSidebar";

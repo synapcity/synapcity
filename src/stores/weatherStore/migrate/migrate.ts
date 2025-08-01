@@ -34,6 +34,7 @@ export const migrateWeatherStore = (
 	}
 
 	return {
+		loading: false,
 		data: state.data ?? defaultWeatherStore.data,
 		hasHydrated: state.hasHydrated ?? defaultWeatherStore.hasHydrated,
 		locationLabel: state.locationLabel ?? defaultWeatherStore.locationLabel,
@@ -44,7 +45,6 @@ export const migrateWeatherStore = (
 			gpsCoords: state.preferences?.gpsCoords ?? null,
 			locationSource: state.preferences?.locationSource ?? "gps",
 		},
-		loading: false,
 		justFetchedManually: false,
 		setJustFetchedManually: () => {},
 		setLoading: () => {},

@@ -42,7 +42,7 @@ export const ResizableContent = ({ children }: { children: React.ReactNode; }) =
         order={2}
         className="relative"
       >
-        <main>{children}</main>
+        {children}
       </ResizablePanel>
 
     </ResizablePanelGroup>

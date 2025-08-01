@@ -8,10 +8,10 @@ import {
 	resolveThemeMetadata,
 	type ThemeMetadataInfo,
 } from "@/theme/utils/resolveThemeMetadata";
+import { createHydrationSlice } from "@/stores/slices";
+import { HydrationSlice } from "@/stores/slices";
 
 export interface ScopedThemeState {
-	hasHydrated: boolean;
-	setHasHydrated: (hasHydrated: boolean) => void;
 	globalPreferences: ThemePreferences;
 	scopedPreferences: Record<EntityType, Record<string, ThemePreferences>>;
 	getPreferences: (scope: ThemeScope, id?: string) => ThemeMetadataInfo;
@@ -26,14 +26,17 @@ export interface ScopedThemeState {
 	resetScopedPreferences: (scope: EntityType, id: string) => void;
 	toggleGlobalMode: () => void;
 	toggleScopedMode: (scope: EntityType, id: string) => void;
+	hasHydrated: boolean;
+	setHasHydrated: (hasHydrated: boolean) => void;
 }
 
-export const themeStoreInitializer: StateCreator<ScopedThemeState> = (
+export type ThemeStore = ScopedThemeState & HydrationSlice;
+
+export const themeStoreInitializer: StateCreator<ThemeStore> = (
 	set,
-	get
+	get,
+	store
 ) => ({
-	hasHydrated: false,
-	setHasHydrated: (hasHydrated) => set({ hasHydrated }),
 	globalPreferences: DEFAULT.THEME,
 	scopedPreferences: {
 		note: {},
@@ -114,7 +117,6 @@ export const themeStoreInitializer: StateCreator<ScopedThemeState> = (
 	},
 	resetScopedPreferences: (scope: EntityType, id: string) => {
 		set((state) => {
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			const { [id]: _, ...rest } = state.scopedPreferences[scope];
 			return {
 				scopedPreferences: {
@@ -155,9 +157,10 @@ export const themeStoreInitializer: StateCreator<ScopedThemeState> = (
 			};
 		});
 	},
+	...createHydrationSlice(set, get, store),
 });
 
-export const useThemeStore = create<ScopedThemeState>()(
+export const useThemeStore = create<ThemeStore>()(
 	persist(themeStoreInitializer, {
 		name: "theme-preferences",
 		version: 2,

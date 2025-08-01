@@ -12,7 +12,7 @@ export type IconSource = "lucide" | "iconify" | "undefined";
 export type IconSize = "xs" | "sm" | "md" | "lg" | "xl" | number;
 
 export interface IconProps extends HTMLAttributes<HTMLElement> {
-  name?: keyof typeof lucideIcons | string; // support fallback
+  name?: keyof typeof lucideIcons | string;
   icon?: ComponentType<any>;
   source?: IconSource;
   size?: IconSize;

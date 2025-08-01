@@ -5,10 +5,10 @@ export function AddButton({ size, onSubmit }: { size?: ButtonSize; onSubmit: () 
   return (
     <div
       data-testid="add-button-wrapper"
-      className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg"
+      className="bg-(--sidebar-primary) text-(--sidebar-primary-foreground) flex aspect-square size-auto items-center justify-center rounded-lg"
     >
       <IconButton
-        icon="Plus"
+        icon="plus"
         tooltip="Add Tab"
         size={size}
         onClick={onSubmit}

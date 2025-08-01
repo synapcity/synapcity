@@ -1,0 +1,63 @@
+[
+  {
+    "id": "2a9fcd55-23f4-4ae0-9e7e-a1e5aa3c77a1",
+    "createdAt": "2025-07-21T14:03:00.000Z",
+    "updatedAt": "2025-07-22T09:45:00.000Z",
+    "deletedAt": null,
+    "name": "Personal Productivity",
+    "description": "Daily planning, tasks, and time tracking widgets.",
+    "widgetIds": [
+      "widget-1-todo",
+      "widget-2-calendar",
+      "widget-3-focus-timer"
+    ]
+  },
+  {
+    "id": "34d9b7c6-d3be-4a7b-9a10-81aeb89d032e",
+    "createdAt": "2025-07-18T10:15:00.000Z",
+    "updatedAt": "2025-07-22T09:45:00.000Z",
+    "deletedAt": null,
+    "name": "Work Dashboard",
+    "description": "Tracks projects, meeting notes, and OKRs.",
+    "widgetIds": [
+      "widget-4-kanban",
+      "widget-5-meeting-notes",
+      "widget-6-okr"
+    ]
+  },
+  {
+    "id": "f88d4e3a-2351-4cb3-b9f2-8990f4b7f118",
+    "createdAt": "2025-07-20T08:30:00.000Z",
+    "updatedAt": "2025-07-21T18:00:00.000Z",
+    "deletedAt": null,
+    "name": "Reading Tracker",
+    "description": "Dashboard to track reading progress, books, and quotes.",
+    "widgetIds": [
+      "widget-7-book-list",
+      "widget-8-quote-wall",
+      "widget-9-reading-timer"
+    ]
+  },
+  {
+    "id": "b3c812e7-81ce-43db-a3c2-6d482f535ffd",
+    "createdAt": "2025-07-19T12:00:00.000Z",
+    "updatedAt": "2025-07-21T09:10:00.000Z",
+    "deletedAt": null,
+    "name": "Wellness",
+    "description": "Widgets for sleep, hydration, and mood tracking.",
+    "widgetIds": [
+      "widget-10-sleep",
+      "widget-11-water-intake",
+      "widget-12-mood"
+    ]
+  },
+  {
+    "id": "c1fb2b3d-b269-4e17-a1de-763c343946e5",
+    "createdAt": "2025-07-22T10:00:00.000Z",
+    "updatedAt": "2025-07-22T10:00:00.000Z",
+    "deletedAt": null,
+    "name": "Untitled Dashboard",
+    "description": "",
+    "widgetIds": []
+  }
+]
