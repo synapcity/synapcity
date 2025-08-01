@@ -1,11 +1,11 @@
-import dynamic from "next/dynamic";
+// import dynamic from "next/dynamic";
 
-const DailyPlanPlugin = dynamic(() => import("./DailyPlanPlugin").then(mod => ({ default: mod.DailyPlanPlugin })))
+// const DailyPlanPlugin = dynamic(() => import("./DailyPlanPlugin").then(mod => ({ default: mod.DailyPlanPlugin })))
 
 export const FeaturePlugins = () => {
   return (
     <>
-      <DailyPlanPlugin />
+      {/* <DailyPlanPlugin /> */}
     </>
   )
 }

@@ -68,10 +68,10 @@ export async function withScopedStatusToast<T>(
 ): Promise<T | undefined> {
 	const { startStatus, finishStatus, failStatus } = useUIStore.getState();
 	try {
-		startStatus(field, type, id);
+		startStatus(field, id);
 		if (messages.loading) showToast.info(messages.loading, { entityId: id });
 		const result = await action();
-		finishStatus(field, type, id);
+		finishStatus(field, id);
 		if (messages.success)
 			showToast.success(
 				typeof messages.success === "function"
@@ -81,7 +81,7 @@ export async function withScopedStatusToast<T>(
 			);
 		return result;
 	} catch (err) {
-		failStatus(field, err as Error, type, id);
+		failStatus(field, err as Error, id);
 		if (messages.error)
 			showToast.error(
 				typeof messages.error === "function"

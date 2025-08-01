@@ -17,7 +17,7 @@ export type InboxItem = {
 	type: InboxType;
 	content: string;
 	createdAt: string;
-	processed: boolean;
+	// processed: boolean;
 };
 
 export type InboxState = {
@@ -44,49 +44,49 @@ export const inboxStoreInitializer: StateCreator<InboxStore> = (set, get) => ({
 			type: "text",
 			content: "Buy oat milk",
 			createdAt: new Date().toISOString(),
-			processed: false,
+			// processed: false,
 		},
 		{
 			id: "2",
 			type: "link",
 			content: "https://developer.mozilla.org/en-US/",
 			createdAt: new Date().toISOString(),
-			processed: false,
+			// processed: false,
 		},
 		{
 			id: "3",
 			type: "snippet",
 			content: "const a = () => console.log('hi')",
 			createdAt: new Date(Date.now() - 86400000).toISOString(),
-			processed: false,
+			// processed: false,
 		},
 		{
 			id: "4",
 			type: "link",
 			content: "https://developer.mozilla.org/en-US/",
 			createdAt: new Date().toISOString(),
-			processed: false,
+			// processed: false,
 		},
 		{
 			id: "5",
 			type: "snippet",
 			content: "const a = () => console.log('hi')",
 			createdAt: new Date(Date.now() - 86400000).toISOString(),
-			processed: false,
+			// processed: false,
 		},
 		{
 			id: "6",
 			type: "link",
 			content: "https://developer.mozilla.org/en-US/",
 			createdAt: new Date().toISOString(),
-			processed: false,
+			// processed: false,
 		},
 		{
 			id: "7",
 			type: "snippet",
 			content: "const a = () => console.log('hi')",
 			createdAt: new Date(Date.now() - 86400000).toISOString(),
-			processed: false,
+			// processed: false,
 		},
 	],
 	hasHydrated: false,

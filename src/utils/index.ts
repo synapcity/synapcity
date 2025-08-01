@@ -2,7 +2,12 @@ export * from "./getUpdatedValues";
 export * from "./testId";
 
 export { getProcessedData } from "./data-utils";
-export { getTodaysDate } from "./date-utils";
+export {
+	getTodaysDate,
+	formatDate,
+	formatRelative,
+	getShortRelativeTime,
+} from "./date-utils";
 export {
 	exportXlsx,
 	exportPdf,
@@ -36,3 +41,9 @@ export { toTitleCase } from "./text-utils";
 export { fmtTime, isTimeOrderValid } from "./time-utils";
 export * from "./testId";
 export * from "./getUpdatedValues";
+export { applyDateRangeFilter } from "./applyDateRangeFilter";
+export {
+	getExcerpt,
+	getViewExcerpts,
+	aggregateViewContent,
+} from "./note-utils";

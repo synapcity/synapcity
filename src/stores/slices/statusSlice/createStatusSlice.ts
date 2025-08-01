@@ -2,217 +2,135 @@ import type { StateCreator } from "zustand";
 import { defaultStatus, toStatusKey } from "./statusHelpers";
 import { UILocalStatus, StatusField } from "@/types/ui";
 
+const GLOBAL_KEY = "__global";
+
 export interface StatusSlice {
-	status: UILocalStatus;
-	localStatus: Record<string, Record<string, UILocalStatus>>;
-	getStatus: (type?: string, id?: string) => UILocalStatus;
-	startStatus: (field: StatusField, type?: string, id?: string) => void;
-	finishStatus: (field: StatusField, type?: string, id?: string) => void;
-	failStatus: (
-		field: StatusField,
-		error: Error,
-		type?: string,
-		id?: string
-	) => void;
-	clearError: (type?: string, id?: string) => void;
-	resetStatus: (type?: string, id?: string) => void;
+	status: Record<string, UILocalStatus>;
+	getStatus: (id?: string) => UILocalStatus;
+	startStatus: (field: StatusField, id?: string) => void;
+	finishStatus: (field: StatusField, id?: string) => void;
+	failStatus: (field: StatusField, error: Error, id?: string) => void;
+	clearError: (id?: string) => void;
+	resetStatus: (id?: string) => void;
 }
+
 export const createStatusSlice: StateCreator<
 	StatusSlice,
 	[],
 	[],
 	StatusSlice
 > = (set, get) => ({
-	status: {
-		isLoading: false,
-		isCreating: false,
-		isSaving: false,
-		isDeleting: false,
-		isEditing: false,
-		isSearching: false,
-		isSyncing: false,
-		error: null,
-		lastSavedAt: null,
-	},
-	localStatus: {},
+	status: {},
 
-	getStatus: (type, id) => {
-		if (type && id) {
-			return {
-				...defaultStatus,
-				...(get().localStatus[type]?.[id] ?? {}),
-			};
-		}
-		return { ...defaultStatus };
+	getStatus: (id) => {
+		const key = id ?? GLOBAL_KEY;
+		return {
+			...defaultStatus,
+			...(get().status?.[key] ?? {}),
+		};
 	},
 
-	startStatus: (field, type, id) => {
+	startStatus: (field, id) => {
 		const key = toStatusKey(field);
-		if (type && id) {
-			set((state) => {
-				const existingMap = state.localStatus[type] || {};
-				const existingStatus = existingMap[id] || {};
+		const target = id ?? GLOBAL_KEY;
 
-				return {
-					localStatus: {
-						...state.localStatus,
-						[type]: {
-							...existingMap,
-							[id]: {
-								...defaultStatus,
-								...existingStatus,
-								[key]: true,
-								error: null,
-							},
-						},
-					},
-				};
-			});
-		} else {
-			set((state) => ({
+		set((state) => {
+			const existing = state.status[target] ?? {};
+			return {
 				status: {
 					...state.status,
-					[key]: true,
-					error: null,
+					[target]: {
+						...defaultStatus,
+						...existing,
+						[key]: true,
+						error: null,
+					},
 				},
-			}));
-		}
+			};
+		});
 	},
 
-	finishStatus: (field, type, id) => {
+	finishStatus: (field, id) => {
 		const key = toStatusKey(field);
 		const time = field === "saving" ? new Date().toISOString() : undefined;
-		if (type && id) {
-			set((state) => {
-				const local = state.localStatus[type] || {};
-				const current = {
-					...defaultStatus,
-					...local[id],
-					[key]: false,
-					error: null,
-					...(time && { lastSavedAt: time }),
-				};
-				const isClean =
-					!current.isSaving &&
-					!current.isLoading &&
-					!current.isDeleting &&
-					!current.isEditing &&
-					!current.isSyncing &&
-					!current.isCreating &&
-					!current.error;
-				const updatedType = { ...local };
-				if (isClean) {
-					delete updatedType[id];
-				} else {
-					updatedType[id] = current;
-				}
-				return {
-					localStatus: {
-						...state.localStatus,
-						[type]: updatedType,
-					},
-				};
-			});
-		} else {
-			set((state) => ({
-				status: {
-					...state.status,
-					[key]: false,
-					error: null,
-					...(time && { lastSavedAt: time }),
-				},
-			}));
-		}
+		const target = id ?? GLOBAL_KEY;
+
+		set((state) => {
+			const prev = state.status[target] ?? {};
+			const current: UILocalStatus = {
+				...defaultStatus,
+				...prev,
+				[key]: false,
+				error: null,
+				...(time && { lastSavedAt: time }),
+			} as UILocalStatus;
+
+			const isClean =
+				!current.isSaving &&
+				!current.isLoading &&
+				!current.isDeleting &&
+				!current.isEditing &&
+				!current.isSyncing &&
+				!current.isCreating &&
+				!current.error;
+
+			const newStatus = { ...state.status };
+			if (isClean) {
+				delete newStatus[target];
+			} else {
+				newStatus[target] = current;
+			}
+
+			return {
+				status: newStatus,
+			};
+		});
 	},
 
-	failStatus: (field, error, type, id) => {
+	failStatus: (field, error, id) => {
 		const key = toStatusKey(field);
-		if (type && id) {
-			set((state) => {
-				const local = state.localStatus[type] || {};
-				return {
-					localStatus: {
-						...state.localStatus,
-						[type]: {
-							...local,
-							[id]: {
-								...defaultStatus,
-								...local[id],
-								[key]: false,
-								error,
-							},
-						},
-					},
-				};
-			});
-		} else {
-			set((state) => ({
+		const target = id ?? GLOBAL_KEY;
+
+		set((state) => {
+			const existing = state.status[target] ?? {};
+			return {
 				status: {
 					...state.status,
-					[key]: false,
-					error,
+					[target]: {
+						...defaultStatus,
+						...existing,
+						[key]: false,
+						error,
+					},
 				},
-			}));
-		}
+			};
+		});
 	},
 
-	clearError: (type, id) => {
-		if (type && id) {
-			set((state) => {
-				const local = state.localStatus[type] || {};
-				return {
-					localStatus: {
-						...state.localStatus,
-						[type]: {
-							...local,
-							[id]: {
-								...defaultStatus,
-								...local[id],
-								error: null,
-							},
-						},
-					},
-				};
-			});
-		} else {
-			set((state) => ({
+	clearError: (id) => {
+		const target = id ?? GLOBAL_KEY;
+		set((state) => {
+			const existing = state.status[target] ?? {};
+			return {
 				status: {
 					...state.status,
-					error: null,
+					[target]: {
+						...defaultStatus,
+						...existing,
+						error: null,
+					},
 				},
-			}));
-		}
+			};
+		});
 	},
 
-	resetStatus: (type, id) => {
-		if (type && id) {
-			set((state) => {
-				const local = state.localStatus[type] || {};
-				return {
-					localStatus: {
-						...state.localStatus,
-						[type]: {
-							...local,
-							[id]: { ...defaultStatus },
-						},
-					},
-				};
-			});
-		} else {
-			set(() => ({
-				status: {
-					isLoadingPage: false,
-					isCreating: false,
-					isSearching: false,
-					isEditing: false,
-					isDeleting: false,
-					isSaving: false,
-					isLoading: false,
-					isSyncing: false,
-					error: null,
-					lastSavedAt: null,
-				},
-			}));
-		}
+	resetStatus: (id) => {
+		const target = id ?? GLOBAL_KEY;
+		set((state) => ({
+			status: {
+				...state.status,
+				[target]: { ...defaultStatus },
+			},
+		}));
 	},
 });

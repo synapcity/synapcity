@@ -139,4 +139,13 @@ body {
 		width: 0;
 		height: 0;
 	}
+
+	[data-state="collapsed"] {
+		width: 0;
+		/* or transform: translateX(-100%) for off-canvas style */
+	}
+
+	[data-state="expanded"] {
+		width: var(--sidebar-width);
+	}
 }

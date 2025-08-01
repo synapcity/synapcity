@@ -14,9 +14,9 @@ export function useUpdateNote(noteId: string) {
 
   const editNote = useCallback(
     (ref: RefObject<HTMLElement | null>) => {
-      startStatus("editing", "note", noteId)
+      startStatus("editing", noteId)
       ref.current?.addEventListener("blur", () => {
-        finishStatus("editing", "note", noteId)
+        finishStatus("editing", noteId)
       })
     }, [noteId, startStatus, finishStatus]
   )
@@ -24,14 +24,14 @@ export function useUpdateNote(noteId: string) {
   const updateNote = useCallback(
     async (updates: Partial<Note>, status: StatusField = "saving") => {
       try {
-        startStatus(status, "note", noteId);
+        startStatus(status, noteId);
         await updateResource(noteId, updates);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
-        failStatus(status, err, "note", noteId);
+        failStatus(status, err, noteId);
         throw err;
       } finally {
-        finishStatus(status, "note", noteId);
+        finishStatus(status, noteId);
       }
     },
     [updateResource, startStatus, finishStatus, failStatus, noteId]

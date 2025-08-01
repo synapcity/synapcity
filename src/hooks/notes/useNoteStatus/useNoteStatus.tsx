@@ -1,3 +1,5 @@
+"use client"
+
 import { useState, useEffect } from "react";
 import { useNoteTabs } from "../useNoteViews";
 import { useNoteStore } from "@/stores/resources";
@@ -26,16 +28,16 @@ export function useNoteStatus(
   // local state for status key and full status object
   const [activeStatus, setActiveStatus] = useState<StatusKeys | null>(null);
   const [status, setStatus] = useState<UILocalStatus | undefined>(() =>
-    useNoteStore.getState().statusByType?.note?.[noteId]
+    useNoteStore.getState().status?.[noteId]
   );
 
   // subscribe to store.statusByType.note[noteId]
   useEffect(() => {
     const unsub = useNoteStore.subscribe(state => (
-      state.statusByType?.note?.[noteId],
+      state.status?.[noteId],
       (newStatus: UILocalStatus) => setStatus(newStatus)
     ));
-    setStatus(useNoteStore.getState().statusByType?.note?.[noteId]);
+    setStatus(useNoteStore.getState().status?.[noteId]);
     return unsub;
   }, [noteId]);
 

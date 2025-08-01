@@ -12,7 +12,7 @@ export interface StatusWrapperProps {
 export const StatusWrapper = ({ id, children }: StatusWrapperProps) => {
   const { status } = useUpdateNote(id)
   const activeStatus = Object.entries(status).find(
-    ([key, value]) => key.startsWith("is") && value === true
+    ([key, value]) => key.startsWith("is") && !!value
   )?.[0] ?? (status.error ? "error" : null);
 
   const renderStatus = () => {

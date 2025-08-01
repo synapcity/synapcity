@@ -2,12 +2,12 @@
 
 import { useUIStore } from "@/stores";
 
-export function useStatus(type?: string, id?: string) {
-	return useUIStore((s) => s.getStatus(type, id));
+export function useStatus(id?: string) {
+	return useUIStore((s) => s.getStatus(id));
 }
 
 export function useStatusFlags(type?: string, id?: string) {
-	const status = useStatus(type, id);
+	const status = useStatus(id);
 	return {
 		isSaving: status.isSaving,
 		isLoading: status.isLoading,
@@ -18,7 +18,7 @@ export function useStatusFlags(type?: string, id?: string) {
 }
 
 export function useNoteStatus(noteId: string) {
-	return useStatus("note", noteId);
+	return useStatus(noteId);
 }
 
 export function useNoteStatusFlags(noteId: string) {
@@ -33,7 +33,7 @@ export function useNoteStatusFlags(noteId: string) {
 }
 
 export function useDashboardStatus(dashboardId: string) {
-	return useStatus("dashboard", dashboardId);
+	return useStatus(dashboardId);
 }
 
 export function useDashboardStatusFlags(dashboardId: string) {

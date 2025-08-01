@@ -17,7 +17,7 @@ import {
 import { PopoverWrapper } from "@/components/molecules/PopoverWrapper";
 import { cn } from "@/utils";
 import { X } from "lucide-react";
-import { useDebouncedSearch } from "@/hooks/search/useDebouncedSearch";
+import { useDebouncedSearch } from "@/hooks/controls/search/useDebouncedSearch";
 
 export type SearchableMultiSelectOption = {
   label: string;
@@ -126,16 +126,16 @@ export function SearchableMultiSelect({
     <span
       key={val}
       className={cn(
-        "text-accent-foreground inline-flex items-center gap-1 rounded px-2 py-0.5 text-xs",
+        "text-(--accent-foreground) inline-flex items-center gap-1 rounded px-2 py-0.5 text-xs",
         getTagColor?.(val)
           ? `bg-[${getTagColor(val)}]`
-          : "bg-accent"
+          : "bg-(--accent-200)"
       )}
     >
       {getTagIcon?.(val) && <span aria-hidden="true">{getTagIcon(val)}</span>}
       {label}
       <X
-        className="size-3.5 cursor-pointer hover:text-destructive"
+        className="size-3.5 cursor-pointer hover:text-(--destructive)"
         onClick={(e) => {
           e.stopPropagation();
           handleRemove(val);
@@ -145,7 +145,7 @@ export function SearchableMultiSelect({
   );
 
   return (
-    <div className="space-y-1 bg-white">
+    <div className="space-y-1 bg-(--background) text-(--foreground)">
       <PopoverWrapper
         open={open}
         onOpenChange={(o) => {
@@ -155,7 +155,7 @@ export function SearchableMultiSelect({
         trigger={
           <div
             className={cn(
-              "border-input hover:bg-muted/30 bg-muted text-foreground focus:ring-ring inline-flex min-h-9 w-full flex-wrap items-center gap-1 rounded-md border px-2 py-1 text-sm transition-all focus:outline-none focus:ring-2 disabled:cursor-not-allowed disabled:opacity-50",
+              "border-(--input) hover:bg-(--muted)/30 bg-(--muted) text-(--foreground) focus:ring-ring inline-flex min-h-9 w-full flex-wrap items-center gap-1 rounded-md border px-2 py-1 text-sm transition-all focus:outline-none focus:ring-2 disabled:cursor-not-allowed disabled:opacity-50",
               className
             )}
             role="button"
@@ -164,7 +164,7 @@ export function SearchableMultiSelect({
             {!renderTagsBelow && selectedOptions.length > 0 ? (
               selectedOptions.map((opt) => tagPill(opt.label, opt.value))
             ) : (
-              <span className="text-muted-foreground">{triggerLabel ?? "Select…"}</span>
+              <span className="text-(--muted-foreground)">{triggerLabel ?? "Select…"}</span>
             )}
 
             <svg
@@ -183,7 +183,7 @@ export function SearchableMultiSelect({
           </div>
         }
         content={
-          <Command className="min-w-[200px] max-h-60 bg-white" data-testid="popover-content">
+          <Command className="min-w-[200px] max-h-60 bg-(--background) text-(--foreground)" data-testid="popover-content">
             <CommandInput
               ref={inputRef}
               placeholder={placeholder}
@@ -207,7 +207,7 @@ export function SearchableMultiSelect({
                       <span
                         className={cn(
                           "mr-auto flex items-center gap-2",
-                          isSelected && "font-medium text-primary"
+                          isSelected && "font-medium text-(--primary)"
                         )}
                       >
                         {getTagIcon?.(opt.value)}
@@ -215,7 +215,7 @@ export function SearchableMultiSelect({
                       </span>
                       {isSelected && (
                         <svg
-                          className="ml-auto size-4 text-primary"
+                          className="ml-auto size-4 text-(--primary)"
                           fill="none"
                           stroke="currentColor"
                           strokeWidth="2"
@@ -229,7 +229,7 @@ export function SearchableMultiSelect({
                 })}
                 {isCreatable && (
                   <CommandItem
-                    className="text-muted-foreground italic"
+                    className="text-(--muted-foreground) italic"
                     onSelect={handleCreate}
                   >
                     Create “{input.trim()}”
@@ -251,7 +251,7 @@ export function SearchableMultiSelect({
         <button
           type="button"
           onClick={() => onChange([])}
-          className="text-xs text-muted-foreground underline hover:text-foreground mt-1"
+          className="text-xs text-(--muted-foreground) underline hover:text-(--foreground) mt-1"
         >
           Clear all
         </button>

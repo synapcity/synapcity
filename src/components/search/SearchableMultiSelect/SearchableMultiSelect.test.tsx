@@ -16,7 +16,7 @@ jest.mock("@/hooks/search/useDebouncedSearch", () => ({
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { SearchableMultiSelect, SearchableMultiSelectOption } from "./SearchableMultiSelect";
-import { useDebouncedSearch } from "@/hooks/search/useDebouncedSearch";
+import { useDebouncedSearch } from "@/hooks/controls/search/useDebouncedSearch";
 
 const mockedUseDebouncedSearch = useDebouncedSearch as jest.Mock;
 

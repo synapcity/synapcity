@@ -1,12 +1,12 @@
 "use client"
 
-import { useUIStore } from "@/stores/uiStore";
-import { useNoteStore } from "@/stores/resources";
+import { useNoteStore } from "@/stores/resources/noteStore";
 import { useMemo } from "react";
+import { useShallow } from "zustand/shallow";
 
-export function useSelectedNote(namespace = "", scope = "note") {
-  const selectedId = useUIStore((s) => s.selected[`${namespace}:${scope}`]) ?? "";
-  const note = useNoteStore((s) => s.items)[selectedId];
+export function useSelectedNote() {
+  const selected = useNoteStore(useShallow((s) => s.selected.note)) || ""
+  const selectedNote = useNoteStore(useShallow((s) => s.items[selected]))
 
-  return useMemo(() => note ?? null, [note]);
+  return useMemo(() => selectedNote ?? null, [selectedNote]);
 }

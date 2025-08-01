@@ -45,7 +45,12 @@ const EditorPlaceholder = dynamic(
 );
 
 function Editable() {
-  return (
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => {
+    setMounted(true)
+  }, [mounted])
+
+  return mounted && (
     <DraggableWrapper>
       <div className="relative size-full">
         <ContentEditable
@@ -56,7 +61,6 @@ function Editable() {
       </div>
     </DraggableWrapper>
   );
-  // }, [mounted])
 }
 
 export default function CoreUIPlugins() {

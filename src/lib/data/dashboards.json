@@ -4,6 +4,7 @@
     "createdAt": "2025-07-21T14:03:00.000Z",
     "updatedAt": "2025-07-22T09:45:00.000Z",
     "deletedAt": null,
+    "icon": "listCheck",
     "name": "Personal Productivity",
     "description": "Daily planning, tasks, and time tracking widgets.",
     "widgetIds": [
@@ -17,6 +18,7 @@
     "createdAt": "2025-07-18T10:15:00.000Z",
     "updatedAt": "2025-07-22T09:45:00.000Z",
     "deletedAt": null,
+    "icon": "briefcase",
     "name": "Work Dashboard",
     "description": "Tracks projects, meeting notes, and OKRs.",
     "widgetIds": [
@@ -30,6 +32,7 @@
     "createdAt": "2025-07-20T08:30:00.000Z",
     "updatedAt": "2025-07-21T18:00:00.000Z",
     "deletedAt": null,
+    "icon": "bookOpen",
     "name": "Reading Tracker",
     "description": "Dashboard to track reading progress, books, and quotes.",
     "widgetIds": [
@@ -43,6 +46,7 @@
     "createdAt": "2025-07-19T12:00:00.000Z",
     "updatedAt": "2025-07-21T09:10:00.000Z",
     "deletedAt": null,
+    "icon": "sleep",
     "name": "Wellness",
     "description": "Widgets for sleep, hydration, and mood tracking.",
     "widgetIds": [
@@ -57,6 +61,7 @@
     "updatedAt": "2025-07-22T10:00:00.000Z",
     "deletedAt": null,
     "name": "Untitled Dashboard",
+    "icon": "boxes",
     "description": "",
     "widgetIds": []
   }

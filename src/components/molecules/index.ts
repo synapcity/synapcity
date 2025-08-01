@@ -5,3 +5,5 @@ export * from "./FormWrapper";
 export * from "./Switch";
 export * from "./PopoverWrapper";
 export * from "./IdleControlled";
+export * from "./CreateModal";
+export * from "./VirtualizedGrid";
