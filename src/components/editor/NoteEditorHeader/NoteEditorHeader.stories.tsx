@@ -35,13 +35,13 @@ function withTabsList(status?: 'idle' | 'saving' | 'syncing' | 'error') {
     const store = useNoteStore.getState();
 
     if (status === "saving") {
-      store.startStatus("saving", "note", noteId);
+      store.startStatus("saving", noteId);
     } else if (status === "syncing") {
-      store.startStatus("syncing", "note", noteId);
+      store.startStatus("syncing", noteId);
     } else if (status === "error") {
-      store.failStatus("saving", new Error("Failed to save!"), "note", noteId);
+      store.failStatus("saving", new Error("Failed to save!"), noteId);
     } else {
-      store.resetStatus("note", noteId);
+      store.resetStatus(noteId);
     }
 
     const [currentTab, setCurrentTab] = useState("edit")

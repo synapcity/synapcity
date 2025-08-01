@@ -43,9 +43,9 @@ export default function NotePage() {
       await updateResource(noteId, updates)
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
-      failStatus(status, err, "note", noteId)
+      failStatus(status, err, noteId)
     } finally {
-      finishStatus(status, "note", noteId)
+      finishStatus(status, noteId)
     }
   }
   if (!hasHydrated || !noteId || !activeTabId) return null;
@@ -59,14 +59,14 @@ export default function NotePage() {
         <NoteEditorHeader
           noteId={noteId}
           onTitleSave={(newTitle: string) => {
-            startStatus("saving", "note", noteId)
+            startStatus("saving", noteId)
             handleUpdate({ title: newTitle }, "saving"
             )
           }}
           tags={noteTags ?? []}
           onTagClick={(tag: string) => console.log("clicked tag", tag)}
           onTagRemove={(tag: string) => {
-            startStatus("deleting", "note", noteId)
+            startStatus("deleting", noteId)
             handleUpdate({ tags: (note?.tags || []).filter((t: string) => t !== tag) }, "deleting")
           }}
           createdAt={activeTab?.createdAt ?? note?.createdAt}
