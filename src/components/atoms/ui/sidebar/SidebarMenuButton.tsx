@@ -35,7 +35,7 @@ import { useSidebar } from "./SidebarProvider"
 //   }
 // );
 export const sidebarMenuButtonVariants = cva(
-  "peer/menu-button relative flex flex-1 items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm ring-offset-background transition-colors transition-[width,height,padding] duration-150 ease-out",
+  "peer/menu-button relative flex flex-1 items-center gap-2 overflow-hidden rounded-md p-2 text-left text-xs ring-offset-background transition-colors transition-[width,height,padding] duration-150 ease-out",
   {
     variants: {
       variant: {

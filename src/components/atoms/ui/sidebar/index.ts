@@ -15,3 +15,5 @@ export * from "./SidebarMenuSub";
 export * from "./SidebarSeparator";
 export * from "./SidebarRail";
 export * from "./SidebarTrigger";
+export * from "./SidebarMainMenu";
+export * from "./SidebarSection";

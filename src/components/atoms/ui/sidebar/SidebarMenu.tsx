@@ -10,7 +10,7 @@ export function SidebarMenu({ className, ...props }: React.ComponentProps<"ul">)
     <ul
       data-slot="sidebar-menu"
       data-sidebar="menu"
-      className={cn("flex flex-1 min-w-0 flex-col gap-3 items-center", className)}
+      className={cn("flex min-w-0 flex-col gap-3", className)}
       {...props}
     />
   )

@@ -9,7 +9,6 @@ import {
 import { useNoteViewStore } from "../noteViewStore";
 import type { StoreApi, UseBoundStore } from "zustand";
 
-// Combined interface for the note store
 export interface NoteStore extends ResourceStore<NoteResource> {
 	addResourceWithDefaultView(
 		data: Partial<NoteResource>

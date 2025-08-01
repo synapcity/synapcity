@@ -17,8 +17,8 @@ import { IconButton } from '@/components/atoms'
 
 const links = [
   { href: '/', label: 'Home' },
-  { href: '/user/dashboards', label: 'Dashboards' },
-  { href: '/user/notes', label: 'Notes' },
+  { href: '/home/dashboards', label: 'Dashboards' },
+  { href: '/home/notes', label: 'Notes' },
   { href: '/libraries', label: 'Libraries' },
   { href: '/settings', label: 'Settings' },
 ]

@@ -10,7 +10,7 @@ export function SidebarGroup({ className, ...props }: React.ComponentProps<"div"
     <div
       data-slot="sidebar-group"
       data-sidebar="group"
-      className={cn("relative flex w-full flex-1 overflow-x-hidden min-w-0 flex-col p-2", className)}
+      className={cn("relative flex w-full overflow-hidden min-w-0 flex-col p-2", className)}
       {...props}
     />
   )
@@ -67,7 +67,7 @@ export function SidebarGroupContent({
     <div
       data-slot="sidebar-group-content"
       data-sidebar="group-content"
-      className={cn("text-sm flex-1", className)}
+      className={cn("text-xs flex flex-col overflow-y-auto", className)}
       {...props}
     />
   )
