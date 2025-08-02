@@ -6,7 +6,7 @@ import type { ThemeScope } from "@/theme/types"
 import dynamic from "next/dynamic"
 import { ThemePreferencesFormValues } from "../schema"
 
-const IconButtonSkeleton = dynamic(() => import("../../../../archives/components/loading/skeletons/buttons/IconButtonSkeleton").then((mod) => mod.IconButtonSkeleton), {
+const IconButtonSkeleton = dynamic(() => import("@/components/loading/skeletons/IconButtonSkeleton/IconButtonSkeleton").then((mod) => mod.IconButtonSkeleton), {
   ssr: true
 })
 
@@ -20,7 +20,7 @@ const IconButton = dynamic(() => import("@/components/atoms/buttons/IconButton/I
   loading: () => <IconButtonSkeleton />
 })
 
-export const ThemeSheet = ({ entityId, scope }: { entityId?: string; scope: ThemeScope; }) => {
+export const ThemeSheet = ({ entityId, scope, triggerStyles }: { entityId?: string; scope: ThemeScope; triggerStyles?: string; }) => {
   const { updateThemePreferences, applyThemeStyles } = useTheme()
   const handleSubmit = (data: ThemePreferencesFormValues) => {
     const finalData = convertFormToPrefs(data)
@@ -35,6 +35,7 @@ export const ThemeSheet = ({ entityId, scope }: { entityId?: string; scope: Them
           icon="palette"
           aria-label="Font & Theme"
           tooltip="Font & Theme"
+          className={triggerStyles}
         />
       }
       title="Theme"

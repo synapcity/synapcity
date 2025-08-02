@@ -59,7 +59,7 @@ function NavigationMenuItem({
 }
 
 const navigationMenuTriggerStyle = cva(
-  "group inline-flex h-8 w-max items-center justify-center rounded-md bg-[var(--background)] px-3 py-1.5 text-sm font-normal hover:bg-[var(--accent-background)] hover:text-[var(--accent-foreground)] focus:bg-[var(--accent-background)] focus:text-[var(--accent-foreground)] active:bg-[var(--accent-background)] active:text-[var(--accent-foreground)] disabled:pointer-events-none disabled:opacity-50 data-[state=open]:text-[var(--accent-foreground)] data-[state=open]:bg-[var(--accent-background)]/50 transition-[color,box-shadow] outline-none focus-visible:ring-[3px] focus-visible:outline-1 border border-transparent",
+  "group inline-flex h-8 w-max items-center justify-center rounded-md text-(--background) px-3 py-1.5 text-sm font-normal hover:bg-[var(--accent-background)] hover:text-[var(--accent-foreground)] focus:bg-[var(--accent-background)] focus:text-[var(--accent-foreground)] active:bg-[var(--accent-background)] active:text-[var(--accent-foreground)] disabled:pointer-events-none disabled:opacity-50 data-[state=open]:text-[var(--accent-foreground)] data-[state=open]:bg-[var(--accent-background)]/50 transition-[color,box-shadow] outline-none focus-visible:ring-[3px] focus-visible:outline-1 border border-transparent",
   {
     variants: {
       active: {

@@ -14,6 +14,7 @@ import { ThemeSheet } from '@/components/theme'
 import { AuthLinks } from '../Links/AuthLinks'
 import { cn } from '@/utils'
 import { IconButton } from '@/components/atoms'
+import { useShallow } from 'zustand/shallow'
 
 const links = [
   { href: '/', label: 'Home' },
@@ -32,8 +33,8 @@ const NavMenuLink = dynamic(
 )
 
 export function TopNavMenu() {
-  const isSiteFocused = useUIStore((s) => s.isSiteFocus)
-  const header = useUIStore((s) => s.components.header)
+  const isSiteFocused = useUIStore(useShallow((s) => s.isSiteFocus))
+  const header = useUIStore(useShallow((s) => s.components.header))
   const getCompState = useUIStore((s) => s.getCompState)
 
   const isHeaderVisible = header ? getCompState("header", "isVisible") : true
@@ -45,7 +46,7 @@ export function TopNavMenu() {
   return (
     <div
       className={cn(
-        'w-full flex items-center justify-between px-4 py-2 bg-[var(--background)] text-[var(--foreground)] transition-opacity duration-300',
+        'w-full flex items-center justify-between px-4 py-2 text-[var(--foreground)] transition-opacity duration-300',
         {
           'opacity-0 -translate-y-full': !isHeaderVisible,
           'opacity-100 translate-y-0': isHeaderVisible && !isSiteFocused,
@@ -68,12 +69,12 @@ export function TopNavMenu() {
         </NavigationMenuList>
       </NavigationMenu>
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 text-(--background)">
         <InboxTrigger />
-        <ThemeSheet scope="global" />
+        <ThemeSheet scope="global" triggerStyles="text-(--background)" />
         <IconButton
           icon={isSiteFocused ? 'eyeOff' : 'eye'}
-          iconClassName={isSiteFocused ? "text-[var(--background)]" : ""}
+          iconClassName={isSiteFocused ? "text-[var(--foreground)] bg-(--background)" : ""}
           onClick={toggleFocus}
           variant={isSiteFocused ? 'primary' : 'ghost'}
           aria-label="Toggle site focus mode"

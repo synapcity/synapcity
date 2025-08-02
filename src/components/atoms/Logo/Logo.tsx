@@ -7,7 +7,7 @@ export const Logo = () => (
     href="/"
     variant="ghost"
     size="xl"
-    className="flex items-center gap-2 mr-8 px-2"
+    className="flex items-center gap-2 mr-8 px-2 text-(--background)"
     isIconOnly
     isLoading={false}
     isActive={false}

@@ -16,12 +16,12 @@ export const ThemeFormFields = () => {
       <FontField
         name="fontFamilyHeading"
         label="Heading"
-        className="text-background"
+        className="text-(--foreground)"
       />
       <FontField
         name="fontFamilyBody"
         label="Body"
-        className="text-background"
+        className="text-(--foreground)"
       />
 
       <ColorField name="primary" label="Primary" />

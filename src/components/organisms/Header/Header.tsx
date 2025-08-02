@@ -52,10 +52,10 @@ export const Header = () => {
       <header
         style={{ '--header-height': '4rem' } as React.CSSProperties}
         className={cn(
-          "sticky top-0 z-[50] backdrop-blur bg-background/80 text-foreground transition-shadow px-4 py-1.5 @container",
+          "sticky top-0 z-[50] backdrop-blur bg-(--surface-inverse) text-foreground transition-shadow px-4 py-1.5 @container",
           {
-            'h-2': !isHeaderVisible,
-            'h-[var(--header-height)]': isHeaderVisible,
+            'h-1 bg-black/50': !isHeaderVisible,
+            'h-[var(--header-height)] drop-shadow-sm': isHeaderVisible,
           }
         )}
         onMouseEnter={showHeader}

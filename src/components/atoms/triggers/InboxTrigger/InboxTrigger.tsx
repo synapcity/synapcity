@@ -26,7 +26,7 @@ export const InboxTrigger = ({ label = "Panel", className }: InboxTriggerProps) 
       icon="inbox"
       isIconOnly
       showIcons={false}
-      className={cn(className, { "text-[var(--background)]": isOpen })}
+      className={cn(className, { "text-[var(--foreground)] bg-(--background) data-[state=on]:bg-(--background)": isOpen })}
       variant={isOpen ? "outline" : "ghost"}
       onClick={() => toggleOpen()}
       size="default"

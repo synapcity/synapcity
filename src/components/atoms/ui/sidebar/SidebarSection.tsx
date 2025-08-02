@@ -11,6 +11,7 @@ import {
 import { type LucideIcon } from "lucide-react";
 import React from "react";
 import Link from "next/link";
+import { CommandShortcut } from "../command";
 
 interface SidebarSectionProps<T> {
   label: string;
@@ -21,6 +22,8 @@ interface SidebarSectionProps<T> {
   itemUrl: (item: T) => string;
   itemIcon: LucideIcon;
   getItemLabel: (item: T) => string;
+  keyboardShortcut?: string;
+  keyboardShortcutTooltip?: string;
 }
 
 export function SidebarSection<T extends { id: string }>({
@@ -32,10 +35,12 @@ export function SidebarSection<T extends { id: string }>({
   itemUrl,
   itemIcon: ItemIcon,
   getItemLabel,
+  keyboardShortcut,
+  keyboardShortcutTooltip
 }: SidebarSectionProps<T>) {
   return (
     <SidebarGroup>
-      <div className="flex items-center justify-between px-3 py-2">
+      <div className="flex items-center justify-between px-1.5 py-2">
         {labelLink ? (
           <Link href={labelLink} className="font-semibold hover:underline">
             <SidebarGroupLabel>{label}</SidebarGroupLabel>
@@ -43,7 +48,15 @@ export function SidebarSection<T extends { id: string }>({
         ) : (
           <SidebarGroupLabel>{label}</SidebarGroupLabel>
         )}
-        {action && action}
+        <span className="flex items-center justify-center gap-2">
+          {action && action}
+          {keyboardShortcut && (
+            <CommandShortcut side="right" content={keyboardShortcutTooltip}>
+              {keyboardShortcut}
+            </CommandShortcut>
+          )}
+
+        </span>
       </div>
       <SidebarGroupContent className="max-h-[300px]">
         <SidebarMenu>
@@ -62,7 +75,7 @@ export function SidebarSection<T extends { id: string }>({
             <SidebarMenuItem>
               <SidebarMenuButton disabled>
                 <ItemIcon className="h-4 w-4" />
-                <span className="text-muted-foreground">{emptyLabel}</span>
+                <span className="text-(--foreground)">{emptyLabel}</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
           )}
