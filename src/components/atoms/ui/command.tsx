@@ -12,6 +12,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/atoms/ui/dialog"
+import { Tooltip } from "../Tooltip"
 
 function Command({
   className,
@@ -157,17 +158,21 @@ function CommandItem({
 
 function CommandShortcut({
   className,
+  side,
+  content,
   ...props
-}: React.ComponentProps<"span">) {
+}: React.ComponentProps<"span"> & { side?: "right" | "top" | "bottom" | "left"; content?: string | React.ReactNode; }) {
   return (
-    <span
-      data-slot="command-shortcut"
-      className={cn(
-        "text-muted-foreground ml-auto text-xs tracking-widest",
-        className
-      )}
-      {...props}
-    />
+    <Tooltip content={content ?? props.children} side={side}>
+      <span
+        data-slot="command-shortcut"
+        className={cn(
+          "text-muted-foreground ml-auto text-xs tracking-widest hover:text-(--accent)",
+          className
+        )}
+        {...props}
+      />
+    </Tooltip>
   )
 }
 

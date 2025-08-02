@@ -4,7 +4,6 @@ const NoteEditorPage = dynamic(() => import("@/components/pages/NoteEditor/NoteE
   ssr: true,
 })
 
-
 export default function NotePage() {
   return <NoteEditorPage />
 }

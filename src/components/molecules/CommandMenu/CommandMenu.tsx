@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useCallback } from "react";
+import React, { useCallback } from "react";
 import {
   CommandDialog,
   CommandInput,
@@ -12,15 +12,14 @@ import {
   CommandShortcut,
 } from "@/components/atoms/ui/command";
 
-type CommandMenuItem = {
+export type CommandMenuItem = {
   label: string;
   shortcut?: string;
   icon?: React.ReactNode;
   disabled?: boolean;
   onSelect?: () => void;
 };
-
-type CommandMenuGroup = {
+export type CommandMenuGroup = {
   heading: string;
   items: CommandMenuItem[];
 };
@@ -33,6 +32,8 @@ export type CommandMenuProps = {
   description?: string;
   showCloseButton?: boolean;
   searchPlaceholder?: string;
+  searchValue?: string;
+  onSearchChange?: (val: string) => void;
 };
 
 export function CommandMenu({
@@ -43,23 +44,31 @@ export function CommandMenu({
   description = "Search or navigate with ↑ ↓ ↵",
   showCloseButton = true,
   searchPlaceholder = "Type a command...",
+  searchValue = "",
+  onSearchChange,
 }: CommandMenuProps) {
-  const [internalOpen, setInternalOpen] = useState(false);
+  const [internalOpen, setInternalOpen] = React.useState(false);
   const isControlled = controlledOpen !== undefined;
   const open = isControlled ? controlledOpen : internalOpen;
 
-  const handleOpenChange = useCallback((value: boolean) => {
-    if (isControlled) {
-      onOpenChange?.(value);
-    } else {
-      setInternalOpen(value);
-    }
-  }, [isControlled, onOpenChange])
+  const handleOpenChange = useCallback(
+    (value: boolean) => {
+      if (isControlled) {
+        onOpenChange?.(value);
+      } else {
+        setInternalOpen(value);
+      }
+    },
+    [isControlled, onOpenChange]
+  );
 
-  const handleSelect = useCallback((item: CommandMenuItem) => {
-    item.onSelect?.();
-    handleOpenChange(false);
-  }, [handleOpenChange]);
+  const handleSelect = useCallback(
+    (item: CommandMenuItem) => {
+      item.onSelect?.();
+      handleOpenChange(false);
+    },
+    [handleOpenChange]
+  );
 
   return (
     <CommandDialog
@@ -68,19 +77,26 @@ export function CommandMenu({
       title={title}
       description={description}
       showCloseButton={showCloseButton}
-      className="bg-white"
+      className="bg-(--background) text-(--foreground)"
     >
-      <CommandInput data-testid="command-input" placeholder={searchPlaceholder} />
+      <CommandInput
+        data-testid="command-input"
+        placeholder={searchPlaceholder}
+        value={searchValue}
+        onValueChange={onSearchChange}
+      />
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
-
         {groups.map((group, groupIdx) => (
           <React.Fragment key={group.heading}>
             {groupIdx > 0 && <CommandSeparator />}
-            <CommandGroup heading={group.heading} className={`bg-white`}>
-              {group.items.map((item) => (
+            <CommandGroup
+              heading={group.heading}
+              className="bg-(--background) text-(--foreground)"
+            >
+              {group.items.map((item, idx) => (
                 <CommandItem
-                  key={item.label}
+                  key={`${item.label}-${idx}`}
                   onSelect={() => handleSelect(item)}
                   disabled={item.disabled}
                   className="hover:bg-gray-800 hover:text-gray-200 transition-all duration-300 ease-in-out"

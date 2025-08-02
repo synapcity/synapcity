@@ -1,11 +1,9 @@
-// import { NotesMasonryGrid } from "@/components/notes/card-layouts/NotesMasonryGrid/NotesMasonryGrid"
-import NotesIndexPage from "./NotesIndexPage"
-// import dynamic from "next/dynamic"
+import dynamic from "next/dynamic"
 
-// const NotesPage = dynamic(() => import("@/components/pages/notes/cards/NotesMasonryGrid").then((mod) => mod.NotesMasonryGrid), {
-//   ssr: true,
-// })
+const NotesIndex = dynamic(() => import("./NotesIndexPage").then((mod) => mod.default), {
+  ssr: true,
+})
 
-export default function NotesGridPage() {
-  return <NotesIndexPage />
+export default function NotesIndexPage() {
+  return <NotesIndex />
 }
