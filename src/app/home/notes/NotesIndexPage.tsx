@@ -1,31 +1,10 @@
-'use client';
-
+import dynamic from 'next/dynamic';
 import React from 'react';
-// import { useNoteStore } from '@/stores';
-import { SearchableSortableNotes } from '@/components/notes/SearchableSortableNotes';
-// import type { Note } from '@/schemas/resources/note-schema';
-// import { useRouter } from 'next/navigation';
-// import { NoteCard } from '@/components/notes';
-// import { getExcerpt } from '@/utils/getExcerpt';
+
+const SkeletonOrLoading = dynamic(() => import("@/components/loading/SkeletonOrLoading/SkeletonOrLoading").then(mod => mod.SkeletonOrLoading), { ssr: true })
+const SearchableSortableNotes = dynamic(() => import("@/components/notes/SearchableSortableNotes").then(mod => mod.SearchableSortableNotes), { ssr: true, loading: ({ isLoading }) => <SkeletonOrLoading isLoading={isLoading} /> })
 
 export default function NotesIndexPage() {
-  // const router = useRouter();
-  // const notesObj = useNoteStore((s) => s.items);
-  // const notes = React.useMemo(() => Object.values(notesObj), [notesObj]);
-
-  // const renderCard = React.useCallback(
-  //   (note: Note) => (
-  //     <div
-  //       onClick={() => {
-  //         router.push(`/home/notes/${note.id}`);
-  //       }}
-  //     >
-  //       <NoteCard id={note.id} title={note.title} excerpt={getExcerpt(note)} />
-  //     </div>
-  //   ),
-  //   [router]
-  // );
-
   return (
     <div className="flex-1 min-h-0 p-4 flex flex-col">
       <SearchableSortableNotes />

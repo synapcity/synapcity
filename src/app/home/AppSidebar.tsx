@@ -8,9 +8,10 @@ import { CreateDashboardModal } from "@/components/dashboards";
 import { CreateNoteModal } from "@/components/notes";
 import { useDashboardStore } from "@/stores/dashboardStore/useDashboardStore";
 import { useNoteStore } from "@/stores";
-import { LayoutDashboard, FileText, Home, Inbox, Calendar, Search, Settings } from "lucide-react";
+import { LayoutDashboard, FileText, Home, Inbox, Search } from "lucide-react";
 import React from "react";
 import { useShallow } from "zustand/shallow";
+import { useKeyboardShortcut } from "@/hooks";
 
 export default function AppSidebar() {
   const dashboardsObj = useDashboardStore(useShallow((s) => s.items));
@@ -30,11 +31,21 @@ export default function AppSidebar() {
   const mainMenuItems = [
     { title: "Home", url: "/home", icon: Home },
     { title: "Inbox", url: "#", icon: Inbox },
-    { title: "Calendar", url: "#", icon: Calendar },
     { title: "Search", url: "#", icon: Search },
-    { title: "Settings", url: "#", icon: Settings },
   ];
 
+  useKeyboardShortcut({
+    key: "D",
+    metaKey: true,
+    onKeyPressed: () => setCreateDashboardOpen(true)
+  })
+
+  useKeyboardShortcut({
+    key: "N",
+    metaKey: true,
+    shiftKey: true,
+    onKeyPressed: () => setCreateNoteOpen(true)
+  })
   return (
     <Sidebar variant="container" collapsible="offcanvas" className="shrink-0">
       <SidebarContent className="py-6">
@@ -48,6 +59,8 @@ export default function AppSidebar() {
           itemUrl={(d) => `/home/dashboards/${d.id}`}
           itemIcon={LayoutDashboard}
           getItemLabel={(d) => d.name}
+          keyboardShortcut="⌘D"
+          keyboardShortcutTooltip="Cmd+D"
         />
         <SidebarSection
           label="Notes"
@@ -58,6 +71,8 @@ export default function AppSidebar() {
           itemUrl={(n) => `/home/notes/${n.id}`}
           itemIcon={FileText}
           getItemLabel={(n) => n.title}
+          keyboardShortcut="⌘⇧N"
+          keyboardShortcutTooltip="Cmd+Shift+N"
         />
       </SidebarContent>
     </Sidebar>

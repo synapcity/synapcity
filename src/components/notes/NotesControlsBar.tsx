@@ -56,7 +56,7 @@ export function NotesControlsBar({
   }, [allNotes]);
 
   return (
-    <div className="flex flex-wrap gap-4 items-center">
+    <>
       <SearchInput
         value={searchTerm}
         onChange={onSearchChange}
@@ -98,6 +98,6 @@ export function NotesControlsBar({
           Reset
         </button>
       )}
-    </div>
+    </>
   );
 }

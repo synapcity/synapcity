@@ -20,6 +20,7 @@ export function useBreadcrumbs(segments: string[]): BreadcrumbItem[] {
         label: "Home",
         href: "/home",
         icon: <HomeIcon className="h-4 w-4" />,
+        iconOnly: true
       });
       return;
     }

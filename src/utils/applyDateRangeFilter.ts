@@ -2,18 +2,14 @@ export interface DateRange {
 	from?: string;
 	to?: string;
 }
-
-/**
- * Inclusive date filtering. Uses updatedAt or createdAt as fallback.
- */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function applyDateRangeFilter<T extends Record<string, any>>(
-	items: T[],
+	items: T[] = [],
 	range?: DateRange,
 	referenceKey: "updatedAt" | "createdAt" = "updatedAt"
 ): T[] {
+	if (!Array.isArray(items) || items.length === 0) return [];
 	if (!range || (!range.from && !range.to)) return items;
-
 	const fromTime = range.from ? new Date(range.from).getTime() : null;
 	const toTime = range.to ? new Date(range.to).getTime() : null;
 

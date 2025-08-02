@@ -49,7 +49,7 @@ export function MasonryVirtualWindow<T extends CardItemBase>({
     <div
       aria-label={ariaLabel}
       className={cn(
-        'relative overflow-y-auto p-6 flex-1 bg-(--primary-100) @container',
+        'relative overflow-y-auto p-6 flex-1 @container no-scrollbar',
         containerClassName
       )}
       style={{ minHeight: 0 }}
@@ -58,7 +58,7 @@ export function MasonryVirtualWindow<T extends CardItemBase>({
         <AnimatePresence initial={false}>
           {allItems.map((item, idx) => (
             <MasonryGridCardSlot
-              key={item === null ? `add-${idx}` : item.id}
+              key={`${item?.id}-${idx}`}
               item={item}
               index={idx}
               renderCard={(item: CardItemBase) => renderCard(item as T)}

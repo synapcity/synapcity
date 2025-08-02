@@ -7,7 +7,7 @@ import { applyDateRangeFilter } from '@/utils/applyDateRangeFilter';
 import dynamic from 'next/dynamic';
 import { CardItemBase } from '@/hooks/useLazyMountWithExpiry';
 import { DashboardsControlsBar } from './DashboardControlsBar';
-
+import { useMemo } from 'react';
 
 const SkeletonOrLoading = dynamic(() => import("@/components/loading/SkeletonOrLoading/SkeletonOrLoading").then(mod => mod.SkeletonOrLoading), { ssr: true })
 
@@ -29,8 +29,11 @@ export function SearchableSortableDashboards({
     query,
     clear: clearSearch,
     isSearching,
-    results: searched
+    results: searchedRaw
   } = useDashboardSearch(dashboards, { debounceMs: 250 });
+
+  const searched = useMemo(() => searchedRaw ?? [], [searchedRaw]);
+
   const { sortKey, setSortKey, sortDir, toggleSortDir, reset: resetSort } = useSort();
   const { dateRange, setDateRange, reset: resetDateRange } = useDateRange();
 
@@ -43,8 +46,9 @@ export function SearchableSortableDashboards({
       ),
     [searched, dateRange, sortKey]
   );
+
   const sorted = React.useMemo(() => {
-    return [...dateFiltered].sort((a, b) => {
+    return [...(dateFiltered ?? [])].sort((a, b) => {
       if (sortKey === 'name') {
         const aName = (a.name || '').toString();
         const bName = (b.name || '').toString();
@@ -89,7 +93,7 @@ export function SearchableSortableDashboards({
       />
 
       <MasonryVirtualWindow
-        items={sorted}
+        items={sorted as Dashboard[]}
         renderCard={(item: CardItemBase) => renderCard(item as Dashboard)}
         estimatedCardHeight={220}
         overscanScreens={1}
