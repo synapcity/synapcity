@@ -3,21 +3,26 @@
 import * as React from 'react';
 import { useNoteStore } from '@/stores/resources/noteStore';
 import { useNoteViewStore } from '@/stores/resources/noteViewStore/useNoteViewStore';
-import { CombinedEditor, Note } from '@/schemas/resources';
-import { NoteCard } from '@/components/notes/cards/NoteCard';
-import { AddNoteCard } from '@/components/notes/cards/AddNoteCard';
-import { MasonryVirtualWindow, CardItemBase } from '@/components/molecules/VirtualizedGrid/MasonryVirtualizedGrid';
+import type { CombinedEditor, Note } from '@/schemas/resources';
+import { CardItemBase } from '@/components/molecules/VirtualizedGrid/MasonryVirtualizedGrid';
 import { useNotesSearchSort, NoteLike } from '@/hooks/notes/useNotesSearchSort/useNotesSearchSort';
 import { SortKey, SortDir } from '@/components/atoms/controls';
 import { useRouter } from 'next/navigation';
 import { useMemo, useCallback } from 'react';
 import { NotesControlsBar } from './NotesControlsBar';
 import { aggregateViewContent, getViewExcerpts } from '@/utils';
+import dynamic from 'next/dynamic';
 
 interface NoteCardItem extends CardItemBase {
-  title: string;
-  excerpt: string;
+  title?: string;
+  summary?: string;
 }
+
+const SkeletonOrLoading = dynamic(() => import("@/components/loading/SkeletonOrLoading/SkeletonOrLoading").then(mod => mod.SkeletonOrLoading), { ssr: true })
+
+const MasonryVirtualWindow = dynamic(() => import("@/components/molecules/VirtualizedGrid/MasonryVirtualizedGrid").then(mod => mod.MasonryVirtualWindow), { ssr: false, loading: ({ isLoading }) => <SkeletonOrLoading isLoading={isLoading} /> })
+const NoteCard = dynamic(() => import("@/components/notes/cards/NoteCard").then(mod => mod.NoteCard), { ssr: true })
+const AddNoteCard = dynamic(() => import("@/components/notes/cards/AddNoteCard").then(mod => mod.AddNoteCard), { ssr: false })
 
 export function SearchableSortableNotes() {
   const router = useRouter();
@@ -70,7 +75,7 @@ export function SearchableSortableNotes() {
       filtered.map((n) => ({
         id: n.id,
         title: n.title?.trim() || 'Untitled',
-        excerpt: n.excerpt || 'Start typing here...',
+        summary: n.excerpt || 'Start typing here...',
       })),
     [filtered]
   );
@@ -83,7 +88,7 @@ export function SearchableSortableNotes() {
           router.push(`/home/notes/${note.id}`);
         }}
       >
-        <NoteCard id={note.id} title={note.title} excerpt={note.excerpt} />
+        <NoteCard id={note.id} title={note.title ?? ""} excerpt={note.summary ?? ""} />
       </div>
     );
   }, [router]);
@@ -111,7 +116,7 @@ export function SearchableSortableNotes() {
         />
       </div>
 
-      <MasonryVirtualWindow<NoteCardItem>
+      <MasonryVirtualWindow
         aria-label="Notes masonry"
         items={items}
         estimatedCardHeight={180}

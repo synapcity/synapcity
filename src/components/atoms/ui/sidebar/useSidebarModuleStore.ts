@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
+import { SIDEBAR_MODULES_BY_ID } from "./modules";
 
 export const SIDEBAR_DIMENSIONS = {
 	MOBILE: 320,
@@ -28,7 +29,8 @@ export type SidebarSettings = {
 	lastActiveAt?: number;
 	dimensions?: {
 		width: number;
-	}
+	};
+	modules: string[];
 };
 
 export type SidebarModule = {
@@ -66,7 +68,7 @@ export const useSidebarModuleStore = create<SidebarModuleStore>()(
 	persist(
 		(set, get) => ({
 			settingsById: {},
-			sidebarModulesById: {},
+			sidebarModulesById: {...SIDEBAR_MODULES_BY_ID },
 
 			updateSettings: (id, updates) => {
 				const current = get().settingsById[id] ?? {};

@@ -11,23 +11,39 @@ export const sidebarMenuButtonVariants = cva(
       variant: {
         default: cn(
           "bg-transparent text-muted-foreground hover:bg-muted/10 hover:text-foreground",
-          "data-[active=true]:bg-accent-100 data-[active=true]:text-accent-foreground data-[active=true]:font-medium"
+          "data-[active=true]:bg-accent-100 data-[active=true]:text-accent-foreground data-[active=true]:font-medium",
+          "hover:bg-muted/10 active:bg-muted/20 hover:text-(--accent)",
         ),
         outline: cn(
           "border border-border text-muted-foreground",
           "hover:bg-muted/10 hover:text-foreground",
           "data-[active=true]:border-accent data-[active=true]:text-accent-foreground"
         ),
+        auto: cn(
+          "items-center h-auto p-auto",
+          // "data-[active=true]:bg-(--sidebar-accent) data-[active=true]:text-(--sidebar-background)"
+        )
       },
       size: {
         default: "h-9 px-2 text-sm",
         sm: "h-7 px-2 text-xs",
         lg: "h-11 px-3 text-base",
+        auto: "h-auto p-auto"
       },
+      isActive: {
+        true: "data-[active=true]:bg-(--sidebar-accent) data-[active=true]:text-(--sidebar-background)",
+        false: ""
+      },
+      icon: {
+        sm: "[&>svg]:size-4",
+        default: "[&>svg]:size-6"
+      }
     },
     defaultVariants: {
       variant: "default",
       size: "default",
+      isActive: false,
+      icon: "default"
     },
   }
 );
@@ -37,15 +53,16 @@ export function SidebarMenuButton({
   size = "default",
   variant = "default",
   className,
+  icon = "default",
   ...props
 }: React.ComponentProps<"button"> & {
   asChild?: boolean;
   isActive?: boolean;
-  size?: "default" | "sm" | "lg";
-  variant?: "default" | "outline";
+  size?: "default" | "sm" | "lg" | "auto";
+  variant?: "default" | "outline" | "auto";
+  icon?: "sm" | "default"
 }) {
   const Comp = asChild ? Slot : "button";
-
   return (
     <Comp
       data-slot="sidebar-menu-button"
@@ -53,11 +70,10 @@ export function SidebarMenuButton({
       data-active={isActive}
       data-size={size}
       className={cn(
-        "flex items-center gap-2 px-2 py-1 rounded-md text-sm transition",
-        "hover:bg-muted/10 active:bg-muted/20",
-        "data-[active=true]:bg-accent data-[active=true]:text-accent-foreground",
-        "group-data-[collapsible=icon]:hidden",
-        sidebarMenuButtonVariants({ variant, size }),
+        "flex items-center gap-2 rounded-md text-sm transition flex-1",
+        "data-[active=true]:hover:text-(--accent) active:bg-(--sidebar-accent) text-(--sidebar-background)",
+        "group-data-[collapsible=icon]:hidden [&>svg]:size-4 text-xs",
+        sidebarMenuButtonVariants({ variant, size, isActive, icon }),
         className
       )}
       {...props}

@@ -62,7 +62,7 @@ export default function Toolbar() {
 }
 
 export const ToolbarSection = ({ children }: { children: React.ReactNode }) => (
-  <div className="flex flex-wrap justify-center items-center gap-2 group">{children}</div>
+  <div className="flex flex-wrap justify-center items-center gap-2">{children}</div>
 );
 
 const ToolbarDivider = () => <div className="w-full bg-gray-300 md:w-px md:h-full" />;

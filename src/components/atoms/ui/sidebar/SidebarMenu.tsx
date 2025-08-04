@@ -25,7 +25,7 @@ export function SidebarMenuItem({
     <li
       data-slot="sidebar-menu-item"
       data-sidebar="menu-item"
-      className={cn("relative flex flex-1 group/menu-item", className)}
+      className={cn("relative flex flex-1 group/menu-item data-[active=true]:bg-(--sidebar-accent) data-[active=true]:text-(--accent-foreground)", className)}
       {...props}
     />
   );

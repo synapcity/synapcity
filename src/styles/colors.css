@@ -1,6 +1,6 @@
 @theme inline {
-	--background: var(--primary-100);
-	--foreground: var(--primary-900);
+	--background: var(--background);
+	--foreground: var(--foreground);
 	--muted: var(--primary-200);
 	--muted-foreground: var(--primary-600);
 	--surface: var(--primary-50);
@@ -45,9 +45,8 @@
 
 .dark,
 [data-theme="dark"] {
-	/* Base Semantic overrides */
-	--background: var(--primary-50);
-	--foreground: var(--primary-900);
+	--foreground: "#fff"
+	--background: "#0a0a0a"
 	--muted: var(--primary-200);
 	--muted-foreground: var(--primary-700);
 	--surface: var(--primary-50);
@@ -92,8 +91,8 @@
 .light,
 [data-theme="light"] {
 	/* Base Semantic overrides */
-	--background: var(--primary-100);
-	--foreground: var(--primary-900);
+	--background: "#fff"
+	--foreground: "#0a0a0a"
 	--muted: var(--primary-200);
 	--muted-foreground: var(--primary-600);
 	--surface: var(--primary-50);

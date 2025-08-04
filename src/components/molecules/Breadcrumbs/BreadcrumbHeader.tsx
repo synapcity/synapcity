@@ -71,10 +71,10 @@ export function BreadcrumbHeader() {
         <button
           type="button"
           aria-label="Toggle sidebar"
-          className="rounded-lg p-2 hover:bg-accent/60 transition-colors"
+          className="rounded-lg p-2 hover:text-(--accent) transition-colors group"
           onClick={toggleSidebar}
         >
-          <Menu className="h-5 w-5 text-muted-foreground group-hover:text-foreground" />
+          <Menu className="h-5 w-5 text-(--muted-foreground) group-hover:text-(--foreground)" />
         </button>
 
         <CommandShortcut side="top" content="Cmd+B" className="mr-2">

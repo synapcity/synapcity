@@ -1,185 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 "use client";
 
 import React, { useEffect, useRef } from "react";
@@ -225,7 +43,7 @@ export function ResizableSidebarWrapper({
   return (
     <div className="outer-container flex flex-1 overflow-hidden">
       {/* ─── Panel group: editor + sliding sidebar ─── */}
-      <ResizablePanelGroup id="resizale-panel-group" direction="horizontal" className="flex-1 flex flex-col">
+      <ResizablePanelGroup id="resizable-panel-group" direction="horizontal" className="flex-1 flex flex-col">
         {/* 1) Editor panel */}
         <ResizablePanel id="resizable-panel" className="min-w-0 flex-1 bg-[var(--background)] p-4 flex flex-col" order={1}>
           {children}
@@ -241,7 +59,7 @@ export function ResizableSidebarWrapper({
           collapsedSize={0}
           defaultSize={35}
           className={cn(
-            "flex flex-col overflow-auto bg-[var(--sidebar-bg)] border-l",
+            "flex flex-col overflow-auto bg-[var(--sidebar-bg)] border-l relative",
             { "flex-1": sidebarState === "expanded" }
           )}
           order={2}
@@ -250,7 +68,7 @@ export function ResizableSidebarWrapper({
             <h2 className="text-sm font-medium">Info</h2>
             <button
               onClick={toggleSidebar}
-              className="p-1 rounded hover:bg-gray-600"
+              className={cn("p-1 rounded hover:bg-gray-600")}
             >
               <PanelRightClose size={16} />
             </button>
@@ -259,7 +77,9 @@ export function ResizableSidebarWrapper({
         </ResizablePanel>
       </ResizablePanelGroup>
 
-      <div className="flex-shrink-0 w-12 bg-[var(--background)] border-l">
+      <div
+        className="flex-shrink-0 w-12 bg-[var(--sidebar-foreground)] border-l flex"
+      >
         <IconSidebar key={id} scope={scope as SidebarScope} id={id} side="right" />
       </div>
     </div>

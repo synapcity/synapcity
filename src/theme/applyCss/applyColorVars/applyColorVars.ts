@@ -12,8 +12,6 @@ export function applyColorVars(
 
 	const mergedVars = {
 		...colorVars,
-		"--background": color[mode].background,
-		"--foreground": color[mode].foreground,
 	};
 
 	applyVars(mergedVars, element);

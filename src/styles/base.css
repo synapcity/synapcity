@@ -3,6 +3,8 @@
 	--font-heading: var(--font-space-grotesk), sans-serif;
 	--font-body: var(--font-sans);
 	--font-mono: var(--font-space-mono), monospace;
+	--foreground: "#fff"
+	--background: "#0a0a0a"
 
 	--body-size: 1rem;
 	--heading-size: calc(var(--body-size) * 1.25);
@@ -33,8 +35,8 @@
 	--accent: var(--accent-600);
 	--accent-foreground: var(--accent-800);
 	--accent-background: var(--accent-200);
-	--background: var(--primary-100);
-	--foreground: var(--primary-900);
+	--background: "#fff"
+	--foreground: "#0a0a0a"
 
 	--muted: var(--primary-200);
 	--muted-foreground: var(--primary-600);
@@ -110,8 +112,8 @@
 	--accent-foreground: var(--accent-800);
 	--accent-background: var(--accent-200);
 
-	--background: var(--primary-900);
-	--foreground: var(--primary-50);
+	--foreground: "#fff"
+	--background: "#0a0a0a"
 
 	--muted: var(--primary-700);
 	--muted-foreground: var(--primary-400);
