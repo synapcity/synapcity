@@ -47,6 +47,7 @@ export function NoteEditorHeader({
   const created = formatDate(createdAt, { style: "full" })
   const updated = formatDate(updatedAt, { style: "relative" })
   const startStatus = useNoteStore(s => s.startStatus)
+  const clearStatus = useNoteStore(s => s.resetStatus)
 
   const { title, status } = useNoteStore(
     useShallow((s) => ({
@@ -54,73 +55,6 @@ export function NoteEditorHeader({
       status: s.status[noteId],
     }))
   );
-  // useEffect(() => {
-  //   const scrollEl = scrollContainerRef.current;
-  //   const titleEl = titleRef.current;
-  //   if (!scrollEl) return;
-
-  //   let raf: number | null = null;
-
-  //   const onScroll = () => {
-  //     if (raf !== null) cancelAnimationFrame(raf);
-  //     raf = requestAnimationFrame(() => {
-  //       const scrollY = Math.min(scrollEl.scrollTop, SHRINK_THRESHOLD);
-  //       const progress = scrollY / SHRINK_THRESHOLD;
-  //       const targetHeight = HEADER_FULL - (HEADER_FULL - HEADER_MIN) * progress;
-  //       setHeaderHeight(targetHeight);
-
-  //       if (titleEl) {
-  //         const scale = 1 - 0.15 * progress;
-  //         titleEl.style.transform = `scale(${scale})`;
-  //         titleEl.style.transformOrigin = "left center";
-  //       }
-  //     });
-  //   };
-
-  //   scrollEl.addEventListener("scroll", onScroll, { passive: true });
-
-  //   return () => {
-  //     scrollEl.removeEventListener("scroll", onScroll);
-  //     if (raf !== null) cancelAnimationFrame(raf);
-  //   };
-  // }, []);
-
-  // const getStatus = (status: UILocalStatus | undefined) => {
-  //   if (!status) {
-  //     return (
-  //       <div className="ml-4 flex items-center gap-2 text-xs text-muted-foreground">
-  //         <Icon name="loading" className={cn("w-4 h-4", "animate-spin")} />
-  //         <span>Loading...</span>
-  //       </div>
-  //     );
-  //   }
-
-  //   const isUpdating = Object.values(status ?? {}).includes(true);
-  //   const text = isUpdating
-  //     ? status.isEditing
-  //       ? "Editing..."
-  //       : status.isSaving
-  //         ? "Saving..."
-  //         : "Loading..."
-  //     : "Saved";
-
-  //   return (
-  //     <div className="ml-4 flex items-center gap-2 text-xs text-muted-foreground">
-  //       <Icon
-  //         name={!isUpdating ? "check" : status.isEditing ? "penLine" : "loading"}
-  //         className={cn(
-  //           "w-4 h-4",
-  //           {
-  //             "text-green-500": !isUpdating,
-  //             "text-gray-500": isUpdating,
-  //             "animate-spin": isUpdating && !status.isEditing,
-  //           }
-  //         )}
-  //       />
-  //       <span>{text}</span>
-  //     </div>
-  //   );
-  // };
 
   useEffect(() => {
     const scrollEl = scrollContainer ?? scrollContainerRef.current;
@@ -157,8 +91,8 @@ export function NoteEditorHeader({
     if (!status) {
       return (
         <div className="ml-4 flex items-center gap-2 text-xs text-muted-foreground">
-          <Icon name="loading" className={cn("w-4 h-4", "animate-spin")} />
-          <span>Loading...</span>
+          <Icon name="check" className={cn("w-4 h-4", "text-green-500")} />
+          <span>Synced</span>
         </div>
       );
     }
@@ -201,7 +135,10 @@ export function NoteEditorHeader({
             <EditableText
               value={title ?? ""}
               as="h4"
-              onSave={onTitleSave}
+              onSave={(value: string) => {
+                onTitleSave(value)
+                clearStatus(noteId)
+              }}
               onEdit={() => {
                 startStatus("editing", noteId)
               }}

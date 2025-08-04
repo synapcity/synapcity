@@ -43,8 +43,8 @@ const Editable = () => {
           <div className="p-4 flex-1">
             <ContentEditable
               aria-placeholder="Loading Content..."
-              placeholder={<EditorPlaceholder />}
-              className=" min-h-[150px] p-4 overflow-y-auto rounded-md outline-none flex-1"
+              placeholder={() => null}
+              className="min-h-[150px] p-4 overflow-y-auto rounded-md outline-none flex-1"
               style={{ height: "900px", background: "rgba(0,0,0,0.03)" }}
             />
           </div>
@@ -52,7 +52,7 @@ const Editable = () => {
       </div>
     </DraggableWrapper>
   );
-}
+};
 
 export default function CoreUIPlugins() {
   const [isClient, setIsClient] = useState(false);
@@ -68,6 +68,7 @@ export default function CoreUIPlugins() {
       <ToolbarPlugin />
       <RichTextPlugin
         contentEditable={<Editable />}
+        placeholder={<EditorPlaceholder />}
         ErrorBoundary={LexicalErrorBoundary}
       />
       <HorizontalRule />

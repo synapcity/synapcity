@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { Command as CommandPrimitive } from "cmdk"
+import { Command as CommandPrimitive, useCommandState } from "cmdk"
 import { SearchIcon } from "lucide-react"
 
 import { cn } from "@/utils/index"
@@ -13,6 +13,7 @@ import {
   DialogTitle,
 } from "@/components/atoms/ui/dialog"
 import { Tooltip } from "../Tooltip"
+import { useShallow } from "zustand/shallow"
 
 function Command({
   className,
@@ -30,18 +31,23 @@ function Command({
   )
 }
 
+
 function CommandDialog({
   title = "Command Palette",
   description = "Search for a command to run...",
   children,
   className,
   showCloseButton = true,
+  loop = false,
+  shouldFilter = true,
   ...props
 }: React.ComponentProps<typeof Dialog> & {
   title?: string
   description?: string
   className?: string
   showCloseButton?: boolean
+  loop?: boolean;
+  shouldFilter?: boolean;
 }) {
   return (
     <Dialog {...props}>
@@ -53,7 +59,7 @@ function CommandDialog({
         className={cn("overflow-hidden p-0", className)}
         showCloseButton={showCloseButton}
       >
-        <Command className="text-foreground [&_[cmdk-group-heading]]:text-foreground **:data-[slot=command-input-wrapper]:h-12 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group]]:px-2 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5">
+        <Command className="text-foreground [&_[cmdk-group-heading]]:text-foreground **:data-[slot=command-input-wrapper]:h-12 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group]]:px-2 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5" label={title} loop={loop} shouldFilter={shouldFilter}>
           {children}
         </Command>
       </DialogContent>
@@ -77,6 +83,8 @@ function CommandInput({
           "placeholder:text-foreground flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-hidden disabled:cursor-not-allowed disabled:opacity-50",
           className
         )}
+        autoFocus
+
         {...props}
       />
     </div>
@@ -156,6 +164,21 @@ function CommandItem({
   )
 }
 
+function CommandSubItem({
+  className,
+  ...props
+}: React.ComponentProps<typeof CommandItem>) {
+  const search = useCommandState(useShallow((state) => state.search))
+  if (!search) return null
+  return (
+    <CommandItem
+      data-slot="command-sub-item"
+      className={cn("pl-4", className)}
+      {...props}
+    />
+  )
+}
+
 function CommandShortcut({
   className,
   side,
@@ -186,4 +209,5 @@ export {
   CommandItem,
   CommandShortcut,
   CommandSeparator,
+  CommandSubItem
 }

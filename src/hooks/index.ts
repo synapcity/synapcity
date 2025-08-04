@@ -13,3 +13,5 @@ export { useActionStatus } from "./useActionStatus";
 export * from "./controls";
 export * from "./dashboard";
 export { useLazyMountWithExpiry } from "./useLazyMountWithExpiry";
+export { useCommandMenu } from "./useCommandMenu"
+export { useCachedFuseSearch } from "./useCachedFuseSearch"

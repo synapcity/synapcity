@@ -5,8 +5,8 @@ import { GlobalCommandMenu } from "@/components/search/GlobalCommandSearch/Globa
 import { useKeyboardShortcut } from "@/hooks";
 import type { LucideIcon } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
 import { CommandShortcut } from "../command";
+import { useCommandMenuStore } from "@/stores";
 
 export interface MainMenuItem {
   title: string;
@@ -15,8 +15,7 @@ export interface MainMenuItem {
 }
 
 export function SidebarMainMenu({ items }: { items: MainMenuItem[] }) {
-  const [isCommandOpen, setIsCommandOpen] = useState(false)
-
+  const setIsCommandOpen = useCommandMenuStore(s => s.setOpen)
   useKeyboardShortcut({
     key: "k",
     metaKey: true,
@@ -55,7 +54,7 @@ export function SidebarMainMenu({ items }: { items: MainMenuItem[] }) {
             )
           })}
         </SidebarMenu>
-        <GlobalCommandMenu key="global-search" open={isCommandOpen} onOpenChange={setIsCommandOpen} />
+        <GlobalCommandMenu key="global-search" />
       </>
     </div>
   );

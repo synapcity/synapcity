@@ -10,3 +10,4 @@ export * from "./metadataStore";
 export * from "./editorStore";
 export * from "./factories";
 export * from "./resources";
+export * from "./commandMenuStore"

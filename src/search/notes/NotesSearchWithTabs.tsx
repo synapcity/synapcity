@@ -1,55 +1,75 @@
 "use client";
 
-import { useState, useMemo, useDeferredValue } from "react";
-import Link from "next/link";
+import React, { useState, useDeferredValue, useMemo } from "react";
 import { useNoteStore } from "@/stores/resources/noteStore/useNoteStore";
 import { useNoteViewStore } from "@/stores/resources/noteViewStore/useNoteViewStore";
-import { useNotesWithViewsSearch } from "@/search/notes/useNotesWithViewsSearch";
+import { useNoteSearch } from "./useNoteSearch";
+import { useViewSearch } from "./useViewSearch";
 import { highlightMatches } from "@/search/highlightMatches";
 import { BookOpenText, FileText } from "lucide-react";
 import { useShallow } from "zustand/shallow";
-import { CombinedEditor, Note } from "@/schemas";
 
-export function getNoteUrl(noteId: string, tabId?: string) {
-  let url = `/home/notes/${noteId}`;
-  if (tabId) url += `?tab=${tabId}`;
-  return url;
-}
+export function NotesSearchWithTabs() {
+  const noteMap = useNoteStore(useShallow((s) => s.items));
+  const viewMap = useNoteViewStore(useShallow((s) => s.items));
+  const hasHydrated = useNoteStore(s => s.hasHydrated)
 
-export function NotesWithViewsSearch() {
-  const noteMap = useNoteStore(useShallow(s => s.items));
-  const notes: Note[] = useMemo(() => Object.values(noteMap), [noteMap])
-  const viewObj = useNoteViewStore(useShallow(s => s.items));
-  const views: CombinedEditor[] = useMemo(() => Object.values(viewObj), [viewObj]).filter(v => v.type === "editor")
-  const [query, setQuery] = useState("");
+  const notes = useMemo(() => Object.values(noteMap), [noteMap])
+  const views = useMemo(() => Object.values(viewMap).filter(v => v.type === "editor"), [viewMap])
+
+  const [query, setQuery] = React.useState("");
   const deferredQuery = useDeferredValue(query);
 
-  const results = useNotesWithViewsSearch(notes, views, deferredQuery);
+  const [tab, setTab] = useState<"notes" | "views">("notes");
 
+  const noteResults = useNoteSearch(notes, query);
+  const viewResults = useViewSearch(views, query);
+
+  const results = tab === "notes" ? noteResults : viewResults;
+
+  if (!hasHydrated) return null;
   return (
     <div className="max-w-xl mx-auto bg-white border rounded shadow-md p-4">
+      <div className="flex space-x-4 mb-3">
+        <button
+          className={`px-4 py-2 font-semibold rounded ${tab === "notes" ? "bg-indigo-600 text-white" : "bg-gray-100"
+            }`}
+          onClick={() => setTab("notes")}
+        >
+          Basic
+        </button>
+        <button
+          className={`px-4 py-2 font-semibold rounded ${tab === "views" ? "bg-indigo-600 text-white" : "bg-gray-100"
+            }`}
+          onClick={() => setTab("views")}
+        >
+          Advanced
+        </button>
+      </div>
       <input
         className="w-full mb-3 p-2 border rounded"
-        placeholder="Search all notes & tabs…"
+        placeholder={
+          tab === "notes" ? "Search notes by title, tags…" : "Search note views by content…"
+        }
         value={query}
-        onChange={e => setQuery(e.target.value)}
+        onChange={(e) => setQuery(e.target.value)}
         autoFocus
       />
-      {query && results.length === 0 && (
+      {deferredQuery.length > 2 && results.length === 0 && (
         <div className="text-gray-400 px-2 py-4">No results found.</div>
       )}
       <ul>
-        {results.map(({ item, matches }) => {
+        {results.filter(r => r.item).map(({ item, matches }) => {
           const isNote = item.entityType === "note";
           const url = isNote
-            ? getNoteUrl(item.id)
-            : getNoteUrl(item.parentNoteId, item.id);
+            ? `/home/notes/${item.id}`
+            : `/home/notes/${item.parentNoteId}?tab=${item.id}`;
 
           return (
             <li key={item.id}>
-              <Link
+              <a
                 href={url}
-                className="flex items-start gap-3 py-2 px-1 rounded transition hover:bg-gray-100 no-underline group"
+                className="flex items-start gap-3 py-2 px-1 rounded hover:bg-gray-100 no-underline group"
                 tabIndex={0}
                 aria-label={
                   isNote
@@ -68,7 +88,7 @@ export function NotesWithViewsSearch() {
                       <div className="font-bold truncate">
                         {highlightMatches(item.title, matches?.filter(m => m.key === "title"))}
                       </div>
-                      {(item.tags || [])?.length > 0 && (
+                      {item.tags && (item.tags || []).length > 0 && (
                         <div className="text-xs text-gray-500 truncate">{item.tags?.join(", ")}</div>
                       )}
                       {item.summary && (
@@ -96,7 +116,7 @@ export function NotesWithViewsSearch() {
                     </>
                   )}
                 </div>
-              </Link>
+              </a>
             </li>
           );
         })}

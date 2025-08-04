@@ -12,7 +12,7 @@ import { useUserPanel } from "@/hooks/features/useUserPanel/useUserPanel";
 export const UserPanelSidebar = () => {
   const { activeModule } = useUserPanel()
   return (
-    <Sidebar auto collapsible="icon" variant="container" className="hidden flex-1 md:flex relative">
+    <Sidebar auto variant="container" className="hidden flex-1 md:flex relative">
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupContent>

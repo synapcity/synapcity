@@ -17,7 +17,7 @@ export function highlightMatches(
     (match.indices as [number, number][]).forEach(([start, end]: [number, number]) => {
       if (start > lastIndex) parts.push(text.slice(lastIndex, start));
       parts.push(
-        <mark key={start} className="bg-yellow-200 rounded px-0.5">
+        <mark key={start} className="bg-primary rounded px-0.5">
           {text.slice(start, end + 1)}
         </mark>
       );

@@ -40,7 +40,6 @@ export const EditableText = ({
     if (editing && inputRef.current) {
       inputRef.current.focus();
       inputRef.current.select();
-      onEdit?.();
     }
   }, [editing, onEdit]);
 
@@ -67,6 +66,7 @@ export const EditableText = ({
 
   const handleEditing = () => {
     setEditing(true)
+    onEdit?.();
   }
   const Comp = as;
   const textValue = currentValue.trim().length === 0 ? <span className="opacity-60">{placeholder}</span> : currentValue.trim()

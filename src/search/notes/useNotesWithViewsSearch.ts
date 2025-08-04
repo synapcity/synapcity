@@ -10,7 +10,7 @@ import type { NoteSearchResult } from "./types";
 /**
  * Returns Fuse.js results for all notes (titles, tags, summary) AND their editor views (content/label).
  */
-export function useNoteGlobalSearch(
+export function useNotesWithViewsSearch(
 	notes: Note[],
 	views: CombinedEditor[],
 	query: string

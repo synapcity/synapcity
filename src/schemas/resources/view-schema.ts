@@ -31,7 +31,7 @@ export const ImageViewSchema = z.object({
 export type ImageView = z.infer<typeof ImageViewSchema>;
 export const CustomViewSchema = z.object({
 	type: z.literal("custom"),
-	settings: z.record(z.any()).default({}),
+	settings: z.record(z.any()).default({})
 });
 
 export type CustomView = z.infer<typeof CustomViewSchema>;
@@ -42,6 +42,7 @@ export const ViewDataSchema = z
 		label: z.string().min(1).default("New View"),
 		order: z.number().nonnegative().default(0),
 		isDefault: z.boolean().default(false),
+		icon: z.string().optional()
 	})
 	.and(
 		z.discriminatedUnion("type", [
@@ -88,6 +89,7 @@ export function createView(partial: Partial<ViewResource> = {}): ViewResource {
 
 			return ViewResourceSchema.parse({
 				...view,
+				icon: "note",
 				content: editorContent,
 				editorState,
 			});
@@ -100,6 +102,7 @@ export function createView(partial: Partial<ViewResource> = {}): ViewResource {
 				...view,
 				content: codeContent,
 				language,
+				icon: "code"
 			});
 
 		case "image":
@@ -107,6 +110,7 @@ export function createView(partial: Partial<ViewResource> = {}): ViewResource {
 			return ViewResourceSchema.parse({
 				...view,
 				imageIds,
+				icon: "image"
 			});
 
 		case "custom":
@@ -114,6 +118,7 @@ export function createView(partial: Partial<ViewResource> = {}): ViewResource {
 			return ViewResourceSchema.parse({
 				...view,
 				settings,
+				icon: "penLine"
 			});
 
 		default:

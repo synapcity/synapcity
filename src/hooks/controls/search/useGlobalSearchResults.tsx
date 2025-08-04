@@ -24,16 +24,20 @@ export type CommandMenuGroup = {
 
 const noteSearchOptions: UseFuzzyFilterOptions<any> = {
   keys: ["title", "summary", "tags", "content", "viewLabel"],
-  threshold: 0.3,
+  threshold: 0.8,
   minQueryLength: 1,
   includeScore: true,
   includeMatches: true,
+  ignoreLocation: true
 };
 
 const dashboardSearchOptions: UseFuzzyFilterOptions<any> = {
   keys: ["name", "description"],
-  threshold: 0.4,
+  threshold: 0.6,
   minQueryLength: 1,
+  includeMatches: true,
+  includeScore: true,
+  ignoreLocation: true
 };
 
 export function useGlobalSearchResults(query: string): CommandMenuGroup[] {
