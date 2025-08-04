@@ -6,14 +6,13 @@ import {
   useRef,
   ChangeEvent,
   KeyboardEvent,
-  RefObject,
   JSX,
 } from "react";
 
 interface EditableTextProps {
   value: string;
   onSave: (value: string) => void;
-  onEdit?: (ref: RefObject<HTMLElement>) => void;
+  onEdit?: () => void;
   as?: keyof JSX.IntrinsicElements;
   className?: string;
   placeholder?: string;
@@ -41,7 +40,7 @@ export const EditableText = ({
     if (editing && inputRef.current) {
       inputRef.current.focus();
       inputRef.current.select();
-      onEdit?.(inputRef as RefObject<HTMLElement>);
+      onEdit?.();
     }
   }, [editing, onEdit]);
 
@@ -66,7 +65,11 @@ export const EditableText = ({
     }
   };
 
+  const handleEditing = () => {
+    setEditing(true)
+  }
   const Comp = as;
+  const textValue = currentValue.trim().length === 0 ? <span className="opacity-60">{placeholder}</span> : currentValue.trim()
 
   return editing ? (
     <input
@@ -78,20 +81,22 @@ export const EditableText = ({
       onKeyDown={handleKeyDown}
       className={`flex-grow text-3xl font-bold bg-transparent border-none focus:ring-0 focus:border-b focus:border-accent-400 truncate ${className}`}
       placeholder={placeholder}
+      aria-placeholder={placeholder}
+      autoFocus
     />
   ) : (
     <Comp
       className={className}
       tabIndex={0}
-      onDoubleClick={() => setEditing(true)}
+      onDoubleClick={() => handleEditing()}
       onKeyDown={(e) => {
-        if (e.key === "Enter") setEditing(true);
+        if (e.key === "Enter") handleEditing()
       }}
       style={{ cursor: "pointer" }}
-      aria-label="Edit"
+      aria-label={`Edit ${textValue}`}
       role="textbox"
     >
-      {currentValue.trim().length === 0 ? <span className="opacity-60">{placeholder}</span> : currentValue.trim()}
+      {textValue}
     </Comp>
   );
 };

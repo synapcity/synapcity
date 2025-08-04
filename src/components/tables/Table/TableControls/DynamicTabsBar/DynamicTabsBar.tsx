@@ -45,7 +45,7 @@ export interface DynamicTabsWrapperProps {
 
 export const DynamicTabsWrapper = ({ value, onChange, className, children }: DynamicTabsWrapperProps) => {
   return (
-    <Tabs value={value} onValueChange={onChange} className={cn("w-full", className)}>
+    <Tabs value={value} onValueChange={onChange} className={cn("w-full flex flex-col flex-1", className)}>
       {children}
     </Tabs>
   )

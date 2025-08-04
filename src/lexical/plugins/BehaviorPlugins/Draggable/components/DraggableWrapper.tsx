@@ -24,7 +24,7 @@ export const DraggableWrapper: React.FC<PropsWithChildren> = ({ children }) => {
   }, []);
 
   return (
-    <div ref={ref} id={DRAGGABLE_WRAPPER_ID} className="flex-1 h-full relative">
+    <div ref={ref} id={DRAGGABLE_WRAPPER_ID} className="flex-1 flex flex-col relative min-h-0">
       {children}
     </div>
   );

@@ -3,9 +3,9 @@
 import dynamic from "next/dynamic";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import { loadPluginByName } from "../pluginLoader";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-const Toolbar = loadPluginByName("Toolbar", false);
+const ToolbarPlugin = loadPluginByName("Toolbar", false);
 const HorizontalRule = loadPluginByName("HorizontalRule");
 const TabIndentation = loadPluginByName("TabIndentation");
 const ListPlugin = loadPluginByName("List", true);
@@ -30,18 +30,29 @@ const EditorPlaceholder = dynamic(
   { ssr: false }
 );
 
-// Directly render ContentEditable without conditionals
-const Editable = () => (
-  <DraggableWrapper>
-    <div className="relative size-full">
-      <ContentEditable
-        aria-placeholder="Loading Content..."
-        placeholder={<EditorPlaceholder />}
-        className="min-h-[150px] h-[85vh] w-full p-4 overflow-y-auto border border-gray-300 rounded-md outline-none"
-      />
-    </div>
-  </DraggableWrapper>
-);
+const Editable = () => {
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null)
+  return (
+    <DraggableWrapper>
+      <div
+        id="lexical-scroll-container"
+        ref={scrollContainerRef}
+        className="flex-1 overflow-y-auto min-h-0 flex flex-col"
+      >
+        <div className="relative flex-1 flex flex-col overflow-hidden min-h-0">
+          <div className="p-4 flex-1">
+            <ContentEditable
+              aria-placeholder="Loading Content..."
+              placeholder={<EditorPlaceholder />}
+              className=" min-h-[150px] p-4 overflow-y-auto rounded-md outline-none flex-1"
+              style={{ height: "900px", background: "rgba(0,0,0,0.03)" }}
+            />
+          </div>
+        </div>
+      </div>
+    </DraggableWrapper>
+  );
+}
 
 export default function CoreUIPlugins() {
   const [isClient, setIsClient] = useState(false);
@@ -54,7 +65,7 @@ export default function CoreUIPlugins() {
 
   return (
     <>
-      <Toolbar />
+      <ToolbarPlugin />
       <RichTextPlugin
         contentEditable={<Editable />}
         ErrorBoundary={LexicalErrorBoundary}

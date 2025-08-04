@@ -10,55 +10,59 @@ import { Button } from "@/components";
 export default function Toolbar() {
   return (
     <div
-      className={clsx(
-        "fixed left-0 bottom-0 justify-evenly md:relative w-full flex gap-4 p-2 border-t md:border-t-0 md:border-r shadow-lg",
-        "overflow-x-auto overscroll-contain h-12 no-scrollbar max-w-screen shrink-0 group opacity-50 group-hover:opacity-100"
-      )}
+      className="absolute right-0 left-0 top-0 group md:border-r shadow-lg bg-(--background)"
     >
-      <ToolbarSection>
-        <UndoRedoTools />
-      </ToolbarSection>
+      <div
+        className={clsx(
+          "justify-evenly md:relative w-full flex gap-4 p-2 border-t md:border-t-0",
+          "overflow-x-auto overscroll-contain h-12 no-scrollbar max-w-screen shrink-0 opacity-10 group-hover:opacity-100 transition-opacity duration-200 delay-200 ease-linear"
+        )}
+      >
+        <ToolbarSection>
+          <UndoRedoTools />
+        </ToolbarSection>
 
-      <ToolbarDivider />
+        <ToolbarDivider />
 
-      <ToolbarSection>
-        <TextFormat />
-      </ToolbarSection>
+        <ToolbarSection>
+          <TextFormat />
+        </ToolbarSection>
 
-      <ToolbarDivider />
+        <ToolbarDivider />
 
-      <ToolbarSection>
-        <ListTools />
-      </ToolbarSection>
+        <ToolbarSection>
+          <ListTools />
+        </ToolbarSection>
 
-      <ToolbarDivider />
+        <ToolbarDivider />
 
-      <ToolbarSection>
-        <AlignmentTools />
-      </ToolbarSection>
+        <ToolbarSection>
+          <AlignmentTools />
+        </ToolbarSection>
 
-      <ToolbarDivider />
+        <ToolbarDivider />
 
-      <ToolbarSection>
-        <BlockStyleTools />
-      </ToolbarSection>
+        <ToolbarSection>
+          <BlockStyleTools />
+        </ToolbarSection>
 
-      <ToolbarDivider />
+        <ToolbarDivider />
 
-      <ToolbarSection>
-        <Button
-          variant="primary"
-          className="w-full"
-        >
-          Save
-        </Button>
-      </ToolbarSection>
+        <ToolbarSection>
+          <Button
+            variant="primary"
+            className="w-full"
+          >
+            Save
+          </Button>
+        </ToolbarSection>
+      </div>
     </div>
   );
 }
 
-const ToolbarSection = ({ children }: { children: React.ReactNode }) => (
-  <div className="flex flex-wrap justify-center items-center gap-2">{children}</div>
+export const ToolbarSection = ({ children }: { children: React.ReactNode }) => (
+  <div className="flex flex-wrap justify-center items-center gap-2 group">{children}</div>
 );
 
 const ToolbarDivider = () => <div className="w-full bg-gray-300 md:w-px md:h-full" />;

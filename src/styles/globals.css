@@ -140,12 +140,49 @@ body {
 		height: 0;
 	}
 
-	[data-state="collapsed"] {
-		width: 0;
-		/* or transform: translateX(-100%) for off-canvas style */
-	}
+[data-variant="inset"] {
+	  margin: 0.2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
 
-	[data-state="expanded"] {
-		width: var(--sidebar-width);
-	}
+[data-variant="container"] {
+  position: relative;
+  width: auto;
+  max-width: 800px; 
+  margin-inline: auto;
+  overflow: hidden;
+}
+
+#panel-group-r47 {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden; /* prevent its own scroll */
+}
+
+#shrinking-header {
+  height: 120px; /* full height */
+  display: flex;
+  flex-direction: column;
+  /* will animate height down to 60px */
+  overflow: hidden;
+}
+
+.shrink {
+  height: 60px; /* 50% of original */
+}
+
+#lexical-scroll-container {
+  flex: 1; /* fill remaining space */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+[data-slot="resizable-panel"] {
+	display: flex;
+	/* flex-direction: column; */
+}
+
 }

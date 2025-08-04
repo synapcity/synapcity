@@ -1,6 +1,5 @@
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
 import dynamic from "next/dynamic"
-
 const FoundationPlugins = dynamic(() => import("./FoundationPlugins/FoundationPlugins").then((mod) => mod.default), {
 	ssr: false,
 });
@@ -18,12 +17,11 @@ const FeaturePlugins = dynamic(() => import("./Features/FeaturePlugins").then((m
 });
 
 export default function PluginsWrapper({ noteId, viewId }: { editorId: string; noteId: string; viewId: string; }) {
-
 	return (
-		<div className="flex flex-col flex-1 size-full overflow-hidden relative">
+		<div className="container flex flex-col flex-1 mx-auto relative py-8">
 			<HistoryPlugin />
-			<FoundationPlugins noteId={noteId} viewId={viewId} />
 			<CoreUIPlugins />
+			<FoundationPlugins noteId={noteId} viewId={viewId} />
 			<BehaviorPlugins />
 			<FeaturePlugins />
 		</div>

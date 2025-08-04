@@ -104,7 +104,7 @@ export {
 	SidebarHeader as UISidebarHeader,
 	SidebarGroup as UISidebarGroup,
 	SidebarGroupContent as UISidebarGroupContent,
-	SidebarGroupAction as UISidebarGroupAction,
+	// SidebarGroupAction as UISidebarGroupAction,
 	SidebarGroupLabel as UISidebarGroupLabel,
 	SidebarInput as UISidebarInput,
 	SidebarInset as UISidebarInset,

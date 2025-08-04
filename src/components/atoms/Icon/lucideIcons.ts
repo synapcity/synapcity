@@ -18,6 +18,7 @@ import {
 	ChevronDownIcon,
 	ChevronRight,
 	ChevronRightIcon,
+	ChevronLeftIcon,
 	ChevronUpIcon,
 	CircleIcon,
 	Code,
@@ -79,6 +80,7 @@ import {
 	Dumbbell,
 	BedSingleIcon,
 	ListCheck,
+	PanelRightClose,
 } from "lucide-react";
 
 export const lucideIcons = {
@@ -113,6 +115,7 @@ export const lucideIcons = {
 	chevronUpIcon: ChevronUpIcon,
 	clear: XCircleIcon,
 	circleIcon: CircleIcon,
+	chevronLeft: ChevronLeftIcon,
 	code: Code,
 	command: Command,
 	eye: Eye,
@@ -125,6 +128,7 @@ export const lucideIcons = {
 	info: Info,
 	layers: Layers,
 	layoutDashboard: LayoutDashboard,
+	loading: Loader2,
 	list: List,
 	listOrdered: ListOrdered,
 	listCheck: ListCheck,
@@ -140,8 +144,10 @@ export const lucideIcons = {
 	moon: Moon,
 	moreHorizontal: MoreHorizontal,
 	notePad: NotepadText,
+	note: NotepadText,
 	palette: Palette,
 	panelLeftIcon: PanelLeftIcon,
+	panelRightClose: PanelRightClose,
 	pencilLine: PencilLine,
 	penTool: PenTool,
 	penLine: PenLine,

@@ -1,1 +1,1 @@
-export * from "./ResizableSidebarWrapper";
+export * from "./ResizableWrapper";

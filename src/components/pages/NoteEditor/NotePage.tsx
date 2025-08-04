@@ -7,7 +7,7 @@ import { useNoteViewStore } from '@/stores/resources/noteViewStore/useNoteViewSt
 import { TabsContent } from '@/components/atoms/ui/tabs';
 import { Loading } from '@/components/loading';
 import { useNoteTabs } from '@/hooks/notes/useNoteViews';
-import { NoteEditorHeader } from '@/components/editor';
+import { NoteEditorHeader } from '@/components/editor/NoteEditorHeader/NoteEditorHeader';
 import { DynamicTabsWrapper } from '@/components/tables/Table/TableControls/DynamicTabsBar';
 import { useNoteStore } from '@/stores';
 import { NoteResource } from '@/types';
@@ -40,6 +40,7 @@ export default function NotePage() {
 
   const handleUpdate = async (updates: Partial<NoteResource>, status: StatusField) => {
     try {
+      startStatus(status, noteId)
       await updateResource(noteId, updates)
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
@@ -50,11 +51,11 @@ export default function NotePage() {
   }
   if (!hasHydrated || !noteId || !activeTabId) return null;
   return (
-    <div className="flex flex-col size-full">
+    <div className="flex flex-col flex-1">
       <DynamicTabsWrapper
         value={activeTabId}
         onChange={(value: string) => setActiveTab(value)}
-        className="size-full"
+        className="flex-1 flex flex-col"
       >
         <NoteEditorHeader
           noteId={noteId}
@@ -71,11 +72,12 @@ export default function NotePage() {
           }}
           createdAt={activeTab?.createdAt ?? note?.createdAt}
           updatedAt={activeTab?.updatedAt ?? note?.updatedAt}
+          scrollContainer={document.getElementById("lexical-scroll-container") as HTMLDivElement}
         />
-        <main className="flex-1 size-full flex flex-col">
+        <main className="flex-1 flex flex-col">
           {Object.values(views as ViewResource[]).map((view) => (
-            <TabsContent key={view.id} value={view.id} className="flex flex-col">
-              <div className="flex-1 flex-col flex border">
+            <TabsContent key={view.id} value={view.id} className="flex flex-col flex-1">
+              <div className="flex-1 flex-col flex">
                 {view.type === 'editor' ? (
                   <NoteEditor noteId={noteId} viewId={view.id} content={view.editorState ?? fallbackEditorState} />
                 ) : view.type === 'code' ? (

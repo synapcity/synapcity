@@ -1,0 +1,267 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"use client";
+
+import React, { useEffect, useRef } from "react";
+import { cn } from "@/utils";
+import { useSidebar } from "@/components/atoms/ui/sidebar";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/atoms/ui/resizable";
+import type { ImperativePanelHandle } from "react-resizable-panels";
+import { PanelRightClose } from "lucide-react";
+import { IconSidebar } from "../IconSidebar";
+import { SidebarScope } from "@/stores/sidebarStore";
+
+interface ResizableSidebarWrapperProps {
+  id: string;
+  scope: string;
+  children: React.ReactNode;
+  sidebar: React.ReactNode;
+}
+
+export function ResizableSidebarWrapper({
+  id,
+  scope,
+  children,
+  sidebar,
+}: ResizableSidebarWrapperProps) {
+  const panelRef = useRef<ImperativePanelHandle>(null);
+  const { sidebarState, toggleSidebar } = useSidebar();
+
+
+  useEffect(() => {
+    const panel = panelRef.current;
+    if (!panel) return;
+    if (sidebarState === "expanded" && panel.isCollapsed()) {
+      panel.expand();
+    } else if (sidebarState !== "expanded" && panel.isExpanded()) {
+      panel.collapse();
+    }
+  }, [sidebarState]);
+
+  return (
+    <div className="outer-container flex flex-1 overflow-hidden">
+      {/* ─── Panel group: editor + sliding sidebar ─── */}
+      <ResizablePanelGroup id="resizale-panel-group" direction="horizontal" className="flex-1 flex flex-col">
+        {/* 1) Editor panel */}
+        <ResizablePanel id="resizable-panel" className="min-w-0 flex-1 bg-[var(--background)] p-4 flex flex-col" order={1}>
+          {children}
+        </ResizablePanel>
+
+        {/* 2) Handle (only show when expanded) */}
+        {sidebarState === "expanded" && (
+          <ResizableHandle withHandle className="cursor-col-resize" />
+        )}
+        <ResizablePanel
+          ref={panelRef}
+          collapsible
+          collapsedSize={0}
+          defaultSize={35}
+          className={cn(
+            "flex flex-col overflow-auto bg-[var(--sidebar-bg)] border-l",
+            { "flex-1": sidebarState === "expanded" }
+          )}
+          order={2}
+        >
+          <div className="flex items-center justify-between px-3 py-2 border-b">
+            <h2 className="text-sm font-medium">Info</h2>
+            <button
+              onClick={toggleSidebar}
+              className="p-1 rounded hover:bg-gray-600"
+            >
+              <PanelRightClose size={16} />
+            </button>
+          </div>
+          <div className="p-3 flex-1 flex">{sidebar}</div>
+        </ResizablePanel>
+      </ResizablePanelGroup>
+
+      <div className="flex-shrink-0 w-12 bg-[var(--background)] border-l">
+        <IconSidebar key={id} scope={scope as SidebarScope} id={id} side="right" />
+      </div>
+    </div>
+  );
+}

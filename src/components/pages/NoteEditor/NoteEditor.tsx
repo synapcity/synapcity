@@ -95,7 +95,7 @@ export default function NoteEditor({ noteId, viewId, content }: { noteId: string
   }
 
   return config && (
-    <div className="flex flex-col size-full bg-white dark:bg-gray-950">
+    <div className="flex flex-col flex-1 min-h-0 max-h-5/6">
       <LexicalComposer initialConfig={config}>
         <Plugins noteId={noteId} viewId={viewId} editorId={`${noteId}`} />
         <OnChangePlugin onChange={handleChange} />

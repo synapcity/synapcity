@@ -7,6 +7,9 @@ export {
 	formatDate,
 	formatRelative,
 	getShortRelativeTime,
+	formatFullDate,
+	type FormatOptions,
+	type FormatStyle
 } from "./date-utils";
 export {
 	exportXlsx,
