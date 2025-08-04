@@ -8,8 +8,8 @@ const AppContent = dynamic(() => import("./AppContent").then(mod => mod.AppConte
 
 export default function AppProviders({ children }: { children: React.ReactNode; }) {
   return (
-    <SidebarProvider defaultOpen>
-      <div className="flex flex-1 min-h-0">
+    <SidebarProvider defaultOpen sidebarId="global-sidebar" collapsible="offcanvas">
+      <div className="flex flex-1 min-h-0 overflow-hidden">
         <AppSidebar />
         <AppContent>
           {children}

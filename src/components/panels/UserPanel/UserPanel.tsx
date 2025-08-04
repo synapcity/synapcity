@@ -13,6 +13,7 @@ import { ModalRenderer } from "@/components/modals";
 export const UserPanel = () => {
   return (
     <SidebarProvider
+      sidebarId="user-panel-sidebar"
       style={{ "--sidebar-width": "350px" } as React.CSSProperties}
     >
       <div className="size-full flex-1 flex border-t-[3px] border-t-accent-200">

@@ -13,7 +13,7 @@ import {
 } from "@/components/atoms/ui/command";
 
 export type CommandMenuItem = {
-  label: string;
+  label: string | React.ReactNode;
   shortcut?: string;
   icon?: React.ReactNode;
   disabled?: boolean;

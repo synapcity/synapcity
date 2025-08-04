@@ -73,7 +73,7 @@ export const CardWithLoading: FC<CardWithLoadingProps> = ({
       disabled={isLoading}
       type="button"
     >
-      <article className="relative cursor-pointer group break-inside-avoid bg-[var(--accent-100)] hover:bg-[var(--primary-100)] group-hover:ring-[var(--accent)] ring-offset-2 ring-transparent rounded-2xl p-5 mb-4 shadow-md hover:shadow-lg transition">
+      <article className="relative cursor-pointer group break-inside-avoid bg-[var(--accent-100)] hover:bg-[var(--primary-100)] group-hover:ring-[var(--accent)] ring-offset-2 ring-transparent rounded-2xl p-5 shadow-md hover:shadow-lg transition flex-1">
         {isLoading && (
           <div className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-2xl z-10">
             <Spinner className="animate-spin" />

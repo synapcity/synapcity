@@ -1,35 +1,41 @@
 "use client";
 
-import React from "react";
-import { useUIStore } from "@/stores/uiStore";
-import { useMetadata } from "@/providers/MetadataProvider";
-import { useNodeStore } from "@/lexical/stores/nodeStore";
-// import { SidebarScope } from "@/stores/sidebarStore";
+import * as React from "react";
+import { PanelLeftIcon } from "lucide-react";
+import { cn } from "@/utils";
+import { Button } from "@/components/atoms";
+import { useSidebar } from "@/components/atoms/ui/sidebar";
 
-export function SidebarTrigger({ persistentKey }: {
-  persistentKey?: string;
-}) {
-  const { id, scope } = useMetadata();
-  const setActiveNode = useNodeStore((s) => s.setNodeKeyForPersistentKey);
-  const setSidebarState = useUIStore((s) => s.setCompState)
-
-  const onClick = () => {
-    if (persistentKey) {
-      setActiveNode(persistentKey);
-      setSidebarState("noteSidebar", "isVisible", true)
-      console.log("id", id, "scope", scope)
-      // setActivePanel()
-      // setActivePanel(scope as SidebarScope, id, "notes");
-    }
-  };
+/**
+ * Optional button for toggling sidebar anywhere in your layout.
+ */
+export function SidebarTrigger({
+  className,
+  onClick,
+  ...props
+}: React.ComponentProps<typeof Button>) {
+  const { toggleSidebar } = useSidebar();
 
   return (
-    <button
-      onClick={onClick}
-      aria-label="Open notes"
-      className="ml-2 inline-flex h-5 w-5 items-center justify-center rounded-full bg-blue-500 text-white text-xs hover:bg-blue-600"
+    <Button
+      variant="ghost"
+      size="sm"
+      aria-label="Toggle Sidebar"
+      data-slot="sidebar-trigger"
+      data-sidebar="trigger"
+      onClick={(e) => {
+        toggleSidebar();
+        onClick?.(e);
+      }}
+      className={cn(
+        "h-7 w-7 p-0 flex items-center justify-center",
+        "transition-colors hover:bg-muted/20 active:bg-muted/30",
+        className
+      )}
+      {...props}
     >
-      N
-    </button>
+      <PanelLeftIcon className="w-4 h-4" />
+      <span className="sr-only">Toggle Sidebar</span>
+    </Button>
   );
 }

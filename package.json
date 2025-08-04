@@ -5,6 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "next dev",
+    "type-check": "tsc --noEmit --pretty",
+    "lint:check": "eslint \"src/**/*.{ts,tsx,js,jsx}\" --max-warnings=0",
+    "verify": "npm run type-check && npm run lint:check",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -23,6 +26,8 @@
     "@iconify/react": "^6.0.0",
     "@juggle/resize-observer": "^3.4.0",
     "@lexical/react": "^0.33.1",
+    "@lexical/selection": "^0.33.1",
+    "@lexical/utils": "^0.33.1",
     "@next/bundle-analyzer": "^15.4.1",
     "@radix-ui/react-accordion": "^1.2.11",
     "@radix-ui/react-avatar": "^1.1.10",

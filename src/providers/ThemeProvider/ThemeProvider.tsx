@@ -147,7 +147,7 @@ export const ThemeProvider = ({
 				data-theme={preferences.mode}
 				data-testid="theme-wrapper"
 				className={cn(
-					"size-full text-[var(--foreground)] bg-[var(--background)] relative",
+					"flex-1 flex flex-col text-[var(--foreground)] bg-[var(--background)] relative",
 					className,
 					preferences.mode
 				)}

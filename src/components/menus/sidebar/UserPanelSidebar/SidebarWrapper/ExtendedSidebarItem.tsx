@@ -19,10 +19,6 @@ export const ExtendedSidebarItem = ({ module, isActive, isDragging, ...sortableP
   return (
     <SidebarMenuItem {...sortableProps}>
       <SidebarMenuButton
-        tooltip={{
-          children: module.label,
-          hidden: false,
-        }}
         isActive={isActive}
         className={cn(
           "group flex items-center justify-center size-9 rounded-md text-muted-foreground hover:text-foreground transition-colors",

@@ -17,3 +17,5 @@ export * from "./SidebarRail";
 export * from "./SidebarTrigger";
 export * from "./SidebarMainMenu";
 export * from "./SidebarSection";
+export * from "./useSidebarModuleStore"
+export * from "./modules"

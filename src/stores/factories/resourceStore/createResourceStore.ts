@@ -16,6 +16,7 @@ import {
 	type SelectionSlice,
 	createStatusSlice,
 	type StatusSlice,
+	defaultStatus,
 } from "@/stores/slices";
 import { mergeSlices } from "@/stores/slices/mergeSlices";
 
@@ -111,16 +112,18 @@ export function createResourceStore<T extends BaseResource>(
 					deletedAt: null,
 				};
 				const item = createItem(raw);
-				set((s) => ({ items: { ...s.items, [id]: item } }));
+				const status = { ...defaultStatus}
+				set((s) => ({ items: { ...s.items, [id]: item }, localStatus: { [id]: status} }));
 				return item;
 			},
 
 			async updateResource(id, patch) {
 				const existing = get().items[id];
 				if (!existing) throw new Error(`${resourceName} ${id} not found`);
+				set({ localStatus: { [id]: { ...defaultStatus, isSaving: true }}})
 				const now = new Date().toISOString();
 				const updated = schema.parse({ ...existing, ...patch, updatedAt: now });
-				set((s) => ({ items: { ...s.items, [id]: updated } }));
+				set((s) => ({ items: { ...s.items, [id]: updated }, localStatus: defaultStatus}));
 				return updated;
 			},
 
@@ -134,9 +137,10 @@ export function createResourceStore<T extends BaseResource>(
 			softDeleteResource(id) {
 				const existing = get().items[id];
 				if (!existing) return;
+			set({ localStatus: { [id]: {...defaultStatus, isDeleting: true}}})
 				const now = new Date().toISOString();
 				const soft = schema.parse({ ...existing, deletedAt: now });
-				set((s) => ({ items: { ...s.items, [id]: soft } }));
+				set((s) => ({ items: { ...s.items, [id]: soft }, localStatus: defaultStatus }));
 			},
 
 			getResourceById(id) {
@@ -148,7 +152,6 @@ export function createResourceStore<T extends BaseResource>(
 			},
 		};
 
-		// support initItems config
 		if (config.initItems) {
 			slice.initItems = config.initItems(
 				set as unknown as (patch: Partial<RS>, replace?: boolean) => void,

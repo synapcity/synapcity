@@ -50,9 +50,9 @@ export const Header = () => {
   return (
     <div className="w-full">
       <header
-        style={{ '--header-height': '4rem' } as React.CSSProperties}
+        style={{ '--header-height': '3.5rem' } as React.CSSProperties}
         className={cn(
-          "sticky top-0 z-[50] backdrop-blur bg-(--surface-inverse) text-foreground transition-shadow px-4 py-1.5 @container",
+          "sticky top-0 z-[50] backdrop-blur bg-(--surface-inverse) text-foreground transition-shadow @container",
           {
             'h-1 bg-black/50': !isHeaderVisible,
             'h-[var(--header-height)] drop-shadow-sm': isHeaderVisible,

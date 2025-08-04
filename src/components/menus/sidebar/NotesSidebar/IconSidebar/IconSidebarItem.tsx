@@ -16,17 +16,13 @@ export const IconSidebarItem = ({ item, isActive, onOpen }: SidebarIconItemProps
   return (
     <SidebarMenuItem key={item.label}>
       <SidebarMenuButton
-        tooltip={{
-          children: item.label,
-          hidden: false,
-        }}
         isActive={isActive}
         className="bg-(--primary)/50 hover:text-(--accent) text-white"
         asChild
       >
         <IconButton
           variant="ghost"
-          size="xs"
+          size="sm"
           isIconOnly
           icon={item.icon ?? "fileText"}
           className="inline-flex justify-center items-center hover:bg-(--accent border) border-(--accent)/50 data-[state=open]:bg-(--accent)/50 dark:text-white"

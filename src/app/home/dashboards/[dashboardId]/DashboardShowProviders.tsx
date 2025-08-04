@@ -26,6 +26,7 @@ function DashboardScopedProviders({
     <ThemeProvider scope="dashboard" entityId={id}>
       <SidebarProvider
         id={id}
+        sidebarId="dashboard-sidebar"
         // scope="dashboard"
         defaultOpen={false}
         data-id={`dashboard-${id}`}

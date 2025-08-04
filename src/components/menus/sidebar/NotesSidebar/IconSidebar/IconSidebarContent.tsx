@@ -71,7 +71,7 @@ export function IconSidebarContent({ scope, id }: IconSidebarContentProps) {
       <SidebarGroup>
         <SidebarGroupContent>
           <SidebarMenu>
-            {panels.map((panel) => (
+            {[...Object.values(panels)].map((panel) => (
               <IconSidebarItem
                 key={panel.id}
                 item={panel}

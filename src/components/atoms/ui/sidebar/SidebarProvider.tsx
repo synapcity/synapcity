@@ -1,169 +1,57 @@
-// "use client"
-
-// import * as React from "react"
-
-// import { useIsMobile } from "@/hooks/ui/use-mobile"
-// import { cn } from "@/utils/index"
-// import {
-//   TooltipProvider,
-// } from "@/components/atoms/ui/tooltip"
-
-// const SIDEBAR_COOKIE_NAME = "sidebar_state"
-// const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
-// // const SIDEBAR_WIDTH = "16rem"
-// // const SIDEBAR_WIDTH_ICON = "3rem"
-// const SIDEBAR_KEYBOARD_SHORTCUT = "b"
-
-// type SidebarContextProps = {
-//   state: "expanded" | "collapsed"
-//   open: boolean
-//   setOpen: (open: boolean) => void
-//   openMobile: boolean
-//   setOpenMobile: (open: boolean) => void
-//   isMobile: boolean
-//   toggleSidebar: () => void
-// }
-
-// const SidebarContext = React.createContext<SidebarContextProps | null>(null)
-
-// export function useSidebar() {
-//   const context = React.useContext(SidebarContext)
-//   if (!context) {
-//     throw new Error("useSidebar must be used within a SidebarProvider.")
-//   }
-
-//   return context
-// }
-
-// export function SidebarProvider({
-//   defaultOpen = true,
-//   open: openProp,
-//   onOpenChange: setOpenProp,
-//   className,
-//   style,
-//   children,
-//   ...props
-// }: React.ComponentProps<"div"> & {
-//   defaultOpen?: boolean
-//   open?: boolean
-//   onOpenChange?: (open: boolean) => void
-// }) {
-//   const isMobile = useIsMobile()
-//   const [openMobile, setOpenMobile] = React.useState(false)
-
-//   const [_open, _setOpen] = React.useState(defaultOpen)
-//   const open = openProp ?? _open
-//   const setOpen = React.useCallback(
-//     (value: boolean | ((value: boolean) => boolean)) => {
-//       const openState = typeof value === "function" ? value(open) : value
-//       if (setOpenProp) {
-//         setOpenProp(openState)
-//       } else {
-//         _setOpen(openState)
-//       }
-
-//       document.cookie = `${SIDEBAR_COOKIE_NAME}=${openState}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`
-//     },
-//     [setOpenProp, open]
-//   )
-
-//   const toggleSidebar = React.useCallback(() => {
-//     return isMobile ? setOpenMobile((open) => !open) : setOpen((open) => !open)
-//   }, [isMobile, setOpen, setOpenMobile])
-
-//   React.useEffect(() => {
-//     const handleKeyDown = (event: KeyboardEvent) => {
-//       if (
-//         event.key === SIDEBAR_KEYBOARD_SHORTCUT &&
-//         (event.metaKey || event.ctrlKey)
-//       ) {
-//         event.preventDefault()
-//         toggleSidebar()
-//       }
-//     }
-
-//     window.addEventListener("keydown", handleKeyDown)
-//     return () => window.removeEventListener("keydown", handleKeyDown)
-//   }, [toggleSidebar])
-
-//   const state = open ? "expanded" : "collapsed"
-
-//   const contextValue = React.useMemo<SidebarContextProps>(
-//     () => ({
-//       state,
-//       open,
-//       setOpen,
-//       isMobile,
-//       openMobile,
-//       setOpenMobile,
-//       toggleSidebar,
-//     }),
-//     [state, open, setOpen, isMobile, openMobile, setOpenMobile, toggleSidebar]
-//   )
-
-//   return (
-//     <SidebarContext.Provider value={contextValue}>
-//       <TooltipProvider delayDuration={0}>
-//         <div
-//           data-slot="sidebar-wrapper"
-//           style={
-//             {
-//               ...style,
-//             } as React.CSSProperties
-//           }
-//           className={cn(
-//             "group/sidebar-wrapper has-data-[variant=inset]:bg-[var(--sidebar)] flex overflow-hidden size-full border-b",
-//             className
-//           )}
-//           {...props}
-//         >
-//           {children}
-//         </div>
-//       </TooltipProvider>
-//     </SidebarContext.Provider>
-//   )
-// }
-
 "use client";
 
 import * as React from "react";
 import { useIsMobile } from "@/hooks/ui/use-mobile";
-import { cn } from "@/utils/index";
 import { TooltipProvider } from "@/components/atoms/ui/tooltip";
+import { cn } from "@/utils";
+import { useSidebarModuleStore, SIDEBAR_STATES, SidebarState, SIDEBAR_DIMENSIONS } from "@/components/atoms/ui/sidebar/useSidebarModuleStore";
+import { useShallow } from "zustand/shallow";
 
-const SIDEBAR_COOKIE_NAME = "sidebar_state";
-const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
 const SIDEBAR_KEYBOARD_SHORTCUT = "b";
 
-type SidebarContextProps = {
-  state: "expanded" | "collapsed";
+export type SidebarContextProps = {
+  sidebarId: string;
+  /** none | icon | offcanvas */
+  collapsible: "none" | "icon" | "offcanvas";
+  sidebarState: SidebarState | undefined;
+  setSidebarState: (s: SidebarState) => void;
+  /** desktop only open/closed */
   open: boolean;
   setOpen: (open: boolean) => void;
+  /** mobile drawer open */
   openMobile: boolean;
   setOpenMobile: (open: boolean) => void;
   isMobile: boolean;
   toggleSidebar: () => void;
 };
 
-const SidebarContext = React.createContext<SidebarContextProps | null>(null);
+const SidebarContext = React.createContext<SidebarContextProps | undefined>(undefined);
 
+/**
+ * Custom React hook that provides access to the SidebarContext.
+ * Throws an error if used outside of a SidebarProvider.
+ * @returns The SidebarContext object
+ */
 export function useSidebar() {
-  const context = React.useContext(SidebarContext);
-  if (!context) {
-    throw new Error("useSidebar must be used within a SidebarProvider.");
+  const ctx = React.useContext(SidebarContext);
+  if (!ctx) {
+    throw new Error("useSidebar must be used within SidebarProvider");
   }
-  return context;
+  return ctx;
 }
 
 export function SidebarProvider({
+  sidebarId,
+  collapsible = "icon",
   defaultOpen = true,
   open: openProp,
   onOpenChange: setOpenProp,
   className,
   style,
   children,
-  ...props
 }: React.ComponentProps<"div"> & {
+  sidebarId: string;
+  collapsible?: "none" | "icon" | "offcanvas";
   defaultOpen?: boolean;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
@@ -173,47 +61,81 @@ export function SidebarProvider({
   const [_open, _setOpen] = React.useState(defaultOpen);
   const open = openProp ?? _open;
 
+  const settings = useSidebarModuleStore(useShallow((s) => s.settingsById[sidebarId]));
+  const updateSettings = useSidebarModuleStore((s) => s.updateSettings);
+
+  const sidebarState = settings ? settings.collapsedState : SIDEBAR_STATES.EXPANDED;
+  const setSidebarState = React.useCallback(
+    (state: SidebarState) =>
+      updateSettings(sidebarId, { collapsedState: state, width: (state === "icon" ? SIDEBAR_DIMENSIONS.ICON : state === "offcanvas" ? SIDEBAR_DIMENSIONS.MIN : SIDEBAR_DIMENSIONS.DEFAULT) }),
+    [sidebarId, updateSettings]
+  );
+
   const setOpen = React.useCallback(
-    (value: boolean | ((value: boolean) => boolean)) => {
-      const openState = typeof value === "function" ? value(open) : value;
-      if (setOpenProp) {
-        setOpenProp(openState);
-      } else {
-        _setOpen(openState);
-      }
-      document.cookie = `${SIDEBAR_COOKIE_NAME}=${openState}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`;
+    (value: boolean | ((o: boolean) => boolean)) => {
+      const next = typeof value === "function" ? value(open) : value;
+      if (setOpenProp) setOpenProp(next);
+      else _setOpen(next);
     },
-    [setOpenProp, open]
+    [open, setOpenProp]
   );
 
   const toggleSidebar = React.useCallback(() => {
-    return isMobile ? setOpenMobile((o) => !o) : setOpen((o) => !o);
-  }, [isMobile, setOpen, setOpenMobile]);
+    if (isMobile) {
+      setOpenMobile((o) => !o);
+    } else {
+      if (sidebarState === SIDEBAR_STATES.EXPANDED) {
+        if (collapsible === "icon") {
+          setSidebarState(SIDEBAR_STATES.ICON);
+          updateSettings(sidebarId, { width: SIDEBAR_DIMENSIONS.ICON })
+        } else if (collapsible === "offcanvas") {
+          setSidebarState(SIDEBAR_STATES.OFFCANVAS);
+          updateSettings(sidebarId, { width: SIDEBAR_DIMENSIONS.MAX })
+        }
+      } else {
+        setSidebarState(SIDEBAR_STATES.EXPANDED);
+        updateSettings(sidebarId, { width: SIDEBAR_DIMENSIONS.MAX })
+      }
+    }
+  }, [isMobile, sidebarState, collapsible, setSidebarState, sidebarId, updateSettings]);
 
+  // Keyboard shortcut (Cmd/Ctrl+B)
   React.useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === SIDEBAR_KEYBOARD_SHORTCUT && (event.metaKey || event.ctrlKey)) {
-        event.preventDefault();
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === SIDEBAR_KEYBOARD_SHORTCUT) {
+        e.preventDefault();
         toggleSidebar();
       }
     };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
   }, [toggleSidebar]);
 
-  const state = open ? "expanded" : "collapsed";
-
-  const contextValue = React.useMemo<SidebarContextProps>(
+  const contextValue = React.useMemo(
     () => ({
-      state,
+      sidebarId,
+      collapsible,
+      sidebarState,
+      setSidebarState,
       open,
       setOpen,
-      isMobile,
       openMobile,
       setOpenMobile,
+      isMobile,
       toggleSidebar,
     }),
-    [state, open, setOpen, isMobile, openMobile, setOpenMobile, toggleSidebar]
+    [
+      sidebarId,
+      collapsible,
+      sidebarState,
+      setSidebarState,
+      open,
+      setOpen,
+      openMobile,
+      setOpenMobile,
+      isMobile,
+      toggleSidebar,
+    ]
   );
 
   return (
@@ -221,12 +143,8 @@ export function SidebarProvider({
       <TooltipProvider delayDuration={0}>
         <div
           data-slot="sidebar-wrapper"
-          style={{ ...style } as React.CSSProperties}
-          className={cn(
-            "group/sidebar-wrapper flex overflow-hidden size-full border-b",
-            className
-          )}
-          {...props}
+          style={{ position: "relative", ...style }}
+          className={cn("group/sidebar-wrapper flex-1 flex overflow-hidden border-b", className)}
         >
           {children}
         </div>

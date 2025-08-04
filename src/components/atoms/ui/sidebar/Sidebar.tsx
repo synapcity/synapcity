@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import * as React from "react";
-import { cn } from "@/utils/index";
+import React from "react";
+import { cn } from "@/utils";
+import { useSidebar } from "./SidebarProvider";
 import {
   Sheet,
   SheetContent,
@@ -10,24 +10,8 @@ import {
   SheetTitle,
   SheetDescription,
 } from "@/components/atoms/ui/sheet";
-import { useSidebar } from "./SidebarProvider";
-
-const SIDEBAR_WIDTH_MOBILE = 320;
-const SIDEBAR_WIDTH_DEFAULT = 320;
-const SIDEBAR_WIDTH_MIN = 200;
-const SIDEBAR_WIDTH_MAX = 480;
-const SIDEBAR_WIDTH_LS_KEY = "sidebarWidth";
-
-function getStoredSidebarWidth() {
-  if (typeof window === "undefined") return SIDEBAR_WIDTH_DEFAULT;
-  const w = parseInt(localStorage.getItem(SIDEBAR_WIDTH_LS_KEY) || "", 10);
-  if (isNaN(w)) return SIDEBAR_WIDTH_DEFAULT;
-  return Math.min(Math.max(w, SIDEBAR_WIDTH_MIN), SIDEBAR_WIDTH_MAX);
-}
-function setStoredSidebarWidth(w: number) {
-  if (typeof window === "undefined") return;
-  localStorage.setItem(SIDEBAR_WIDTH_LS_KEY, String(w));
-}
+import { useSidebarModuleStore, SIDEBAR_DIMENSIONS, SIDEBAR_STATES, SidebarSettings } from "@/components/atoms/ui/sidebar/useSidebarModuleStore";
+import { useShallow } from "zustand/shallow";
 
 export function Sidebar({
   side = "left",
@@ -37,6 +21,7 @@ export function Sidebar({
   resizable = false,
   className,
   children,
+  hover = false,
   ...props
 }: React.ComponentProps<"div"> & {
   side?: "left" | "right";
@@ -44,90 +29,92 @@ export function Sidebar({
   collapsible?: "offcanvas" | "icon" | "none";
   auto?: boolean;
   resizable?: boolean;
+  hover?: boolean;
 }) {
-  const { isMobile, state, openMobile, setOpenMobile } = useSidebar();
-  const isFloatingOrInset = variant === "inset" || variant === "floating";
+  const {
+    sidebarId,
+    isMobile,
+    sidebarState,
+    setSidebarState,
+    openMobile,
+    setOpenMobile,
+  } = useSidebar();
 
-  // width state (persisted)
-  const [sidebarWidth, setSidebarWidth] = React.useState<number>(
-    typeof window !== "undefined" ? getStoredSidebarWidth() : SIDEBAR_WIDTH_DEFAULT
+
+  const settings = useSidebarModuleStore(useShallow((s) => s.getSettings(sidebarId)));
+  const updateSettings = useSidebarModuleStore((s) => s.updateSettings);
+
+
+  const [width, setWidth] = React.useState(
+    (settings as SidebarSettings)?.width ?? SIDEBAR_DIMENSIONS.DEFAULT
   );
   const resizing = React.useRef(false);
 
-  React.useEffect(() => {
-    if (!resizable || isMobile) return;
-    document.documentElement.style.setProperty("--sidebar-width", `${sidebarWidth}px`);
-    setStoredSidebarWidth(sidebarWidth);
-  }, [sidebarWidth, resizable, isMobile]);
 
   React.useEffect(() => {
     if (!resizable || isMobile) return;
-    function handleMouseMove(e: MouseEvent) {
+    document.documentElement.style.setProperty("--sidebar-width", `${width}px`);
+    updateSettings(sidebarId, { width });
+  }, [width, resizable, isMobile, sidebarId, updateSettings]);
+
+
+  React.useEffect(() => {
+    if (!resizable || isMobile) return;
+    const onMove = (e: MouseEvent) => {
       if (!resizing.current) return;
-      let newWidth =
-        side === "right" ? window.innerWidth - e.clientX : e.clientX;
-      newWidth = Math.max(SIDEBAR_WIDTH_MIN, Math.min(SIDEBAR_WIDTH_MAX, newWidth));
-      setSidebarWidth(newWidth);
-    }
-    function handleMouseUp() {
-      resizing.current = false;
-      document.body.style.cursor = "";
-    }
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("mouseup", handleMouseUp);
+      let w = side === "right" ? window.innerWidth - e.clientX : e.clientX;
+      w = Math.max(SIDEBAR_DIMENSIONS.MIN, Math.min(SIDEBAR_DIMENSIONS.MAX, w));
+      setWidth(w);
+    };
+    const onUp = () => {
+      if (resizing.current) {
+        resizing.current = false;
+        document.body.style.cursor = "";
+      }
+    };
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseup", onUp);
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mouseup", handleMouseUp);
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mouseup", onUp);
     };
   }, [resizable, isMobile, side]);
 
-  function handleResizerMouseDown(e: React.MouseEvent) {
+  const handleMouseDown = (e: React.MouseEvent) => {
     resizing.current = true;
     document.body.style.cursor = "col-resize";
     e.preventDefault();
-  }
+  };
 
-  const isExpanded = state === "expanded";
-  const showResizer = resizable && isExpanded && !isMobile;
 
-  // ---- none (always visible) ----
-  if (collapsible === "none") {
-    return (
-      <div
-        data-slot="sidebar"
-        className={cn(
-          "text-[var(--foreground)] flex h-full w-[var(--sidebar-width)] flex-col",
-          className
-        )}
-        {...props}
-      >
-        {children}
-        {showResizer && (
-          <div
-            onMouseDown={handleResizerMouseDown}
-            className="absolute top-0 right-0 h-full w-2 cursor-col-resize bg-transparent hover:bg-muted/50"
-            data-resizer
-          />
-        )}
-      </div>
-    );
-  }
+  const isExpanded = sidebarState === SIDEBAR_STATES.EXPANDED;
+  const isIcon = sidebarState === SIDEBAR_STATES.ICON && collapsible === "icon";
+  const isOffcanvas =
+    sidebarState === SIDEBAR_STATES.OFFCANVAS &&
+    collapsible === "offcanvas";
 
-  // ---- mobile (drawer) ----
+
+  const onEnter = () => {
+    if (auto && isIcon) setSidebarState(SIDEBAR_STATES.EXPANDED);
+  };
+  const onLeave = () => {
+    if (auto && isExpanded && collapsible === "icon")
+      setSidebarState(SIDEBAR_STATES.ICON);
+  };
+
+
   if (isMobile) {
     return (
-      <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
+      <Sheet open={openMobile} onOpenChange={setOpenMobile}>
         <SheetContent
-          data-sidebar="sidebar"
           data-slot="sidebar"
-          data-mobile="true"
-          className="text-[var(--sidebar-foreground)] w-[var(--sidebar-width)] p-0 [&>button]:hidden"
-          style={{ "--sidebar-width": `${SIDEBAR_WIDTH_MOBILE}px` } as React.CSSProperties}
+          data-mobile
+          className="w-[var(--sidebar-width)] p-0 [&>button]:hidden"
           side={side}
         >
           <SheetHeader className="sr-only">
             <SheetTitle>Sidebar</SheetTitle>
-            <SheetDescription>Displays the mobile sidebar.</SheetDescription>
+            <SheetDescription>Mobile sidebar</SheetDescription>
           </SheetHeader>
           <div className="flex h-full w-full flex-col">{children}</div>
         </SheetContent>
@@ -135,112 +122,76 @@ export function Sidebar({
     );
   }
 
-  // ---- container / inset ----
-  if (variant === "container" || variant === "inset") {
-    return (
-      <div
-        className={cn("relative h-full flex flex-col max-h-full group z-10", className)}
-        style={{
-          width: isExpanded ? (resizable ? sidebarWidth : undefined) : undefined,
-          minWidth: resizable && isExpanded ? SIDEBAR_WIDTH_MIN : undefined,
-          maxWidth: resizable && isExpanded ? SIDEBAR_WIDTH_MAX : undefined,
-        }}
-        data-state={state}
-        data-collapsible={isExpanded ? collapsible : ""}
-        data-variant={variant}
-        data-side={side}
-        data-slot="sidebar"
-        {...props}
-      >
-        <div
-          data-sidebar="sidebar"
-          data-slot="sidebar-inner"
-          className="bg-[var(--sidebar-background)] flex flex-col h-full w-full"
-        >
-          {children}
-        </div>
-        {showResizer && (
-          <div
-            onMouseDown={handleResizerMouseDown}
-            className={cn(
-              "absolute top-0 h-full w-2 cursor-col-resize z-30 select-none transition-colors duration-150",
-              side === "left" ? "right-0" : "left-0",
-              "bg-transparent hover:bg-muted/50 active:bg-muted/70 group-hover:bg-muted/40"
-            )}
-            style={{ [side === "right" ? "left" : "right"]: 0 } as any}
-            data-resizer
-          />
-        )}
-      </div>
-    );
-  }
 
-  // ---- default sidebar / floating etc ----
+  const containerWidth = isExpanded
+    ? width
+    : isIcon
+      ? SIDEBAR_DIMENSIONS.ICON
+      : isOffcanvas
+        ? width
+        : width;
+
+
+  const offcanvasStyles: React.CSSProperties = isOffcanvas
+    ? {
+      position: "absolute",
+      top: 0,
+      bottom: 0,
+      [side]: 0,
+      transform:
+        side === "left"
+          ? `translateX(-${width}px)`
+          : `translateX(${width}px)`,
+      transition: "transform 0.2s ease",
+    }
+    : {};
+
   return (
     <div
-      className="group peer text-[var(--sidebar-foreground)] hidden md:block h-full"
-      data-state={state}
-      data-collapsible={isExpanded ? collapsible : ""}
+      onMouseEnter={hover ? (() => onEnter()) : undefined}
+      onMouseLeave={hover ? (() => onLeave()) : undefined}
+      className={cn(
+        "relative flex h-full flex-col overflow-hidden group z-10",
+        variant === "floating" && "p-2",
+        className
+      )}
+      style={{
+        width: containerWidth,
+        transition: isOffcanvas ? undefined : "width 0.2s ease",
+        ...offcanvasStyles,
+      }}
+      data-state={sidebarState}
+      data-collapsible={collapsible}
       data-variant={variant}
       data-side={side}
       data-slot="sidebar"
+      {...props}
     >
-      <div
-        data-slot="sidebar-gap"
-        className={cn(
-          "relative w-[var(--sidebar-width)] bg-transparent transition-[width] duration-200 ease-linear",
-          "group-data-[collapsible=offcanvas]:w-0",
-          "group-data-[side=right]:rotate-180",
-          (isFloatingOrInset && !auto)
-            ? "p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4))+2px)]"
-            : "group-data-[collapsible=icon]:w-[var(--sidebar-width-icon)] group-data-[side=left]:border-r group-data-[side=right]:border-l"
-        )}
-      />
-      <div
-        data-slot="sidebar-container"
-        className={cn(
-          !auto && "fixed inset-y-0",
-          "max-h-full h-full flex-1 overflow-hidden z-10 hidden transition-[left,right,width] duration-200 ease-linear md:flex border-none",
-          side === "left"
-            ? "left-0 group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]"
-            : "right-0 group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)]",
-          (isFloatingOrInset && !auto)
-            ? "p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4))+2px)]"
-            : "group-data-[collapsible=icon]:w-[var(--sidebar-width-icon)] group-data-[side=left]:border-r group-data-[side=right]:border-l",
-          !auto && "h-svh",
-          className
-        )}
-        style={
-          resizable && isExpanded
-            ? {
-              width: sidebarWidth,
-              minWidth: SIDEBAR_WIDTH_MIN,
-              maxWidth: SIDEBAR_WIDTH_MAX,
-            }
-            : undefined
-        }
-        {...props}
-      >
+      {resizable && isExpanded ? (
         <div
-          data-sidebar="sidebar"
           data-slot="sidebar-inner"
-          className="bg-[var(--sidebar-background)] group-data-[variant=floating]:border-sidebar-border flex h-full w-full flex-row group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:shadow-sm"
+          onMouseDown={handleMouseDown}
+          className={cn(
+            "absolute top-0 h-full w-2 z-30 select-none cursor-col-resize",
+            side === "left" ? "right-0" : "left-0",
+            "bg-transparent hover:bg-muted/50 active:bg-muted/70"
+          )}
         >
           {children}
         </div>
-        {showResizer && (
-          <div
-            onMouseDown={handleResizerMouseDown}
-            className={cn(
-              "absolute top-0 h-full w-2 cursor-col-resize z-30 select-none transition-colors duration-150",
-              side === "left" ? "right-0" : "left-0",
-              "bg-transparent hover:bg-muted/50 active:bg-muted/70 group-hover:bg-muted/40"
-            )}
-            style={{ [side === "right" ? "left" : "right"]: 0 } as any}
-            data-resizer
-          />
-        )}
-      </div>
+      ) : (
+        <div
+          data-slot="sidebar-inner"
+          className={cn(
+            "bg-[--sidebar-background] flex flex-col flex-1",
+            variant === "floating" &&
+            "rounded-md border border-[--sidebar-border] shadow-sm"
+          )}
+        >
+          {children}
+        </div>
+      )}
+
     </div>
   );
 }
