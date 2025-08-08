@@ -49,7 +49,7 @@ export const themeStoreInitializer: StateCreator<ThemeStore> = (
 		const scopedPreferences = get().scopedPreferences;
 		return resolveThemeMetadata({
 			globalPreferences: global,
-			scopedPreferences: scopedPreferences,
+			scopedPreferences: scopedPreferences[scope as EntityType],
 			entityType: scope,
 			entityId: id,
 		});
