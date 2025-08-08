@@ -10,31 +10,23 @@ import {
   Laptop,
   Monitor,
 } from "lucide-react";
+import { BreakpointType, defaultBreakpoints } from "@/stores";
 
-export type Breakpoint = "xxs" | "xs" | "sm" | "md" | "lg" | "xl";
 
 interface BreakpointToggleProps {
-  value: Breakpoint;
-  onChange: (value: Breakpoint) => void;
+  value: BreakpointType;
+  onChange: (value: BreakpointType) => void;
   containerWidth?: number;
 }
 
-const breakpointSizes: Record<Breakpoint, number> = {
-  xxs: 320,
-  xs: 480,
-  sm: 768,
-  md: 996,
-  lg: 1200,
-  xl: 1500,
-};
-
-const breakpointIcons: Record<Breakpoint, React.ReactNode> = {
+const breakpointIcons: Record<BreakpointType, React.ReactNode> = {
   xxs: <Phone className="h-4 w-4" />,
   xs: <Smartphone className="h-4 w-4" />,
   sm: <TabletSmartphone className="h-4 w-4" />,
   md: <Tablet className="h-4 w-4" />,
   lg: <Laptop className="h-4 w-4" />,
   xl: <Monitor className="h-4 w-4" />,
+  xxl: <Monitor className="h-4 w-4" />
 };
 
 // const breakpointTooltipContent: Record<Breakpoint, string> = {
@@ -51,8 +43,8 @@ const BreakpointToggle: React.FC<BreakpointToggleProps> = ({
   onChange,
   containerWidth = Infinity,
 }) => {
-  const availableBreakpoints = (Object.keys(breakpointSizes) as Breakpoint[]).filter(
-    (bp) => breakpointSizes[bp] <= containerWidth
+  const availableBreakpoints = (Object.keys(defaultBreakpoints) as BreakpointType[]).filter(
+    (bp) => defaultBreakpoints[bp] <= containerWidth
   );
 
   React.useEffect(() => {
@@ -68,7 +60,7 @@ const BreakpointToggle: React.FC<BreakpointToggleProps> = ({
       value={value}
       size="sm"
       onValueChange={(val) => {
-        if (val) onChange(val as Breakpoint);
+        if (val) onChange(val as BreakpointType);
       }}
       className="gap-1 flex items-center group"
     >

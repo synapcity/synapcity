@@ -3,14 +3,13 @@
 import { useDashboardStore } from "@/stores";
 import { useShallow } from "zustand/shallow";
 import { EditableText } from "../molecules/EditableText";
-import { formatDate } from "@/utils/date-utils";
 import { cn } from "@/utils";
 import { Icon } from "../atoms";
 
 export const DashboardHeader = ({ dashboardId }: { dashboardId: string; }) => {
   const updateName = useDashboardStore(useShallow(s => s.updateName))
 
-  const { name, status, createdAt, updatedAt } = useDashboardStore(
+  const { name, status } = useDashboardStore(
     useShallow((s) => ({
       name: s.items[dashboardId]?.name,
       status: s.status[dashboardId],
@@ -18,8 +17,6 @@ export const DashboardHeader = ({ dashboardId }: { dashboardId: string; }) => {
       updatedAt: s.items[dashboardId]?.updatedAt
     }))
   );
-  const created = formatDate(createdAt, { style: "full" })
-  const updated = formatDate(updatedAt, { style: "relative" })
   const startStatus = useDashboardStore(s => s.startStatus)
   const clearStatus = useDashboardStore(s => s.resetStatus)
 
@@ -66,7 +63,13 @@ export const DashboardHeader = ({ dashboardId }: { dashboardId: string; }) => {
       <EditableText
         as="h4"
         value={name ?? ""}
-        onSave={(value: string) => updateName(dashboardId, value)}
+        onSave={(value: string) => {
+          updateName(dashboardId, value)
+          clearStatus()
+        }}
+        onEdit={() => {
+          startStatus("editing", dashboardId)
+        }}
       />
       {getStatus()}
     </div>

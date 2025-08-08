@@ -1,6 +1,6 @@
 "use client";
 
-import { RefObject, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { Layout } from "react-grid-layout";
 import { BreakpointToggleSkeleton, WidgetAreaSkeleton } from "@/components/skeletons";

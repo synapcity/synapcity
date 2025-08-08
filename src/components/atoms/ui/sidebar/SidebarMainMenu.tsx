@@ -4,11 +4,9 @@ import { SidebarMenu, SidebarMenuItem, SidebarMenuButton } from "@/components/at
 import { GlobalCommandMenu } from "@/components/search/GlobalCommandSearch/GlobalCommandMenu";
 import { useKeyboardShortcut } from "@/hooks";
 import { Home, Inbox, Search, type LucideIcon } from "lucide-react";
-import Link from "next/link";
 import { CommandShortcut } from "../command";
 import { useCommandMenuStore, useUIStore } from "@/stores";
 import { useRouter } from "next/navigation";
-import { useKey } from "react-use";
 
 export interface MainMenuItem {
   title: string;

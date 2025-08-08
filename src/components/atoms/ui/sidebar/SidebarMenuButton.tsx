@@ -56,6 +56,7 @@ export function SidebarMenuButton({
   className,
   icon = "default",
   tooltip,
+  tooltipPosition = "top",
   ...props
 }: React.ComponentProps<"button"> & {
   asChild?: boolean;
@@ -64,6 +65,7 @@ export function SidebarMenuButton({
   variant?: "default" | "outline" | "auto";
   icon?: "sm" | "default"
   tooltip?: string;
+  tooltipPosition?: "top" | "bottom" | "left" | "right"
 }) {
   const Comp = asChild ? Slot : "button";
   const innerValue = (
@@ -86,6 +88,8 @@ export function SidebarMenuButton({
     return (
       <Tooltip
         content={tooltip}
+        side={tooltipPosition}
+        asChild
       >
         {innerValue}
       </Tooltip>

@@ -72,8 +72,8 @@ export function BreadcrumbHeader() {
             <Menu className="h-5 w-5" />
           </span>
           <span className="absolute inset-0 flex items-center justify-center transition-opacity duration-150 opacity-0 group-hover:opacity-100">
-            <CommandShortcut side="top" content="Cmd+B">
-              ⌘B
+            <CommandShortcut side="top" content="Cmd+M">
+              ⌘M
             </CommandShortcut>
           </span>
         </span>

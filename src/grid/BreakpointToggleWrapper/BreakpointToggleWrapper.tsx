@@ -1,20 +1,23 @@
 "use client"
 import React, { RefObject, useCallback, useEffect, useRef, useState } from "react";
-import { OverlayToggle, Breakpoint, BreakpointToggle } from "@/components/molecules/toggles";
+import { OverlayToggle, BreakpointToggle } from "@/components/molecules/toggles";
 import { ColumnOverlay, RowOverlay } from "@/components/molecules/overlays";
 import { gridConstants } from "@/grid/defaultGridLayout";
+import { getBreakpointForWidth } from "@/utils/grid-utils";
+import { BreakpointType, defaultCols, defaultContainerPadding, defaultMargin } from "@/stores";
 
-const widths: Record<Breakpoint, string> = {
+const widths: Record<BreakpointType, string> = {
   xxs: "max-w-[479px]",
   xs: "max-w-[767px]",
   sm: "max-w-[995px]",
   md: "max-w-[1199px]",
   lg: "max-w-[1499px]",
   xl: "max-w-full",
+  xxl: "max-w-full"
 };
 
 const BreakpointToggleWrapper = ({ children, containerRef: externalContainerRef }: { children: React.ReactNode; containerRef: RefObject<HTMLDivElement | null> }) => {
-  const [breakpoint, setBreakpoint] = useState<Breakpoint>("xl");
+  const [breakpoint, setBreakpoint] = useState<BreakpointType>("xl");
   const [rows, setRows] = useState(20);
   const [showCols, setShowCols] = useState(false);
   const [showRows, setShowRows] = useState(false);
@@ -22,14 +25,14 @@ const BreakpointToggleWrapper = ({ children, containerRef: externalContainerRef 
 
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const columnCount = gridConstants.cols[breakpoint];
+  const columnCount = defaultCols[breakpoint];
   const containerWidthClass = widths[breakpoint];
 
   const rowHeight = gridConstants.rowHeight;
-  const marginX = gridConstants.margin[0];
-  const marginY = gridConstants.margin[1];
-  const containerPaddingX = gridConstants.containerPadding[0];
-  const containerPaddingY = gridConstants.containerPadding[1];
+  const marginX = defaultMargin[breakpoint][0];
+  const marginY = defaultMargin[breakpoint][1];
+  const containerPaddingX = defaultContainerPadding[breakpoint][0];
+  const containerPaddingY = defaultContainerPadding[breakpoint][1];
 
   const calculateRows = useCallback(() => {
     if (!containerRef.current) return;
@@ -39,7 +42,15 @@ const BreakpointToggleWrapper = ({ children, containerRef: externalContainerRef 
     const newRows = Math.floor((availableHeight + marginY) / rowSpace);
     setRows(newRows > 0 ? newRows : 1);
   }, [containerPaddingY, marginY, rowHeight]);
-  console.log("width", windowWidth)
+
+  useEffect(() => {
+    if (containerRef && containerRef.current && containerRef.current.clientWidth > windowWidth) {
+      const width = containerRef.current.clientWidth - containerPaddingX
+      setWindowWidth(width)
+      const breakpoint = getBreakpointForWidth(windowWidth)
+      setBreakpoint(breakpoint)
+    }
+  }, [containerPaddingX, containerRef, windowWidth])
 
   useEffect(() => {
     calculateRows();
