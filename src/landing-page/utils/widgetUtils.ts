@@ -4,7 +4,6 @@
 import { defaultWidgetProps } from "@/landing-page/lib/constants";
 import {
 	type AvailableWidget,
-	type Layout,
 	type Widget,
 	type WidgetType,
 } from "@/landing-page/types";
@@ -12,7 +11,7 @@ import { widgetRegistry } from "@/landing-page/stores/widgets/widgetRegistry";
 import { useWidgetStore } from "@/landing-page/stores/widgets/widgetStore";
 import { v4 as uuidv4 } from "uuid";
 import { widgetSchemasByType as widgetSchemas } from "@/landing-page/stores/widgets";
-
+import { LayoutItem } from "@/stores";
 export const getDefaultProps = (overrides = {}) => ({
 	...defaultWidgetProps,
 	...overrides,
@@ -48,7 +47,7 @@ export const getRandomWidgets = (
 };
 export const createWidget = (
 	availableWidget: AvailableWidget,
-	layout?: Layout
+	layout?: LayoutItem
 ): Widget | null => {
 	const registryEntry = widgetRegistry[availableWidget.type];
 	if (!registryEntry) {
@@ -79,7 +78,7 @@ export const createWidget = (
 	const { minWidth, minHeight, maxWidth, width, height, maxHeight } =
 		mergedProps;
 
-	const finalLayout: Layout = layout || {
+	const finalLayout: LayoutItem = layout || {
 		i: id,
 		x: Infinity,
 		y: 0,

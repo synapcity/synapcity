@@ -1,8 +1,8 @@
 import { lazy } from "react";
-import { sharedPanelMeta } from "./sharedPanelMeta";
+import { notePanelMeta } from "./sharedPanelMeta";
 import { SidebarPanel } from "@/stores/ui/sidebarStore";
 
-export const defaultNotePanels: SidebarPanel[] = sharedPanelMeta.map(
+export const defaultNotePanels: SidebarPanel[] = notePanelMeta.map(
 	(meta) => ({
 		...meta,
 		component: lazy(() =>

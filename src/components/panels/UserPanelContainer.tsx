@@ -6,7 +6,7 @@ import { useShallow } from "zustand/shallow";
 import { InboxTrigger } from "../atoms";
 
 export const UserContainer = ({ children }: { children: React.ReactNode }) => {
-  const isOpen = useUIStore(useShallow(s => s.components.userPanelSidebar.isExpanded))
+  const isOpen = useUIStore(useShallow(s => s.components?.['userPanelSidebar']?.['isExpanded'] ?? false))
   return (
     <SidebarProvider
       sidebarId="user-panel-sidebar"

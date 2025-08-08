@@ -16,7 +16,7 @@ const _useWidgetStore = createResourceStore<Widget>({
   initItems: (set, get) => (raw) => {
     if(Object.values(get().items).length > 0 || !get().hasHydrated) return;
     const parsed = initItems<Widget>(raw, WidgetResourceSchema, createWidget);
-    set({ items: parsed })
+    set({ items: parsed as Record<string, Widget>})
   },
 
   afterHydrate: (state, err) => {

@@ -28,11 +28,11 @@
 
 	--color-heading: var(--primary-800);
 	--color-subheading: var(--primary-700);
-	--color-body: var(--primary-800);
+	--color-body: var(--foreground);
 	--color-caption: var(--primary-600);
 	--color-subtle-text: var(--primary-600);
 	--color-placeholder: var(--primary-300);
-	--color-link: var(--primary-900);
+	--color-link: var(--foreground);
 	--color-link-hover: var(--accent-600);
 
 	--text-xs: var(--text-xs);
@@ -127,7 +127,7 @@
 
 	a:hover,
 	button:hover {
-		cursor: pointer;
+		cursor: pointer text-link-hover;
 	}
 
 	.link {

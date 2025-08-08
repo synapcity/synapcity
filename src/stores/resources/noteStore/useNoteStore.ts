@@ -27,7 +27,7 @@ const _useNoteStore = createResourceStore<NoteResource>({
 	initItems: (set, get) => (raw) => {
 		if (Object.values(get().items).length > 0 || !get().hasHydrated) return;
 		const parsed = initItems<NoteResource>(raw, NoteResourceSchema, createNote);
-		set({ items: parsed });
+		set({ items: parsed as Record<string, NoteResource>});
 	},
 
 	afterHydrate: (state, err) => {

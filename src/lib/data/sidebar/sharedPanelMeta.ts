@@ -20,7 +20,52 @@ export const sharedPanelMeta: SharedMeta[] = [
 		icon: "palette",
 		tooltip: "font & theme prefs",
 	},
+	// {
+	// 	id: "outline",
+	// 	label: "Outline",
+	// 	icon: "listTree",
+	// 	tooltip: "document structure",
+	// },
+	// {
+	// 	id: "connections",
+	// 	label: "Connections",
+	// 	icon: "link2",
+	// 	tooltip: "linked notes & refs",
+	// },
+	// {
+	// 	id: "resources",
+	// 	label: "Resources",
+	// 	icon: "bookOpen",
+	// 	tooltip: "files & external links",
+	// },
+	// {
+	// 	id: "annotations",
+	// 	label: "Annotations",
+	// 	icon: "messageCircle",
+	// 	tooltip: "annotations & notes",
+	// },
+	// {
+	// 	id: "trash",
+	// 	label: "Trash",
+	// 	icon: "trash2",
+	// 	tooltip: "deleted tabs (restore or purge)",
+	// 	defaultHidden: true,
+	// },
+];
+
+export const dashboardPanelMeta: SharedMeta[] = [
+	...sharedPanelMeta,
 	{
+		id: "widgets",
+		label: "Widgets Menu",
+		icon: "boxes",
+		tooltip: "Widgets"
+	}
+]
+
+export const notePanelMeta: SharedMeta[] = [
+	...sharedPanelMeta,
+		{
 		id: "outline",
 		label: "Outline",
 		icon: "listTree",
@@ -44,11 +89,4 @@ export const sharedPanelMeta: SharedMeta[] = [
 		icon: "messageCircle",
 		tooltip: "annotations & notes",
 	},
-	{
-		id: "trash",
-		label: "Trash",
-		icon: "trash2",
-		tooltip: "deleted tabs (restore or purge)",
-		defaultHidden: true,
-	},
-];
+]

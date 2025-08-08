@@ -26,7 +26,7 @@ export interface ResourceStore<T extends BaseResource>
 		SelectionSlice {
 	items: Record<string, T>;
 	addResource(data?: Partial<T>): Promise<T>;
-	updateResource(id: string, patch: Partial<T>): Promise<void>;
+	updateResource(id: string, patch: Partial<T>): Promise<T>;
 	deleteResource(id: string): void;
 	softDeleteResource(id: string): void;
 	getResourceById(id: string): T | undefined;
@@ -124,7 +124,7 @@ export function createResourceStore<T extends BaseResource>(
 				const now = new Date().toISOString();
 				const updated = schema.parse({ ...existing, ...patch, updatedAt: now });
 				set((s) => ({ items: { ...s.items, [id]: updated }, localStatus: defaultStatus}));
-				return updated;
+				return updated as T;
 			},
 
 			deleteResource(id) {

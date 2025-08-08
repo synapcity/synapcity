@@ -7,7 +7,7 @@ describe("DialogWrapper", () => {
   const defaultProps: DialogWrapperProps = {
     title: "Test Dialog",
     description: "This is a test description",
-    trigger: <Button>Open Dialog</Button>,
+    trigger: <Button asChild>Open Dialog</Button>,
     children: <div>Dialog content</div>,
     actions: [{
       type: "submit",

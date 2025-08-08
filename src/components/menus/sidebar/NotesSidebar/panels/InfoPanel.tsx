@@ -45,20 +45,22 @@ export default function InfoPanel() {
               as="h4"
             />
           </section>
-          <section className="flex flex-col justify-between space-y-4">
-            <h2 className="text-xs uppercase tracking-wide text-[var(--muted-foreground) mb-1">Current Tab</h2>
-            <EditableText
-              value={activeView.label}
-              onEdit={() => {
-                startStatus("editing", note.id)
-              }}
-              onSave={(newLabel: string) => {
-                updateView(activeView.id, { label: newLabel })
-                finishStatus("editing", note.id)
-              }}
-              as="p"
-            />
-          </section>
+          {activeView && (
+            <section className="flex flex-col justify-between space-y-4">
+              <h2 className="text-xs uppercase tracking-wide text-[var(--muted-foreground) mb-1">Current Tab</h2>
+              <EditableText
+                value={activeView?.label}
+                onEdit={() => {
+                  startStatus("editing", note.id)
+                }}
+                onSave={(newLabel: string) => {
+                  updateView(activeView.id, { label: newLabel })
+                  finishStatus("editing", note.id)
+                }}
+                as="p"
+              />
+            </section>
+          )}
 
           <Separator
             orientation="horizontal"

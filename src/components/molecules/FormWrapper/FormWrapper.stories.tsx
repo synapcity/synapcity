@@ -59,7 +59,7 @@ const RenderFields = () => (
 
 export const Default: StoryObj<typeof FormWrapper> = {
   render: () => (
-    <FormWrapper<FormData>
+    <FormWrapper<FormData, FormData>
       schema={schema}
       defaultValues={defaultValues}
       onSubmit={(data) => alert(JSON.stringify(data, null, 2))}
@@ -72,7 +72,7 @@ export const Default: StoryObj<typeof FormWrapper> = {
 
 export const WithCustomLabel: StoryObj<typeof FormWrapper> = {
   render: () => (
-    <FormWrapper<FormData>
+    <FormWrapper<FormData, FormData>
       schema={schema}
       defaultValues={defaultValues}
       onSubmit={(data) => console.log(data)}
@@ -86,7 +86,7 @@ export const WithCustomLabel: StoryObj<typeof FormWrapper> = {
 
 export const LoadingState: StoryObj<typeof FormWrapper> = {
   render: () => (
-    <FormWrapper<FormData>
+    <FormWrapper<FormData, FormData>
       schema={schema}
       defaultValues={defaultValues}
       onSubmit={(data) => new Promise((res) => setTimeout(() => res(console.log(data)), 2000))}
@@ -100,7 +100,7 @@ export const LoadingState: StoryObj<typeof FormWrapper> = {
 
 export const WithRenderProp: StoryObj<typeof FormWrapperWithRender> = {
   render: () => (
-    <FormWrapperWithRender<FormData>
+    <FormWrapperWithRender<FormData, FormData>
       schema={schema}
       defaultValues={defaultValues}
       onSubmit={(data) => alert(JSON.stringify(data))}

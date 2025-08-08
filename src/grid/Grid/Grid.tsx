@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
-import { Layout } from "react-grid-layout";
+import { LayoutItem } from "@/stores";
 import { BreakpointToggleSkeleton, WidgetAreaSkeleton } from "@/components/skeletons";
 import { useCurrentGrid } from "@/stores/resources/gridStore/useGrid";
 import "react-grid-layout/css/styles.css"
@@ -49,10 +49,18 @@ const Grid = () => {
   //   }
   // }, [grid])
   // const dashboardId = useDashboardStore(useShallow(s => s.getSelected?.("dashboard")));
-  const layouts = state?.layouts ?? {}
+  const layouts = state?.layouts ?? {
+    xxs: [],
+    xs: [],
+    sm: [],
+    md: [],
+    lg: [],
+    xl: [],
+    xxl: []
+  }
 
   const currentBreakpoint = state?.activeBreakpoint ?? "lg"
-  const layoutRef = useRef<Layout[]>(layouts?.[currentBreakpoint] || [])
+  const layoutRef = useRef<LayoutItem[]>(layouts?.[currentBreakpoint] || [])
 
   useEffect(() => {
     ReactGridLayout.preload?.();

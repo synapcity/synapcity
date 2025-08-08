@@ -33,7 +33,7 @@ export type UIActions = {
 };
 
 const defaultComponentState: ComponentUIState = {
-	isVisible: true,
+	isVisible: false,
 	isExpanded: false,
 	isLocked: false,
 };
@@ -42,8 +42,8 @@ const defaultUIState: UIState = {
 	isSiteFocus: false,
 	components: {
 		header: { ...defaultComponentState },
-		userPanel: { ...defaultComponentState },
-		userPanelSidebar: { ...defaultComponentState },
+		userPanel: { ...defaultComponentState, isExpanded: false },
+		userPanelSidebar: { ...defaultComponentState, isExpanded: false },
 		scheduleModal: { isVisible: false },
 		notesSidebar: { ...defaultComponentState },
 		breadcrumbs: {...defaultComponentState},

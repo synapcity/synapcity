@@ -1,3 +1,10 @@
+Object.defineProperty(HTMLCanvasElement.prototype, "getContext", {
+  value: () => {
+    // minimal mock so nothing breaks
+    return {};
+  },
+});
+
 import "@testing-library/jest-dom";
 import { ResizeObserver } from "@juggle/resize-observer";
 global.ResizeObserver = ResizeObserver;

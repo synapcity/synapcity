@@ -7,9 +7,14 @@ import {
   defaultResizeHandles,
 } from "./defaults";
 
-// --- 1. Types & Defaults ---
+
+import type { Layout as RGLLayout } from "react-grid-layout";
+
 export const breakpoints = ["xxs", "xs", "sm", "md", "lg", "xl", "xxl"] as const;
 export type BreakpointType = typeof breakpoints[number];
+
+export type LayoutItem = RGLLayout; // Always use this type for each grid item
+export type Layouts = Record<BreakpointType, LayoutItem[]>;
 
 export const defaultBreakpoints: Record<BreakpointType, number> = {
   xxs: 320, xs: 480, sm: 640, md: 768, lg: 1024, xl: 1280, xxl: 1400,
@@ -50,51 +55,49 @@ export const LayoutItemSchema = z.object({
   maxH: z.number().optional(),
   moved: z.boolean().optional(),
   static: z.boolean().optional(),
-  isDraggable: z.boolean().optional().default(false),
-  isResizable: z.boolean().optional().default(false),
-  resizeHandles: z.array(z.enum(resizeHandleLiterals)).optional(), // <--- Strict, not string[]
+  isDraggable: z.boolean().optional(),
+  isResizable: z.boolean().optional(),
+  resizeHandles: z.array(z.enum(resizeHandleLiterals)).optional(),
   isBounded: z.boolean().optional(),
 });
 export const LayoutSchema = z.array(LayoutItemSchema);
 export const LayoutsSchema = z.record(z.enum(breakpoints), LayoutSchema).default({
   xxs: [], xs: [], sm: [], md: [], lg: [], xl: [], xxl: [],
 });
-export type LayoutItem = z.infer<typeof LayoutItemSchema>;
-export type Layout = z.infer<typeof LayoutSchema>;
-export type Layouts = z.infer<typeof LayoutsSchema>;
+
 
 // --- 3. Config/Flags/Handles schemas ---
 export const GridHandlesSchema = z.object({
-  draggableCancel: z.string().optional(),
-  draggableHandle: z.string().optional(),
-  resizeHandle: z.string().optional(),
+  draggableCancel: z.string().optional().default(".draggable-cancel"),
+  draggableHandle: z.string().optional().default(".draggable"),
+  resizeHandle: z.string().optional().default(".resizable"),
 });
 export type GridHandles = z.infer<typeof GridHandlesSchema>;
 
 export const GridFlagsSchema = z.object({
-  isDraggable: z.boolean(),
-  isResizable: z.boolean(),
-  isBounded: z.boolean(),
-  useCSSTransforms: z.boolean(),
-  allowOverlap: z.boolean(),
-  preventCollision: z.boolean(),
-  isDroppable: z.boolean(),
+  isDraggable: z.boolean().optional(),
+  isResizable: z.boolean().optional(),
+  isBounded: z.boolean().optional(),
+  useCSSTransforms: z.boolean().default(true),
+  allowOverlap: z.boolean().default(true),
+  preventCollision: z.boolean().default(true),
+  isDroppable: z.boolean().default(false),
 });
 export type GridFlags = z.infer<typeof GridFlagsSchema>;
 
 export const GridConfigSchema = z.object({
-  label: z.string().optional(),
-  breakpoints: z.record(z.enum(breakpoints), z.number()),
-  cols: z.record(z.enum(breakpoints), z.number()),
-  margin: z.record(z.enum(breakpoints), z.tuple([z.number(), z.number()])),
-  containerPadding: z.record(z.enum(breakpoints), z.tuple([z.number(), z.number()])),
+  label: z.string().optional().default("Untitled"),
+  breakpoints: z.record(z.enum(breakpoints), z.number()).default({...defaultBreakpoints}),
+  cols: z.record(z.enum(breakpoints), z.number()).default({...defaultCols}),
+  margin: z.record(z.enum(breakpoints), z.tuple([z.number(), z.number()])).default({...defaultMargin}),
+  containerPadding: z.record(z.enum(breakpoints), z.tuple([z.number(), z.number()])).default({ ...defaultContainerPadding}),
   rowHeight: z.number().default(30),
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   compactType: z.enum(["vertical", "horizontal", null as any]).default("vertical"),
   resizeHandles: z.array(z.enum(resizeHandleLiterals)).default(defaultResizeHandles),
-  autoSize: z.boolean().optional(),
+  autoSize: z.boolean().optional().default(true),
   flags: GridFlagsSchema,
-  handles: GridHandlesSchema.default({}),
+  handles: GridHandlesSchema.default({...handles}),
 });
 export type GridConfig = z.infer<typeof GridConfigSchema>;
 
@@ -137,11 +140,11 @@ export function createGrid(partial: Partial<Grid>): Grid {
     rowHeight: partial.config?.rowHeight ?? 30,
     compactType: partial.config?.compactType ?? "vertical",
     resizeHandles: partial.config?.resizeHandles ?? [...defaultResizeHandles], // strict type
-    autoSize: partial.config?.autoSize,
+    autoSize: partial.config?.autoSize ?? true,
     flags: {
-      isDraggable: partial.config?.flags?.isDraggable ?? defaultFlags.isDraggable,
-      isResizable: partial.config?.flags?.isResizable ?? defaultFlags.isResizable,
-      isBounded: partial.config?.flags?.isBounded ?? defaultFlags.isBounded,
+      isDraggable: partial.config?.flags?.isDraggable ?? defaultFlags.isDraggable ?? false,
+      isResizable: partial.config?.flags?.isResizable ?? defaultFlags.isResizable ?? false,
+      isBounded: partial.config?.flags?.isBounded ?? defaultFlags.isBounded ?? false,
       useCSSTransforms: partial.config?.flags?.useCSSTransforms ?? defaultFlags.useCSSTransforms,
       allowOverlap: partial.config?.flags?.allowOverlap ?? defaultFlags.allowOverlap,
       preventCollision: partial.config?.flags?.preventCollision ?? defaultFlags.preventCollision,
@@ -149,9 +152,9 @@ export function createGrid(partial: Partial<Grid>): Grid {
     },
     handles: {
       ...handles,
-      ...(partial.config?.handles ?? {}),
+      ...(partial.config?.handles ?? {...handles}),
     },
-    label: partial.config?.label,
+    label: partial.config?.label ?? "",
   };
 
   const state: GridState = {
@@ -161,10 +164,12 @@ export function createGrid(partial: Partial<Grid>): Grid {
     activeBreakpoint: partial.state?.activeBreakpoint ?? "xl",
     width: partial.state?.width ?? 1300,
     layout: partial.state?.layout ?? [],
+    // ⬇️ Ensure layouts are parsed through Zod defaults
     layouts: partial.state?.layouts ?? {
       xxs: [], xs: [], sm: [], md: [], lg: [], xl: [], xxl: [],
     },
   };
+
 
   return GridResourceSchema.parse({
     id,

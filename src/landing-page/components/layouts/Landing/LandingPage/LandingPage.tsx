@@ -1,21 +1,52 @@
-"use client"
+"use client";
 
 import { useUIStore } from "@/stores/ui";
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
+import type { ScrollRef } from "@/landing-page/components/ui/containers/ScrollContainer/Scroll";
 
-const ScrollContainer = dynamic(() => import("@/landing-page/components/ui/containers/ScrollContainer/Scroll").then(mod => mod.Scroll), { ssr: false });
-const Hero = dynamic(() => import("./Hero").then((mod) => mod.Hero), { ssr: true })
-const CTA = dynamic(() => import("./CTA").then(mod => mod.CTA), { ssr: true });
-const Widgets = dynamic(() => import("./Widgets").then(mod => mod.Widgets), { ssr: false });
-const About = dynamic(() => import("./About").then(mod => mod.About), { ssr: true });
-const Features = dynamic(() => import("./Features").then(mod => mod.Features), { ssr: true })
-const HowItWorks = dynamic(() => import("./HowItWorks").then(mod => mod.HowItWorks), { ssr: true })
+const ScrollContainer = dynamic(
+  () =>
+    import("@/landing-page/components/ui/containers/ScrollContainer/Scroll").then(
+      (mod) => mod.Scroll
+    ),
+  { ssr: false }
+);
+const Hero = dynamic(() => import("./Hero").then((mod) => mod.Hero), {
+  ssr: true,
+});
+const CTA = dynamic(() => import("./CTA").then((mod) => mod.CTA), {
+  ssr: true,
+});
+const Widgets = dynamic(
+  () => import("./Widgets").then((mod) => mod.Widgets),
+  { ssr: false }
+);
+const About = dynamic(() => import("./About").then((mod) => mod.About), {
+  ssr: true,
+});
+const Features = dynamic(
+  () => import("./Features").then((mod) => mod.Features),
+  { ssr: true }
+);
+const HowItWorks = dynamic(
+  () => import("./HowItWorks").then((mod) => mod.HowItWorks),
+  { ssr: true }
+);
 
 export const LandingPage = () => {
-  const scrollRef = useRef(null);
-  const [scrollElement, setScrollElement] = useState(null);
+  const scrollRef = useRef<ScrollRef>(null);
+  const [scrollElement, setScrollElement] = useState<HTMLElement | null>(null);
+
+  // Set scrollElement to the DOM node once available
+  useEffect(() => {
+    if (scrollRef.current?.container instanceof Element) {
+      setScrollElement(scrollRef.current.container);
+    } else {
+      setScrollElement(null);
+    }
+  }, [scrollRef.current?.container]);
 
   const { ref: heroRef, inView: heroInView } = useInView({
     threshold: 0.6,
@@ -23,13 +54,7 @@ export const LandingPage = () => {
     triggerOnce: false,
   });
 
-  const setShowHeader = useUIStore(state => state.setCompState)
-
-  useEffect(() => {
-    if (scrollRef.current) {
-      setScrollElement(scrollRef.current);
-    }
-  }, []);
+  const setShowHeader = useUIStore((state) => state.setCompState);
 
   useEffect(() => {
     setShowHeader("header", "isVisible", true);
@@ -52,7 +77,6 @@ export const LandingPage = () => {
         <About />
         <Features />
         <HowItWorks />
-
         <Widgets />
         <CTA />
       </ScrollContainer>

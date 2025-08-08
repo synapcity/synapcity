@@ -51,3 +51,4 @@ export {
 	aggregateViewContent,
 } from "./note-utils";
 export { deepMerge } from "./deepMerge"
+export { getBreakpointForWidth, normalizeLayouts } from "./grid-utils"

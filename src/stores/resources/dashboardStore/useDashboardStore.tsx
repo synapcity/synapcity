@@ -22,7 +22,7 @@ const _useDashboardStore = createResourceStore<DashboardResource>({
   initItems: (set, get) => (raw) => {
     if (Object.values(get().items).length > 0 || !get().hasHydrated) return;
     const parsed = initItems<DashboardResource>(raw, DashboardResourceSchema, createDashboard);
-    set({ items: parsed });
+    set({ items: parsed as Record<string, DashboardResource> });
   },
 
   afterHydrate: (state, err) => {

@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { LayoutItem } from "@/stores";
 import { IconType } from "react-icons";
 
 export type WidgetCardProps = {
@@ -31,18 +32,18 @@ export type WidgetInfo = {
 /** Possible widget type identifiers */
 export type WidgetType = "list" | "notes" | "inbox";
 
-/** Widget layout position and sizing info */
-export type Layout = {
-	i: string;
-	y: number;
-	x: number;
-	w: number;
-	minW: number;
-	maxW: number;
-	h: number;
-	minH: number;
-	maxH: number;
-};
+// /** Widget layout position and sizing info */
+// export type Layout = {
+// 	i: string;
+// 	y: number;
+// 	x: number;
+// 	w: number;
+// 	minW: number;
+// 	maxW: number;
+// 	h: number;
+// 	minH: number;
+// 	maxH: number;
+// };
 
 /** Widget runtime instance */
 export type Widget = {
@@ -50,7 +51,7 @@ export type Widget = {
 	type: WidgetType;
 	component: React.ComponentType<any>;
 	props: Record<string, any>;
-	layout: Layout;
+	layout: LayoutItem;
 	isDeleted: boolean;
 };
 

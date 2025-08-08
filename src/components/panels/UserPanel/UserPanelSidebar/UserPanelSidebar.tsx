@@ -16,7 +16,7 @@ import { useShallow } from "zustand/shallow";
 
 export const UserPanelSidebar = () => {
   const { activeModule, modules, setActiveModuleId } = useUserPanel()
-  const isOpen = useUIStore(useShallow(s => s.components.userPanelSidebar.isExpanded))
+  const isOpen = useUIStore(useShallow(s => s.components?.['userPanelSidebar']?.['isExpanded']))
   return isOpen && (
     <Sidebar auto variant="container" className="hidden flex-1 md:flex flex-col relative min-h-0"
       style={{

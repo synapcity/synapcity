@@ -16,7 +16,7 @@ export function parseSchemaWithResolver<T extends ZodRawShape>(
 		}
 
 		const zod = zodField as ZodTypeAny;
-		const meta = zod._def?.meta ?? {};
+		const meta = zod.meta ?? {};
 		const description = zod.description;
 
 		return {
@@ -24,7 +24,7 @@ export function parseSchemaWithResolver<T extends ZodRawShape>(
 			name: key,
 			meta,
 			description,
-			required: !zod.isOptional(),
+			required: !zod.optional(),
 		};
 	});
 }

@@ -2,9 +2,8 @@ import { z } from "zod";
 import { type WidgetType } from "@/landing-page/types";
 
 const baseWidgetSchema = z.object({
-	// id: z.string().uuid(),
 	type: z.enum(["list", "notes", "inbox"] as [WidgetType, ...WidgetType[]]),
-	component: z.function().args(z.any()).returns(z.any()),
+	component: z.function().input(z.any()).output(z.any()),
 });
 
 const listPropsSchema = z.object({

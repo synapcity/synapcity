@@ -156,12 +156,12 @@ describe("FormWrapperWithRender", () => {
 
     await rtlAct(async () => {
       render(
-        <FormWrapperWithRender
-          onSubmit={onSubmit}
+        <FormWrapperWithRender<{ email: string }>
           defaultValues={{ email: "" }}
+          onSubmit={onSubmit}
           render={() => (
             <>
-              <input type="email" />
+              <input type="email" name="email" />
               <button type="submit">Submit</button>
             </>
           )}
@@ -179,7 +179,7 @@ describe("FormWrapper (static children)", () => {
 
     await rtlAct(async () => {
       render(
-        <FormWrapper
+        <FormWrapper<{ email: string }>
           defaultValues={{ email: "" }}
           onSubmit={onSubmit}
           showSubmitButton
@@ -242,7 +242,7 @@ describe("FormWrapper (static children)", () => {
 
     await rtlAct(async () => {
       render(
-        <FormWrapper
+        <FormWrapper<{ email: string }>
           defaultValues={{ email: "test@example.com" }}
           onSubmit={onSubmit}
           showSubmitButton
@@ -263,7 +263,10 @@ describe("FormWrapper (static children)", () => {
 
     await rtlAct(async () => {
       render(
-        <FormWrapper onSubmit={onSubmit} defaultValues={{ email: "" }}>
+        <FormWrapper<{ email: string }>
+          onSubmit={onSubmit}
+          defaultValues={{ email: "" }}
+        >
           <input name="email" />
         </FormWrapper>
       );
@@ -275,7 +278,7 @@ describe("FormWrapper (static children)", () => {
 
     await rtlAct(async () => {
       render(
-        <FormWrapper
+        <FormWrapper<{ email: string }>
           defaultValues={{ email: "" }}
           onSubmit={jest.fn()}
           methodsRef={methodsRef}

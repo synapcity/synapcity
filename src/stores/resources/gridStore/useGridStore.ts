@@ -4,10 +4,15 @@ import {
   Grid,
   GridResourceSchema,
   createGrid,
+  defaultBreakpoints,
+  defaultCols,
+  defaultContainerPadding,
+  defaultMargin
 } from "./grid-schema"; // Update this import if needed
 import { nanoid } from "nanoid";
 import { deepMerge } from "@/utils/deepMerge";
 import { defaultFlags, handles } from "@/stores/resources/gridStore/defaults";
+import { normalizeLayouts } from "@/utils";
 
 // --- Use the InitGridArgs type for argument typing ---
 export type InitGridArgs = {
@@ -63,14 +68,17 @@ const _useGridStore = createResourceStore<Grid>({
         label,
         config: deepMerge(
           {
-            breakpoints: {},
-            cols: {},
-            margin: {},
-            containerPadding: {},
+            breakpoints: {...defaultBreakpoints},
+            cols: {...defaultCols},
+            margin: {...defaultMargin},
+            containerPadding: {...defaultContainerPadding},
             rowHeight: 0,
             resizeHandles: [],
+            compactType: "vertical",
             flags: defaultFlags,
             handles,
+            label: "Untitled",
+            autoSize: true
           },
           config
         ),
@@ -83,21 +91,30 @@ const _useGridStore = createResourceStore<Grid>({
       return id;
     },
 
-    // 2. Patch only grid state
+
 updateGridState: (gridId: string, patch: Partial<Grid["state"]>): void => {
   const grid = get().items[gridId];
   if (!grid) return;
+
+  const newPatch: Partial<Grid["state"]> = { ...patch };
+
+  if (patch.layouts) {
+    // Use the lenient normalizer for patches (merges, user edits)
+    newPatch.layouts = normalizeLayouts(patch.layouts);
+  }
+
   set((store) => ({
     items: {
       ...store.items,
       [gridId]: {
         ...grid,
-        state: { ...grid.state, ...patch },
+        state: { ...grid.state, ...newPatch },
         updatedAt: new Date().toISOString(),
       }
     }
   }));
 },
+
 
     // 3. Patch only grid config
     updateGridConfig: (gridId: string, patch: Partial<Grid["config"]>): void => {

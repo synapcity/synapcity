@@ -31,7 +31,7 @@ export const ImageViewSchema = z.object({
 export type ImageView = z.infer<typeof ImageViewSchema>;
 export const CustomViewSchema = z.object({
 	type: z.literal("custom"),
-	settings: z.record(z.any()).default({})
+	settings: z.record(z.any(), z.any()).default({})
 });
 
 export type CustomView = z.infer<typeof CustomViewSchema>;

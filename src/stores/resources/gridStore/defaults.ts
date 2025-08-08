@@ -1,4 +1,4 @@
-// --- 1. Handles: strictly typed! ---
+
 export const resizeHandleLiterals = ["s", "w", "e", "n", "sw", "nw", "se", "ne"] as const;
 export type ResizeHandle = typeof resizeHandleLiterals[number];
 export const defaultResizeHandles: ResizeHandle[] = [...resizeHandleLiterals]; // mutable array, strict type

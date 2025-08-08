@@ -30,7 +30,7 @@ const _useNoteViewStore = createResourceStore<ViewResource>({
 
 	initItems: (set) => (raw) => {
 		const parsed = initItems<ViewResource>(raw, ViewResourceSchema, createView);
-		set({ items: parsed });
+		set({ items: parsed as Record<string, ViewResource>});
 	},
 
 	afterHydrate: (state, err) => {
