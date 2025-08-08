@@ -24,8 +24,8 @@ type Props<T extends { id: string, label: string }> = {
 export function ContextSelector<T extends { id: string, label: string; }>({ items, activeItem, setActiveItemId }: Props<T>) {
 
   return (
-    <SidebarMenu>
-      <SidebarMenuItem className="w-full">
+    <SidebarMenu className="flex-1">
+      <SidebarMenuItem className="w-full flex-1">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             {/* <SidebarMenuButton
@@ -36,7 +36,7 @@ export function ContextSelector<T extends { id: string, label: string; }>({ item
             > */}
             <SidebarMenuButton
               className={clsx(
-                "w-full flex items-center gap-2 p-2 text-sm bg-transparent text-muted-foreground hover:bg-muted/10 hover:text-foreground rounded-md transition",
+                "w-full flex flex-1 items-center gap-2 p-2 text-sm bg-transparent text-(--accent-foreground) bg-(--accent-background) hover:bg-muted/10 hover:text-foreground rounded-md transition",
                 "data-[state=open]:text-accent-foreground data-[state=open]:bg-accent/10"
               )}
             >
@@ -46,7 +46,6 @@ export function ContextSelector<T extends { id: string, label: string; }>({ item
                 <Layers className="size-4" />
               </div>
               <div className="flex flex-col gap-0.5 leading-none">
-                {/* <span className="text-xs text-muted-foreground uppercase font-semibold">{type}</span> */}
                 <span className="truncate ">{activeItem?.label || "Select…"}</span>
 
               </div>

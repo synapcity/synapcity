@@ -74,9 +74,9 @@ export function TopNavMenu() {
         <ThemeSheet scope="global" triggerStyles="text-(--background)" />
         <IconButton
           icon={isSiteFocused ? 'eyeOff' : 'eye'}
-          iconClassName={isSiteFocused ? "text-[var(--foreground)] bg-(--background)" : ""}
+          iconClassName={isSiteFocused ? "!text-(--background) bg-(--foreground)" : "text-(--background)"}
           onClick={toggleFocus}
-          variant={isSiteFocused ? 'primary' : 'ghost'}
+          variant={isSiteFocused ? 'primary' : 'inverse'}
           aria-label="Toggle site focus mode"
         />
         <Separator orientation="vertical" className="h-4" />

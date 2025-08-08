@@ -55,7 +55,7 @@ export const EditableText = ({
       e.currentTarget.blur();
     }
     if (e.key === "Escape") {
-      setCurrentValue(value); // revert
+      setCurrentValue(value);
       setEditing(false);
     }
   };
@@ -96,7 +96,7 @@ export const EditableText = ({
           onChange={handleInput}
           onBlur={handleBlur}
           onKeyDown={handleKeyDown}
-          className={cn(`flex-grow bg-transparent border-none focus:ring-0 focus:border-b focus:border-accent-400 truncate`, textStyles[as])}
+          className={cn(`flex-grow bg-transparent border-none focus:ring-0 focus:border-b focus:border-accent-400 truncate w-full`, textStyles[as])}
           placeholder={placeholder}
           aria-placeholder={placeholder}
           autoFocus

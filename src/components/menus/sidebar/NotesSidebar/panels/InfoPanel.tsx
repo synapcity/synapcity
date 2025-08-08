@@ -9,6 +9,7 @@ import { SearchableMultiSelect } from "@/components/search";
 import { Separator } from "@/components/atoms/ui/separator";
 import { useShallow } from "zustand/shallow";
 import { EditableText } from "@/components/molecules/EditableText";
+import { useNoteViewStore } from "@/stores";
 
 export default function InfoPanel() {
   const { noteId } = useParams();
@@ -17,6 +18,9 @@ export default function InfoPanel() {
   const update = useNoteStore(s => s.updateResource)
   const startStatus = useNoteStore(s => s.startStatus)
   const finishStatus = useNoteStore(s => s.finishStatus)
+  const activeViewId = useNoteViewStore(useShallow(s => s.activeByScope[id]))
+  const activeView = useNoteViewStore(useShallow(s => s.items[activeViewId!]))
+  const updateView = useNoteViewStore(s => s.updateResource)
 
   if (!note) return <Skeleton className="p-6" />;
 
@@ -26,7 +30,7 @@ export default function InfoPanel() {
   return (
     <div className="flex flex-col justify-between gap-6 p-6 text-sm text-[var(--muted-foreground)] h-5/6">
       <div className="flex flex-col space-y-8">
-        <div className="flex justify-between items-center">
+        <div className="flex flex-col space-y-4">
           <section className="flex flex-col justify-between space-y-4">
             <h2 className="text-xs uppercase tracking-wide text-[var(--muted-foreground) mb-1">Title</h2>
             <EditableText
@@ -38,8 +42,35 @@ export default function InfoPanel() {
                 update(note.id, { title: newTitle })
                 finishStatus("editing", note.id)
               }}
+              as="h4"
+            />
+          </section>
+          <section className="flex flex-col justify-between space-y-4">
+            <h2 className="text-xs uppercase tracking-wide text-[var(--muted-foreground) mb-1">Current Tab</h2>
+            <EditableText
+              value={activeView.label}
+              onEdit={() => {
+                startStatus("editing", note.id)
+              }}
+              onSave={(newLabel: string) => {
+                updateView(activeView.id, { label: newLabel })
+                finishStatus("editing", note.id)
+              }}
               as="p"
             />
+          </section>
+
+          <Separator
+            orientation="horizontal"
+            className="my-2 data-[orientation=horizontal]:w-full"
+          />
+        </div>
+        <section className="flex flex-col justify-between space-y-4">
+        </section>
+        {
+          <section className="flex flex-col gap-2">
+            <h2 className="text-xs uppercase tracking-wide text-[var(--muted-foreground)] mb-1">Tags</h2>
+            <SearchableMultiSelect renderTagsBelow value={note.tags ?? []} onCreateOption={(tag: string) => update(note.id, { tags: [...(note.tags || []), tag] })} />
             <div className="flex flex-wrap gap-2">
               {(note.tags || [])?.map((tag) => (
                 <Badge key={tag} variant="outline" className="text-xs px-2 py-1">
@@ -47,17 +78,6 @@ export default function InfoPanel() {
                 </Badge>
               ))}
             </div>
-          </section>
-
-          <Separator
-            orientation="vertical"
-            className="mr-2 data-[orientation=vertical]:h-4"
-          />
-        </div>
-        {
-          <section className="flex flex-col gap-2">
-            <h2 className="text-xs uppercase tracking-wide text-[var(--muted-foreground)] mb-1">Tags</h2>
-            <SearchableMultiSelect renderTagsBelow value={note.tags ?? []} onCreateOption={(tag: string) => update(note.id, { tags: [...(note.tags || []), tag] })} />
           </section>
         }
         <section>

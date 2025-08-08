@@ -6,7 +6,8 @@ export type ButtonVariant =
 	| "ghost"
 	| "destructive"
 	| "disabled"
-	| "loading";
+	| "loading"
+	| "inverse";
 
 export const baseButtonStyles =
 	"inline-flex items-center justify-center rounded-md font-medium transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 aria-invalid:ring-destructive/30 aria-invalid:border-destructive disabled:cursor-not-allowed disabled:opacity-50 data-[state=loading]:cursor-wait data-[state=loading]:opacity-60 [&_svg:not([class*='size-'])]:size-4 [&_svg]:shrink-0";
@@ -16,6 +17,7 @@ export const variantClasses: Record<ButtonVariant, string> = {
 		"bg-[var(--primary)] text-[var(--background)] hover:bg-[var(--primary-hover)] hover:text-[var(--foreground)] focus-visible:ring-[var(--primary)] border border-transparent",
 	outline:
 		"bg-transparent border border-[var(--border)] text-[var(--foreground)] hover:bg-[var(--muted)]",
+inverse: "text-(--background) bg-(--transparent) hover:bg-(--accent) focus-visible:ring-(--primary) border border-transparent" ,
 	ghost: "bg-transparent hover:bg-[var(--muted)] text-[var(--foreground)]",
 	link: "text-[var(--primary)] underline-offset-4 hover:underline shadow-none",
 	destructive:

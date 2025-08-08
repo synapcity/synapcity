@@ -25,7 +25,7 @@ export const DashboardHeader = ({ dashboardId }: { dashboardId: string; }) => {
   const getStatus = () => {
     if (!status) {
       return (
-        <div className="ml-4 flex items-center gap-2 text-xs text-muted-foreground">
+        <div className="ml-4 flex items-center justify-around text-xs text-muted-foreground">
           <Icon name="check" className={cn("w-4 h-4", "text-green-500")} />
           <span>Synced</span>
         </div>

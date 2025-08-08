@@ -9,7 +9,7 @@ export const UserPanelIconSidebar = () => {
       side="left"
       collapsible="none"
       variant="icon"
-      className="w-[calc(var(--sidebar-width-icon)+1px)]! flex flex-1 bg-(--sidebar)"
+      className="w-[calc(var(--sidebar-width-icon)+1px)]! flex bg-(--sidebar) flex flex-col items-center gap-4 py-4"
       style={{
         width: "48px",
         maxWidth: "48px"

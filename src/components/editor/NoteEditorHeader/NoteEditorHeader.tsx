@@ -54,6 +54,8 @@ export function NoteEditorHeader({
   const views = useMemo(() => {
     return Object.values(viewObj).filter(v => v.entityId === noteId) ?? []
   }, [viewObj, noteId])
+  const activeView = useNoteViewStore(useShallow(s => s.activeByScope[noteId]))
+  const setSelected = useNoteViewStore(s => s.setActive)
 
   const { title, status } = useNoteStore(
     useShallow((s) => ({
@@ -141,7 +143,7 @@ export function NoteEditorHeader({
       <header
         ref={headerRef}
         style={{ height: headerHeight }}
-        className="sticky top-0 z-30 bg-background/95 supports-[backdrop-filter]:backdrop-blur border-b flex flex-col transition-[height] duration-100 ease-out"
+        className="sticky top-0 z-30 bg-background/95 supports-[backdrop-filter]:backdrop-blur border-b flex flex-col transition-[height] duration-100 ease-out @container"
       >
         <div className="flex items-center justify-between pr-4">
           <div className="flex items-center px-4 py-2 gap-4">
@@ -162,7 +164,7 @@ export function NoteEditorHeader({
 
         <div className="flex-1 flex flex-col md:flex-row items-start md:items-center justify-between px-4 gap-3 pb-3 text-xs text-muted-foreground">
           <div className="flex flex-wrap flex-1 items-center gap-4">
-            <span className="flex items-center gap-1">
+            <span className="@md:flex items-center gap-1 hidden transition-[display] duration-200 ease-linear">
               {/* calendar icon + date */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -215,6 +217,8 @@ export function NoteEditorHeader({
           <DynamicTabsBar
             tabs={tabOptions}
             onAdd={() => useNoteViewStore.getState().addView(noteId, "editor")}
+            value={activeView ?? views[0].id}
+            onTabChange={(tabId: string) => setSelected(noteId, tabId)}
           />
         </div>
       </header>

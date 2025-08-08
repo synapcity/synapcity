@@ -51,7 +51,7 @@ export function BreadcrumbHeader() {
 
   return (
     <header
-      className={cn("flex items-center gap-4 px-6 py-2 group transition-opacity duration-200 ease-linear drop-shadow-xl drop-shadow-(--primary) opacity-100", {
+      className={cn("flex items-center gap-4 px-6 pt-2 pb-4 group transition-opacity duration-200 ease-linear drop-shadow-xl drop-shadow-(--primary) opacity-100", {
         "h-[40px]": breadcrumbsComponent?.isVisible ?? true,
         "absolute top-0 left-0 right-0 h-2 p-0 opacity-0 z-[100]": !breadcrumbsComponent?.isVisible,
       })}
