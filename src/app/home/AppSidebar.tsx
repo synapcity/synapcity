@@ -8,7 +8,7 @@ import { CreateDashboardModal } from "@/components/dashboards";
 import { CreateNoteModal } from "@/components/notes";
 import { useDashboardStore } from "@/stores/resources/dashboardStore/useDashboardStore";
 import { useNoteStore } from "@/stores";
-import { LayoutDashboard, FileText, Home, Inbox, Search } from "lucide-react";
+import { LayoutDashboard, FileText } from "lucide-react";
 import React from "react";
 import { useShallow } from "zustand/shallow";
 import { useKeyboardShortcut } from "@/hooks";
@@ -30,12 +30,6 @@ export default function AppSidebar() {
   const [createDashboardOpen, setCreateDashboardOpen] = React.useState(false);
   const [createNoteOpen, setCreateNoteOpen] = React.useState(false);
 
-  const mainMenuItems = [
-    { title: "Home", url: "/home", icon: Home },
-    { title: "Inbox", url: "#", icon: Inbox },
-    { title: "Search", url: "#", icon: Search },
-  ];
-
   useKeyboardShortcut({
     key: "D",
     metaKey: true,
@@ -51,7 +45,7 @@ export default function AppSidebar() {
   return (
     <Sidebar variant="container" className="shrink-0">
       <SidebarContent className="py-6">
-        <SidebarMainMenu items={mainMenuItems} />
+        <SidebarMainMenu />
         <SidebarSection
           label="Dashboards"
           labelLink="/home/dashboards"

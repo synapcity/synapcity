@@ -39,6 +39,7 @@ const BreakpointToggleWrapper = ({ children, containerRef: externalContainerRef 
     const newRows = Math.floor((availableHeight + marginY) / rowSpace);
     setRows(newRows > 0 ? newRows : 1);
   }, [containerPaddingY, marginY, rowHeight]);
+  console.log("width", windowWidth)
 
   useEffect(() => {
     calculateRows();

@@ -78,7 +78,7 @@ export function ResizableSidebarWrapper({
       </ResizablePanelGroup>
 
       <div
-        className="flex-shrink-0 w-12 bg-[var(--sidebar-foreground)] text-(--sidebar-background) border-l flex"
+        className="flex-shrink-0 w-12 bg-[var(--sidebar-background)] text-(--sidebar-foreground) border-l flex"
       >
         <IconSidebar key={id} scope={scope as SidebarScope} id={id} side="right" />
       </div>

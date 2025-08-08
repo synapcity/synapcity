@@ -1,26 +1,13 @@
-"use client"
+import dynamic from "next/dynamic";
 
-import { Grid } from "@/grid";
-import { useDashboardStore } from "@/stores";
-import { useRef } from "react";
-import { useShallow } from "zustand/shallow";
-import { EditableText } from "../molecules/EditableText";
+const Grid = dynamic(() => import("@/grid/Grid/Grid").then(mod => mod.default))
+const DashboardHeader = dynamic(() => import("@/components/dashboards/DashboardHeader").then(mod => mod.DashboardHeader))
 
 export default function DashboardPage({ dashboardId }: { dashboardId: string; }) {
-  const dashboardRef = useRef<HTMLDivElement | null>(null)
-  const dashboard = useDashboardStore(useShallow(s => s.getResourceById(dashboardId)))
-  const updateName = useDashboardStore(useShallow(s => s.updateName))
   return (
-    <div ref={dashboardRef} className="flex flex-col items-center justify-items-center flex-1">
-      <div className="flex w-full">
-        <EditableText
-          as="h4"
-          value={dashboard?.name ?? ""}
-          onSave={(value: string) => updateName(dashboardId, value)}
-          className="mx-auto"
-        />
-      </div>
-      <Grid containerRef={dashboardRef} />
+    <div className="flex flex-col items-center justify-items-center flex-1">
+      <DashboardHeader dashboardId={dashboardId} />
+      <Grid />
     </div>
   )
 }

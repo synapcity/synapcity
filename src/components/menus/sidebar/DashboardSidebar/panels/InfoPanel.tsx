@@ -7,6 +7,8 @@ import { useShallow } from "zustand/shallow";
 import { EditableText } from "@/components/molecules/EditableText";
 import { useDashboardStore } from "@/stores";
 import { useMetadata } from "@/providers";
+import { IconButton } from "@/components/atoms";
+import { useState } from "react";
 
 export default function InfoPanel() {
   const { id } = useMetadata()
@@ -14,6 +16,7 @@ export default function InfoPanel() {
   const update = useDashboardStore(s => s.updateResource)
   const startStatus = useDashboardStore(s => s.startStatus)
   const finishStatus = useDashboardStore(s => s.finishStatus)
+  const [edit, setEdit] = useState(false)
 
   if (!dashboard) return <Skeleton className="p-6" />;
 
@@ -25,18 +28,47 @@ export default function InfoPanel() {
       <div className="flex flex-col space-y-8">
         <div className="flex justify-between items-center">
           <section className="flex flex-col justify-between space-y-4">
-            <h2 className="text-xs uppercase tracking-wide text-[var(--muted-foreground) mb-1">Title</h2>
-            <EditableText
-              value={dashboard.name}
-              onEdit={() => {
-                startStatus("editing", dashboard.id)
-              }}
-              onSave={(newName: string) => {
-                update(dashboard.id, { name: newName })
-                finishStatus("editing", dashboard.id)
-              }}
-              as="p"
-            />
+            <div className="flex flex-col space-y-4">
+              <h2 className="text-xs uppercase tracking-wide text-[var(--muted-foreground) mb-1">Title</h2>
+              <EditableText
+                value={dashboard.name}
+                onEdit={() => {
+                  startStatus("editing", dashboard.id)
+                }}
+                onSave={(newName: string) => {
+                  update(dashboard.id, { name: newName })
+                  finishStatus("editing", dashboard.id)
+                }}
+                as="h4"
+              />
+            </div>
+            <div className="flex flex-col space-y-4">
+              <h2 className="text-xs uppercase tracking-wide text-(--muted-foreground) mb-1">
+                Description
+              </h2>
+              {(dashboard.description || edit) ? (
+                <EditableText
+                  value={dashboard.description}
+                  onEdit={() => {
+                    startStatus("editing", dashboard.id)
+                  }}
+                  onSave={(newDescription: string) => {
+                    update(dashboard.id, { description: newDescription })
+                    finishStatus("editing", dashboard.id)
+                  }}
+                  as="p"
+                  onBlur={() => {
+                    setEdit(false)
+                    finishStatus("editing", dashboard.id)
+                  }}
+                />
+              ) : (
+                <IconButton
+                  icon="plus"
+                  onClick={() => setEdit(true)}
+                />
+              )}
+            </div>
           </section>
 
           <Separator

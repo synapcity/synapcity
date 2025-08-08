@@ -17,6 +17,7 @@ interface EditableTextProps {
   as?: keyof JSX.IntrinsicElements;
   className?: string;
   placeholder?: string;
+  onBlur?: () => void;
 }
 
 export const EditableText = ({
@@ -26,6 +27,7 @@ export const EditableText = ({
   as = "span",
   className = "",
   placeholder = "Untitled",
+  onBlur
 }: EditableTextProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [currentValue, setCurrentValue] = useState(value);
@@ -63,6 +65,7 @@ export const EditableText = ({
     if (currentValue !== value) {
       onSave(currentValue);
     }
+    onBlur?.()
   };
 
   const handleEditing = () => {
@@ -111,6 +114,7 @@ export const EditableText = ({
         style={{ cursor: "pointer" }}
         aria-label={`Edit ${textValue}`}
         role="textbox"
+        onBlur={handleBlur}
       >
         {textValue}
       </Comp>

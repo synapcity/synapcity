@@ -36,8 +36,9 @@ const BreakpointToggleWrapper = dynamic(
   }
 );
 
-const Grid = ({ containerRef }: { containerRef: RefObject<HTMLDivElement | null> }) => {
+const Grid = () => {
   const [mounted, setMounted] = useState(false);
+  const containerRef = useRef<HTMLDivElement | null>(null)
   const { state } = useCurrentGrid()
   // const grid = useGridStore(useShallow(s => s.grids[gridId]))
   // const initGrid = useGridStore(s => s.initGrid)
@@ -59,7 +60,7 @@ const Grid = ({ containerRef }: { containerRef: RefObject<HTMLDivElement | null>
   }, []);
 
   return (
-    <div className="bg-[var(--background-100)] flex-1 size-full max-size-full flex flex-col shadow-inner relative">
+    <div ref={containerRef} className="bg-[var(--background-100)] flex-1 size-full max-size-full flex flex-col shadow-inner relative">
       <BreakpointToggleWrapper containerRef={containerRef}>
         {mounted ? <ReactGridLayout layoutRef={layoutRef} /> : <WidgetAreaSkeleton />}
       </BreakpointToggleWrapper>
