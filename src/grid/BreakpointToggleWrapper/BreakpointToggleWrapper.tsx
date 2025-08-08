@@ -28,7 +28,7 @@ const BreakpointToggleWrapper = ({ children, containerRef: externalContainerRef 
   const columnCount = defaultCols[breakpoint];
   const containerWidthClass = widths[breakpoint];
 
-  const rowHeight = config.rowHeight;
+  const rowHeight = config?.rowHeight ?? 30;
   const marginX = defaultMargin[breakpoint][0];
   const marginY = defaultMargin[breakpoint][1];
   const containerPaddingX = defaultContainerPadding[breakpoint][0];

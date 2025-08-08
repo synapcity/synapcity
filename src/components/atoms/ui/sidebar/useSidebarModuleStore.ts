@@ -10,6 +10,7 @@ export const SIDEBAR_DIMENSIONS = {
 	MIN: 64,
 	MAX: 360,
 	ICON: 0,
+	ICON_WIDTH: 48
 };
 
 export const SIDEBAR_STATES = {

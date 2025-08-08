@@ -17,14 +17,27 @@ export const ExtendedSidebarItem = ({ module, isActive, isDragging, ...sortableP
   const { setActiveModuleId } = useUserPanel()
   const { setOpen } = useSidebar()
   return (
-    <SidebarMenuItem {...sortableProps}>
+    <SidebarMenuItem {...sortableProps}
+      style={{
+        width: "48px",
+        maxWidth: "48px"
+      }}
+    >
       <SidebarMenuButton
+        variant="auto"
+        size="sm"
         isActive={isActive}
         className={cn(
-          "group flex items-center justify-center size-9 rounded-md text-muted-foreground hover:text-foreground transition-colors",
-          // isActive && "active:bg-[var(--accent-200)] active:text-[var(--accent)]"
+          "group flex items-center justify-center size-9 rounded-md transition-colors",
+          isActive && "active:text-[var(--accent)] data-[active=true]:bg-transparent"
         )}
         asChild
+        style={{
+          width: "48px",
+          maxWidth: "48px"
+        }}
+        tooltip={module.label}
+        tooltipPosition="right"
       >
 
         <IconButton

@@ -76,7 +76,7 @@ export function SidebarMenuButton({
       data-size={size}
       className={cn(
         "flex items-center gap-2 rounded-md text-sm transition flex-1",
-        "data-[active=true]:hover:text-(--accent-foreground) active:bg-(--sidebar-accent) text-(--primary-foreground) hover:text-(--accent)",
+        "data-[active=true]:hover:text-(--accent-foreground) data-[active=true]:bg-(--sidebar-background) active:bg-(--sidebar-accent) text-(--primary-foreground) hover:text-(--accent)",
         "group-data-[collapsible=icon]:hidden [&>svg]:size-4 text-xs",
         sidebarMenuButtonVariants({ variant, size, isActive, icon }),
         className

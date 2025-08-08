@@ -12,10 +12,14 @@ import { useUserPanel } from "@/hooks/features/useUserPanel/useUserPanel";
 export const UserPanelSidebar = () => {
   const { activeModule } = useUserPanel()
   return (
-    <Sidebar auto variant="container" className="hidden flex-1 md:flex relative">
+    <Sidebar auto variant="container" className="hidden flex-1 md:flex flex-col relative min-h-0"
+      style={{
+        maxWidth: "320px"
+      }}
+    >
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupContent>
+          <SidebarGroupContent className="min-h-0 overflow-y-auto no-scrollbar shadow-r">
             {activeModule?.sidebar ? (
               <activeModule.sidebar />
             ) : (

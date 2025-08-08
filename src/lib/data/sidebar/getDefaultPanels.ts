@@ -9,6 +9,8 @@ export function getDefaultPanels(scope: SidebarScope): SidebarPanel[] {
 			return defaultNotePanels;
 		case "dashboard":
 			return defaultDashboardPanels;
+	case "global":
+		return []
 		default:
 			return sharedPanelMeta.map((meta) => ({
 				...meta,

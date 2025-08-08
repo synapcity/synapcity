@@ -29,7 +29,7 @@ export function useGrid(id?: string, scope?: string, parentId?: string) {
   }, [gridId, hasInitialized, initGrid, parentId, scope]);
 
   const grid = useGridStore(useShallow((s) => s.getGrid(gridId)));
-  const config = useGridStore(useShallow(s => s.getFullConfig(gridId)))
+  const config = useGridStore(useShallow(s => s.getConfig(gridId)))
   const state = useGridStore(useShallow((s) => s.getState(gridId)))
   const setState = useGridStore((s) => s.updateGridState);
   const setConfig = useGridStore((s) => s.updateGridConfig);

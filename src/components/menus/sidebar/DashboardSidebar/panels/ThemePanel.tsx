@@ -19,7 +19,6 @@ export const ThemePanel = () => {
     updateThemePreferences(finalData)
     applyThemeStyles(finalData)
   }
-  console.log("scope", scope, "id", entityId)
   return (
     <div className="mt-4 flex-1 flex flex-col text-(--foreground)">
       <ThemeForm

@@ -9,21 +9,17 @@ import { ActivePanelRenderer } from "./ActivePanelRenderer/ActivePanelRenderer";
 import { motion } from "framer-motion";
 import { Suspense } from "react";
 import { ModalRenderer } from "@/components/modals";
+import dynamic from "next/dynamic";
+// import { IconSidebar } from "@/components/menus/sidebar";
+
+const UserPanelContainer = dynamic(() => import("../UserPanelContainer").then(mod => mod.UserContainer))
 
 export const UserPanel = () => {
   return (
-    <SidebarProvider
-      sidebarId="user-panel-sidebar"
-      style={{ "--sidebar-width": "350px" } as React.CSSProperties}
-    >
+    <UserPanelContainer>
       <div className="size-full flex-1 flex border-t-[3px] border-t-accent-200">
-        <SidebarWrapper
-          iconSidebarContent={<UserPanelIconSidebar />}
-        >
-          <Suspense fallback={<div>Loading...</div>}>
-            <UserPanelSidebar />
-          </Suspense>
-        </SidebarWrapper>
+        <UserPanelIconSidebar />
+        <UserPanelSidebar />
         <SidebarInset>
           <motion.div
             layout
@@ -38,6 +34,6 @@ export const UserPanel = () => {
           </motion.div>
         </SidebarInset>
       </div>
-    </SidebarProvider>
+    </UserPanelContainer>
   )
 }

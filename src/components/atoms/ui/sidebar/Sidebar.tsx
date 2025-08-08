@@ -25,7 +25,7 @@ export function Sidebar({
   ...props
 }: React.ComponentProps<"div"> & {
   side?: "left" | "right";
-  variant?: "sidebar" | "floating" | "inset" | "container";
+  variant?: "sidebar" | "floating" | "inset" | "container" | "icon";
   collapsible?: "offcanvas" | "icon" | "none";
   auto?: boolean;
   resizable?: boolean;
@@ -46,7 +46,7 @@ export function Sidebar({
 
 
   const [width, setWidth] = React.useState(
-    (settings as SidebarSettings)?.width ?? SIDEBAR_DIMENSIONS.DEFAULT
+    (settings as SidebarSettings)?.width ?? (variant === "icon" ? SIDEBAR_DIMENSIONS.ICON_WIDTH : SIDEBAR_DIMENSIONS.DEFAULT)
   );
   const resizing = React.useRef(false);
 
@@ -123,7 +123,7 @@ export function Sidebar({
   }
 
 
-  const containerWidth = isExpanded
+  const containerWidth = variant === "icon" ? SIDEBAR_DIMENSIONS.ICON_WIDTH : isExpanded
     ? width
     : isIcon
       ? SIDEBAR_DIMENSIONS.ICON
@@ -183,7 +183,7 @@ export function Sidebar({
         <div
           data-slot="sidebar-inner"
           className={cn(
-            "bg-(--sidebar-background) text-(--sidebar-foreground) flex flex-col flex-1",
+            "bg-(--sidebar-background) text-(--sidebar-foreground) min-h-0 flex flex-col flex-1",
             variant === "floating" &&
             "rounded-md border border-(--sidebar-border) shadow-sm"
           )}

@@ -23,6 +23,7 @@
 // }
 
 export type SidebarScope =
+| "global"
 	| "note"
 	| "dashboard"
 	| "resource"
