@@ -1,5 +1,3 @@
-"use client";
-
 import { create, StateCreator } from "zustand";
 import { format, parseISO } from "date-fns";
 import { migrateInboxStore } from "../migrate/migrate";

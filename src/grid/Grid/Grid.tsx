@@ -1,0 +1,71 @@
+"use client";
+
+import { RefObject, useEffect, useRef, useState } from "react";
+// import { useGridStore } from "../gridStore/useGridStore";
+import dynamic from "next/dynamic";
+import { Layout } from "react-grid-layout";
+// import { useDashboardStore } from "@/stores/dashboardStore/useDashboardStore";
+import { BreakpointToggleSkeleton, WidgetAreaSkeleton } from "@/components/skeletons";
+// import { useShallow } from "zustand/shallow";
+import { useCurrentGrid } from "@/rgl/providers/useGrid";
+
+const ReactGridLayout = dynamic(
+  () =>
+    import("../ReactGridLayout/ReactGridLayout").then(
+      (mod) => mod.ReactGridLayout
+    ),
+  {
+    ssr: false,
+    loading: () => (
+      <WidgetAreaSkeleton />
+    ),
+  }
+) as typeof import("../ReactGridLayout/ReactGridLayout").ReactGridLayout & {
+  preload?: () => void;
+};
+
+const BreakpointToggleWrapper = dynamic(
+  () =>
+    import("../BreakpointToggleWrapper/BreakpointToggleWrapper").then(
+      (mod) => mod.default
+    ),
+  {
+    ssr: false,
+    loading: () => (
+      <BreakpointToggleSkeleton />
+    ),
+  }
+);
+
+const Grid = ({ containerRef }: { containerRef: RefObject<HTMLDivElement | null> }) => {
+  const [mounted, setMounted] = useState(false);
+  const { state } = useCurrentGrid()
+  // const grid = useGridStore(useShallow(s => s.grids[gridId]))
+  // const initGrid = useGridStore(s => s.initGrid)
+
+  // useEffect(() => {
+  //   if (!grid) {
+  //     initGrid({ gridId })
+  //   }
+  // }, [grid])
+  // const dashboardId = useDashboardStore(useShallow(s => s.getSelected?.("dashboard")));
+  const layouts = state?.layouts ?? {}
+
+  const currentBreakpoint = state?.activeBreakpoint ?? "lg"
+  const layoutRef = useRef<Layout[]>(layouts?.[currentBreakpoint] || [])
+
+  useEffect(() => {
+    ReactGridLayout.preload?.();
+    setMounted(true);
+  }, []);
+
+  return (
+    <div className="bg-[var(--background-100)] flex-1 size-full max-size-full flex flex-col shadow-inner relative">
+      <BreakpointToggleWrapper containerRef={containerRef}>
+        {mounted ? <ReactGridLayout layoutRef={layoutRef} /> : <WidgetAreaSkeleton />}
+      </BreakpointToggleWrapper>
+    </div>
+  )
+}
+
+export default Grid;

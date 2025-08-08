@@ -29,7 +29,7 @@ export function NotesSearchWithTabs() {
 
   if (!hasHydrated) return null;
   return (
-    <div className="max-w-xl mx-auto bg-white border rounded shadow-md p-4">
+    <div className="bg-white border rounded shadow-md p-4 flex-1 flex flex-col w-full">
       <div className="flex space-x-4 mb-3">
         <button
           className={`px-4 py-2 font-semibold rounded ${tab === "notes" ? "bg-indigo-600 text-white" : "bg-gray-100"

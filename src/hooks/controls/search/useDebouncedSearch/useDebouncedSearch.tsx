@@ -5,7 +5,7 @@ import debounce from "lodash.debounce";
 
 export function useDebouncedSearch<T>(
   query: string,
-  searchFn: (query: string) => Promise<T[]>,
+  searchFn?: (query: string) => Promise<T[]>,
   delay = 250
 ) {
   const [results, setResults] = useState<T[]>([]);
@@ -13,6 +13,7 @@ export function useDebouncedSearch<T>(
   const debounced = useMemo(
     () =>
       debounce(async (q: string) => {
+        if (!searchFn) return;
         const res = await searchFn(q);
         setResults(res);
       }, delay),

@@ -50,3 +50,4 @@ export {
 	getViewExcerpts,
 	aggregateViewContent,
 } from "./note-utils";
+export { deepMerge } from "./deepMerge"

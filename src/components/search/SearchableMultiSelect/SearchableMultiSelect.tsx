@@ -27,9 +27,9 @@ export type SearchableMultiSelectOption = {
 
 type Props = {
   value: string[];
-  onChange: (selected: string[]) => void;
+  onChange?: (selected: string[]) => void;
   options?: SearchableMultiSelectOption[];
-  onSearch: (query: string) => Promise<SearchableMultiSelectOption[]>;
+  onSearch?: (query: string) => Promise<SearchableMultiSelectOption[]>;
   onCreateOption?: (label: string) => void;
   placeholder?: string;
   triggerLabel?: string;
@@ -86,9 +86,9 @@ export function SearchableMultiSelect({
 
   const handleToggle = (val: string) => {
     if (selectedSet.has(val)) {
-      onChange(value.filter((v) => v !== val));
+      onChange?.(value.filter((v) => v !== val));
     } else if (!atMax) {
-      onChange([...value, val]);
+      onChange?.([...value, val]);
     }
   };
 
@@ -102,7 +102,7 @@ export function SearchableMultiSelect({
   };
 
   const handleRemove = (val: string) => {
-    onChange(value.filter((v) => v !== val));
+    onChange?.(value.filter((v) => v !== val));
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -112,7 +112,7 @@ export function SearchableMultiSelect({
       input === "" &&
       value.length > 0
     ) {
-      onChange(value.slice(0, -1));
+      onChange?.(value.slice(0, -1));
     }
   };
 
@@ -196,7 +196,7 @@ export function SearchableMultiSelect({
               <CommandEmpty>No results found.</CommandEmpty>
               <CommandGroup>
                 {matchedOptions.map((opt) => {
-                  const isSelected = selectedSet.has(opt.value);
+                  const isSelected = selectedSet.has(opt.value ?? input);
                   return (
                     <CommandItem
                       key={opt.value}
@@ -250,7 +250,7 @@ export function SearchableMultiSelect({
       {showClearButton && value.length > 0 && (
         <button
           type="button"
-          onClick={() => onChange([])}
+          onClick={() => onChange?.([])}
           className="text-xs text-(--muted-foreground) underline hover:text-(--foreground) mt-1"
         >
           Clear all

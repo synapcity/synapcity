@@ -8,7 +8,7 @@ export const defaultDashboardPanels: SidebarPanel[] = sharedPanelMeta.map(
 		component: lazy(() =>
 			import(
 				/* webpackChunkName: "DashboardSidebarPanel-[request]" */
-				`@/components/menus/sidebar/DashboardSidebar/panels/Dash${capitalize(
+				`@/components/menus/sidebar/DashboardSidebar/panels/${capitalize(
 					meta.id
 				)}Panel`
 			).then((mod) => ({ default: mod.default }))

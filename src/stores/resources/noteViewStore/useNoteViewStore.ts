@@ -12,6 +12,7 @@ import {
 	createActiveSlice,
 } from "@/stores/slices";
 import type { StoreApi, UseBoundStore } from "zustand";
+import { useNoteStore } from "../noteStore";
 
 export type NoteViewStore = ResourceStore<ViewResource> &
 	ReturnType<typeof createViewSlice<ViewResource>> &
@@ -22,7 +23,10 @@ const _useNoteViewStore = createResourceStore<ViewResource>({
 	resourceName: "note-views",
 	schema: ViewResourceSchema,
 	persistKey: "synapcity-note-views",
-	createItem: createView,
+	createItem: (partial) => {
+		useNoteStore.getState().updateResource(partial.entityId, { updatedAt: new Date().toISOString()})
+		return createView(partial)
+	},
 
 	initItems: (set) => (raw) => {
 		const parsed = initItems<ViewResource>(raw, ViewResourceSchema, createView);

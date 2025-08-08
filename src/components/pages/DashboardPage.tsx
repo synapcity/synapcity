@@ -1,12 +1,22 @@
 "use client"
 
+import { Grid } from "@/grid";
+// import { useMetadata } from "@/providers"
+// import { ResponsiveGridWrapper } from "@/rgl/components/ResponsiveGridWrapper"
+import { useRef } from "react";
+
 export default function DashboardPage() {
-
+  const containerRef = useRef<HTMLDivElement | null>(null)
+  // const { scope, id } = useMetadata()
+  // const children = useMemo(() => {
+  //   return new Array(20).fill(undefined).map((val, idx) => {
+  //     return <div key={idx} data-grid={{ x: idx, y: 1, w: 1, h: 1 }} />;
+  //   });
+  // }, []);
   return (
-    <div className="flex flex-col items-center justify-items-center size-full p-8 pb-20 gap-16 sm:p-20">
-      <div className="container mx-auto py-10">
-
-      </div>
+    <div ref={containerRef} className="flex flex-col items-center justify-items-center flex-1">
+      {/* <ResponsiveGridWrapper /> */}
+      <Grid containerRef={containerRef} />
     </div>
   )
 }
