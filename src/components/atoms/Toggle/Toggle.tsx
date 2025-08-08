@@ -18,82 +18,69 @@ export interface ToggleProps
   source?: IconSource
 }
 
-
-const Toggle = React.forwardRef<HTMLButtonElement, ToggleProps>(
-  (
-    {
-      label,
-      description,
-      error,
-      icon,
-      showIcons = false,
-      isIconOnly,
-      className,
-      children,
-      pressed,
-      source,
-      ...props
-    },
-    ref
-  ) => {
-    const id = React.useId();
-
-    return (
-      <div className="grid gap-1.5">
-        {!isIconOnly && label && (
-          <Label
-            htmlFor={id}
-            className={cn(error && "text-destructive")}
-          >
-            {label}
-          </Label>
-        )}
-
-        <UIToggle
-          ref={ref}
-          id={id}
-          aria-invalid={error || undefined}
-          pressed={pressed}
-          className={cn(className)}
-          {...props}
-        >
-          {showIcons ? (
-            <Icon name={pressed ? "Check" : "X"} source={source} />
-          ) : icon ? (
-            <Icon
-              name={icon}
-              source={source}
-              className={cn(
-                "transition-colors",
-                pressed ? "text-[var(--foreground)]" : ""
-              )}
-            />
-          ) : null}
-
-          {!isIconOnly && (
-            <span
-              className={cn(
-                "ml-2 transition-all duration-200 ease-linear",
-                isIconOnly ? "opacity-0 w-0 overflow-hidden" : "opacity-100 w-auto"
-              )}
-            >
-              {children}
-            </span>
+const Toggle = React.forwardRef<
+  HTMLButtonElement,
+  ToggleProps
+>(({ label, description, error, icon, showIcons = false, className, children, pressed, isIconOnly, source, ...props }, ref) => {
+  const id = React.useId()
+  return (
+    <div className="grid gap-1.5">
+      {!isIconOnly && label && (
+        <Label
+          htmlFor={id}
+          className={cn(
+            error && "text-destructive"
           )}
-        </UIToggle>
-
-        {description && (
-          <Typography
-            variant="small"
-            className={cn(error && "text-destructive")}
-          >
-            {description}
-          </Typography>
+        >
+          {label}
+        </Label>
+      )}
+      <UIToggle
+        ref={ref}
+        id={id}
+        aria-invalid={error || undefined}
+        pressed={pressed}
+        className={cn("border border-[var(--accent)] hover:cursor-pointer", className)}
+        {...props}
+      >
+        {showIcons ? (
+          <Icon name={pressed ? "Check" : "X"} source={source} />
+        ) : icon && (
+          <Icon
+            name={icon}
+            source={source}
+            className={cn(pressed ? "text-white" : "text-[var(--accent)]")}
+          />
         )}
-      </div>
-    );
-  }
-);
+
+
+        {!isIconOnly && (
+          <span
+            className={cn(
+              "ml-2 transition-all ease-linear duration-200",
+              isIconOnly ? "opacity-0 w-0 overflow-hidden" : "opacity-100 w-auto"
+            )}
+          >
+            {children}
+          </span>
+
+        )}
+      </UIToggle>
+
+
+      {description && (
+        <Typography
+          variant="small"
+          className={cn(
+            error && "text-destructive"
+          )}
+        >
+          {description}
+        </Typography>
+      )}
+    </div>
+  )
+})
 
 Toggle.displayName = "Toggle"
 

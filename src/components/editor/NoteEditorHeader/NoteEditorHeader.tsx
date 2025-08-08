@@ -3,10 +3,12 @@
 import { Icon } from "@/components/atoms";
 import { EditableText } from "@/components/molecules/EditableText";
 import { TagPills } from "@/components/tables/pills";
-import { useNoteStore } from "@/stores";
+import { DynamicTabsBar } from "@/components/tables/Table/TableControls/DynamicTabsBar";
+import { ViewResource } from "@/schemas";
+import { useNoteStore, useNoteViewStore } from "@/stores";
 import { cn } from "@/utils";
 import { formatDate } from "@/utils/date-utils";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useShallow } from "zustand/shallow";
 
 const HEADER_FULL = 120;
@@ -48,6 +50,10 @@ export function NoteEditorHeader({
   const updated = formatDate(updatedAt, { style: "relative" })
   const startStatus = useNoteStore(s => s.startStatus)
   const clearStatus = useNoteStore(s => s.resetStatus)
+  const viewObj = useNoteViewStore(useShallow(s => s.items))
+  const views = useMemo(() => {
+    return Object.values(viewObj).filter(v => v.entityId === noteId) ?? []
+  }, [viewObj, noteId])
 
   const { title, status } = useNoteStore(
     useShallow((s) => ({
@@ -123,6 +129,13 @@ export function NoteEditorHeader({
     );
   };
 
+  const tabOptions = views.map((view) => {
+    return {
+      label: (view as ViewResource)?.label,
+      value: (view as ViewResource)?.id
+    }
+  })
+
   return (
     <div className="flex flex-col">
       <header
@@ -197,6 +210,12 @@ export function NoteEditorHeader({
             </span>
           </div>
           <TagPills tags={tags} onClick={onTagClick} onRemove={onTagRemove} />
+        </div>
+        <div className="px-4 pb-3">
+          <DynamicTabsBar
+            tabs={tabOptions}
+            onAdd={() => useNoteViewStore.getState().addView(noteId, "editor")}
+          />
         </div>
       </header>
     </div>

@@ -24,6 +24,7 @@ interface SidebarSectionProps<T> {
   getItemLabel: (item: T) => string;
   keyboardShortcut?: string;
   keyboardShortcutTooltip?: string;
+  activeItemId?: string | null;
 }
 
 export function SidebarSection<T extends { id: string }>({
@@ -36,8 +37,10 @@ export function SidebarSection<T extends { id: string }>({
   itemIcon: ItemIcon,
   getItemLabel,
   keyboardShortcut,
-  keyboardShortcutTooltip
+  keyboardShortcutTooltip,
+  activeItemId
 }: SidebarSectionProps<T>) {
+  console.log("is active", activeItemId, label)
   return (
     <SidebarGroup>
       <div className="flex items-center justify-between px-1.5 py-2">
@@ -63,7 +66,7 @@ export function SidebarSection<T extends { id: string }>({
           {items.length > 0 ? (
             items.map((item) => (
               <SidebarMenuItem key={item.id}>
-                <SidebarMenuButton asChild>
+                <SidebarMenuButton isActive={activeItemId === item.id} asChild>
                   <Link href={itemUrl(item)} className="flex items-center gap-2 px-2 py-1">
                     <ItemIcon className="h-4 w-4" />
                     <span>{getItemLabel(item)}</span>

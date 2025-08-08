@@ -2,9 +2,10 @@
 
 import React, { JSX, Suspense } from 'react';
 import { Skeleton } from '@/components/atoms/ui/skeleton';
-import { useUIStore } from '@/stores/uiStore';
 import { usePanels } from '@/hooks/sidebar/usePanels';
 import { SidebarScope } from '@/stores/sidebarStore';
+import { useSidebar } from '@/components/atoms/ui/sidebar';
+import { useNoteStore } from '@/stores';
 
 interface SidebarRendererProps {
   scope: SidebarScope;
@@ -12,16 +13,18 @@ interface SidebarRendererProps {
 }
 
 export function SidebarRenderer({ scope, id }: SidebarRendererProps): JSX.Element | null {
-  const getCompState = useUIStore(s => s.getCompState)
-  const isVisible = getCompState ? getCompState("sidebar", "isVisible") : false
-  const isHydrated = useUIStore((s) => s.hasHydrated);
-  const { activePanel } = usePanels(scope, id);
+  const { sidebarState } = useSidebar();
+
+  const isExpanded = sidebarState === "expanded";
+  const { activePanel } = usePanels(scope, id)
+
+  const isHydrated = useNoteStore((s) => s.hasHydrated);
 
   if (!isHydrated) {
     return <Skeleton className="w-full h-full" />;
   }
 
-  if (!activePanel || !isVisible) {
+  if (!activePanel || !isExpanded) {
     console.warn(`No active panel for ${scope}:${id}`);
     return null;
   }

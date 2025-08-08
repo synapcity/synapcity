@@ -12,6 +12,7 @@ import type { ImperativePanelHandle } from "react-resizable-panels";
 import { PanelRightClose } from "lucide-react";
 import { IconSidebar } from "../IconSidebar";
 import { SidebarScope } from "@/stores/sidebarStore";
+import { usePanels } from "@/hooks";
 
 interface ResizableSidebarWrapperProps {
   id: string;
@@ -28,7 +29,7 @@ export function ResizableSidebarWrapper({
 }: ResizableSidebarWrapperProps) {
   const panelRef = useRef<ImperativePanelHandle>(null);
   const { sidebarState, toggleSidebar } = useSidebar();
-
+  const { activePanel } = usePanels(scope as SidebarScope, id)
 
   useEffect(() => {
     const panel = panelRef.current;
@@ -65,7 +66,7 @@ export function ResizableSidebarWrapper({
           order={2}
         >
           <div className="flex items-center justify-between px-3 py-2 border-b">
-            <h2 className="text-sm font-medium">Info</h2>
+            <h2 className="text-sm font-medium">{activePanel?.label}</h2>
             <button
               onClick={toggleSidebar}
               className={cn("p-1 rounded hover:bg-gray-600")}

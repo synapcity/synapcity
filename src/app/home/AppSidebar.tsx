@@ -24,6 +24,8 @@ export default function AppSidebar() {
     () => Object.values(notesObj).map(({ id, title }) => ({ id, title })),
     [notesObj]
   );
+  const activeDashboardId = useDashboardStore(useShallow(s => s.selected['dashboard']))
+  const activeNoteId = useNoteStore(useShallow(s => s.selected['note']))
 
   const [createDashboardOpen, setCreateDashboardOpen] = React.useState(false);
   const [createNoteOpen, setCreateNoteOpen] = React.useState(false);
@@ -61,6 +63,7 @@ export default function AppSidebar() {
           getItemLabel={(d) => d.name}
           keyboardShortcut="⌘D"
           keyboardShortcutTooltip="Cmd+D"
+          activeItemId={activeDashboardId}
         />
         <SidebarSection
           label="Notes"
@@ -73,6 +76,7 @@ export default function AppSidebar() {
           getItemLabel={(n) => n.title}
           keyboardShortcut="⌘⇧N"
           keyboardShortcutTooltip="Cmd+Shift+N"
+          activeItemId={activeNoteId}
         />
       </SidebarContent>
     </Sidebar>

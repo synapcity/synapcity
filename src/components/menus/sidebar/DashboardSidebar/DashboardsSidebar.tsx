@@ -2,27 +2,27 @@
 
 import * as React from "react";
 import { Sidebar, SidebarContent, SidebarHeader, SidebarGroup, SidebarGroupContent } from "@/components/atoms/ui/sidebar";
-import { useNoteStore } from "@/stores/resources";
+import { useDashboardStore } from "@/stores/dashboardStore/useDashboardStore";
 import { usePanels } from "@/hooks";
 import { useShallow } from "zustand/shallow";
 import { SidebarRenderer } from "../SidebarRenderer";
 
-interface NotesSidebarProps {
+interface DashboardsSidebarProps {
   id: string;
 }
 
-export function NotesSidebar({ id, ...props }: NotesSidebarProps & React.ComponentProps<typeof Sidebar>) {
-  const currentNote = useNoteStore(useShallow(s => s.getResourceById(id)));
-  const createNote = useNoteStore(s => s.addResource);
-  const noteExists = Boolean(currentNote);
-  const { panels, activePanel } = usePanels("note", id);
+export function DashboardsSidebar({ id, ...props }: DashboardsSidebarProps & React.ComponentProps<typeof Sidebar>) {
+  const currentDashboard = useDashboardStore(useShallow(s => s.getResourceById(id)));
+  const createDashboard = useDashboardStore(s => s.addResource);
+  const dashboardExists = Boolean(currentDashboard);
+  const { panels, activePanel } = usePanels("dashboard", id);
 
   React.useEffect(() => {
-    if (!noteExists) {
-      console.warn(`Note ${id} not found—creating a stub.`);
-      createNote({ id });
+    if (!dashboardExists) {
+      console.warn(`Dashboard ${id} not found—creating a stub.`);
+      createDashboard({ id });
     }
-  }, [noteExists, id, createNote]);
+  }, [dashboardExists, id, createDashboard]);
 
   return (
     <Sidebar
@@ -41,13 +41,13 @@ export function NotesSidebar({ id, ...props }: NotesSidebarProps & React.Compone
     >
       {activePanel ? (
         <SidebarContent className="bg-[var(--sidebar-foreground)] text-[var(--sidebar)] p-2 flex-1 min-h-0 overflow-auto">
-          <SidebarRenderer scope="note" id={id} />
+          <SidebarRenderer scope="dashboard" id={id} />
         </SidebarContent>
       ) : (
         <SidebarContent className="border-l bg-[var(--sidebar-foreground)] text-[var(--sidebar)] flex-1 min-h-0 overflow-auto">
           <SidebarHeader className="gap-3.5 border-b p-4">
             <span className="text-foreground text-base font-medium">
-              Notes
+              Dashboards
             </span>
           </SidebarHeader>
           <SidebarGroup>

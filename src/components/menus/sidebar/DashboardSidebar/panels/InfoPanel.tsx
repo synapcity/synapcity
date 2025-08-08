@@ -67,7 +67,7 @@
 //     </div>
 //   );
 // }
-export default function InfoPanel() {
+export default function DashInfoPanel() {
   return (
     <div>
       Info

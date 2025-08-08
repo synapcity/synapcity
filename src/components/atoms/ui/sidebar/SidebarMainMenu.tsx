@@ -31,10 +31,13 @@ export function SidebarMainMenu({ items }: { items: MainMenuItem[] }) {
               return (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton onClick={() => setIsCommandOpen(true)} asChild>
-                    <span className="flex justify-between w-full items-center pr-2">
-                      <span className="flex items-center gap-2 px-2 py-1">
-                        <item.icon className="h-4 w-4" />
-                        <span>{item.title}</span>
+                    <span className="w-full">
+
+                      <span className="flex justify-between w-full items-center pr-2">
+                        <span className="flex items-center gap-2 px-2 py-1">
+                          <item.icon className="h-4 w-4" />
+                          <span>{item.title}</span>
+                        </span>
                         <CommandShortcut side="right" content="Cmd+K">⌘K</CommandShortcut>
                       </span>
                     </span>

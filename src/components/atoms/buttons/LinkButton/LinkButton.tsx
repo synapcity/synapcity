@@ -26,6 +26,7 @@ export interface LinkButtonProps
   fullWidth?: boolean;
   children?: React.ReactNode;
   tooltip?: string;
+  tooltipPosition?: "right" | "top" | "bottom" | "left";
   icon?: string;
   onClick?: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
   onMouseEnter?: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
@@ -46,6 +47,7 @@ export const LinkButton = forwardRef<HTMLAnchorElement, LinkButtonProps>(
       fullWidth = false,
       children,
       tooltip,
+      tooltipPosition,
       ...props
     },
     ref
@@ -80,7 +82,7 @@ export const LinkButton = forwardRef<HTMLAnchorElement, LinkButtonProps>(
     );
 
     return tooltip ? (
-      <Tooltip asChild content={tooltip} trigger={link} />
+      <Tooltip asChild content={tooltip} trigger={link} side={tooltipPosition} />
     ) : (
       link
     );

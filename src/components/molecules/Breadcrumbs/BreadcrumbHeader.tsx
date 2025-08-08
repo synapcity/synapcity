@@ -68,18 +68,16 @@ export function BreadcrumbHeader() {
           }
         )}
       >
-        <button
-          type="button"
-          aria-label="Toggle sidebar"
-          className="rounded-lg p-2 hover:text-(--accent) transition-colors group"
-          onClick={toggleSidebar}
-        >
-          <Menu className="h-5 w-5 text-(--muted-foreground) group-hover:text-(--foreground)" />
-        </button>
-
-        <CommandShortcut side="top" content="Cmd+B" className="mr-2">
-          ⌘B
-        </CommandShortcut>
+        <span className="relative group p-2 mr-2" onClick={() => toggleSidebar()}>
+          <span className="absolute inset-0 flex items-center justify-center transition-opacity duration-150 opacity-100 group-hover:opacity-0">
+            <Menu className="h-5 w-5" />
+          </span>
+          <span className="absolute inset-0 flex items-center justify-center transition-opacity duration-150 opacity-0 group-hover:opacity-100">
+            <CommandShortcut side="top" content="Cmd+B">
+              ⌘B
+            </CommandShortcut>
+          </span>
+        </span>
 
         <Separator
           orientation="vertical"

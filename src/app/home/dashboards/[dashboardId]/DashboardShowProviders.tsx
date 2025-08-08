@@ -1,6 +1,5 @@
 "use client";
 
-import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDashboardStore } from "@/stores/dashboardStore/useDashboardStore";
 // import { useGridStore } from "@/stores/dashboard/gridStore";
@@ -8,6 +7,8 @@ import { FullPageLoading } from "@/components/loading/skeletons/FullPageLoading/
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import { SidebarProvider } from "@/components/atoms/ui/sidebar/SidebarProvider";
 import { useShallow } from "zustand/shallow";
+import { GridProvider } from "@/rgl/providers/useGrid";
+import { useGridStore } from "@/rgl/stores";
 
 function DashboardScopedProviders({
   id,
@@ -16,64 +17,49 @@ function DashboardScopedProviders({
   id: string;
   children: React.ReactNode;
 }) {
-  // const selectDashboard = useDashboardStore((s) => s.selectDashboard);
+  const selectDashboard = useDashboardStore(s => s.setSelected)
+  const selected = useDashboardStore(useShallow(s => s.selected['dashboard']))
+  const grid = useGridStore(useShallow(s => s.findByParent(id, "dashboard")))
 
-  // useEffect(() => {
-  //   if (id) selectDashboard(id);
-  // }, [id, selectDashboard]);
+  useEffect(() => {
+    if (!id) return
+    if (id !== selected) selectDashboard("dashboard", id);
+  }, [id, selectDashboard, selected]);
 
   return (
     <ThemeProvider scope="dashboard" entityId={id}>
-      <SidebarProvider
-        id={id}
-        sidebarId="dashboard-sidebar"
-        // scope="dashboard"
-        defaultOpen={false}
-        data-id={`dashboard-${id}`}
-        style={{ "--sidebar-width": "350px", height: "100%" } as React.CSSProperties}
-      >
-        {children}
-      </SidebarProvider>
+      <GridProvider gridId={grid?.gridId}>
+        <SidebarProvider
+          id={id}
+          sidebarId={`dashboard:${id}`}
+          onOpenChange={(open: boolean) => !open && true}
+          data-id={`dashboard-${id}`}
+          collapsible="icon"
+        >
+          {children}
+        </SidebarProvider>
+      </GridProvider>
     </ThemeProvider>
   );
 }
 
-export function DashboardShowProviders({ children }: { children: React.ReactNode }) {
-  const { dashboardId } = useParams();
-  const id = Array.isArray(dashboardId) ? dashboardId[0] : dashboardId;
-  const dashboard = useDashboardStore(useShallow(state => id && state.items[id]))
-
-  // const selectDashboard = useDashboardStore((s) => s.selectDashboard);
-  // const hasHydrated = useGridStore((s) => s.hasHydrated);
-  // const dashboard = useDashboardStore((s) => s.getDashboardById(id ?? ""));
+export function DashboardShowProviders({ dashboardId, children }: { dashboardId: string; children: React.ReactNode }) {
+  const dashboard = useDashboardStore(useShallow(state => state.items[dashboardId]))
   const [canRender, setCanRender] = useState(false);
 
   useEffect(() => {
-    if (!id || typeof id !== "string") return;
-
-    //   const grid = useGridStore.getState();
-    //   const hasLayouts = !!grid.layoutsByDashboard[id];
-
-    //   (async () => {
-    //     await selectDashboard(id);
-    //     if (!hasLayouts) {
-    //       grid.setWidgetsForDashboard({}, id);
-    //       grid.setLayoutsByDashboard(
-    //         { lg: [], md: [], sm: [], xs: [], xxs: [] },
-    //         id
-    //       );
-    //     }
-    setCanRender(true);
-    // })();
-  }, [id]);
+    if (!dashboardId) return;
+    setCanRender(true)
+  }, [dashboardId]);
 
   useEffect(() => {
     if (dashboard) {
       console.log("dashboard", dashboard)
     }
   }, [dashboard])
-  if (!id) return null;
+
+  if (!dashboardId) return null;
   if (!canRender) return <FullPageLoading message="Loading Dashboard..." />;
 
-  return <DashboardScopedProviders id={id}>{children}</DashboardScopedProviders>;
+  return <DashboardScopedProviders id={dashboardId}>{children}</DashboardScopedProviders>;
 }
