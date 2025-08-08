@@ -7,9 +7,10 @@ import { resolveThemeMetadata } from "@/theme/utils/resolveThemeMetadata";
 import { useThemeStore } from "@/stores";
 import { useEffect, useMemo } from "react";
 import { useTheme } from "@/providers/ThemeProvider";
-import type { ThemeScope } from "@/theme/types";
+import type { EntityType, ThemeScope } from "@/theme/types";
 import { cn } from "@/utils";
 import dynamic from "next/dynamic";
+import { useShallow } from "zustand/shallow";
 
 const ResetThemeButton = dynamic(() => import("@/components/atoms/buttons/ResetThemeButton/ResetThemeButton").then(mod => mod.ResetThemeButton));
 const Button = dynamic(() => import("@/components/atoms/buttons/Button/Button").then(mod => mod.Button));
@@ -28,7 +29,7 @@ export const ThemePopoverForm = ({
   className?: string;
   onSubmit: (values: ThemePreferencesFormValues) => void;
 }) => {
-  const scopedPreferences = useThemeStore(theme => theme.scopedPreferences);
+  const scopedPreferences = useThemeStore(useShallow(theme => theme.scopedPreferences[scope as EntityType]));
   const globalPreferences = useThemeStore(theme => theme.globalPreferences);
   const { preferences: theme } = resolveThemeMetadata({
     entityType: scope,

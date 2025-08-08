@@ -10,11 +10,7 @@ describe("resolveThemeMetadata", () => {
 			entityType: "global",
 			entityId: undefined,
 			globalPreferences,
-			scopedPreferences: {
-				note: {},
-				dashboard: {},
-				widget: {},
-			},
+			scopedPreferences: {}
 		});
 
 		expect(result).toMatchObject({
@@ -43,7 +39,7 @@ describe("resolveThemeMetadata", () => {
 			entityType: "note",
 			entityId: "abc",
 			globalPreferences,
-			scopedPreferences,
+			scopedPreferences: scopedPreferences['note'],
 		});
 
 		expect(result).toMatchObject({
@@ -71,7 +67,7 @@ describe("resolveThemeMetadata", () => {
 			entityType: "note",
 			entityId: "abc",
 			globalPreferences,
-			scopedPreferences,
+			scopedPreferences: scopedPreferences['note'],
 		});
 
 		expect(result).toMatchObject({
@@ -85,12 +81,8 @@ describe("resolveThemeMetadata", () => {
 			entityType: "note",
 			entityId: "missing-id",
 			globalPreferences,
-			scopedPreferences: {
-				note: {},
-				dashboard: {},
-				widget: {},
-			},
-		});
+			scopedPreferences: {}
+	});
 
 		expect(result).toMatchObject({
 			isInherited: false,

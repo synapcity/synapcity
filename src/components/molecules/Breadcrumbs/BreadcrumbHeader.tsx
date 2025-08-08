@@ -3,7 +3,6 @@
 import React, { useEffect, useRef } from "react";
 import { Menu } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { useSidebar } from "@/components/atoms/ui/sidebar/SidebarProvider";
 import { useUIStore } from "@/stores";
 import { useShallow } from "zustand/shallow";
 import { cn } from "@/utils";

@@ -36,7 +36,7 @@ describe("generateColorVars", () => {
 	it("returns correct vars for dark mode", () => {
 		const result = generateColorVars(mockColor, "dark", "accent");
 		expect(result["--accent-50"]).toBe("#dark-50");
-		expect(result["--accent-foreground"]).toBe(mockColor.dark.scale[950]);
-		expect(result["--accent-background"]).toBe(mockColor.dark.scale[50]);
+		expect(result["--accent-foreground"]).toBe(mockColor.dark.scale[100]);
+		expect(result["--accent-background"]).toBe(mockColor.dark.scale[800]);
 	});
 });
