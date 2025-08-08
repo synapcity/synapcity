@@ -20,36 +20,35 @@ export function NotesSearchWithTabs() {
   const [query, setQuery] = React.useState("");
   const deferredQuery = useDeferredValue(query);
 
-  const [tab, setTab] = useState<"notes" | "views">("notes");
-
+  const [tab, setTab] = useState<"notes" | "dashboards">("notes");
   const noteResults = useNoteSearch(notes, query);
   const viewResults = useViewSearch(views, query);
 
-  const results = tab === "notes" ? noteResults : viewResults;
+  const results = tab === "notes" ? [...noteResults, ...viewResults] : [];
 
   if (!hasHydrated) return null;
   return (
-    <div className="bg-white border rounded shadow-md p-4 flex-1 flex flex-col w-full">
+    <div className="bg-(--sidebar-background-100) text-(--sidebar-foreground) border rounded shadow-md p-4 flex-1 flex flex-col w-full">
       <div className="flex space-x-4 mb-3">
         <button
-          className={`px-4 py-2 font-semibold rounded ${tab === "notes" ? "bg-indigo-600 text-white" : "bg-gray-100"
+          className={`px-4 py-2 font-semibold rounded ${tab === "notes" ? "bg-(--accent-background) text-(--accent-foreground)" : "bg-(--sidebar-background) text-(--sidebar-background-200) hover:text-(--accent)"
             }`}
           onClick={() => setTab("notes")}
         >
-          Basic
+          Notes
         </button>
         <button
-          className={`px-4 py-2 font-semibold rounded ${tab === "views" ? "bg-indigo-600 text-white" : "bg-gray-100"
+          className={`px-4 py-2 font-semibold rounded ${tab === "dashboards" ? "bg-(--accent-background) text-(--accent-foreground)" : "bg-(--sidebar-background) text-(--sidebar-background-200) hover:text-(--accent)"
             }`}
-          onClick={() => setTab("views")}
+          onClick={() => setTab("dashboards")}
         >
-          Advanced
+          Dashboards
         </button>
       </div>
       <input
         className="w-full mb-3 p-2 border rounded"
         placeholder={
-          tab === "notes" ? "Search notes by title, tags…" : "Search note views by content…"
+          tab === "notes" ? "Search notes by title, tags…" : "Search dashboards…"
         }
         value={query}
         onChange={(e) => setQuery(e.target.value)}
