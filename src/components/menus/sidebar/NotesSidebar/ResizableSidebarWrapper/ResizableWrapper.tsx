@@ -59,13 +59,13 @@ export function ResizableSidebarWrapper({
           collapsedSize={0}
           defaultSize={35}
           className={cn(
-            "flex flex-col overflow-auto bg-[var(--sidebar-bg)] border-l relative",
+            "flex flex-col overflow-auto bg-[var(--sidebar-bg)] relative bg-(--primary-background) text-(--primary-foreground)",
             { "flex-1": sidebarState === "expanded" }
           )}
           order={2}
         >
-          <div className="flex items-center justify-between px-3 py-2 border-b">
-            <h2 className="text-sm font-medium">{activePanel?.label}</h2>
+          <div className="flex items-center justify-between px-3 py-2 border-b bg-(--accent-background) text-(--accent-foreground)">
+            <h2 className="text-sm font-medium text-(--accent-foreground)">{activePanel?.label}</h2>
             <button
               onClick={toggleSidebar}
               className={cn("p-1 rounded hover:bg-gray-600")}
@@ -78,7 +78,7 @@ export function ResizableSidebarWrapper({
       </ResizablePanelGroup>
 
       <div
-        className="flex-shrink-0 w-12 bg-[var(--sidebar-foreground)] border-l flex"
+        className="flex-shrink-0 w-12 bg-[var(--sidebar-foreground)] text-(--sidebar-background) border-l flex"
       >
         <IconSidebar key={id} scope={scope as SidebarScope} id={id} side="right" />
       </div>

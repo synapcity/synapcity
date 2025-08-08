@@ -1,8 +1,8 @@
-import DashboardPage from "@/components/pages/DashboardPage";
-import "react-grid-layout/css/styles.css"
-import "react-resizable/css/styles.css";
+import dynamic from "next/dynamic";
 
 type Params = Promise<{ dashboardId: string }>;
+
+const DashboardPage = dynamic(() => import("@/components/pages/DashboardPage").then(mod => mod.default))
 
 export default async function DashboardShowPage({ params }: { params: Params }) {
   const dashboardParams = await params;

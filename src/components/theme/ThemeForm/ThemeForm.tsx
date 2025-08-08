@@ -4,13 +4,13 @@ import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { themePreferencesSchema, ThemePreferencesFormValues } from "../schema";
 import { cn } from "@/utils";
-import { resolveThemeMetadata } from "@/theme/utils/resolveThemeMetadata";
 import { useThemeStore } from "@/stores";
 import { useEffect, useMemo } from "react";
 import { useTheme } from "@/providers/ThemeProvider";
-import type { ThemeScope } from "@/theme/types";
+import type { EntityType, ThemeScope } from "@/theme/types";
 import dynamic from "next/dynamic";
 import { ResetThemeButton } from "@/components/atoms/buttons/ResetThemeButton";
+import { useShallow } from "zustand/shallow";
 
 const ThemeFormFields = dynamic(() => import("@/components/theme/ThemeForm/ThemeFormFields/ThemeFormFields").then((mod) => mod.ThemeFormFields), {
   ssr: true,
@@ -35,9 +35,10 @@ export const ThemeForm = ({
   className?: string;
   onSubmit: (values: ThemePreferencesFormValues) => void;
 }) => {
-  const scopedPreferences = useThemeStore(theme => theme.scopedPreferences)
+  const hasHydrated = useThemeStore(s => s.hasHydrated)
+  const scopedPreferences = useThemeStore(useShallow(theme => theme.scopedPreferences[scope as EntityType][entityId!]))
   const globalPreferences = useThemeStore(theme => theme.globalPreferences)
-  const { preferences: theme } = resolveThemeMetadata({ entityType: scope, entityId, scopedPreferences, globalPreferences })
+  const theme = scope === "global" ? globalPreferences : scopedPreferences
   const { isCustom } = useTheme()
   const formTheme = useMemo(() => {
     return {
@@ -57,6 +58,10 @@ export const ThemeForm = ({
   const { reset } = methods;
 
   useEffect(() => {
+    if (!hasHydrated) return
+  }, [hasHydrated])
+
+  useEffect(() => {
     reset(formTheme);
   }, [formTheme, reset]);
 
@@ -64,7 +69,7 @@ export const ThemeForm = ({
     <FormProvider {...methods}>
       <form
         onSubmit={methods.handleSubmit(onSubmit)}
-        className={cn("space-y-6 text-[var(--foreground", className)}
+        className={cn("space-y-6 text-[var(--foreground)]", className)}
       >
         <ThemeFormFields />
         <div className="border rounded-md p-4">

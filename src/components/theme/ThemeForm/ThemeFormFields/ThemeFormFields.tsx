@@ -26,7 +26,7 @@ export const ThemeFormFields = () => {
 
       <ColorField name="primary" label="Primary" />
       <ColorField name="accent" label="Accent" />
-      {isScoped && <SwitchField name="useGlobalTheme" label="Use Global Theme" />}
+      {isScoped && <SwitchField name="inheritsFromGlobalTheme" label="Use Global Theme" />}
     </div>
   )
 }

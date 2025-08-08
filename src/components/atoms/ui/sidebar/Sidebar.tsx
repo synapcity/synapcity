@@ -183,7 +183,7 @@ export function Sidebar({
         <div
           data-slot="sidebar-inner"
           className={cn(
-            "bg-(--sidebar) text-(--sidebar-foreground) flex flex-col flex-1",
+            "bg-(--sidebar-background) text-(--sidebar-foreground) flex flex-col flex-1",
             variant === "floating" &&
             "rounded-md border border-(--sidebar-border) shadow-sm"
           )}

@@ -46,7 +46,9 @@ const defaultUIState: UIState = {
 		userPanelSidebar: { ...defaultComponentState },
 		scheduleModal: { isVisible: false },
 		notesSidebar: { ...defaultComponentState },
-		breadcrumbs: {...defaultComponentState}
+		breadcrumbs: {...defaultComponentState},
+		dashboardsSidebar: {...defaultComponentState},
+		mainSidebar: {...defaultComponentState}
 	},
 };
 

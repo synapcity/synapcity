@@ -53,8 +53,8 @@
 	--input-placeholder: var(--primary-400);
 	--input-focus-border: var(--accent-500);
 
-	--sidebar-background: var(--primary-50);
-	--sidebar-foreground: var(--primary-900);
+	--sidebar-background: var(--primary-900);
+	--sidebar-foreground: var(--primary-100);
 
 	--tooltip-background: var(--primary-800);
 	--tooltip-foreground: var(--primary-50);

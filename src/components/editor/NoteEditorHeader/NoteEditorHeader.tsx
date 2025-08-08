@@ -11,7 +11,7 @@ import { formatDate } from "@/utils/date-utils";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useShallow } from "zustand/shallow";
 
-const HEADER_FULL = 120;
+const HEADER_FULL = 150;
 const HEADER_MIN = HEADER_FULL * 0.5;
 const SHRINK_THRESHOLD = 80;
 

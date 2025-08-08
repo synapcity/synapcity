@@ -6,7 +6,7 @@ import { isEqual } from "lodash";
 export interface ThemeMetadataOptions {
 	entityType: EntityType | "global";
 	entityId?: string;
-	scopedPreferences: Record<EntityType, Record<string, ThemePreferences>>;
+	scopedPreferences:  Record<string, ThemePreferences>;
 	globalPreferences: ThemePreferences;
 }
 
@@ -28,7 +28,7 @@ export function resolveThemeMetadata({
 	const isScoped = !isGlobal;
 
 	const scoped = isScoped
-		? scopedPreferences[entityType as EntityType]?.[entityId!]
+		? scopedPreferences[entityId!]
 		: undefined;
 
 	const isInherited = scoped?.inheritsFromGlobalTheme === true;

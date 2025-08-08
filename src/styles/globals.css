@@ -93,9 +93,6 @@ body {
 [data-theme="light"] {
 		--background: #fff;
 	--foreground: #0a0a0a;
-	--sidebar: var(--primary-800);
-	--sidebar-foreground: var(--primary-200);
-	--sidebar-primary: var(--primary-50);
 	--sidebar-accent: var(--accent-800);
 	--sidebar-accent-foreground: var(--accent-200);
 	--sidebar-ring: var(--accent);
@@ -105,9 +102,6 @@ body {
 [data-theme="dark"] {
 			--foreground: #fff;
 	--background: #0a0a0a;
-	--sidebar: var(--primary-800);
-	--sidebar-foreground: var(--primary-200);
-	--sidebar-primary: var(--primary-50);
 	--sidebar-accent: var(--accent-800);
 	--sidebar-accent-foreground: var(--accent-200);
 	--sidebar-ring: var(--accent);

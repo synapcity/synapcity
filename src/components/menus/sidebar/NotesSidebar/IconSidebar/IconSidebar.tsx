@@ -34,12 +34,12 @@ export function IconSidebar({ scope, id, side = "right" }: IconSidebarProps) {
       side={side}
       collapsible="none"
       variant="inset"
-      className="w-[calc(var(--sidebar-width-icon)+1px)]! border-r flex flex-1 bg-(--sidebar)"
+      className="w-[calc(var(--sidebar-width-icon)+1px)]! flex flex-1 bg-(--sidebar)"
     >
       <SidebarMenu className="flex-1 overflow-y-auto">
         {panels.map((panel) => {
           return (
-            <SidebarMenuItem key={panel.id} className="py-2 px-1">
+            <SidebarMenuItem key={panel.id} className="py-2 px-1 text-(--sidebar-foreground)">
               <SidebarMenuButton
                 variant="auto"
                 size="auto"

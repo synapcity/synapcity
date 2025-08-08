@@ -40,11 +40,11 @@ export function NotesSidebar({ id, ...props }: NotesSidebarProps & React.Compone
       {...props}
     >
       {activePanel ? (
-        <SidebarContent className="bg-[var(--sidebar-foreground)] text-[var(--sidebar)] p-2 flex-1 min-h-0 overflow-auto">
+        <SidebarContent className="bg-[var(--sidebar-background)] text-[var(--sidebar)] p-2 flex-1 min-h-0 overflow-auto">
           <SidebarRenderer scope="note" id={id} />
         </SidebarContent>
       ) : (
-        <SidebarContent className="border-l bg-[var(--sidebar-foreground)] text-[var(--sidebar)] flex-1 min-h-0 overflow-auto">
+        <SidebarContent className="bg-[var(--sidebar-background)] text-[var(--sidebar)] flex-1 min-h-0 overflow-auto">
           <SidebarHeader className="gap-3.5 border-b p-4">
             <span className="text-foreground text-base font-medium">
               Notes

@@ -17,6 +17,7 @@ import type {
 import { Loading } from "@/components";
 import { resolveThemeMetadata, applyThemeVars } from "@/theme";
 import { ModalRenderer } from "@/components/modals/ModalRenderer/ModalRenderer";
+import { useShallow } from "zustand/shallow";
 
 export const ThemeProvider = ({
 	scope,
@@ -31,7 +32,7 @@ export const ThemeProvider = ({
 	children: React.ReactNode;
 }) => {
 	const hasHydrated = useThemeStore((s) => s.hasHydrated);
-	const hydratedScoped = useThemeStore((s) => s.scopedPreferences);
+	const hydratedScoped = useThemeStore(useShallow((s) => s.scopedPreferences[(scope ?? "global") as EntityType]));
 	const hydratedGlobal = useThemeStore((s) => s.globalPreferences);
 	const initScopedPreferences = useThemeStore((s) => s.initScopedPreferences);
 	const setGlobalPreferences = useThemeStore((s) => s.setGlobalPreferences);
@@ -62,11 +63,11 @@ export const ThemeProvider = ({
 
 	const scopedPrefs =
 		entityId && hasHydrated
-			? hydratedScoped[scope as EntityType]?.[entityId] ?? null
+			? hydratedScoped[entityId] ?? null
 			: null;
 
 	useEffect(() => {
-		if (entityId && hasHydrated && !hydratedScoped[scope as EntityType]?.[entityId]) {
+		if (entityId && hasHydrated && !hydratedScoped[entityId]) {
 			console.debug(`[ThemeProvider] Initializing scoped theme for ${scope}:${entityId}`);
 			initScopedPreferences(scope as EntityType, entityId);
 		}
@@ -90,6 +91,7 @@ export const ThemeProvider = ({
 			if (entityId) setPreferences(scope as EntityType, entityId, updates);
 		},
 	});
+	console.log("scope", scope, "entityId", entityId)
 
 	const resetTheme = () => {
 		if (isGlobal) {

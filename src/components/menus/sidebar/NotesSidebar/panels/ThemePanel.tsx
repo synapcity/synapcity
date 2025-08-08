@@ -2,16 +2,17 @@
 
 import { useTheme } from "@/providers/ThemeProvider"
 import { convertFormToPrefs } from "@/theme"
-import type { ThemeScope } from "@/theme/types"
 import dynamic from "next/dynamic"
 import { ThemePreferencesFormValues } from "@/components/theme/schema"
+import { useMetadata } from "@/providers"
 
 const ThemeForm = dynamic(() => import("@/components/theme/ThemeForm/ThemeForm").then((mod) => mod.ThemeForm), {
   ssr: false,
   loading: () => <div>Loading...</div>
 })
 
-export const ThemePanel = ({ entityId, scope }: { entityId?: string; scope: ThemeScope; }) => {
+export const ThemePanel = () => {
+  const { scope, id: entityId } = useMetadata()
   const { updateThemePreferences, applyThemeStyles } = useTheme()
   const handleSubmit = (data: ThemePreferencesFormValues) => {
     const finalData = convertFormToPrefs(data)
@@ -19,7 +20,7 @@ export const ThemePanel = ({ entityId, scope }: { entityId?: string; scope: Them
     applyThemeStyles(finalData)
   }
   return (
-    <div className="mt-4 flex-1 flex flex-col">
+    <div className="mt-4 flex-1 flex flex-col text-(--foreground)">
       <ThemeForm
         entityId={entityId}
         scope={scope}

@@ -16,7 +16,7 @@ export function BreadcrumbHeader() {
   const pathname = usePathname();
   const segments = pathname.replace(/^\/|\/$/g, "").split("/").filter(Boolean);
   const items = useDynamicBreadcrumbs(segments);
-  const { toggleSidebar } = useSidebar();
+  const toggleMain = useUIStore(useShallow(s => s.toggleCompState))
 
   const breadcrumbsComponent = useUIStore(
     useShallow((s) => s.components["breadcrumbs"])
@@ -68,7 +68,7 @@ export function BreadcrumbHeader() {
           }
         )}
       >
-        <span className="relative group p-2 mr-2" onClick={() => toggleSidebar()}>
+        <span className="relative group p-2 mr-2" onClick={() => toggleMain("mainSidebar", "isVisible")}>
           <span className="absolute inset-0 flex items-center justify-center transition-opacity duration-150 opacity-100 group-hover:opacity-0">
             <Menu className="h-5 w-5" />
           </span>

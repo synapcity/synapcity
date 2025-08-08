@@ -9,6 +9,7 @@ import { SidebarProvider } from "@/components/atoms/ui/sidebar/SidebarProvider";
 import { useShallow } from "zustand/shallow";
 import { GridProvider } from "@/rgl/providers/useGrid";
 import { useGridStore } from "@/stores";
+import { MetadataProvider } from "@/providers";
 
 function DashboardScopedProviders({
   id,
@@ -27,19 +28,21 @@ function DashboardScopedProviders({
   }, [id, selectDashboard, selected]);
 
   return (
-    <ThemeProvider scope="dashboard" entityId={id}>
-      <GridProvider gridId={grid?.gridId}>
-        <SidebarProvider
-          id={id}
-          sidebarId={`dashboard:${id}`}
-          onOpenChange={(open: boolean) => !open && true}
-          data-id={`dashboard-${id}`}
-          collapsible="icon"
-        >
-          {children}
-        </SidebarProvider>
-      </GridProvider>
-    </ThemeProvider>
+    <MetadataProvider scope="dashboard" entityId={id}>
+      <ThemeProvider scope="dashboard" entityId={id}>
+        <GridProvider gridId={grid?.gridId}>
+          <SidebarProvider
+            id={id}
+            sidebarId={`dashboard:${id}`}
+            onOpenChange={(open: boolean) => !open && true}
+            data-id={`dashboard-${id}`}
+            collapsible="icon"
+          >
+            {children}
+          </SidebarProvider>
+        </GridProvider>
+      </ThemeProvider>
+    </MetadataProvider>
   );
 }
 

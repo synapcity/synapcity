@@ -18,9 +18,9 @@ export function generateColorVars(
 		vars[`--${prefix}-${shade}`] = scale[shade];
 	});
 
-	vars[`--${prefix}-foreground`] = scale[950];
-	vars[`--${prefix}-background`] = scale[50];
-	vars[`--${prefix}`] = scale[700];
+	vars[`--${prefix}-foreground`] = prefix === "accent" ? scale[100] : scale[950];
+	vars[`--${prefix}-background`] = prefix === "accent" ? scale[800] : scale[50];
+	vars[`--${prefix}`] = scale[500];
 
 	return vars;
 }
