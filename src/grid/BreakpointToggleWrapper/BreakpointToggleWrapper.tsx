@@ -2,9 +2,8 @@
 import React, { RefObject, useCallback, useEffect, useRef, useState } from "react";
 import { OverlayToggle, BreakpointToggle } from "@/components/molecules/toggles";
 import { ColumnOverlay, RowOverlay } from "@/components/molecules/overlays";
-import { gridConstants } from "@/grid/defaultGridLayout";
 import { getBreakpointForWidth } from "@/utils/grid-utils";
-import { BreakpointType, defaultCols, defaultContainerPadding, defaultMargin } from "@/stores";
+import { BreakpointType, defaultCols, defaultContainerPadding, defaultMargin, useGrid } from "@/stores";
 
 const widths: Record<BreakpointType, string> = {
   xxs: "max-w-[479px]",
@@ -17,6 +16,7 @@ const widths: Record<BreakpointType, string> = {
 };
 
 const BreakpointToggleWrapper = ({ children, containerRef: externalContainerRef }: { children: React.ReactNode; containerRef: RefObject<HTMLDivElement | null> }) => {
+  const { config } = useGrid()
   const [breakpoint, setBreakpoint] = useState<BreakpointType>("xl");
   const [rows, setRows] = useState(20);
   const [showCols, setShowCols] = useState(false);
@@ -28,7 +28,7 @@ const BreakpointToggleWrapper = ({ children, containerRef: externalContainerRef 
   const columnCount = defaultCols[breakpoint];
   const containerWidthClass = widths[breakpoint];
 
-  const rowHeight = gridConstants.rowHeight;
+  const rowHeight = config.rowHeight;
   const marginX = defaultMargin[breakpoint][0];
   const marginY = defaultMargin[breakpoint][1];
   const containerPaddingX = defaultContainerPadding[breakpoint][0];
