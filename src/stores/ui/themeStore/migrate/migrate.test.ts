@@ -1,4 +1,4 @@
-import { migrateThemeStore } from "@/stores/themeStore/migrate";
+import { migrateThemeStore } from "@/stores/ui/themeStore/migrate";
 import { DEFAULT } from "@/theme/defaults";
 
 describe("migrateThemeStore", () => {

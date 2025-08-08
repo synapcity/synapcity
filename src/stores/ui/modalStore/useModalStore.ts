@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { ConfirmModalProps } from "@/components/modals/ConfirmModal/ConfirmModal";
-import { ScheduleEvent } from "../scheduleStore";
+import { ScheduleEvent } from "../../scheduleStore";
 
 export type ModalScope = "global" | "userPanelMain" | "userPanelSidebar";
 export type ModalType = "confirm" | "weatherSettings" | "scheduleForm";

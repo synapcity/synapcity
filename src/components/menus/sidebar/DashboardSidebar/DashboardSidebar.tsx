@@ -17,7 +17,7 @@ import { IconSidebar, SidebarRenderer } from "@/components/menus/sidebar/NotesSi
 // import { SidebarPanel } from "@/types";
 import { usePanels } from "@/hooks/sidebar";
 // import { useTabsForEntity } from "@/hooks/features/useTabsForEntity";
-import { SidebarPanel } from "@/stores/sidebarStore";
+import { SidebarPanel } from "@/stores/ui/sidebarStore";
 // import { useTabsForEntity } from "@/hooks/suseTabsForEntity";
 
 // ---- Types ----

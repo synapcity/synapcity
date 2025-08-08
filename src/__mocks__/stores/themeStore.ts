@@ -1,4 +1,4 @@
-import type { ScopedThemeState } from "@/stores/themeStore/useThemeStore";
+import type { ScopedThemeState } from "@/stores/ui/themeStore/useThemeStore";
 import { DEFAULT } from "@/theme/defaults";
 import type { ThemePreferences } from "@/theme/types";
 

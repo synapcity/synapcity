@@ -1,7 +1,7 @@
 "use client";
 
-import { useModalStore } from "@/stores/modalStore";
-import { modalDefinitions } from "@/stores/modalStore";
+import { useModalStore } from "@/stores/ui/modalStore";
+import { modalDefinitions } from "@/stores/ui/modalStore";
 import { RefObject, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 

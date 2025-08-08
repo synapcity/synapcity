@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback } from "react";
-import { useUIStore } from "@/stores/uiStore";
+import { useUIStore } from "@/stores/ui/uiStore";
 
 export function useComponentUI(id: string) {
 	const component = useUIStore((s) => s.components[id] ?? {});

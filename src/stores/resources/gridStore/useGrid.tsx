@@ -1,7 +1,7 @@
 "use client"
 
 import React, { createContext, useContext, useMemo, useCallback, useEffect } from "react";
-import { useGridStore } from "../../stores/resources/gridStore/useGridStore";
+import { useGridStore } from "./useGridStore";
 import type { GridConfig, GridState, Grid } from "@/stores/resources/gridStore/grid-schema";
 import { useShallow } from "zustand/shallow";
 import { nanoid } from "@/__mocks__/nanoid";

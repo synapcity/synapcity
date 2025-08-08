@@ -1,4 +1,4 @@
-import { useToastStore } from "@/stores/toastStore";
+import { useToastStore } from "@/stores/ui/toastStore";
 
 const lastShown: Record<string, number> = {};
 const DEDUPE_TIMEOUT = 1000;

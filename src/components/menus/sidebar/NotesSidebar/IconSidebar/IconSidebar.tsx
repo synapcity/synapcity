@@ -4,7 +4,7 @@ import * as React from "react";
 import { Sidebar, SidebarMenu, SidebarMenuItem, SidebarMenuButton } from "@/components/atoms/ui/sidebar";
 import { Icon, IconButton } from "@/components/atoms";
 import { useSidebar } from "@/components/atoms/ui/sidebar";
-import { SidebarScope } from "@/stores/sidebarStore";
+import { SidebarScope } from "@/stores/ui/sidebarStore";
 import { useKeyboardShortcut, usePanels } from "@/hooks";
 import { useMemo } from "react";
 import { CommandShortcut } from "@/components/atoms/ui/command";

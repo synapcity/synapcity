@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/atoms/buttons";
-import { useUIStore } from "@/stores/uiStore";
+import { useUIStore } from "@/stores/ui/uiStore";
 
 export const SettingsTrigger = () => {
   const comps = useUIStore((state) => state.components);

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useWeatherEffect, useLocalStorage } from "@/hooks";
 import { useWeatherStore } from "@/stores";
 import { cn } from "@/utils";
-import { useModalStore } from "@/stores/modalStore/useModalStore";
+import { useModalStore } from "@/stores/ui/modalStore/useModalStore";
 import { Icon, SkeletonOrLoading } from "@/components";
 
 export const UserWeather = () => {

@@ -1,5 +1,5 @@
 "use client";
-import { SidebarScope } from "@/stores/sidebarStore";
+import { SidebarScope } from "@/stores/ui/sidebarStore";
 // import { useMemo } from "react";
 // import { generateScopeKey } from "@/stores/";
 import type { UseBoundStore, StoreApi } from "zustand";

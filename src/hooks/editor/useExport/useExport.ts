@@ -107,7 +107,7 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
-import { useModalStore } from "@/stores/modalStore";
+import { useModalStore } from "@/stores/ui/modalStore";
 import { Format } from "@/types/export";
 import {
 	exportCsv,

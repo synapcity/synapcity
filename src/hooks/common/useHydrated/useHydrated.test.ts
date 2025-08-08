@@ -1,6 +1,6 @@
 import { renderHook } from "@testing-library/react";
 import { useHydrated } from "./useHydrated";
-import { useThemeStore } from "@/stores/themeStore/useThemeStore";
+import { useThemeStore } from "@/stores/ui/themeStore/useThemeStore";
 
 describe("useHydrated", () => {
 	it("returns true when hasHydrated is true in store", () => {

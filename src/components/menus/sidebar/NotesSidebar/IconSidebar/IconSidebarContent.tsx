@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { SidebarContent, SidebarGroup, SidebarGroupContent, SidebarMenu } from "@/components/atoms/ui/sidebar";
 import { IconSidebarItem } from "./IconSidebarItem";
 import { usePanels } from "@/hooks/sidebar/usePanels";
-import { SidebarScope, SidebarPanel, useSidebarStore } from "@/stores/sidebarStore";
+import { SidebarScope, SidebarPanel, useSidebarStore } from "@/stores/ui/sidebarStore";
 
 interface IconSidebarContentProps {
   scope: SidebarScope;

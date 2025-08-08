@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { Layout } from "react-grid-layout";
 import { BreakpointToggleSkeleton, WidgetAreaSkeleton } from "@/components/skeletons";
-import { useCurrentGrid } from "@/rgl/providers/useGrid";
+import { useCurrentGrid } from "@/stores/resources/gridStore/useGrid";
 import "react-grid-layout/css/styles.css"
 import "react-resizable/css/styles.css";
 

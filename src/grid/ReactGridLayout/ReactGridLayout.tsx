@@ -8,7 +8,7 @@ import debounce from "lodash.debounce";
 
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
-import { useCurrentGrid } from "@/rgl/providers/useGrid";
+import { useCurrentGrid } from "@/stores/resources/gridStore/useGrid";
 import { breakpoints, BreakpointType } from "@/stores/resources/gridStore/grid-schema";
 // import { useShallow } from "zustand/shallow";
 

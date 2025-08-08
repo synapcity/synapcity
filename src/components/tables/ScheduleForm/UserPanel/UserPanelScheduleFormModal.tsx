@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import ScheduleForm from '../ScheduleForm';
-import { useUIStore } from '@/stores/uiStore';
+import { useUIStore } from '@/stores/ui/uiStore';
 
 export default function UserPanelScheduleModal() {
   const isScheduleModalOpen = useUIStore(state => state.components["scheduleModal"].isVisible ?? false)

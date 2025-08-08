@@ -11,7 +11,7 @@ import {
 import type { ImperativePanelHandle } from "react-resizable-panels";
 import { PanelRightClose } from "lucide-react";
 import { IconSidebar } from "../IconSidebar";
-import { SidebarScope } from "@/stores/sidebarStore";
+import { SidebarScope } from "@/stores/ui/sidebarStore";
 import { usePanels } from "@/hooks";
 import { BreadcrumbHeader } from "@/components/molecules/Breadcrumbs";
 

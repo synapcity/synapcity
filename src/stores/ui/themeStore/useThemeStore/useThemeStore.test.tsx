@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createStore, StoreApi } from "zustand";
-import { ScopedThemeState, themeStoreInitializer } from "@/stores/themeStore";
+import { ScopedThemeState, themeStoreInitializer } from "@/stores/ui/themeStore";
 import { DEFAULT } from "@/theme/defaults";
 import { getDefaultTheme } from "@/theme/utils";
 import { ThemeMode } from "@/theme";

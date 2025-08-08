@@ -1,3 +1,3 @@
-export * from "./skeletons/buttons";
+export * from "./skeletons";
 export * from "./Loading";
 export * from "./SkeletonOrLoading";

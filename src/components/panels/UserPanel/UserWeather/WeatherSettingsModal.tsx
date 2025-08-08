@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Input, Label, IconButton } from "@/components/atoms";
 import { Switch } from "@/components/molecules";
 import { useWeatherStore } from "@/stores/weatherStore";
-import { useModalStore } from "@/stores/modalStore/useModalStore";
+import { useModalStore } from "@/stores/ui/modalStore/useModalStore";
 import { getWeather } from "@/lib";
 
 export function WeatherSettingsModal() {

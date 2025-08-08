@@ -1,4 +1,4 @@
-import { SidebarPanel } from "@/stores/sidebarStore";
+import { SidebarPanel } from "@/stores/ui/sidebarStore";
 
 type SharedMeta = Pick<
 	SidebarPanel,

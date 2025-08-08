@@ -5,7 +5,7 @@ import {
 	useSidebarStore,
 	SidebarPanel,
 	SidebarScope,
-} from "@/stores/sidebarStore";
+} from "@/stores/ui/sidebarStore";
 import { getDefaultPanels } from "@/lib/data/sidebar";
 
 // 📦 module‐level constant for an empty panels list

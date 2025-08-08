@@ -7,7 +7,7 @@ import { FullPageLoading } from "@/components/loading/skeletons/FullPageLoading/
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import { SidebarProvider } from "@/components/atoms/ui/sidebar/SidebarProvider";
 import { useShallow } from "zustand/shallow";
-import { GridProvider } from "@/rgl/providers/useGrid";
+import { GridProvider } from "@/stores/resources/gridStore/useGrid";
 import { useGridStore } from "@/stores";
 import { MetadataProvider } from "@/providers";
 

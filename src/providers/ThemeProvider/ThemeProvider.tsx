@@ -5,7 +5,7 @@ import {
 	RefObject,
 	useEffect,
 } from "react";
-import { useThemeStore } from "@/stores/themeStore/useThemeStore/useThemeStore";
+import { useThemeStore } from "@/stores/ui/themeStore/useThemeStore/useThemeStore";
 import { ThemeContext } from "./theme-context";
 import { cn } from "@/utils";
 import { useThemeEngine } from "@/hooks/theme/useThemeEngine";

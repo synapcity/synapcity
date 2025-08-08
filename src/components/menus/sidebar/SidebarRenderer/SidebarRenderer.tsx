@@ -3,7 +3,7 @@
 import React, { JSX, Suspense } from 'react';
 import { Skeleton } from '@/components/atoms/ui/skeleton';
 import { usePanels } from '@/hooks/sidebar/usePanels';
-import { SidebarScope } from '@/stores/sidebarStore';
+import { SidebarScope } from '@/stores/ui/sidebarStore';
 import { useSidebar } from '@/components/atoms/ui/sidebar';
 import { useNoteStore } from '@/stores';
 

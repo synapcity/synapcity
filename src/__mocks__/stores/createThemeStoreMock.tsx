@@ -1,6 +1,6 @@
 import { createStore } from "zustand";
 import { persist } from "zustand/middleware";
-import { themeStoreInitializer } from "@/stores/themeStore/useThemeStore";
+import { themeStoreInitializer } from "@/stores/ui/themeStore/useThemeStore";
 
 export function createThemeStoreMock(initial?: Partial<ReturnType<typeof themeStoreInitializer>>) {
   const store = createStore(
