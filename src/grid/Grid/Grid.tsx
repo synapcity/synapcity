@@ -1,12 +1,9 @@
 "use client";
 
 import { RefObject, useEffect, useRef, useState } from "react";
-// import { useGridStore } from "../gridStore/useGridStore";
 import dynamic from "next/dynamic";
 import { Layout } from "react-grid-layout";
-// import { useDashboardStore } from "@/stores/dashboardStore/useDashboardStore";
 import { BreakpointToggleSkeleton, WidgetAreaSkeleton } from "@/components/skeletons";
-// import { useShallow } from "zustand/shallow";
 import { useCurrentGrid } from "@/rgl/providers/useGrid";
 
 const ReactGridLayout = dynamic(

@@ -1,21 +1,16 @@
 "use client"
 
 import { Grid } from "@/grid";
-// import { useMetadata } from "@/providers"
-// import { ResponsiveGridWrapper } from "@/rgl/components/ResponsiveGridWrapper"
+import { useDashboardStore } from "@/stores";
 import { useRef } from "react";
+import { useShallow } from "zustand/shallow";
 
-export default function DashboardPage() {
+export default function DashboardPage({ dashboardId }: { dashboardId: string; }) {
   const dashboardRef = useRef<HTMLDivElement | null>(null)
-  // const { scope, id } = useMetadata()
-  // const children = useMemo(() => {
-  //   return new Array(20).fill(undefined).map((val, idx) => {
-  //     return <div key={idx} data-grid={{ x: idx, y: 1, w: 1, h: 1 }} />;
-  //   });
-  // }, []);
+  const dashboard = useDashboardStore(useShallow(s => s.getResourceById(dashboardId)))
   return (
     <div ref={dashboardRef} className="flex flex-col items-center justify-items-center flex-1">
-      {/* <ResponsiveGridWrapper /> */}
+      <h1>{dashboard?.name}</h1>
       <Grid containerRef={dashboardRef} />
     </div>
   )

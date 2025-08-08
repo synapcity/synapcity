@@ -13,6 +13,7 @@ import { PanelRightClose } from "lucide-react";
 import { IconSidebar } from "../IconSidebar";
 import { SidebarScope } from "@/stores/sidebarStore";
 import { usePanels } from "@/hooks";
+import { BreadcrumbHeader } from "@/components/molecules/Breadcrumbs";
 
 interface ResizableSidebarWrapperProps {
   id: string;
@@ -43,14 +44,12 @@ export function ResizableSidebarWrapper({
 
   return (
     <div className="outer-container flex flex-1 overflow-hidden">
-      {/* ─── Panel group: editor + sliding sidebar ─── */}
       <ResizablePanelGroup id="resizable-panel-group" direction="horizontal" className="flex-1 flex flex-col">
-        {/* 1) Editor panel */}
         <ResizablePanel id="resizable-panel" className="min-w-0 flex-1 bg-[var(--background)] p-4 flex flex-col" order={1}>
+          <BreadcrumbHeader />
           {children}
         </ResizablePanel>
 
-        {/* 2) Handle (only show when expanded) */}
         {sidebarState === "expanded" && (
           <ResizableHandle withHandle className="cursor-col-resize" />
         )}
