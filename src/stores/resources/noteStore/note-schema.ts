@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ResourceSchema } from "./base-schema";
+import { ResourceSchema } from "../factory/base-schema";
 
 export const NoteDataSchema = z.object({
 	title: z.string().min(1, "Title is required"),

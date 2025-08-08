@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { Sidebar, SidebarContent, SidebarHeader, SidebarGroup, SidebarGroupContent } from "@/components/atoms/ui/sidebar";
-import { useDashboardStore } from "@/stores/dashboardStore/useDashboardStore";
+import { useDashboardStore } from "@/stores/resources/dashboardStore/useDashboardStore";
 import { usePanels } from "@/hooks";
 import { useShallow } from "zustand/shallow";
 import { SidebarRenderer } from "../SidebarRenderer";

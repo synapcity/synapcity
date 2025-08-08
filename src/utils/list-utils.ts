@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ListSchema, type List } from "@/schemas/data/list-schema";
+import { ListSchema, type List } from "@/schemas/list-schema";
 import {
 	NoteDataSchema as NoteSchema,
 	RawNote,
-} from "@/schemas/resources/note-schema";
+} from "@/stores/resources/noteStore/note-schema";
 
 /**
  * Load and validate all lists from JSON.

@@ -16,7 +16,6 @@ export default async function DashboardShowPage({ params }: { params: Params }) 
   const { dashboardId } = dashboardParams;
 
   return (
-    // <Dashboard id={dashboardId} />
     <div className="flex flex-col flex-1">
       <h3>Dashboard ID: {dashboardId} </h3>
       <DashboardPage />

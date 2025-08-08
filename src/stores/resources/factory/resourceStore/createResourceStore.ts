@@ -8,7 +8,7 @@ import {
 } from "zustand/middleware";
 import { nanoid } from "nanoid";
 import type { ZodTypeAny } from "zod";
-import { BaseResource } from "@/schemas/resources/base-schema";
+import { BaseResource } from "@/stores/resources/factory/base-schema";
 import {
 	createHydrationSlice,
 	type HydrationSlice,

@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo } from 'react';
 import { useNoteStore } from '@/stores/resources/noteStore';
-// import { Note } from '@/schemas/resources';
+// import { Note } from '@/stores';
 import { NoteCard } from '@/components/notes/cards/NoteCard';
 import { AddNoteCard } from '@/components/notes/cards/AddNoteCard';
 import { CardItemBase, MasonryVirtualWindow } from '@/components/molecules/VirtualizedGrid/MasonryVirtualizedGrid';

@@ -5,16 +5,14 @@ import { Table } from "@tanstack/react-table";
 import { ColumnVisibilityMenu } from "../ColumnVisibilityMenu";
 import { GlobalSearch } from "../GlobalSearch";
 import { BulkActions } from "../BulkActions";
-import { DynamicTabsBar } from "../DynamicTabsBar";
+import { DynamicTabsBar, TabOption } from "../DynamicTabsBar";
 import { ExportButton } from "../ExportButton";
-import { BaseTab } from "@/schemas/data/tab-schema";
-// import { useNoteViewStore } from "@/stores";
 
 export default function TableControlsBar({ table, data, onBulkDelete, tabs }: {
   table: Table<any>;
   data: any[];
   onBulkDelete: () => void;
-  tabs: BaseTab[];
+  tabs: TabOption[];
 }) {
 
   return (

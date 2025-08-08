@@ -1,6 +1,6 @@
 "use client";
 
-import { ViewResource } from "@/schemas/resources";
+import { ViewResource } from "@/stores";
 import { useNoteViewStore, useNoteStore } from "@/stores";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo } from "react";

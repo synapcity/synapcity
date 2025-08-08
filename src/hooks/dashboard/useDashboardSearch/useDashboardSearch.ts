@@ -1,6 +1,6 @@
 "use client";
 
-import { Dashboard } from "@/schemas";
+import { Dashboard } from "@/stores";
 import { useDebouncedQuery, useFuzzyFilter } from "@/hooks/controls/search";
 
 /** Options for useDashboardSearch */

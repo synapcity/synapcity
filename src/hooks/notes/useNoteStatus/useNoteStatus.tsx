@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useNoteTabs } from "../useNoteViews";
 import { useNoteStore } from "@/stores/resources";
 import type { StatusKeys, UILocalStatus } from "@/types/ui";
-import type { ViewResource } from "@/schemas/resources";
+import type { ViewResource } from "@/stores";
 
 /**
  * Tracks the note's local status flags and maps to the active and default views.

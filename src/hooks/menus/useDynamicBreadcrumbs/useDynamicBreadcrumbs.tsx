@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Boxes, Home as HomeIcon, Library } from "lucide-react";
-import { useDashboardStore } from "@/stores/dashboardStore/useDashboardStore";
+import { useDashboardStore } from "@/stores/resources/dashboardStore/useDashboardStore";
 import { useNoteStore } from "@/stores";
 import { useShallow } from "zustand/shallow";
 

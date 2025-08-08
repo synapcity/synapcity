@@ -1,11 +1,11 @@
-import rawTabs from "@/lib/data/tabs.json";
+import rawViews from "./views.json";
 import { initItems } from "@/utils/initItems";
-import { createResourceStore, ResourceStore } from "@/stores/factories";
+import { createResourceStore, ResourceStore } from "@/stores/resources/factory";
 import {
 	createView,
 	type ViewResource,
 	ViewResourceSchema,
-} from "@/schemas/resources/view-schema";
+} from "./view-schema";
 import {
 	createViewSlice,
 	createDirtySlice,
@@ -36,7 +36,7 @@ const _useNoteViewStore = createResourceStore<ViewResource>({
 	afterHydrate: (state, err) => {
 		state.setHasHydrated(true);
 		if (!err && Object.values(state.items).length === 0) {
-			state.initItems?.(rawTabs as ViewResource[]);
+			state.initItems?.(rawViews as ViewResource[]);
 		}
 	},
 

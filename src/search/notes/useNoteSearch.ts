@@ -2,7 +2,7 @@
 
 import Fuse from "fuse.js";
 import { useMemo } from "react";
-import type { Note } from "@/schemas/resources/note-schema";
+import type { Note } from "@/stores/resources/noteStore/note-schema";
 import type { NoteSearchResult } from "./types";
 import { noteSearchOptions } from "./noteSearchOptions";
 import { prepareNotes } from "./prepareNotesWithViews";

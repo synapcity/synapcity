@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ResourceSchema } from "./base-schema";
+import { ResourceSchema } from "../factory/base-schema";
 
 export const DashboardDataSchema = z.object({
 	name: z.string().min(1, "Name is required"),
@@ -21,6 +21,7 @@ export function createDashboard(partial: Partial<Dashboard> = {}): Dashboard {
 		updatedAt: now,
 		deletedAt: null,
 	};
+// const grid = createGrid()
 	const dashboard = {
 		...base,
 		name: partial.name ?? "Untitled",

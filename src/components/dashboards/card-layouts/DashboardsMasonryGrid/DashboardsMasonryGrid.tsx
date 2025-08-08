@@ -4,7 +4,7 @@ import { useEffect, useMemo } from 'react';
 import { DashboardCard } from '@/components/dashboards/cards/DashboardCard/DashboardCard';
 import { AddDashboardCard } from '@/components/dashboards/cards/AddDashboardCard';
 import { CardItemBase, MasonryVirtualWindow } from '@/components/molecules/VirtualizedGrid/MasonryVirtualizedGrid';
-import { useDashboardStore } from '@/stores/dashboardStore/useDashboardStore';
+import { useDashboardStore } from '@/stores/resources/dashboardStore/useDashboardStore';
 import { useShallow } from 'zustand/shallow';
 
 

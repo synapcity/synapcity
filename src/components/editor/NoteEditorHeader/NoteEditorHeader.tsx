@@ -4,7 +4,7 @@ import { Icon } from "@/components/atoms";
 import { EditableText } from "@/components/molecules/EditableText";
 import { TagPills } from "@/components/tables/pills";
 import { DynamicTabsBar } from "@/components/tables/Table/TableControls/DynamicTabsBar";
-import { ViewResource } from "@/schemas";
+import { ViewResource } from "@/stores";
 import { useNoteStore, useNoteViewStore } from "@/stores";
 import { cn } from "@/utils";
 import { formatDate } from "@/utils/date-utils";

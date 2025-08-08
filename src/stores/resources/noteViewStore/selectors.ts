@@ -1,6 +1,7 @@
+"use client"
+
 import { useEffect } from "react";
-import { useNoteViewStore } from "@/stores/resources";
-import type { ViewResource } from "@/schemas/resources";
+import { useNoteViewStore, type ViewResource } from "@/stores/resources";
 import { useShallow } from "zustand/shallow";
 
 export function useNoteViewsByNoteId(noteId: string): ViewResource[] {

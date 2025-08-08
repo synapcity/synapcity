@@ -1,0 +1,18 @@
+[
+  {
+    "id": "1",
+    "createdAt": "2025-07-21T14:03:00.000Z",
+    "updatedAt": "2025-07-22T09:45:00.000Z",
+    "deletedAt": null,
+    "label": "To-do",
+    "type": "todo"
+  },
+  {
+    "id": "2",
+    "createdAt": "2025-07-21T14:03:00.000Z",
+    "updatedAt": "2025-07-22T09:45:00.000Z",
+    "deletedAt": null,
+    "label": "Clock",
+    "type": "clock"
+  }
+]

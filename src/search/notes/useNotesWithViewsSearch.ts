@@ -3,8 +3,8 @@ import { useMemo } from "react";
 import Fuse from "fuse.js";
 import { prepareNotesWithViews } from "./prepareNotesWithViews";
 import { noteSearchOptions } from "./noteConfig";
-import type { Note } from "@/schemas/resources/note-schema";
-import type { CombinedEditor } from "@/schemas/resources/view-schema";
+import type { Note } from "@/stores/resources/noteStore/note-schema";
+import type { CombinedEditor } from "@/stores/resources/noteViewStore/view-schema";
 import type { NoteSearchResult } from "./types";
 
 /**

@@ -8,7 +8,7 @@
 // import { withStatusAndToast } from "@/lib/toast";
 // import { getData } from "@/utils/fetch-utils";
 // import type { TodoItem } from "@/schemas/data/todo-schema";
-// import type { List } from "@/schemas/data/list-schema";
+// import type { List } from "@/schemas/list-schema";
 // // import { useListStore } from "@/stores/listsStore";
 
 // export default function TodosClient({ id }: { id: string }) {

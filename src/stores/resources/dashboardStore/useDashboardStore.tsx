@@ -1,11 +1,11 @@
-import rawDashboards from "@/lib/data/dashboards.json";
+import rawDashboards from "./dashboards.json";
 import { initItems } from "@/utils/initItems";
-import { createResourceStore, ResourceStore } from "@/stores/factories";
+import { createResourceStore, ResourceStore } from "@/stores/resources/factory";
 import {
   createDashboard,
   DashboardResourceSchema,
   type Dashboard as DashboardResource,
-} from "@/schemas/resources/dashboard-schema";
+} from "@/stores/resources/dashboardStore/dashboard-schema";
 import type { StoreApi, UseBoundStore } from "zustand";
 
 export interface DashboardStore extends ResourceStore<DashboardResource> {

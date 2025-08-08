@@ -1,4 +1,4 @@
-import type { ResourceStore } from "@/stores/factories/resourceStore";
+import type { ResourceStore } from "@/stores/resources/factory/resourceStore";
 import type {
 	CodeView,
 	CombinedEditor,
@@ -8,9 +8,9 @@ import type {
 	ViewResource,
 	ViewType,
 	ViewTypeDef,
-} from "@/schemas/resources/view-schema";
+} from "@/stores/resources/noteViewStore/view-schema";
 import { StateCreator } from "zustand";
-import { BaseResource } from "@/schemas";
+import { BaseResource } from "@/stores";
 import { fallbackEditorState } from "@/lexical/constants";
 
 type NoteView = ViewResource & ViewTypeDef;

@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { IconButton, Input } from "@/components";
-import { useDashboardStore } from "@/stores/dashboardStore/useDashboardStore";
+import { useDashboardStore } from "@/stores/resources/dashboardStore/useDashboardStore";
 import { CreateModalShell } from "@/components/molecules/CreateModal";
-import { Dashboard } from "@/schemas";
+import { Dashboard } from "@/stores";
 
 interface Props {
   open: boolean;

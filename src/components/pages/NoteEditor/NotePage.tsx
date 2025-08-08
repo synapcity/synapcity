@@ -9,11 +9,10 @@ import { Loading } from '@/components/loading';
 import { useNoteTabs } from '@/hooks/notes/useNoteViews';
 import { NoteEditorHeader } from '@/components/editor/NoteEditorHeader/NoteEditorHeader';
 import { DynamicTabsWrapper } from '@/components/tables/Table/TableControls/DynamicTabsBar';
-import { useNoteStore } from '@/stores';
+import { useNoteStore, ViewResource } from '@/stores';
 import { NoteResource } from '@/types';
 import { StatusField } from '@/types/ui';
 import { useActiveNoteView } from '@/hooks/notes/useActiveNoteView/useActiveNoteView';
-import { ViewResource } from '@/schemas';
 import { fallbackEditorState } from '@/lexical/constants';
 
 export default function NotePage() {

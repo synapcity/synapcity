@@ -6,7 +6,7 @@ import { SidebarMainMenu } from "@/components/atoms/ui/sidebar/SidebarMainMenu";
 import { SidebarSection } from "@/components/atoms/ui/sidebar/SidebarSection";
 import { CreateDashboardModal } from "@/components/dashboards";
 import { CreateNoteModal } from "@/components/notes";
-import { useDashboardStore } from "@/stores/dashboardStore/useDashboardStore";
+import { useDashboardStore } from "@/stores/resources/dashboardStore/useDashboardStore";
 import { useNoteStore } from "@/stores";
 import { LayoutDashboard, FileText, Home, Inbox, Search } from "lucide-react";
 import React from "react";

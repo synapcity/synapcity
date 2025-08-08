@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { useNoteStore } from '@/stores/resources/noteStore';
 import { useNoteViewStore } from '@/stores/resources/noteViewStore/useNoteViewStore';
-import type { CombinedEditor, Note } from '@/schemas/resources';
+import type { CombinedEditor, Note } from '@/stores';
 import { CardItemBase } from '@/components/molecules/VirtualizedGrid/MasonryVirtualizedGrid';
 import { useNotesSearchSort, NoteLike } from '@/hooks/notes/useNotesSearchSort/useNotesSearchSort';
 import { SortKey, SortDir } from '@/components/atoms/controls';

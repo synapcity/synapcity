@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { ZodTypeAny, infer as zodInfer } from "zod";
-import type { BaseResource } from "@/schemas/resources/base-schema";
+import type { BaseResource } from "@/stores/resources/factory/base-schema";
 
 export function initItems<T extends BaseResource>(
 	raw: unknown[],

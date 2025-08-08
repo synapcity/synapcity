@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ResourceSchema } from "@/schemas/resources/base-schema";
+import { ResourceSchema } from "@/stores/resources/factory/base-schema";
 
 // 1️⃣ Define the fields unique to your Note
 export const NoteDataSchema = z.object({

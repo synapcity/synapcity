@@ -3,7 +3,7 @@
 import { ComponentUIState } from "@/stores";
 import { ThemePreferences } from "@/theme";
 import { ColumnDef } from "@tanstack/react-table"
-import { BaseResource as BaseEntity } from "@/schemas";
+import { BaseResource as BaseEntity } from "@/stores";
 
 export type ItemStatus = "done" | "not-started" | "in-progress";
 

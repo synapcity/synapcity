@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useNoteStore, useNoteViewStore } from "@/stores";
 import { useSearchParams } from "next/navigation";
 import { useNoteTabs } from "../useNoteViews";
-import { ViewResource } from "@/schemas";
+import { ViewResource } from "@/stores";
 
 /**
  * Safely subscribes to the active note, its views, and the active view.

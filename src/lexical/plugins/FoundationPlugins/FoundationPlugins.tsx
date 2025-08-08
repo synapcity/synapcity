@@ -1,8 +1,7 @@
 "use client";
 
-import { CombinedEditor } from "@/schemas";
-import { useNoteViewStore } from "@/stores/resources";
-import { useNoteActiveView } from "@/stores/resources/selectors";
+import { CombinedEditor } from "@/stores";
+import { useNoteViewStore, useNoteActiveView } from "@/stores/resources";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import dynamic from "next/dynamic";
 import { useEffect } from "react";

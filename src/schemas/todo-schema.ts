@@ -1,16 +1,16 @@
 import { z } from "zod";
-import { EntityBaseSchema } from "./base-schema";
+import { BaseResourceSchema } from "@/stores/resources";
 
 // 2. TodoStatus enum and schema
 export const TodoStatusSchema = z.enum(["done", "not-started", "in-progress"]);
 export type TodoStatus = z.infer<typeof TodoStatusSchema>;
 
 // 3. TodoItem schema (extends EntityBase)
-export const TodoItemSchema = EntityBaseSchema.extend({
+export const TodoItemSchema = BaseResourceSchema.extend({
 	content: z.string(),
 	status: TodoStatusSchema,
 });
-export type TodoItem = z.infer<typeof TodoItemSchema>;
+ type TodoItem = z.infer<typeof TodoItemSchema>;
 
 // 4. Example: createItem factory using schema defaults
 export function createTodoItem(partial: Partial<TodoItem> = {}): TodoItem {

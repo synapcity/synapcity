@@ -1,44 +1,5 @@
-// import { z } from "zod";
-// import { TodoStatusSchema, TodoItemSchema } from "./todo-schema";
-
-// export const ListConfigSchema = z.object({
-// 	itemOrder: z.array(z.string()).optional(),
-// 	itemsPerPage: z.number().optional(),
-// 	defaultSort: z.string().optional(),
-// 	defaultFilter: z
-// 		.object({
-// 			status: TodoStatusSchema.optional(),
-// 			search: z.string().optional(),
-// 		})
-// 		.optional(),
-// 	defaultView: z.enum(["list", "board", "calendar"]).optional(),
-// });
-
-// export const ListMetaSchema = z.object({
-// 	sortBy: z.string(),
-// 	sortOrder: z.enum(["asc", "desc"]),
-// 	selectedId: z.string().nullable(),
-// 	batchSelectedIds: z.array(z.string()),
-// 	parentId: z.string().optional(),
-// 	parentType: z.string().optional(),
-// });
-
-// export const ListSchema = z.object({
-// 	id: z.string(),
-// 	name: z.string().optional(),
-// 	type: z.string(),
-// 	description: z.string().optional(),
-// 	tags: z.array(z.string()).optional(),
-// 	theme: z.object({ icon: z.string().optional() }).passthrough().optional(),
-// 	config: ListConfigSchema,
-// 	items: z.array(TodoItemSchema),
-// 	meta: ListMetaSchema,
-// });
-
-// export type List = z.infer<typeof ListSchema>;
-
 import { z } from "zod";
-import { EntityBaseSchema } from "./base-schema";
+import { BaseResourceSchema } from "@/stores/resources";
 import { TodoItemSchema, TodoStatusSchema } from "./todo-schema";
 
 // 1. Config schema for list settings
@@ -68,7 +29,7 @@ export const ListMetaSchema = z.object({
 export type TodoItem = z.infer<typeof TodoItemSchema>;
 
 // 3. Complete List schema (extends BaseEntity + includes nested items)
-export const ListSchema = EntityBaseSchema.extend({
+export const ListSchema = BaseResourceSchema.extend({
 	name: z.string().optional(),
 	type: z.string(),
 	description: z.string().optional(),

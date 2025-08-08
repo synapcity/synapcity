@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import type { Dashboard } from '@/schemas/resources/dashboard-schema';
+import type { Dashboard } from '@/stores/resources/dashboardStore/dashboard-schema';
 import { useDateRange, useDashboardSearch, useSort, useUrlStateSync } from '@/hooks';
 import { applyDateRangeFilter } from '@/utils/applyDateRangeFilter';
 import dynamic from 'next/dynamic';

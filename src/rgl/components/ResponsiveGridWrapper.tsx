@@ -2,10 +2,9 @@
 
 import React, { useCallback, useEffect, useMemo } from "react";
 import RGL, { Layout, Layouts } from "react-grid-layout";
-import { useGridStore } from "../stores/gridStore/useGridStore";
+import { useGridStore } from "../../stores/resources/gridStore/useGridStore";
 import { useCurrentGrid } from "../providers/useGrid";
-import { BreakpointType } from "../types";
-import { ResizeHandleAxis } from "@/types";
+import { BreakpointType, ResizeHandle } from "@/stores";
 
 const Responsive = RGL.Responsive;
 const WidthProvider = RGL.WidthProvider;
@@ -103,7 +102,7 @@ export function ResponsiveGridWrapper() {
   if (!hasHydrated) return null;
 
   return (
-    <RGLayout {...gridProps} key={currentBreakpoint} resizeHandles={gridProps.resizeHandles as ResizeHandleAxis[]}>
+    <RGLayout {...gridProps} key={currentBreakpoint} resizeHandles={gridProps.resizeHandles as ResizeHandle[]}>
       {layoutForBreakpoint.map((item) => (
         <div key={item.i} className="border rounded bg-gray-100 p-3 shadow-sm">
           <div className="font-medium">Dummy Item <span className="text-xs text-gray-400">{item.i}</span></div>

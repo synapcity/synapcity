@@ -1,14 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useDashboardStore } from "@/stores/dashboardStore/useDashboardStore";
+import { useDashboardStore } from "@/stores/resources/dashboardStore/useDashboardStore";
 // import { useGridStore } from "@/stores/dashboard/gridStore";
 import { FullPageLoading } from "@/components/loading/skeletons/FullPageLoading/FullPageLoading";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import { SidebarProvider } from "@/components/atoms/ui/sidebar/SidebarProvider";
 import { useShallow } from "zustand/shallow";
 import { GridProvider } from "@/rgl/providers/useGrid";
-import { useGridStore } from "@/rgl/stores";
+import { useGridStore } from "@/stores";
 
 function DashboardScopedProviders({
   id,

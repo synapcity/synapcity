@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useCallback, useMemo } from 'react';
-import { useDashboardStore } from '@/stores/dashboardStore/useDashboardStore';
-import type { Dashboard } from '@/schemas/resources/dashboard-schema';
+import { useDashboardStore } from '@/stores/resources/dashboardStore/useDashboardStore';
+import type { Dashboard } from '@/stores/resources/dashboardStore/dashboard-schema';
 import { useRouter } from 'next/navigation';
 import { useShallow } from 'zustand/shallow';
 import dynamic from 'next/dynamic';

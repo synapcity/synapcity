@@ -4,7 +4,7 @@
 import { useMemo } from "react";
 import { useFuzzyFilter, UseFuzzyFilterOptions } from "./useFuzzyFilter";
 import { useNoteStore } from "@/stores/resources/noteStore";
-import { useDashboardStore } from "@/stores/dashboardStore/useDashboardStore";
+import { useDashboardStore } from "@/stores/resources/dashboardStore/useDashboardStore";
 import { useRouter } from "next/navigation";
 import { FileText, LayoutDashboard } from "lucide-react";
 import { useShallow } from "zustand/shallow";

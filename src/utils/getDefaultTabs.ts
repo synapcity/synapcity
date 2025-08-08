@@ -1,8 +1,6 @@
-import rawTabs from "@/lib/data/tabs.json";
-import { ViewResource } from "@/schemas";
-import { TabEntityType } from "@/schemas/data/tab-schema";
-
-export function getDefaultTabs(scope: TabEntityType): ViewResource[] {
+import rawTabs from "@/stores/resources/noteViewStore/views.json";
+import { ViewResource, ViewType } from "@/stores";
+export function getDefaultTabs(scope: ViewType): ViewResource[] {
 	return rawTabs.map((tab, idx) => {
 		const isDefault = idx === 0;
 		return {

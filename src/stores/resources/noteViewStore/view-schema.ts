@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { BaseResource, ResourceSchema } from "./base-schema";
+import { BaseResource, ResourceSchema } from "../factory/base-schema";
 
 export const EntityTypeSchema = z.enum(["note", "dashboard", "widget", "list"]);
 export type EntityType = z.infer<typeof EntityTypeSchema>;

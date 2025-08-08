@@ -1,5 +1,4 @@
-import { CombinedEditor } from "@/schemas";
-import { useNoteViewStore } from "@/stores";
+import { useNoteViewStore, type CombinedEditor } from "@/stores";
 import { NoteResource } from "@/types";
 
 export function getExcerpt(note: NoteResource): string {

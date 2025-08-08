@@ -1,6 +1,5 @@
 import { NoteLike } from "@/hooks/notes/useNotesSearchSort/useNotesSearchSort";
-import { CombinedEditor } from "@/schemas";
-import { useNoteViewStore } from "@/stores";
+import { CombinedEditor, useNoteViewStore } from "@/stores";
 import { NoteResource } from "@/types";
 
 export function getViewExcerpts(

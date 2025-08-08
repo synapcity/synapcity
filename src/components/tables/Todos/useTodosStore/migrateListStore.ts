@@ -1,5 +1,5 @@
 // // import type { EntityState } from "@/stores/refactor/factory-old";
-// import { List } from "@/schemas/data/list-schema";
+// import { List } from "@/schemas/list-schema";
 
 // export const migrateListStore = (
 // 	persisted: unknown,

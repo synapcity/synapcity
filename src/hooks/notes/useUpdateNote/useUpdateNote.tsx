@@ -2,7 +2,7 @@
 
 import { RefObject, useCallback } from "react";
 import { useNoteStore } from "@/stores";
-import type { Note } from "@/schemas/resources/note-schema";
+import type { Note } from "@/stores/resources/noteStore/note-schema";
 import type { StatusField } from "@/types/ui";
 
 export function useUpdateNote(noteId: string) {

@@ -6,7 +6,7 @@ import { Grid } from "@/grid";
 import { useRef } from "react";
 
 export default function DashboardPage() {
-  const containerRef = useRef<HTMLDivElement | null>(null)
+  const dashboardRef = useRef<HTMLDivElement | null>(null)
   // const { scope, id } = useMetadata()
   // const children = useMemo(() => {
   //   return new Array(20).fill(undefined).map((val, idx) => {
@@ -14,9 +14,9 @@ export default function DashboardPage() {
   //   });
   // }, []);
   return (
-    <div ref={containerRef} className="flex flex-col items-center justify-items-center flex-1">
+    <div ref={dashboardRef} className="flex flex-col items-center justify-items-center flex-1">
       {/* <ResponsiveGridWrapper /> */}
-      <Grid containerRef={containerRef} />
+      <Grid containerRef={dashboardRef} />
     </div>
   )
 }

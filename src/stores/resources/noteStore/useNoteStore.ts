@@ -1,11 +1,11 @@
-import rawNotes from "@/lib/data/notes.json";
+import rawNotes from "./notes.json";
 import { initItems } from "@/utils/initItems";
-import { createResourceStore, ResourceStore } from "@/stores/factories";
+import { createResourceStore, ResourceStore } from "@/stores/resources/factory";
 import {
 	createNote,
 	NoteResourceSchema,
 	type Note as NoteResource,
-} from "@/schemas/resources/note-schema";
+} from "./note-schema";
 import { useNoteViewStore } from "../noteViewStore";
 import type { StoreApi, UseBoundStore } from "zustand";
 

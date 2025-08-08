@@ -8,7 +8,7 @@ import { useNotesWithViewsSearch } from "@/search/notes/useNotesWithViewsSearch"
 import { highlightMatches } from "@/search/highlightMatches";
 import { BookOpenText, FileText } from "lucide-react";
 import { useShallow } from "zustand/shallow";
-import { CombinedEditor, Note } from "@/schemas";
+import { CombinedEditor, Note } from "@/stores";
 
 export function getNoteUrl(noteId: string, tabId?: string) {
   let url = `/home/notes/${noteId}`;

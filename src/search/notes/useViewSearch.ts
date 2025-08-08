@@ -2,7 +2,7 @@
 
 import Fuse from "fuse.js";
 import { useMemo } from "react";
-import type { CombinedEditor } from "@/schemas/resources/view-schema";
+import type { CombinedEditor } from "@/stores/resources/noteViewStore/view-schema";
 import type { NoteSearchResult } from "./types";
 import { viewSearchOptions } from "./noteSearchOptions";
 import { prepareViews } from "./prepareNotesWithViews";

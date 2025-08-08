@@ -1,7 +1,7 @@
 "use client"
 
 import type { BreadcrumbItem } from "@/components/molecules/Breadcrumbs";
-import { useDashboardStore } from "@/stores/dashboardStore/useDashboardStore";
+import { useDashboardStore } from "@/stores/resources/dashboardStore/useDashboardStore";
 import { useNoteStore } from "@/stores";
 import { LayoutDashboard, FileText, Home as HomeIcon } from "lucide-react";
 

@@ -3,7 +3,7 @@ import { ScheduleEvent, useScheduleStore } from "@/stores/scheduleStore";
 import { useNoteStore } from "@/stores/resources";
 import { NoteEditorMini } from "../NoteEditorMini";
 import { SidebarModal } from "../SidebarModal";
-import { Note } from "@/schemas";
+import { Note } from "@/stores";
 
 export function EventActions({ event }: { event: import("@/stores/scheduleStore/useScheduleStore").ScheduleEvent }) {
   const updateEvent = useScheduleStore(s => s.updateEvent);

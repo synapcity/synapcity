@@ -7,7 +7,7 @@ import { CardWithLoading } from '../../../molecules/cards/CardWithLoading';
 import { format, formatDistanceToNow, isValid } from 'date-fns';
 import { StackedMeta } from '../../../molecules/cards/meta/StackedMeta';
 import { CreateDashboardModal, useDashboardModal } from '@/components/dashboards/modals';
-import type { Dashboard as DashboardResource } from '@/schemas/resources/dashboard-schema';
+import type { Dashboard as DashboardResource } from '@/stores/resources/dashboardStore/dashboard-schema';
 import { getShortRelativeTime } from '@/utils/date-utils';
 
 interface DashboardCardProps {

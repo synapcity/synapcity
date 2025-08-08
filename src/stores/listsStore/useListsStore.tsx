@@ -1,6 +1,6 @@
 // import { create } from "zustand";
 // import { createEntityStore, EntityStore } from "@/stores/factory";
-// import { ListSchema, createList, type List } from "@/schemas/data/list-schema";
+// import { ListSchema, createList, type List } from "@/schemas/list-schema";
 // import { loadLists } from "@/utils/list-utils";
 // import { persist } from "zustand/middleware";
 // import { migrateListStore } from "@/components/tables/Todos/useTodosStore/migrateListStore";

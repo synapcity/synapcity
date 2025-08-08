@@ -1,5 +1,5 @@
-import type { Note } from "@/schemas/resources/note-schema";
-import type { CombinedEditor } from "@/schemas/resources/view-schema";
+import type { Note } from "@/stores/resources/noteStore/note-schema";
+import type { CombinedEditor } from "@/stores/resources/noteViewStore/view-schema";
 import type { SearchableNoteItem, SearchEntityType } from "./types";
 
 export function prepareNotes(notes: Note[]){
