@@ -1,8 +1,7 @@
 "use client";
 
-import { SidebarInset, SidebarProvider } from "@/components/atoms/ui/sidebar";
+import { SidebarInset } from "@/components/atoms/ui/sidebar";
 import { UserPanelHeader } from "./ActivePanelRenderer/UserHeader/UserHeader";
-import { SidebarWrapper } from "@/components/menus/sidebar/UserPanelSidebar/SidebarWrapper";
 import { UserPanelSidebar } from "./UserPanelSidebar/UserPanelSidebar";
 import { UserPanelIconSidebar } from "./UserPanelIconSidebar/UserPanelIconSidebar";
 import { ActivePanelRenderer } from "./ActivePanelRenderer/ActivePanelRenderer";

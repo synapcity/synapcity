@@ -27,6 +27,7 @@ export const createPanelRegistrySlice: StateCreator<PanelRegistrySlice> = (
 	get
 ) => ({
 	definitions: {
+		global: {},
 		note: {},
 		dashboard: {},
 		resource: {},
