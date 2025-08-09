@@ -120,6 +120,7 @@ export const lucideIcons = {
 	command: Command,
 	eye: Eye,
 	eyeOff: EyeOff,
+	eyeClosed: EyeOff,
 	export: Download,
 	fileTextIcon: FileTextIcon,
 	gripVerticalIcon: GripVerticalIcon,

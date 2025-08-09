@@ -86,7 +86,12 @@ export const Icon = ({
       );
     }
 
-    const LucideIcon = lucideIcons[name as keyof typeof lucideIcons];
+    const normalizedName =
+      typeof name === "string" ? name.charAt(0).toLowerCase() + name.slice(1) : name;
+    const LucideIcon =
+      lucideIcons[normalizedName as keyof typeof lucideIcons] ||
+      lucideIcons[name as keyof typeof lucideIcons];
+
 
     if (LucideIcon) {
       return (

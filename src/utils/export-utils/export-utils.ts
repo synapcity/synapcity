@@ -1,24 +1,32 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+
 import { saveAs } from "file-saver";
 import { utils, write } from "xlsx";
 import { jsPDF } from "jspdf";
-// import autoTable from "jspdf-autotable";
-import { PdfColumn } from "../types/export";
-import { renderPdfText, preparePdfTable } from "./pdf-utils";
-import { sanitizeFileName } from "./file-utils";
+
+import { PdfColumn } from "../../types/export";
+import { renderPdfText, preparePdfTable } from "../pdf-utils";
+import { sanitizeFileName } from "../file-utils";
 import { prepareFlatData } from "@/components/tables/Table/TableControls/ExportButton/dataUtils";
 
-/** Helper: safely serializes any value for CSV cells, quoting as needed. */
+/**
+ * Helper: serializes any value for a CSV cell using RFC 4180 rules.
+ * Doubles internal quotes and wraps fields containing commas, quotes,
+ * or newlines in double quotes, replacing the old backslash-comma logic.
+ */
 export function csvCell(value: any): string {
 	if (value == null) return "";
-	// Objects/arrays → JSON; primitives → toString
+	
 	const raw = typeof value === "object" ? JSON.stringify(value) : String(value);
-	// Escape internal quotes
+	
 	const escaped = raw.replace(/"/g, '""');
-	// If it contains comma, quote, or newline, wrap in double quotes
+	// Quote fields containing commas, quotes, or newlines
 	return /[",\n]/.test(escaped) ? `"${escaped}"` : escaped;
 }
+
+// csvCell applies RFC 4180 escaping (doubling quotes and quoting fields with
+// commas, quotes, or newlines), replacing the old backslash-comma approach
 
 export function downloadBlob(blob: Blob, filename: string) {
 	const url = URL.createObjectURL(blob);
@@ -29,61 +37,41 @@ export function downloadBlob(blob: Blob, filename: string) {
 	URL.revokeObjectURL(url);
 }
 
-/**
- * Export as CSV.
- * Uses proper RFC4180 quoting rather than backslashes.
-//  */
-// export function exportCsv(rows: Record<string, any>[], fileName = "export") {
-// 	const safeName = sanitizeFileName(fileName);
-// 	if (rows.length === 0) {
-// 		saveAs(new Blob([], { type: "text/csv" }), `${safeName}.csv`);
-// 		return;
-// 	}
-// 	const headers = Object.keys(rows[0]);
-// 	const lines = rows.map((row) =>
-// 		headers.map((h) => csvCell(row[h])).join(",")
-// 	);
-// 	const content = [headers.map(csvCell).join(","), ...lines].join("\n");
-// 	const blob = new Blob([content], { type: "text/csv;charset=utf-8" });
-// 	saveAs(blob, `${safeName}.csv`);
-// }
-// exportUtils.ts
 
+/**
+ * Export rows as CSV using csvCell for RFC 4180-compliant escaping.
+ * Legacy backslash-comma escaping is obsolete and no longer used.
+ */
 export function exportCsv(
 	data: Record<string, any>[],
 	mergeNested = false,
 	fileName = "export"
 ) {
 	const safeName = sanitizeFileName(fileName);
-	// 1) Flatten as before
+	
 	const flat = prepareFlatData(data);
 
-	// 2) Build headers from the flattened shape
+	
 	const headers = flat.length ? Object.keys(flat[0]) : [];
 
-	// 3) If merging, find which header keys came from nested objects
+	
 	const nestedKeys = mergeNested
 		? Object.entries(data[0] || {})
 				.filter(([_, v]) => v && typeof v === "object" && !Array.isArray(v))
 				.map(([k]) => k)
 		: [];
-
-	// 4) Build CSV rows, blanking nestedKeys cells after first row if requested
-	const rows = flat.map((rowObj, rowIndex) => {
-		return headers
-			.map((h) => {
-				// if mergeNested and this is a nested key on a later row, blank it
-				if (mergeNested && rowIndex > 0 && nestedKeys.includes(h)) {
-					return "";
-				}
-				// otherwise stringify safely
-				const cell = rowObj[h];
-				return cell == null ? "" : String(cell).replace(/,/g, "\\,");
-			})
-			.join(",");
-	});
-
-	// 5) Combine header + rows and fire download
+    
+	
+  const rows = flat.map((rowObj, rowIndex) => {
+      return headers.map((h) => {
+      if (mergeNested && rowIndex > 0 && nestedKeys.includes(h)) {
+          return "";
+      }
+      
+      return csvCell(rowObj[h]);
+      }).join(",");
+  });
+	
 	const csv = [headers.join(","), ...rows].join("\n");
 	downloadBlob(new Blob([csv], { type: "text/csv" }), `${safeName}.csv`);
 }
