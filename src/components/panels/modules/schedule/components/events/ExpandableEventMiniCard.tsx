@@ -1,10 +1,13 @@
 "use client";
-
 import { AnimatePresence, motion } from "framer-motion";
 import { EventActions } from "./EventActions";
 import { TagPills } from "../../../../../tables/pills/TagPills/TagPills";
+import { EventResourceIcons } from "./EventResourceIcons";
 import { CheckCircle2, Clock3 } from "lucide-react";
-import type { ScheduleEvent } from "@/stores/scheduleStore";
+import { useScheduleStore, type ScheduleEvent } from "@/stores/scheduleStore";
+import { EditableText } from "@/components/molecules/EditableText";
+import { Separator } from "@radix-ui/react-separator";
+import { useState } from "react";
 
 type Props = {
   event: ScheduleEvent;
@@ -14,6 +17,67 @@ type Props = {
   isPast?: boolean;
 };
 
+const EventTitle = ({ id, done, title }: { id: string; done: boolean; title: string; }) => {
+  const updateEvent = useScheduleStore(s => s.updateEvent)
+  return (
+    <div className="flex items-center gap-2">
+      {done ? (
+        <CheckCircle2 className="w-4 h-4 text-green-400" />
+      ) : (
+        <Clock3 className="w-4 h-4 text-blue-400" />
+      )}
+      <EditableText
+        as="span"
+        className="font-semibold text-xs truncate"
+        value={title}
+        onSave={(newTitle: string) => updateEvent(id, { title: newTitle })}
+      />
+    </div>
+  )
+}
+
+const EventDateTime = ({ allDay, end, start, setType }: { allDay: boolean; end?: Date | string; start: Date | string; setType: (type: string) => void; }) => {
+  return (
+    <div className="text-xs text-(--foreground)" onClick={() => setType("form")}>
+      {allDay
+        ? "All Day"
+        : new Date(start).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+      {end && <> - {new Date(end).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</>}
+    </div>
+  )
+}
+
+const MoreEventInfo = ({ type, event }: { type: string; event: ScheduleEvent; }) => {
+  console.log("type", type)
+  if (!type) return null;
+  return (
+    <div className="w-full">
+      {type === "note" && <EventActions event={event} />}
+    </div>
+  )
+}
+
+const EventDetails = ({ event, isPast, setType }: { event: ScheduleEvent, isPast?: boolean; setType: (type: string) => void; }) => {
+  return (
+    <div className="flex w-full justify-between items-center">
+      <div className="flex flex-col" onClick={e => e.stopPropagation()}>
+        <EventTitle
+          id={event.id}
+          title={event.title}
+          done={(event.done ?? isPast ?? event.end ?? false) as boolean}
+        />
+        <EventDateTime
+          allDay={event.allDay ?? false}
+          start={event.start}
+          end={event.end}
+          setType={setType}
+        />
+        {event.tags && <TagPills tags={event.tags} />}
+      </div>
+      <EventResourceIcons event={event} setType={setType} />
+    </div>
+  )
+}
 export function ExpandableEventMiniCard({
   event,
   open,
@@ -21,12 +85,21 @@ export function ExpandableEventMiniCard({
   isNext,
   isPast,
 }: Props) {
+  const [type, setType] = useState<string | null>(null)
+
+  const handleOpenType = (newType: string) => {
+    if (newType !== type) {
+      setType(newType)
+    } else {
+      setType(null)
+    }
+    onToggle()
+  }
   return (
-    <div className="relative w-full">
-      {/* Card face */}
+    <div className="relative w-full px-8">
       <div
         className={`
-          flex flex-col gap-1 rounded-xl border px-3 py-2 shadow-sm cursor-pointer
+          flex flex-col max-w-4xl items-center gap-3 rounded-xl border px-4 py-2 shadow-sm cursor-pointer
           bg-(--background) transition-all
           ${open ? "border-primary ring-2 ring-primary/40 z-10" : ""}
           ${isNext ? "border-primary bg-primary/10 shadow" : ""}
@@ -36,24 +109,25 @@ export function ExpandableEventMiniCard({
         aria-label={event.title}
         onClick={onToggle}
       >
-        <div className="flex items-center gap-2">
-          {event.done ? (
-            <CheckCircle2 className="w-4 h-4 text-green-400" />
-          ) : (
-            <Clock3 className="w-4 h-4 text-blue-400" />
+        <EventDetails event={event} isPast={false} setType={handleOpenType} />
+        <AnimatePresence initial={false}>
+          {open && type && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.97, y: -5 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.98, y: -5 }}
+              transition={{ duration: 0.2 }}
+              onClick={e => e.stopPropagation()}
+              className="w-full flex flex-col"
+            >
+              <Separator className="w-full my-4 text-(--foreground)" />
+              <MoreEventInfo type={type} event={event} />
+            </motion.div>
           )}
-          <span className="font-semibold text-xs truncate">{event.title}</span>
-        </div>
-        <div className="text-xs text-(--foreground)">
-          {event.allDay
-            ? "All Day"
-            : new Date(event.start).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-          {event.end && <> - {new Date(event.end).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</>}
-        </div>
-        {event.tags && <TagPills tags={event.tags} />}
+        </AnimatePresence>
       </div>
 
-      {/* Animated expanded panel */}
+      {/* Animated expanded panel
       <AnimatePresence initial={false}>
         {open && (
           <motion.div
@@ -68,7 +142,7 @@ export function ExpandableEventMiniCard({
             <EventActions event={event} />
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence> */}
     </div>
   );
 }

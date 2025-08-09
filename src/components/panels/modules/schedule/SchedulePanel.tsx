@@ -1,5 +1,6 @@
 "use client";
 
+// import { Icon } from "@/components/atoms";
 import { useScheduleStore } from "@/stores/scheduleStore";
 import {
   addDays,
@@ -7,12 +8,19 @@ import {
   format,
   isSameDay,
   isSameMonth,
-  parseISO,
+  // parseISO,
   startOfMonth,
   startOfWeek,
 } from "date-fns";
+// import Link from "next/link";
+// import { EventResourceIcons } from "./components/events/EventResourceIcons";
+// import { AnimatePresence, motion } from "framer-motion";
+// import { EventActions, ExpandableEventMiniCard } from "./components";
+import { useState } from "react";
+import { ExpandableEventMiniCard } from "./components";
 
 export const SchedulePanel = () => {
+  const [openId, setOpenId] = useState<string | null>(null)
   const events = useScheduleStore((s) => s.events);
 
   const today = new Date();
@@ -24,22 +32,58 @@ export const SchedulePanel = () => {
       <div className="p-4 space-y-3">
         <h2 className="text-lg font-semibold">{format(today, "PPP")}</h2>
         {todayEvents.map((e) => (
-          <div
-            key={e.id}
-            className="rounded border border-[var(--border)] p-3 bg-[var(--accent-background)] text-[var(--accent-foreground)] shadow-sm text-sm"
-          >
-            <div className="font-medium">{e.title}</div>
-            <div className="text-xs text-muted-foreground">
-              {format(parseISO(e.start), "p")}
-              {e.end ? ` – ${format(parseISO(e.end), "p")}` : ""}
-            </div>
-          </div>
+          <ExpandableEventMiniCard key={e.id} event={e} open={openId === e.id} onToggle={() => openId === e.id ? setOpenId(null) : setOpenId(e.id)} />
+          // <div
+          //   key={e.id}
+          //   className="rounded border border-[var(--border)] p-3 bg-[var(--accent-background)] text-[var(--accent-foreground)] shadow-sm text-sm flex justify-between items-center"
+          // >
+          //   <div className="flex flex-col justify-evenly">
+          //     <div className="font-medium">{e.title}</div>
+          //     <div className="text-xs text-muted-foreground">
+          //       {format(parseISO(e.start), "p")}
+          //       {e.end ? ` – ${format(parseISO(e.end), "p")}` : ""}
+          //     </div>
+          //     {e.location && (
+          //       <div className="text-xs text-muted-foreground mt-1">
+          //         {e.location.startsWith("http") ? (
+          //           <Link
+          //             href={e.location}
+          //             target="_blank"
+          //             rel="noopener noreferrer"
+          //             className="inline-flex items-center gap-1"
+          //           >
+          //             <Icon name="link2" size="sm" />
+          //           </Link>
+          //         ) : (
+          //           e.location
+          //         )}
+          //       </div>
+          //     )}
+          //   </div>
+          //   {/* <div className="flex-1 flex border"> */}
+          //   <EventResourceIcons event={e} />
+          //   {/* </div> */}
+          //   <AnimatePresence initial={false}>
+          //     {open && (
+          //       <motion.div
+          //         initial={{ opacity: 0, scale: 0.97, y: -5 }}
+          //         animate={{ opacity: 1, scale: 1, y: 0 }}
+          //         exit={{ opacity: 0, scale: 0.98, y: -5 }}
+          //         transition={{ duration: 0.17 }}
+          //         className="absolute left-0 right-0 mt-2 bg-(--background) text-(--foreground) border rounded-xl shadow-lg z-[99999] p-4"
+          //         style={{ minWidth: 260, maxWidth: 340 }}
+          //         onClick={e => e.stopPropagation()}
+          //       >
+          //         <EventActions event={event} />
+          //       </motion.div>
+          //     )}
+          //   </AnimatePresence>
         ))}
+        {/* </div> */}
       </div>
     );
   }
 
-  // If no events today, show simple month calendar grid
   const monthStart = startOfMonth(today);
   const monthEnd = endOfMonth(today);
   const startDate = startOfWeek(monthStart, { weekStartsOn: 0 });

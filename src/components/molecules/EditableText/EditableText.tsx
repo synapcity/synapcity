@@ -107,7 +107,10 @@ export const EditableText = ({
       <Comp
         className={cn(textStyles[as], className)}
         tabIndex={0}
-        onDoubleClick={() => handleEditing()}
+        onDoubleClick={(e) => {
+          e.stopPropagation()
+          handleEditing()
+        }}
         onKeyDown={(e) => {
           if (e.key === "Enter") handleEditing()
         }}
