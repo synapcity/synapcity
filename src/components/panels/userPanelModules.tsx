@@ -1,7 +1,7 @@
 import { PanelModule } from "@/types/panels";
 import { OverviewSidebar } from "./modules/overview/OverviewSidebar";
 import { OverviewPanel } from "./modules/overview/OverviewPanel";
-import { InboxPanel, InboxSidebar, ScheduleSidebar } from "./modules";
+import { InboxPanel, InboxSidebar, SchedulePanel, ScheduleSidebar } from "./modules";
 // import { ScheduleSidebar } from "./modules/schedule/ScheduleSidebar";
 // import { ScheduleEvent } from "@/types/schedule";
 // import { ScheduleEvent } from "@/stores/scheduleStore";
@@ -69,7 +69,7 @@ export const USER_PANEL_MODULES: PanelModule[] = [
 		label: "Schedule",
 		icon: "calendarClock",
 		description: "Today’s events across hubs",
-		component: () => null,
+		component: () => <SchedulePanel />,
 		sidebar: () => <ScheduleSidebar />,
 		layout: {
 			isFavorite: true,

@@ -21,7 +21,9 @@ export function ScheduleEventForm({
   onCancel: () => void;
 }) {
   const [title, setTitle] = useState(event?.title || "");
-  const [start, setStart] = useState(event?.start || new Date().toISOString());
+  const [start, setStart] = useState(
+    event?.start || new Date(Date.now() + 5 * 60 * 1000).toISOString()
+  );
   const [end, setEnd] = useState(event?.end || "");
   const [tags, setTags] = useState<Tag[]>(event?.tags || []);
   const [notes, setNotes] = useState(event?.notes || "");
@@ -41,7 +43,7 @@ export function ScheduleEventForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4 items-center justify-center">
       <div>
         <label className="block text-sm font-medium mb-1">Title</label>
         <input

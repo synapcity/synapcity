@@ -3,12 +3,16 @@ import { useState } from "react";
 import { Active, DndContext, Over, closestCenter } from "@dnd-kit/core";
 import { SortableContext, arrayMove, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { ExpandableEventMiniCard } from "./components/events/ExpandableEventMiniCard";
-import { useScheduleStore } from "@/stores/scheduleStore";
+import { SidebarModal } from "./components/SidebarModal";
+import { ScheduleEventForm } from "./components/events/ScheduleEventForm";
+import { useScheduleStore, type ScheduleEvent } from "@/stores/scheduleStore";
 import { PlusIcon } from "lucide-react";
 
 export function ScheduleSidebar() {
-  const { events, reorderEvents, addEvent } = useScheduleStore();
-  const [openId, setOpenId] = useState<string | null>(null);
+  const { events, reorderEvents, addEvent, updateEvent } = useScheduleStore();
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [editingEvent, setEditingEvent] = useState<ScheduleEvent | null>(null);
 
   // DnD order
   const [order, setOrder] = useState(events.map(e => e.id));
@@ -41,15 +45,22 @@ export function ScheduleSidebar() {
   }
 
   function handleAdd() {
-    addEvent({
-      title: "New Event",
-      start: new Date().toISOString(),
-      end: undefined,
-      tags: [],
-      resources: [],
-      done: false,
-      notes: "",
-    });
+    setEditingEvent(null);
+    setModalOpen(true);
+  }
+
+  function handleEdit(e: ScheduleEvent) {
+    setEditingEvent(e);
+    setModalOpen(true);
+  }
+
+  function handleSave(data: Omit<ScheduleEvent, "id">) {
+    if (editingEvent) {
+      updateEvent(editingEvent.id, data);
+    } else {
+      addEvent(data);
+    }
+    setModalOpen(false);
   }
 
   return (
@@ -79,8 +90,8 @@ export function ScheduleSidebar() {
                     <ExpandableEventMiniCard
                       key={e.id}
                       event={e}
-                      open={openId === e.id}
-                      onToggle={() => setOpenId(openId === e.id ? null : e.id)}
+                      open={false}
+                      onToggle={() => handleEdit(e)}
                       isPast
                     />
                   ))}
@@ -103,8 +114,8 @@ export function ScheduleSidebar() {
               <ExpandableEventMiniCard
                 key={e.id}
                 event={e}
-                open={openId === e.id}
-                onToggle={() => setOpenId(openId === e.id ? null : e.id)}
+                open={false}
+                onToggle={() => handleEdit(e)}
                 isNext={i === 0}
               />
             ))}
@@ -126,8 +137,8 @@ export function ScheduleSidebar() {
                 <ExpandableEventMiniCard
                   key={e.id}
                   event={e}
-                  open={openId === e.id}
-                  onToggle={() => setOpenId(openId === e.id ? null : e.id)}
+                  open={false}
+                  onToggle={() => handleEdit(e)}
                   isPast
                 />
               ))}
@@ -135,6 +146,13 @@ export function ScheduleSidebar() {
           )}
         </div>
       )}
+      <SidebarModal open={modalOpen} onClose={() => setModalOpen(false)}>
+        <ScheduleEventForm
+          event={editingEvent}
+          onSave={handleSave}
+          onCancel={() => setModalOpen(false)}
+        />
+      </SidebarModal>
     </aside>
   );
 }

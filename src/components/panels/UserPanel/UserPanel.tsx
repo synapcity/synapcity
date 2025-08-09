@@ -23,7 +23,7 @@ export const UserPanel = () => {
           <motion.div
             layout
             transition={{ type: "spring", duration: 0.3 }}
-            className="flex-1 flex flex-col overflow-y-auto h-full relative"
+            className="flex-1 flex flex-col overflow-y-auto flex-1 relative"
           >
             <UserPanelHeader />
             <Suspense fallback={<div>Loading...</div>}>

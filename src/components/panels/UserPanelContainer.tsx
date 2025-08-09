@@ -14,7 +14,6 @@ export const UserContainer = ({ children }: { children: React.ReactNode }) => {
       open={isOpen}
       collapsible="icon"
       className="relative"
-
     >
       {children}
       <InboxTrigger
