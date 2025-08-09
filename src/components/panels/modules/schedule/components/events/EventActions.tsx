@@ -1,3 +1,5 @@
+"use client"
+
 import { useState, useEffect } from "react";
 import { ScheduleEvent, useScheduleStore } from "@/stores/scheduleStore";
 import { useNoteStore } from "@/stores/resources";

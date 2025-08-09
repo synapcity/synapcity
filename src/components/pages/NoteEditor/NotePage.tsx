@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { useParams } from 'next/navigation';
-import NoteEditor from '@/components/pages/NoteEditor/NoteEditor';
 import { useNoteViewStore } from '@/stores/resources/noteViewStore/useNoteViewStore';
 import { TabsContent } from '@/components/atoms/ui/tabs';
 import { Loading } from '@/components/loading';
@@ -14,7 +13,12 @@ import { NoteResource } from '@/types';
 import { StatusField } from '@/types/ui';
 import { useActiveNoteView } from '@/hooks/notes/useActiveNoteView/useActiveNoteView';
 import { fallbackEditorState } from '@/lexical/constants';
+import dynamic from 'next/dynamic';
 
+const NoteEditor = dynamic(
+  () => import('@/components/pages/NoteEditor/NoteEditor'),
+  { ssr: false, loading: () => <Loading fullScreen size={10} /> }
+);
 export default function NotePage() {
   const { noteId: raw } = useParams();
   const noteId = Array.isArray(raw) ? raw[0] : raw;

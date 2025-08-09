@@ -1,8 +1,11 @@
-import dynamic from "next/dynamic"
+"use client"
 
-const NoteEditorPage = dynamic(() => import("@/components/pages/NoteEditor/NotePage").then((mod) => mod.default), {
-  ssr: true,
-})
+import dynamic from "next/dynamic";
+
+const NoteEditorPage = dynamic(
+  () => import("@/components/pages/NoteEditor/NotePage"),
+  { ssr: false }
+);
 
 export default function NotePage() {
   return <NoteEditorPage />
