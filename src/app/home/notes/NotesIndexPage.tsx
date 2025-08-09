@@ -1,8 +1,21 @@
 import dynamic from 'next/dynamic';
 import React from 'react';
 
-const SkeletonOrLoading = dynamic(() => import("@/components/loading/SkeletonOrLoading/SkeletonOrLoading").then(mod => mod.SkeletonOrLoading), { ssr: true })
-const SearchableSortableNotes = dynamic(() => import("@/components/notes/SearchableSortableNotes").then(mod => mod.SearchableSortableNotes), { ssr: true, loading: ({ isLoading }) => <SkeletonOrLoading isLoading={isLoading} /> })
+
+const SkeletonOrLoading = dynamic(
+  () =>
+    import("@/components/loading/SkeletonOrLoading/SkeletonOrLoading").then(
+      (mod) => mod.SkeletonOrLoading,
+    ),
+  { ssr: true },
+)
+const SearchableSortableNotes = dynamic(
+  () =>
+    import("@/components/notes/SearchableSortableNotes").then(
+      (mod) => mod.SearchableSortableNotes,
+    ),
+  { ssr: false, loading: ({ isLoading }) => <SkeletonOrLoading isLoading={isLoading} /> },
+)
 
 export default function NotesIndexPage() {
   return (
