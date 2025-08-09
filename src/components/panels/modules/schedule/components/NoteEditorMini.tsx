@@ -1,11 +1,12 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useNoteStore } from "@/stores/resources";
+import { useNoteStore } from "@/stores/resources/noteStore/useNoteStore";
 import { TemplateInsertMenu } from "./TemplateInsertMenu";
+import { useShallow } from "zustand/shallow";
 
 export function NoteEditorMini({ noteId }: { noteId: string }) {
-  const note = useNoteStore((s) => s.getItemById)(noteId);
-  const updateNote = useNoteStore((s) => s.updateItem);
+  const note = useNoteStore(useShallow((s) => s.getResourceById(noteId)));
+  const updateNote = useNoteStore((s) => s.updateResource);
   const [content, setContent] = useState(note?.summary ?? "");
 
   useEffect(() => {

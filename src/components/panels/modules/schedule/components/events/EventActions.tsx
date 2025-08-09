@@ -2,15 +2,15 @@
 
 import { useState, useEffect } from "react";
 import { ScheduleEvent, useScheduleStore } from "@/stores/scheduleStore";
-import { useNoteStore } from "@/stores/resources";
+import { useNoteStore } from "@/stores/resources/noteStore/useNoteStore";
 import { NoteEditorMini } from "../NoteEditorMini";
 import { SidebarModal } from "../SidebarModal";
 import { Note } from "@/stores";
 
-export function EventActions({ event }: { event: import("@/stores/scheduleStore/useScheduleStore").ScheduleEvent }) {
+export function EventActions({ event }: { event: import("@/stores/scheduleStore/useScheduleStore/useScheduleStore").ScheduleEvent }) {
   const updateEvent = useScheduleStore(s => s.updateEvent);
-  const addNote = useNoteStore(s => s.addItem);
-  const getNoteById = useNoteStore(s => s.getItemById);
+  const addNote = useNoteStore(s => s.addResource);
+  const getNoteById = useNoteStore(s => s.getResourceById);
 
   const noteResource = event.resources?.find(r => r.type === "note");
   const linkedNote = noteResource?.resourceId
@@ -21,7 +21,6 @@ export function EventActions({ event }: { event: import("@/stores/scheduleStore/
   const [showMini, setShowMini] = useState(false);
   const [showFull, setShowFull] = useState(false);
 
-  // Keep note in sync if resources change
   useEffect(() => {
     if (linkedNote) setNote(linkedNote);
   }, [linkedNote]);
@@ -34,7 +33,6 @@ export function EventActions({ event }: { event: import("@/stores/scheduleStore/
     const newNote = await addNote({
       title: `${event.title} Notes`,
       summary: "",
-      preview: "",
     });
     if (!newNote) return;
     setNote(newNote);

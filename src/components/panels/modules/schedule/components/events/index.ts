@@ -1,4 +1,4 @@
 export * from "./EventActions";
-export * from "./EventModal";
+export * from "../EventModal/EventModal";
 export * from "./ExpandableEventMiniCard";
 export * from "./ScheduleEventForm";

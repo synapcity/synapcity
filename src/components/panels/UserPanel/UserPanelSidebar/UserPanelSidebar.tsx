@@ -32,9 +32,9 @@ export const UserPanelSidebar = () => {
           />
         </div>
       </SidebarHeader>
-      <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupContent className="min-h-0 overflow-y-auto no-scrollbar shadow-r">
+      <SidebarContent className="flex-1">
+        <SidebarGroup className="flex-1">
+          <SidebarGroupContent className="min-h-0 overflow-y-auto no-scrollbar shadow-r flex-1">
             {activeModule?.sidebar ? (
               <activeModule.sidebar />
             ) : (
