@@ -1,16 +1,20 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
+
 import { AnimatePresence, motion } from "framer-motion";
 import { EventActions } from "./EventActions";
 import { TagPills } from "../../../../../tables/pills/TagPills/TagPills";
 import { EventResourceIcons } from "./EventResourceIcons";
 import { CheckCircle2, Clock3 } from "lucide-react";
-import { useScheduleStore, type ScheduleEvent } from "@/stores/scheduleStore";
+import { useScheduleStore } from "@/stores/scheduleStore";
 import { EditableText } from "@/components/molecules/EditableText";
 import { Separator } from "@radix-ui/react-separator";
 import { useState } from "react";
+import { EventResourceForm } from "./EventResourceForm";
+import { ScheduleEvent } from "@/types/schedule";
 
 type Props = {
-  event: ScheduleEvent;
+  event: any;
   open: boolean;
   onToggle: () => void;
   isNext?: boolean;
@@ -18,7 +22,7 @@ type Props = {
 };
 
 const EventTitle = ({ id, done, title }: { id: string; done: boolean; title: string; }) => {
-  const updateEvent = useScheduleStore(s => s.updateEvent)
+  const updateEvent = useScheduleStore(s => s.updateEvent);
   return (
     <div className="flex items-center gap-2">
       {done ? (
@@ -33,8 +37,8 @@ const EventTitle = ({ id, done, title }: { id: string; done: boolean; title: str
         onSave={(newTitle: string) => updateEvent(id, { title: newTitle })}
       />
     </div>
-  )
-}
+  );
+};
 
 const EventDateTime = ({ allDay, end, start, setType }: { allDay: boolean; end?: Date | string; start: Date | string; setType: (type: string) => void; }) => {
   return (
@@ -44,20 +48,20 @@ const EventDateTime = ({ allDay, end, start, setType }: { allDay: boolean; end?:
         : new Date(start).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
       {end && <> - {new Date(end).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</>}
     </div>
-  )
-}
+  );
+};
 
-const MoreEventInfo = ({ type, event }: { type: string; event: ScheduleEvent; }) => {
-  console.log("type", type)
+const MoreEventInfo = ({ type, event, setType }: { type: string; setType: (type: string | null) => void; event: ScheduleEvent; }) => {
   if (!type) return null;
   return (
     <div className="w-full">
-      {type === "note" && <EventActions event={event} />}
+      {type === "note" && <EventActions event={event as any} />}
+      {type === "form" && <EventResourceForm event={event} onClose={() => setType(null)} />}
     </div>
-  )
-}
+  );
+};
 
-const EventDetails = ({ event, isPast, setType }: { event: ScheduleEvent, isPast?: boolean; setType: (type: string) => void; }) => {
+const EventDetails = ({ event, isPast, setType }: { event: ScheduleEvent; isPast?: boolean; setType: (type: string) => void; }) => {
   return (
     <div className="flex w-full justify-between items-center">
       <div className="flex flex-col" onClick={e => e.stopPropagation()}>
@@ -68,16 +72,17 @@ const EventDetails = ({ event, isPast, setType }: { event: ScheduleEvent, isPast
         />
         <EventDateTime
           allDay={event.allDay ?? false}
-          start={event.start}
+          start={event.start ? new Date(event.start).toISOString() : new Date()}
           end={event.end}
           setType={setType}
         />
         {event.tags && <TagPills tags={event.tags} />}
       </div>
-      <EventResourceIcons event={event} setType={setType} />
+      <EventResourceIcons event={event as any} setType={setType} />
     </div>
-  )
-}
+  );
+};
+
 export function ExpandableEventMiniCard({
   event,
   open,
@@ -85,18 +90,15 @@ export function ExpandableEventMiniCard({
   isNext,
   isPast,
 }: Props) {
-  const [type, setType] = useState<string | null>(null)
+  const [type, setType] = useState<string | null>(null);
 
-  const handleOpenType = (newType: string) => {
-    if (newType !== type) {
-      if (!type) {
-        onToggle()
-      }
-      setType(newType)
-    } else {
-      setType(null)
+  const handleOpenType = (newType: string | null) => {
+    setType(newType);
+    if (!type) {
+      onToggle();
     }
-  }
+  };
+
   return (
     <div className="relative w-full px-8">
       <div
@@ -111,7 +113,7 @@ export function ExpandableEventMiniCard({
         aria-label={event.title}
         onClick={onToggle}
       >
-        <EventDetails event={event} isPast={false} setType={handleOpenType} />
+        <EventDetails event={event} isPast={isPast} setType={handleOpenType} />
         <AnimatePresence initial={false}>
           {open && type && (
             <motion.div
@@ -123,28 +125,11 @@ export function ExpandableEventMiniCard({
               className="w-full flex flex-col"
             >
               <Separator className="w-full my-4 text-(--foreground)" />
-              <MoreEventInfo type={type} event={event} />
+              <MoreEventInfo type={type} event={event} setType={handleOpenType} />
             </motion.div>
           )}
         </AnimatePresence>
       </div>
-
-      {/* Animated expanded panel
-      <AnimatePresence initial={false}>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.97, y: -5 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.98, y: -5 }}
-            transition={{ duration: 0.17 }}
-            className="absolute left-0 right-0 mt-2 bg-(--background) text-(--foreground) border rounded-xl shadow-lg z-[99999] p-4"
-            style={{ minWidth: 260, maxWidth: 340 }}
-            onClick={e => e.stopPropagation()}
-          >
-            <EventActions event={event} />
-          </motion.div>
-        )}
-      </AnimatePresence> */}
     </div>
   );
 }

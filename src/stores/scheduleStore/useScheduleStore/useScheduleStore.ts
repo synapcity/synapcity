@@ -28,7 +28,7 @@ const generateId = (): string => {
 export type ScheduleEvent = {
 	id: string;
 	title: string;
-	start: string; // ISO string
+	start: string;
 	end?: string;
 	allDay?: boolean;
 	tags?: { label: string; color?: string; value: string }[];
