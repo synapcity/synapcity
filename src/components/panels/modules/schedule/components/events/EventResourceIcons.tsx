@@ -26,7 +26,7 @@ const ICONS: Record<string, LucideIcon> = {
 };
 
 export function EventResourceIcons({ event, setType }: { event: ScheduleEvent; setType: (type: string) => void; }) {
-  const [open, setOpen] = useState<string | null>(null);
+  const [open,] = useState<string | null>(null);
 
   const groups = useMemo(() => {
     const res: Record<string, typeof event.resources> = {};

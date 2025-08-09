@@ -89,11 +89,13 @@ export function ExpandableEventMiniCard({
 
   const handleOpenType = (newType: string) => {
     if (newType !== type) {
+      if (!type) {
+        onToggle()
+      }
       setType(newType)
     } else {
       setType(null)
     }
-    onToggle()
   }
   return (
     <div className="relative w-full px-8">
