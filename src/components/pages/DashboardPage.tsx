@@ -1,7 +1,16 @@
 import dynamic from "next/dynamic";
 
-const Grid = dynamic(() => import("@/grid/Grid/Grid").then(mod => mod.default))
-const DashboardHeader = dynamic(() => import("@/components/dashboards/DashboardHeader").then(mod => mod.DashboardHeader))
+const Grid = dynamic(
+  () => import("@/grid/Grid/Grid").then((mod) => mod.default),
+  { ssr: false }
+);
+const DashboardHeader = dynamic(
+  () =>
+    import("@/components/dashboards/DashboardHeader").then(
+      (mod) => mod.DashboardHeader
+    ),
+  { ssr: false }
+);
 
 export default function DashboardPage({ dashboardId }: { dashboardId: string; }) {
   return (

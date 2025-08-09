@@ -1,12 +1,16 @@
+"use client";
+
 import dynamic from "next/dynamic";
+import { useParams } from "next/navigation";
 
-type Params = Promise<{ dashboardId: string }>;
+const DashboardPage = dynamic(
+  () => import("@/components/pages/DashboardPage").then((mod) => mod.default),
+  { ssr: false }
+);
 
-const DashboardPage = dynamic(() => import("@/components/pages/DashboardPage").then(mod => mod.default))
-
-export default async function DashboardShowPage({ params }: { params: Params }) {
-  const dashboardParams = await params;
-  const { dashboardId } = dashboardParams;
+export default function DashboardShowPage() {
+  const params = useParams();
+  const dashboardId = params.dashboardId as string;
 
   return (
     <div className="flex flex-col flex-1">
