@@ -7,7 +7,7 @@ import { DynamicTabsBar } from "@/components/tables/Table/TableControls/DynamicT
 import { ViewResource } from "@/stores";
 import { useNoteStore, useNoteViewStore } from "@/stores";
 import { cn } from "@/utils";
-import { formatDate } from "@/utils/date-utils";
+import { formatInputDate } from "@/utils/date-utils";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useShallow } from "zustand/shallow";
 
@@ -25,8 +25,8 @@ export interface NoteEditorHeaderProps {
   }[];
   onTagRemove: (tag: string) => void;
   onTagClick: (tag: string) => void;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: Date;
+  updatedAt: Date;
   scrollContainer?: HTMLDivElement | null;
   wordCount?: number;
 }
@@ -46,8 +46,8 @@ export function NoteEditorHeader({
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const titleRef = useRef<HTMLHeadingElement | null>(null);
   const [headerHeight, setHeaderHeight] = useState(HEADER_FULL);
-  const created = formatDate(createdAt, { style: "full" })
-  const updated = formatDate(updatedAt, { style: "relative" })
+  const created = formatInputDate(createdAt, { style: "full" })
+  const updated = formatInputDate(updatedAt, { style: "relative" })
   const startStatus = useNoteStore(s => s.startStatus)
   const clearStatus = useNoteStore(s => s.resetStatus)
   const viewObj = useNoteViewStore(useShallow(s => s.items))

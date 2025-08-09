@@ -4,7 +4,9 @@ export * from "./testId";
 export { getProcessedData } from "./data-utils";
 export {
 	getTodaysDate,
+	formatInputDate,
 	formatDate,
+	formatTime,
 	formatRelative,
 	getShortRelativeTime,
 	formatFullDate,

@@ -49,7 +49,7 @@ export default function InfoPanel() {
             <section className="flex flex-col justify-between space-y-4">
               <h2 className="text-xs uppercase tracking-wide text-[var(--muted-foreground) mb-1">Current Tab</h2>
               <EditableText
-                value={activeView?.label}
+                value={activeView?.label ?? "Untitled"}
                 onEdit={() => {
                   startStatus("editing", note.id)
                 }}

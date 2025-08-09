@@ -4,15 +4,47 @@
     "createdAt": "2025-07-21T14:03:00.000Z",
     "updatedAt": "2025-07-22T09:45:00.000Z",
     "deletedAt": null,
-    "label": "To-do",
-    "type": "todo"
+    "widgetKey": "todo",
+    "label": "My Tasks",
+    "type": "productivity",
+    "category": [
+      "productivity"
+    ],
+    "icon": "ListChecks",
+    "description": "",
+    "props": {
+      "title": "My Tasks",
+      "emptyState": "All clear ✨",
+      "showCompleted": true
+    },
+    "settings": {
+      "groupBy": "none",
+      "sortBy": "createdAt"
+    },
+    "constraints": {}
   },
   {
     "id": "2",
     "createdAt": "2025-07-21T14:03:00.000Z",
     "updatedAt": "2025-07-22T09:45:00.000Z",
     "deletedAt": null,
-    "label": "Clock",
-    "type": "clock"
+    "widgetKey": "clock",
+    "label": "Local Time",
+    "type": "utility",
+    "category": [
+      "time",
+      "utility"
+    ],
+    "icon": "Clock",
+    "description": "Simple time display by timezone.",
+    "props": {
+      "title": "Local Time",
+      "timezone": "UTC",
+      "showSeconds": false
+    },
+    "settings": {
+      "format": "24h"
+    },
+    "constraints": {}
   }
 ]

@@ -12,18 +12,25 @@ import { useEffect } from "react";
 export function AuthLinks() {
   const router = useRouter()
   const pathname = usePathname()
-  const isLoggedIn = useUserStore(useShallow(state => state.isLoggedIn))
+  const { isLoggedIn, hasHydrated } = useUserStore(useShallow(state => ({
+    isLoggedIn: state.isLoggedIn,
+    hasHydrated: state.hasHydrated,
+  })))
   const user = useUserStore(useShallow(state => state.user))
   const login = useUserStore(state => state.login)
   const logout = useUserStore(state => state.logout)
   const loading = useUserStore(state => state.loading)
 
   useEffect(() => {
-    if (isLoggedIn && pathname === "/") {
+
+    if (hasHydrated && isLoggedIn && pathname === "/") {
       router.push('/home')
     }
-  }, [isLoggedIn, pathname, router])
+  }, [hasHydrated, isLoggedIn, pathname, router])
 
+  if (!hasHydrated) {
+    return null
+  }
   if (!isLoggedIn) {
     return (
       <NavLinkGroup

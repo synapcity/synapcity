@@ -64,16 +64,19 @@ export function SidebarSection<T extends { id: string }>({
       <SidebarGroupContent className="max-h-[300px]">
         <SidebarMenu>
           {items.length > 0 ? (
-            items.map((item) => (
-              <SidebarMenuItem key={item.id}>
-                <SidebarMenuButton isActive={activeItemId === item.id} asChild>
-                  <Link href={itemUrl(item)} className="flex items-center gap-2 px-2 py-1">
-                    <ItemIcon className="h-4 w-4" />
-                    <span>{getItemLabel(item)}</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            ))
+            items.map((item) => {
+              console.log("item", item, "active", activeItemId)
+              return (
+                <SidebarMenuItem key={item.id}>
+                  <SidebarMenuButton isActive={activeItemId === item.id} asChild>
+                    <Link href={itemUrl(item)} className="flex items-center gap-2 px-2 py-1">
+                      <ItemIcon className="h-4 w-4" />
+                      <span>{getItemLabel(item)}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              )
+            })
           ) : (
             <SidebarMenuItem>
               <SidebarMenuButton disabled>

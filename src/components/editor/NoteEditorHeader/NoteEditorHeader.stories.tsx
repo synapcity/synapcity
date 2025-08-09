@@ -24,8 +24,8 @@ const baseArgs: NoteEditorHeaderProps = {
   ],
   onTagClick: (val) => console.log('Tag clicked', val),
   onTagRemove: (val) => console.log('Tag removed', val),
-  createdAt: new Date(2025, 6, 15).toISOString(),
-  updatedAt: new Date(2025, 6, 19).toISOString(),
+  createdAt: new Date(2025, 6, 15),
+  updatedAt: new Date(2025, 6, 19),
   wordCount: 1207,
 };
 function withTabsList(status?: 'idle' | 'saving' | 'syncing' | 'error') {

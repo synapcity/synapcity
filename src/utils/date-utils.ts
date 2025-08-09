@@ -18,7 +18,7 @@ export interface FormatOptions {
 /**
  * Safely formats an ISO/date input.
  */
-export function formatDate(
+export function formatInputDate(
   input: string | Date | null | undefined,
   opts: FormatOptions = {}
 ): string {
@@ -118,4 +118,36 @@ export function getShortRelativeTime(date: Date) {
 	if (diffHours < 24) return `${diffHours}h ago`;
 	const diffDays = Math.round(diffHours / 24);
 	return `${diffDays}d ago`;
+}
+
+
+export function formatTime(d: Date, tz: string, showSeconds: boolean, format: "12h" | "24h") {
+  // Using Intl for accurate TZ handling
+  const opts: Intl.DateTimeFormatOptions = {
+    hour: "numeric",
+    minute: "2-digit",
+    ...(showSeconds ? { second: "2-digit" } : {}),
+    hour12: format === "12h",
+    timeZone: tz,
+  };
+  try {
+    return new Intl.DateTimeFormat(undefined, opts).format(d);
+  } catch {
+    // Fallback if timezone invalid
+    return d.toLocaleTimeString(undefined, { hour12: format === "12h" });
+  }
+}
+
+export function formatDate(d: Date, tz: string) {
+  try {
+    return new Intl.DateTimeFormat(undefined, {
+      weekday: "short",
+      month: "short",
+      day: "2-digit",
+      year: "numeric",
+      timeZone: tz,
+    }).format(d);
+  } catch {
+    return d.toLocaleDateString();
+  }
 }

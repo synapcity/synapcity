@@ -1,5 +1,6 @@
 "use client"
 
+import { SkeletonOrLoading } from "@/components";
 import { useUIStore, useUserStore } from "@/stores";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
@@ -13,13 +14,21 @@ const AppContent = dynamic(() => import("./AppContent").then(mod => mod.AppConte
 export default function AppProviders({ children }: { children: React.ReactNode; }) {
   const isOpen = useUIStore(useShallow(s => s.components?.['mainSidebar']?.['isVisible'] ?? false))
   const router = useRouter()
-  const isLoggedIn = useUserStore(useShallow(state => state.isLoggedIn))
+  const { isLoggedIn, hasHydrated } = useUserStore(useShallow(({ isLoggedIn, hasHydrated }) => ({ isLoggedIn, hasHydrated })))
 
   useEffect(() => {
-    if (!isLoggedIn) {
-      router.push("/")
+    if (hasHydrated && !isLoggedIn) {
+      router.replace("/")
     }
-  }, [isLoggedIn, router])
+  }, [hasHydrated, isLoggedIn, router])
+
+  if (!hasHydrated) {
+    return <SkeletonOrLoading />
+  }
+
+  if (!isLoggedIn) {
+    return null
+  }
 
   return (
     <SidebarProvider defaultOpen sidebarId="global-sidebar" collapsible="offcanvas" open={isOpen}>

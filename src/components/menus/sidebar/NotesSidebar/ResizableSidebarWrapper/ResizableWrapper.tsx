@@ -30,7 +30,7 @@ export function ResizableSidebarWrapper({
 }: ResizableSidebarWrapperProps) {
   const panelRef = useRef<ImperativePanelHandle>(null);
   const { sidebarState, toggleSidebar } = useSidebar();
-  const { activePanel } = usePanels(scope as SidebarScope, id)
+  const { activePanel } = usePanels(scope as SidebarScope, id);
 
   useEffect(() => {
     const panel = panelRef.current;
@@ -43,43 +43,72 @@ export function ResizableSidebarWrapper({
   }, [sidebarState]);
 
   return (
-    <div className="outer-container flex flex-1 overflow-hidden">
-      <ResizablePanelGroup id="resizable-panel-group" direction="horizontal" className="flex-1 flex flex-col">
-        <ResizablePanel id="resizable-panel" className="min-w-0 flex-1 bg-[var(--background)] p-4 flex flex-col" order={1}>
-          <BreadcrumbHeader />
-          {children}
+    <div className="outer-container flex flex-1 h-full min-h-0 overflow-hidden">
+      <ResizablePanelGroup
+        id="resizable-panel-group"
+        direction="horizontal"
+        className="flex-1 h-full min-h-0"
+      >
+        <ResizablePanel
+          id="resizable-panel"
+          order={1}
+          className="
+            min-w-0 flex-1 h-full min-h-0
+            bg-[var(--background)]
+            p-4
+            flex flex-col
+            overflow-hidden
+          "
+        >
+          <div className="shrink-0">
+            <BreadcrumbHeader />
+          </div>
+
+          {/* Main content area can scroll independently if it needs to */}
+          <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden">
+            {children}
+          </div>
         </ResizablePanel>
 
         {sidebarState === "expanded" && (
           <ResizableHandle withHandle className="cursor-col-resize" />
         )}
+
         <ResizablePanel
           ref={panelRef}
           collapsible
           collapsedSize={0}
           defaultSize={35}
+          order={2}
           className={cn(
-            "flex flex-col overflow-auto bg-[var(--sidebar-bg)] relative bg-(--primary-background) text-(--primary-foreground)",
+            `
+            relative
+            bg-(--primary-background) text-(--primary-foreground)
+            flex h-full min-h-0 flex-col
+            overflow-hidden
+          `,
             { "flex-1": sidebarState === "expanded" }
           )}
-          order={2}
         >
-          <div className="flex items-center justify-between px-3 py-2 border-b bg-(--accent-background) text-(--accent-foreground)">
-            <h2 className="text-sm font-medium text-(--accent-foreground)">{activePanel?.label}</h2>
-            <button
-              onClick={toggleSidebar}
-              className={cn("p-1 rounded hover:bg-gray-600")}
-            >
+          {/* Fixed header (non-scrolling) */}
+          <div className="shrink-0 flex items-center justify-between px-3 py-2 border-b bg-(--accent-background) text-(--accent-foreground)">
+            <h2 className="text-sm font-medium text-(--accent-foreground)">
+              {activePanel?.label}
+            </h2>
+            <button onClick={toggleSidebar} className="p-1 rounded hover:bg-gray-600/30">
               <PanelRightClose size={16} />
             </button>
           </div>
-          <div className="p-3 flex-1 flex">{sidebar}</div>
+
+          {/* Scrollable sidebar content */}
+          <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden p-4 m-2 flex no-scrollbar">
+            {sidebar}
+          </div>
         </ResizablePanel>
       </ResizablePanelGroup>
 
-      <div
-        className="flex-shrink-0 w-12 bg-[var(--sidebar-background)] text-(--sidebar-foreground) border-l flex"
-      >
+      {/* Icon rail */}
+      <div className="flex-shrink-0 w-12 bg-[var(--sidebar-background)] text-(--sidebar-foreground) border-l flex">
         <IconSidebar key={id} scope={scope as SidebarScope} id={id} side="right" />
       </div>
     </div>
