@@ -1,6 +1,5 @@
 "use client"
 
-import { useSidebarStore } from "@/stores";
 import { useNodeRelationsStore } from "./nodeRelationsStore";
 import { useMetadata } from "@/providers";
 import { usePanels } from "@/hooks";
