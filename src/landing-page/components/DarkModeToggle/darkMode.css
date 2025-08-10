@@ -1,8 +1,0 @@
-#dark-mode-toggle {
-	& svg {
-		width: var(--size-40);
-		height: var(--size-40);
-		border-radius: 100%;
-		padding: 8px;
-	}
-}

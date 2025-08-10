@@ -2,7 +2,6 @@
 
 import { Button } from '@/components/atoms'
 import { SunIcon, MoonIcon } from 'lucide-react'
-import "./darkMode.css"
 import { useThemeStore } from '@/stores/ui'
 
 export const DarkModeToggle = () => {
