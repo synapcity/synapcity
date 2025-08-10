@@ -1,3 +1,5 @@
+"use client"
+
 import { Container, SectionContainer, SectionHeading } from "@/landing-page/components/ui"
 import { fadeIn } from "../../../../../lib/variants"
 

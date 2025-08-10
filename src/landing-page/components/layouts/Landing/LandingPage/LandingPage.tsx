@@ -7,17 +7,17 @@ const Hero = dynamic(() => import("./Hero").then((mod) => mod.Hero), {
   ssr: true,
 });
 const CTA = dynamic(() => import("./CTA").then((mod) => mod.CTA), {
-  ssr: true,
+  ssr: false,
 });
 const Widgets = dynamic(
   () => import("./Widgets").then((mod) => mod.Widgets), { ssr: false }
 );
 const About = dynamic(() => import("./About").then((mod) => mod.About), {
-  ssr: true,
+  ssr: false,
 });
 const Features = dynamic(
   () => import("./Features").then((mod) => mod.Features),
-  { ssr: true }
+  { ssr: false }
 );
 const HowItWorks = dynamic(
   () => import("./HowItWorks").then((mod) => mod.HowItWorks), { ssr: false }

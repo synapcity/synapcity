@@ -1,3 +1,5 @@
+"use client"
+
 import clsx from "clsx";
 import { TechType } from "@/landing-page/types";
 import dynamic from "next/dynamic";

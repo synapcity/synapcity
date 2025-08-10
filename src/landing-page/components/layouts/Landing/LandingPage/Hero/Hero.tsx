@@ -1,5 +1,3 @@
-"use client"
-
 import { SectionContainer, SectionHeading, HStack } from "@/landing-page/components";
 import { BuiltWith } from "../BuiltWith";
 import { fadeInUp } from "@/landing-page/lib/variants";
