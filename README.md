@@ -61,6 +61,33 @@ Run Storybook for isolated component development:
 npm run storybook
 ```
 
+#### Dependency Stability Review
+
+The project depends on several major front-end frameworks. Their current stability status was verified using `npm view` to inspect dist-tags.
+
+##### Next.js
+
+- **Version:** 15.4.6
+- **Stability:** Marked as the latest release on npm, indicating a stable distribution【c02e7b†L1-L10】
+- **Action:** Pinned in `package.json` and monitor release notes for future major updates.
+
+##### React
+
+- **Version:** 19.1.1
+- **Stability:** Tagged as the latest stable release on npm【a25974†L1-L8】
+- **Action:** Pinned in `package.json`; track React 20 planning once official roadmaps are published.
+
+##### Tailwind CSS
+
+- **Version:** 4.1.11
+- **Stability:** Listed under npm's latest dist-tag, denoting a stable release【9690cb†L2】
+- **Action:** Pinned in `package.json`; watch for Tailwind CSS 5 announcements.
+
+##### Upgrade Plan
+
+- Review upstream changelogs monthly.
+- Test new major versions in a separate branch before adopting them.
+
 ### Testing
 
 Run the unit tests:
@@ -80,6 +107,8 @@ npm run verify      # Lint and type-check together
 
 #### Cypress end-to-end tests
 
+This project is configured for Cypress end-to-end and component testing.
+
 1. Start the dev server in a separate terminal:
 
    ```bash
@@ -88,11 +117,34 @@ npm run verify      # Lint and type-check together
 
 2. Run Cypress tests:
 
-   ```bash
-   npm run test:e2e
-   ```
+- Run e2e tests with `npm run test:cypress:e2e`.
+- Run component tests with `npm run test:cypress:component`.
 
 The configuration assumes the app is available at [http://localhost:3000](http://localhost:3000). Update the `baseUrl` in `cypress.config.ts` or set the `CYPRESS_BASE_URL` environment variable if your server runs elsewhere.
+
+*Note:()
+
+`npm run test:cypress:component` requires a `cypress/support/component-index.html` file. If it is missing, Cypress fails with an error like:
+
+```terminal
+Module not found: Error: Can't resolve '.../cypress/support/component-index.html' (ENOENT)
+```
+
+To run component tests locally:
+
+1. Create `cypress/support/component-index.html` containing a root element:
+
+    ```html
+    <!DOCTYPE html>
+    <html lang="en">
+      <body>
+        <div id="root"></div>
+      </body>
+    </html>
+    ```
+
+2. Ensure `webpack.config.cjs` is present so Cypress can bundle React and TypeScript components.
+3. Re-run `npm run test:cypress:component`.
 
 #### Continuous integration
 

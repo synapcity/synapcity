@@ -54,7 +54,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="manifest" href="/manifest.webmanifest" />
-        <link rel="favicon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.ico" />
       </head>
       <body
         className={`${spaceGrotesk.variable} ${spaceMono.variable} ${inter.variable}`}
