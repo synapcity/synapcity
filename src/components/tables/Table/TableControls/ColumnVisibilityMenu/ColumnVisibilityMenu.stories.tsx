@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState } from 'react';
-import { Meta, StoryObj } from '@storybook/nextjs-vite';
+import React, { useState } from "react";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import {
   useReactTable,
   getCoreRowModel,
@@ -8,33 +8,30 @@ import {
   ColumnDef,
   VisibilityState,
   Table as TanstackTable,
-} from '@tanstack/react-table';
-import { ColumnVisibilityMenu } from './ColumnVisibilityMenu';
+} from "@tanstack/react-table";
+import { ColumnVisibilityMenu } from "./ColumnVisibilityMenu";
 
 type Person = { id: string; name: string; age: number };
 
 const sampleData: Person[] = [
-  { id: '1', name: 'Alice', age: 28 },
-  { id: '2', name: 'Bob', age: 34 },
-  { id: '3', name: 'Carol', age: 22 },
+  { id: "1", name: "Alice", age: 28 },
+  { id: "2", name: "Bob", age: 34 },
+  { id: "3", name: "Carol", age: 22 },
 ];
 
 const columns: ColumnDef<Person>[] = [
-  { accessorKey: 'id', header: 'ID' },
-  { accessorKey: 'name', header: 'Name' },
-  { accessorKey: 'age', header: 'Age' },
+  { accessorKey: "id", header: "ID" },
+  { accessorKey: "name", header: "Name" },
+  { accessorKey: "age", header: "Age" },
 ];
 
 interface TableWithMenuProps {
   initialVisibility?: VisibilityState;
 }
 
-const TableWithMenu: React.FC<TableWithMenuProps> = ({
-  initialVisibility = {},
-}) => {
+const TableWithMenu: React.FC<TableWithMenuProps> = ({ initialVisibility = {} }) => {
   const [data] = useState(() => [...sampleData]);
-  const [columnVisibility, setColumnVisibility] =
-    useState<VisibilityState>(initialVisibility);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(initialVisibility);
 
   const table = useReactTable<Person>({
     data,
@@ -49,33 +46,28 @@ const TableWithMenu: React.FC<TableWithMenuProps> = ({
       <ColumnVisibilityMenu table={table as unknown as TanstackTable<any>} />
 
       <table
-        style={{ width: '100%', borderCollapse: 'collapse', marginTop: 16 }}
+        style={{ width: "100%", borderCollapse: "collapse", marginTop: 16 }}
         border={1}
         cellPadding={8}
       >
         <thead>
-          {table.getHeaderGroups().map(hg => (
+          {table.getHeaderGroups().map((hg) => (
             <tr key={hg.id}>
-              {hg.headers.map(header => (
+              {hg.headers.map((header) => (
                 <th key={header.id}>
                   {header.isPlaceholder
                     ? null
-                    : flexRender(
-                      header.column.columnDef.header,
-                      header.getContext()
-                    )}
+                    : flexRender(header.column.columnDef.header, header.getContext())}
                 </th>
               ))}
             </tr>
           ))}
         </thead>
         <tbody>
-          {table.getRowModel().rows.map(row => (
+          {table.getRowModel().rows.map((row) => (
             <tr key={row.id}>
-              {row.getVisibleCells().map(cell => (
-                <td key={cell.id}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
+              {row.getVisibleCells().map((cell) => (
+                <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
               ))}
             </tr>
           ))}
@@ -86,7 +78,7 @@ const TableWithMenu: React.FC<TableWithMenuProps> = ({
 };
 
 const meta: Meta<typeof ColumnVisibilityMenu> = {
-  title: 'Table/Column Visibility Menu',
+  title: "Table/Column Visibility Menu",
   component: ColumnVisibilityMenu,
 };
 

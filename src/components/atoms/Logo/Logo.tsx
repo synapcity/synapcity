@@ -53,7 +53,7 @@ export function Logo({
         : palette === "foreground"
           ? "var(--foreground)"
           : palette === "custom"
-            ? customColor ?? "currentColor"
+            ? (customColor ?? "currentColor")
             : "currentColor";
 
   if (variant === "mono") {
@@ -72,16 +72,8 @@ export function Logo({
           {/* rounded tile outline */}
           <rect x="36" y="36" width="440" height="440" rx="92" strokeWidth="28" />
           {/* synapse curves */}
-          <path
-            d="M148 332 C 210 256, 302 256, 364 180"
-            strokeWidth="28"
-            opacity="0.95"
-          />
-          <path
-            d="M148 180 C 210 256, 302 256, 364 332"
-            strokeWidth="20"
-            opacity="0.45"
-          />
+          <path d="M148 332 C 210 256, 302 256, 364 180" strokeWidth="28" opacity="0.95" />
+          <path d="M148 180 C 210 256, 302 256, 364 332" strokeWidth="20" opacity="0.45" />
         </g>
         {/* nodes */}
         <circle cx="148" cy="332" r="20" fill={color} />
@@ -104,7 +96,14 @@ export function Logo({
       >
         {title ? <title>{title}</title> : null}
         <defs>
-          <linearGradient id="synapcity-g" x1="96" y1="96" x2="416" y2="416" gradientUnits="userSpaceOnUse">
+          <linearGradient
+            id="synapcity-g"
+            x1="96"
+            y1="96"
+            x2="416"
+            y2="416"
+            gradientUnits="userSpaceOnUse"
+          >
             <stop offset="0" className="syn-primary-stop" />
             <stop offset="1" className="syn-accent-stop" />
           </linearGradient>
@@ -160,19 +159,29 @@ export function Logo({
       {...sizeProps(size)}
       {...props}
       // If palette != auto, push a currentColor that children can use (e.g., strokes)
-      style={
-        palette === "auto"
-          ? undefined
-          : { color, ...(props.style || {}) }
-      }
+      style={palette === "auto" ? undefined : { color, ...(props.style || {}) }}
     >
       {title ? <title>{title}</title> : null}
       <defs>
-        <linearGradient id="synapcity-g" x1="96" y1="96" x2="416" y2="416" gradientUnits="userSpaceOnUse">
+        <linearGradient
+          id="synapcity-g"
+          x1="96"
+          y1="96"
+          x2="416"
+          y2="416"
+          gradientUnits="userSpaceOnUse"
+        >
           <stop offset="0" className="syn-primary-stop" />
           <stop offset="1" className="syn-accent-stop" />
         </linearGradient>
-        <filter id="syn-soft" x="-20%" y="-20%" width="140%" height="140%" colorInterpolationFilters="sRGB">
+        <filter
+          id="syn-soft"
+          x="-20%"
+          y="-20%"
+          width="140%"
+          height="140%"
+          colorInterpolationFilters="sRGB"
+        >
           <feDropShadow dx="0" dy="2" stdDeviation="6" floodOpacity="0.18" />
         </filter>
       </defs>

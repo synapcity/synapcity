@@ -3,10 +3,10 @@ import { ResourceSchema } from "@/stores/resources/factory/base-schema";
 
 // 1️⃣ Define the fields unique to your Note
 export const NoteDataSchema = z.object({
-	title: z.string().min(1, "Title is required"),
-	summary: z.string().optional(),
-	tags: z.array(z.string()).optional(),
-	icon: z.string().optional(),
+  title: z.string().min(1, "Title is required"),
+  summary: z.string().optional(),
+  tags: z.array(z.string()).optional(),
+  icon: z.string().optional(),
 });
 
 // 2️⃣ Merge with the base (id/createdAt/updatedAt/deletedAt)

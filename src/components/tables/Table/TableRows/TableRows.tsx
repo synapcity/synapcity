@@ -1,9 +1,23 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-'use client';
+"use client";
 
 import { Table, Row } from "@tanstack/react-table";
-import { DndContext, closestCenter, useSensor, useSensors, MouseSensor, TouchSensor, KeyboardSensor, DragEndEvent } from "@dnd-kit/core";
-import { arrayMove, SortableContext, verticalListSortingStrategy, useSortable } from "@dnd-kit/sortable";
+import {
+  DndContext,
+  closestCenter,
+  useSensor,
+  useSensors,
+  MouseSensor,
+  TouchSensor,
+  KeyboardSensor,
+  DragEndEvent,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  verticalListSortingStrategy,
+  useSortable,
+} from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import React from "react";
 import TableCell from "../TableCell/TableCell";
@@ -12,7 +26,7 @@ export default function TableRows({
   table,
   onUpdate,
   onDelete,
-  reorderRows
+  reorderRows,
 }: {
   table: Table<any>;
   onUpdate: (id: string, updates: Record<string, any>) => void;
@@ -26,7 +40,6 @@ export default function TableRows({
     useSensor(KeyboardSensor)
   );
 
-
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     if (!over || active.id === over.id) return;
@@ -34,13 +47,13 @@ export default function TableRows({
     const oldIndex = rows.findIndex((row) => row.id === active.id);
     const newIndex = rows.findIndex((row) => row.id === over.id);
 
-    const newOrder = arrayMove(rows, oldIndex, newIndex).map(row => row.original);
+    const newOrder = arrayMove(rows, oldIndex, newIndex).map((row) => row.original);
     reorderRows(newOrder);
   };
 
   return (
     <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-      <SortableContext items={rows.map(r => r.id)} strategy={verticalListSortingStrategy}>
+      <SortableContext items={rows.map((r) => r.id)} strategy={verticalListSortingStrategy}>
         <TableBody className="size-full">
           {rows.length === 0 && (
             <TableRow className="size-full flex items-center justify-around">
@@ -49,7 +62,7 @@ export default function TableRows({
               </Cell>
             </TableRow>
           )}
-          {rows.map(row => (
+          {rows.map((row) => (
             <SortableRow key={row.id} row={row} onUpdate={onUpdate} onDelete={onDelete} />
           ))}
         </TableBody>
@@ -68,10 +81,9 @@ function SortableRow({ row, onUpdate, onDelete }: { row: Row<any>; onUpdate: any
   };
   return (
     <TableRow ref={setNodeRef} style={style}>
-      {row.getVisibleCells().map(cell => (
+      {row.getVisibleCells().map((cell) => (
         <TableCell key={cell.id} cell={cell} row={row} onUpdate={onUpdate} onDelete={onDelete} />
       ))}
     </TableRow>
   );
 }
-

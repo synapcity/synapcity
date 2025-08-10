@@ -44,13 +44,7 @@ describe("<Select />", () => {
   });
 
   it("renders with an error and sets aria-invalid", () => {
-    render(
-      <Select
-        label="Select Label"
-        error="Required field"
-        options={flatOptions}
-      />
-    );
+    render(<Select label="Select Label" error="Required field" options={flatOptions} />);
 
     const trigger = screen.getByRole("combobox");
     expect(trigger).toHaveAttribute("aria-invalid", "true");
@@ -58,25 +52,14 @@ describe("<Select />", () => {
   });
 
   it("renders with placeholder when no value is selected", () => {
-    render(
-      <Select
-        label="Select Label"
-        placeholder="Choose one"
-        options={flatOptions}
-      />
-    );
+    render(<Select label="Select Label" placeholder="Choose one" options={flatOptions} />);
 
     expect(screen.getByRole("combobox")).toHaveTextContent("Choose one");
   });
 
   it("shows the selected value when controlled", () => {
     render(
-      <Select
-        label="Select Label"
-        value="b"
-        options={flatOptions}
-        onValueChange={jest.fn()}
-      />
+      <Select label="Select Label" value="b" options={flatOptions} onValueChange={jest.fn()} />
     );
 
     expect(screen.getByRole("combobox")).toHaveTextContent("Option B");
@@ -107,13 +90,7 @@ describe("<Select />", () => {
 
   it("does not trigger onValueChange when clicking a disabled option", async () => {
     const handleChange = jest.fn();
-    render(
-      <Select
-        label="Select Label"
-        options={flatOptions}
-        onValueChange={handleChange}
-      />
-    );
+    render(<Select label="Select Label" options={flatOptions} onValueChange={handleChange} />);
 
     fireEvent.click(screen.getByRole("combobox"));
 
@@ -125,24 +102,14 @@ describe("<Select />", () => {
   });
 
   it("renders disabled select trigger", () => {
-    render(
-      <Select
-        label="Disabled Select"
-        options={flatOptions}
-        disabled
-      />
-    );
+    render(<Select label="Disabled Select" options={flatOptions} disabled />);
 
     expect(screen.getByRole("combobox")).toBeDisabled();
   });
 
   it("renders grouped options with labels and separators", async () => {
     render(
-      <Select
-        label="Grouped Select"
-        placeholder="Pick one"
-        groupedOptions={groupedOptions}
-      />
+      <Select label="Grouped Select" placeholder="Pick one" groupedOptions={groupedOptions} />
     );
 
     const trigger = screen.getByRole("combobox", { name: /grouped select/i });
@@ -161,7 +128,7 @@ describe("<Select />", () => {
     expect(within(listbox).getByText("Group B2")).toBeInTheDocument();
 
     // Separators
-    const separators = within(listbox).getAllByTestId("select-separator")
+    const separators = within(listbox).getAllByTestId("select-separator");
     expect(separators.length).toBe(1); // One between groups
   });
 
@@ -188,5 +155,4 @@ describe("<Select />", () => {
     expect(within(listbox).getByText("Item 1")).toBeInTheDocument();
     expect(within(listbox).getByText("Item 2")).toBeInTheDocument();
   });
-
 });

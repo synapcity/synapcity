@@ -16,7 +16,7 @@ export const noteSearchOptions: IFuseOptions<SearchableNoteItem> = {
 export const viewSearchOptions: IFuseOptions<SearchableNoteItem> = {
   keys: [
     { name: "content", weight: 0.7 },
-    { name: "viewLabel", weight: 0.5},
+    { name: "viewLabel", weight: 0.5 },
   ],
   threshold: 0.5,
   includeScore: true,

@@ -3,5 +3,5 @@
 import { useThemeStore } from "@/stores/ui/themeStore";
 
 export function useHydrated() {
-	return useThemeStore((s) => s.hasHydrated);
+  return useThemeStore((s) => s.hasHydrated);
 }

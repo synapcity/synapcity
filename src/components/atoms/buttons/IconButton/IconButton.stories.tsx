@@ -12,7 +12,7 @@ const meta: Meta<typeof IconButton> = {
     },
     iconSource: {
       control: { type: "select" },
-      options: ["lucide", "iconify"]
+      options: ["lucide", "iconify"],
     },
     size: {
       control: "select",

@@ -1,11 +1,6 @@
 "use client";
 
-import React, {
-  useState,
-  useMemo,
-  useRef,
-  KeyboardEvent,
-} from "react";
+import React, { useState, useMemo, useRef, KeyboardEvent } from "react";
 import {
   Command,
   CommandInput,
@@ -60,8 +55,8 @@ export function SearchableMultiSelect({
 }: Props) {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
-  const debouncedSearch = useDebouncedSearch(input, onSearch, 250)
-  const fetchedOptions = debouncedSearch
+  const debouncedSearch = useDebouncedSearch(input, onSearch, 250);
+  const fetchedOptions = debouncedSearch;
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -72,9 +67,7 @@ export function SearchableMultiSelect({
 
   const matchedOptions = useMemo(() => {
     if (!lowerInput) return combinedOptions;
-    return combinedOptions.filter((opt) =>
-      opt.value.toLowerCase().includes(lowerInput)
-    );
+    return combinedOptions.filter((opt) => opt.value.toLowerCase().includes(lowerInput));
   }, [combinedOptions, lowerInput]);
 
   const isCreatable =
@@ -106,16 +99,10 @@ export function SearchableMultiSelect({
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (
-      backspaceToRemove &&
-      e.key === "Backspace" &&
-      input === "" &&
-      value.length > 0
-    ) {
+    if (backspaceToRemove && e.key === "Backspace" && input === "" && value.length > 0) {
       onChange?.(value.slice(0, -1));
     }
   };
-
 
   const selectedOptions = useMemo(
     () => combinedOptions.filter((opt) => selectedSet.has(opt.value)),
@@ -127,9 +114,7 @@ export function SearchableMultiSelect({
       key={val}
       className={cn(
         "text-(--accent-foreground) inline-flex items-center gap-1 rounded px-2 py-0.5 text-xs",
-        getTagColor?.(val)
-          ? `bg-[${getTagColor(val)}]`
-          : "bg-(--accent-200)"
+        getTagColor?.(val) ? `bg-[${getTagColor(val)}]` : "bg-(--accent-200)"
       )}
     >
       {getTagIcon?.(val) && <span aria-hidden="true">{getTagIcon(val)}</span>}
@@ -167,11 +152,7 @@ export function SearchableMultiSelect({
               <span className="text-(--muted-foreground)">{triggerLabel ?? "Select…"}</span>
             )}
 
-            <svg
-              className="ml-auto size-4 shrink-0 opacity-50"
-              viewBox="0 0 20 20"
-              fill="none"
-            >
+            <svg className="ml-auto size-4 shrink-0 opacity-50" viewBox="0 0 20 20" fill="none">
               <path
                 d="M6 8L10 12L14 8"
                 stroke="currentColor"
@@ -183,7 +164,10 @@ export function SearchableMultiSelect({
           </div>
         }
         content={
-          <Command className="min-w-[200px] max-h-60 bg-(--background) text-(--foreground)" data-testid="popover-content">
+          <Command
+            className="min-w-[200px] max-h-60 bg-(--background) text-(--foreground)"
+            data-testid="popover-content"
+          >
             <CommandInput
               ref={inputRef}
               placeholder={placeholder}
@@ -228,10 +212,7 @@ export function SearchableMultiSelect({
                   );
                 })}
                 {isCreatable && (
-                  <CommandItem
-                    className="text-(--muted-foreground) italic"
-                    onSelect={handleCreate}
-                  >
+                  <CommandItem className="text-(--muted-foreground) italic" onSelect={handleCreate}>
                     Create “{input.trim()}”
                   </CommandItem>
                 )}

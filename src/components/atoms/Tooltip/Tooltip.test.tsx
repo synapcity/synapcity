@@ -2,20 +2,13 @@ jest.mock("nanoid", () => ({
   nanoid: () => "mock-id",
 }));
 
-
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Tooltip } from "@/components/atoms/Tooltip";
 import React from "react";
 
 describe("Tooltip component", () => {
-  const tooltip = (
-    <Tooltip
-      asChild
-      trigger={<button>Hover me</button>}
-      content="Tooltip content"
-    />
-  )
+  const tooltip = <Tooltip asChild trigger={<button>Hover me</button>} content="Tooltip content" />;
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -37,7 +30,14 @@ describe("Tooltip component", () => {
   });
 
   it("respects delayDuration", async () => {
-    render(<Tooltip asChild trigger={<button>Hover me</button>} content="Tooltip content" delayDuration={100} />);
+    render(
+      <Tooltip
+        asChild
+        trigger={<button>Hover me</button>}
+        content="Tooltip content"
+        delayDuration={100}
+      />
+    );
     const trigger = await screen.findAllByRole("button", { name: "Hover me" });
     userEvent.hover(trigger[0]);
 

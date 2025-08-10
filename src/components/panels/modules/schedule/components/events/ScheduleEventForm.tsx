@@ -30,11 +30,11 @@ import {
 import type { ScheduleEvent, ScheduleTag } from "@/types/schedule";
 import { z } from "zod";
 
-type FormIn = z.input<typeof ScheduleEventInputSchema>;   // pre-coercion (strings OK)
+type FormIn = z.input<typeof ScheduleEventInputSchema>; // pre-coercion (strings OK)
 type FormOut = z.output<typeof ScheduleEventInputSchema>; // post-coercion (Dates)
 
 export const CHANNELS = ["browser", "email", "sms", "audio"] as const;
-export type Channel = typeof CHANNELS[number];
+export type Channel = (typeof CHANNELS)[number];
 
 /** Robust ISO/number/Date -> Date | undefined */
 function toDate(val: unknown): Date | undefined {
@@ -46,7 +46,6 @@ function toDate(val: unknown): Date | undefined {
   }
   return undefined;
 }
-
 
 export function ScheduleEventForm({
   event,
@@ -78,7 +77,6 @@ export function ScheduleEventForm({
     [event]
   );
 
-
   // useForm — note the 3 generics and defaultValues typed as FormIn
   const form = useForm<FormIn, any, FormOut>({
     resolver: zodResolver(ScheduleEventInputSchema),
@@ -99,7 +97,10 @@ export function ScheduleEventForm({
     const tag: ScheduleTag = { label: value, value };
     const existing = form.getValues("tags");
     if (!existing?.some((t) => t.value === tag.value)) {
-      form.setValue("tags", [...(existing ?? []), tag], { shouldDirty: true, shouldValidate: true });
+      form.setValue("tags", [...(existing ?? []), tag], {
+        shouldDirty: true,
+        shouldValidate: true,
+      });
     }
     setTagDraft("");
   }
@@ -258,7 +259,11 @@ export function ScheduleEventForm({
                 {form.watch("tags")?.map((t) => (
                   <Badge key={t.value} variant="secondary" className="flex items-center gap-2">
                     {t.label}
-                    <button type="button" onClick={() => removeTag(t.value)} aria-label={`Remove ${t.label}`}>
+                    <button
+                      type="button"
+                      onClick={() => removeTag(t.value)}
+                      aria-label={`Remove ${t.label}`}
+                    >
                       <Trash2 className="h-3.5 w-3.5 opacity-70" />
                     </button>
                   </Badge>
@@ -341,7 +346,9 @@ export function ScheduleEventForm({
 
         {/* Actions */}
         <div className="flex gap-2 justify-end">
-          <Button type="button" variant="outline" onClick={onCancel}>Cancel</Button>
+          <Button type="button" variant="outline" onClick={onCancel}>
+            Cancel
+          </Button>
           <Button type="submit">Save</Button>
         </div>
       </form>

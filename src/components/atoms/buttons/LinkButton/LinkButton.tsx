@@ -15,7 +15,7 @@ import { IconButtonProps } from "../IconButton/IconButton";
 
 export interface LinkButtonProps
   extends Omit<LinkProps, "onClick" | "onMouseEnter" | "onTouchStart">,
-  Omit<IconButtonProps, "onClick" | "onMouseEnter" | "onTouchStart" | "icon"> {
+    Omit<IconButtonProps, "onClick" | "onMouseEnter" | "onTouchStart" | "icon"> {
   href: string;
   className?: string;
   variant?: ButtonVariant;

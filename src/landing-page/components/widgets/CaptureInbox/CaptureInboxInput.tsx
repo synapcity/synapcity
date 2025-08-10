@@ -1,15 +1,14 @@
-"use client"
+"use client";
 
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import { InboxItem } from "./CaptureInboxItem";
 
-
 interface CaptureInboxInputProps {
   addItem: (item: InboxItem) => void;
 }
 
-const PlusIcon = dynamic(() => import("lucide-react").then((mod) => mod.PlusIcon), { ssr: false })
+const PlusIcon = dynamic(() => import("lucide-react").then((mod) => mod.PlusIcon), { ssr: false });
 
 export const CaptureInboxInput = ({ addItem }: CaptureInboxInputProps) => {
   const [input, setInput] = useState("");
@@ -22,9 +21,9 @@ export const CaptureInboxInput = ({ addItem }: CaptureInboxInputProps) => {
       content: input.trim(),
       createdAt: new Date().toLocaleString(),
     };
-    addItem(newItem)
-    setInput("")
-  }
+    addItem(newItem);
+    setInput("");
+  };
 
   return (
     <div className="w-full flex items-center gap-2 mb-2">
@@ -43,5 +42,5 @@ export const CaptureInboxInput = ({ addItem }: CaptureInboxInputProps) => {
         <PlusIcon size={16} />
       </button>
     </div>
-  )
-}
+  );
+};

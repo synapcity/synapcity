@@ -1,4 +1,4 @@
-import { cn } from "@/utils/index"
+import { cn } from "@/utils/index";
 import { testId } from "@/utils/testId/testId";
 import { JSX } from "react";
 type SkeletonProps = React.HTMLAttributes<HTMLElement> & {

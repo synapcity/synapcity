@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useEffect, useRef } from 'react';
-import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+import { useEffect, useRef } from "react";
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 
 interface Props {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -19,7 +19,7 @@ export default function TabAutosavePlugin({ onSave }: Props) {
         const json = editorState.toJSON();
         onSave?.(json);
       } catch (err) {
-        console.error('Tab autosave failed', err);
+        console.error("Tab autosave failed", err);
       }
     };
 
@@ -33,4 +33,3 @@ export default function TabAutosavePlugin({ onSave }: Props) {
 
   return null;
 }
-

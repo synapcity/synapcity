@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
   Breadcrumb,
@@ -16,16 +16,13 @@ type Segment = {
 };
 
 export const BreadcrumbMenu = ({ items }: { items: string[] }) => {
-  const getLabel = useCallback(
-    (segment: string) => {
-      const formattedSegment = segment.slice(0, 1).toUpperCase() + segment.slice(1).toLowerCase()
-      return decodeURIComponent(formattedSegment);
-    },
-    []
-  );
+  const getLabel = useCallback((segment: string) => {
+    const formattedSegment = segment.slice(0, 1).toUpperCase() + segment.slice(1).toLowerCase();
+    return decodeURIComponent(formattedSegment);
+  }, []);
 
   const finalItems: Segment[] = useMemo(() => {
-    let path = '';
+    let path = "";
     return items.map((segment) => {
       path += `/${segment}`;
       return {

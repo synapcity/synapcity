@@ -8,18 +8,22 @@ import { BulkActions } from "../BulkActions";
 import { DynamicTabsBar, TabOption } from "../DynamicTabsBar";
 import { ExportButton } from "../ExportButton";
 
-export default function TableControlsBar({ table, data, onBulkDelete, tabs }: {
+export default function TableControlsBar({
+  table,
+  data,
+  onBulkDelete,
+  tabs,
+}: {
   table: Table<any>;
   data: any[];
   onBulkDelete: () => void;
   tabs: TabOption[];
 }) {
-
   return (
     <div className="flex flex-wrap justify-between items-center gap-4 p-3 border-b bg-muted rounded-t-lg">
       <div className="flex items-center gap-3">
         <ColumnVisibilityMenu table={table} />
-        <DynamicTabsBar value={tabs[0].value} onAdd={() => { }} tabs={tabs} />
+        <DynamicTabsBar value={tabs[0].value} onAdd={() => {}} tabs={tabs} />
       </div>
       <div className="flex items-center gap-2">
         <GlobalSearch table={table} />

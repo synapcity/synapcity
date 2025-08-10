@@ -1,9 +1,8 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-import { cn } from "@/utils/index"
-
+import { cn } from "@/utils/index";
 
 export function SidebarInset({ className, ...props }: React.ComponentProps<"main">) {
   return (
@@ -16,5 +15,5 @@ export function SidebarInset({ className, ...props }: React.ComponentProps<"main
       )}
       {...props}
     />
-  )
+  );
 }

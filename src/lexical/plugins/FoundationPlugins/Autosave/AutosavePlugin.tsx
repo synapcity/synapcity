@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useCallback, useEffect, useRef } from "react";
 import { debounce } from "lodash";
@@ -21,7 +21,7 @@ export function AutosavePlugin({ onSave }: AutosavePluginProps) {
   const debouncedSave = useRef(debounce(saveContent, 1250)).current;
 
   useEffect(() => {
-    return editor.registerUpdateListener(({ }) => {
+    return editor.registerUpdateListener(({}) => {
       if (!isBlurredRef.current) {
         debouncedSave();
       }

@@ -1,25 +1,28 @@
 .draggable-element {
-	position: absolute;
-	border-radius: 5px;
-	width: 6px;
-	height: 40px;
-	background-color: #051020;
-	cursor: grab;
-	transition: background-color 150ms linear, transform 150ms, width 150ms;
-	opacity: 0.2;
-	z-index: 10;
+  position: absolute;
+  border-radius: 5px;
+  width: 6px;
+  height: 40px;
+  background-color: #051020;
+  cursor: grab;
+  transition:
+    background-color 150ms linear,
+    transform 150ms,
+    width 150ms;
+  opacity: 0.2;
+  z-index: 10;
 }
 
 .draggable-element:active {
-	cursor: grabbing;
-	transform: scale(1.05);
+  cursor: grabbing;
+  transform: scale(1.05);
 }
 
 .draggable-element:hover,
 .draggable-element:focus-within,
 .draggable-element:active {
-	background-color: #033275;
-	opacity: 0.8;
-	width: 12px;
-	left: 8;
+  background-color: #033275;
+  opacity: 0.8;
+  width: 12px;
+  left: 8;
 }

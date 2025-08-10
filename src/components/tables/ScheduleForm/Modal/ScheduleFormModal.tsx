@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import ScheduleForm from '../ScheduleForm';
-import { useRouter } from 'next/navigation';
+import { motion } from "framer-motion";
+import ScheduleForm from "../ScheduleForm";
+import { useRouter } from "next/navigation";
 
 export default function ScheduleFormModal() {
   const router = useRouter();

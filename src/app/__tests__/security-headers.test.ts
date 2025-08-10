@@ -13,10 +13,8 @@ describe("security headers", () => {
     expect(headerMap.get("X-Content-Type-Options")).toBe("nosniff");
     expect(headerMap.get("X-DNS-Prefetch-Control")).toBe("on");
     expect(headerMap.get("Strict-Transport-Security")).toBe(
-      "max-age=63072000; includeSubDomains; preload",
+      "max-age=63072000; includeSubDomains; preload"
     );
-    expect(headerMap.get("Permissions-Policy")).toBe(
-      "camera=(), microphone=(), geolocation=()",
-    );
+    expect(headerMap.get("Permissions-Policy")).toBe("camera=(), microphone=(), geolocation=()");
   });
 });

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client"
+"use client";
 
 import { useState, useRef, useEffect } from "react";
 import { ChevronDown } from "lucide-react";
@@ -69,7 +69,10 @@ export function SortKeyDropdown({ sortKey, onChange }: SortKeyDropdownProps) {
         type="button"
       >
         <span>{OPTIONS.find((o) => o.value === sortKey)?.label}</span>
-        <ChevronDown className={cn("transition-transform", open ? "rotate-180" : "rotate-0")} size={14} />
+        <ChevronDown
+          className={cn("transition-transform", open ? "rotate-180" : "rotate-0")}
+          size={14}
+        />
       </button>
 
       {open && (

@@ -21,11 +21,7 @@ interface SwatchPickerProps {
   className?: string;
 }
 
-export const SwatchPicker: React.FC<SwatchPickerProps> = ({
-  value,
-  onChange,
-  className = "",
-}) => {
+export const SwatchPicker: React.FC<SwatchPickerProps> = ({ value, onChange, className = "" }) => {
   const handleColorChange = (e: React.MouseEvent, color: string) => {
     onChange(color);
   };
@@ -36,12 +32,7 @@ export const SwatchPicker: React.FC<SwatchPickerProps> = ({
         <div className="h-full overflow-y-scroll">
           <div className="p-4 pb-1.5">
             {tailwindGroupedColors.map((group, idx) => (
-              <SwatchesGroup
-                key={idx}
-                group={group}
-                active={value}
-                onClick={handleColorChange}
-              />
+              <SwatchesGroup key={idx} group={group} active={value} onClick={handleColorChange} />
             ))}
             <div className="clear-both" />
           </div>

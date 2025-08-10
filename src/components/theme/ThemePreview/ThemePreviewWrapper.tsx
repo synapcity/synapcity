@@ -11,7 +11,7 @@ import { ThemePreferences } from "@/theme";
 export function ThemePreview() {
   const { control } = useFormContext<ThemePreferencesFormValues>();
   const liveValues = useWatch({ control });
-  const previewRef = useRef<HTMLElement | null>(null)
+  const previewRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     if (previewRef.current) {

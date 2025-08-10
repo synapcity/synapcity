@@ -1,9 +1,6 @@
 "use client";
 
-import React, {
-  Component,
-  type ReactNode,
-} from "react";
+import React, { Component, type ReactNode } from "react";
 import { Card } from "@/components/atoms/ui/card";
 import { AlertCircle } from "lucide-react";
 

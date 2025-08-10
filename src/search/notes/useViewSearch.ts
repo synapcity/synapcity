@@ -7,18 +7,10 @@ import type { NoteSearchResult } from "./types";
 import { viewSearchOptions } from "./noteSearchOptions";
 import { prepareViews } from "./prepareNotesWithViews";
 
+export function useViewSearch(views: CombinedEditor[], query: string): NoteSearchResult[] {
+  const searchItems = useMemo(() => prepareViews(views), [views]);
 
-export function useViewSearch(
-  views: CombinedEditor[],
-  query: string
-): NoteSearchResult[] {
-  const searchItems = useMemo(
-    () => prepareViews(views),
-    [views]
-  );
-
-const fuse = useMemo(() => new Fuse(searchItems, viewSearchOptions), [searchItems]);
-
+  const fuse = useMemo(() => new Fuse(searchItems, viewSearchOptions), [searchItems]);
 
   return useMemo(() => {
     if (!query.trim()) return [];

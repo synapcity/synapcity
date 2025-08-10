@@ -17,7 +17,6 @@ type StackProps<E extends ElementType = "div"> = {
   padding?: string;
 } & Omit<React.ComponentPropsWithoutRef<E>, "as">;
 
-
 function getResponsiveClasses<T extends string>(
   prefix: string,
   value?: ResponsiveValue<T>
@@ -83,7 +82,7 @@ export function Stack<E extends ElementType = "div">({
 
 export function HStack<E extends ElementType = "div">(props: StackProps<E>) {
   const { children, ...rest } = props;
-  const { gap, className, ...restProps } = rest
+  const { gap, className, ...restProps } = rest;
   return (
     <Stack<E> {...(restProps as StackProps<E>)} gap={gap} className={cn("flex-row", className)}>
       {children}
@@ -96,7 +95,6 @@ export function VStack<E extends ElementType = "div">(props: StackProps<E>) {
   return <Stack<E> {...(rest as StackProps<E>)} className={cn("flex-col", className)} />;
 }
 
-
 // export function HStack(props: Omit<React.ComponentProps<typeof Stack>, "as" | "className"> & { className?: string }) {
 //   const { className, ...rest } = props;
 //   return <Stack {...rest} className={cn("flex-row", className)}>{props.children}</Stack>;
@@ -106,7 +104,6 @@ export function VStack<E extends ElementType = "div">(props: StackProps<E>) {
 //   const { className, ...rest } = props;
 //   return <Stack {...rest} className={cn("flex-col", className)} >{props.children}</Stack>;
 // }
-
 
 // Utility functions for handling spacing, margins, etc.
 

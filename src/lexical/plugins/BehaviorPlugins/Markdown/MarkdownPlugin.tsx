@@ -3,5 +3,5 @@ import { PLAYGROUND_TRANSFORMERS } from "./MarkdownTransformers";
 import { JSX } from "react";
 
 export default function MarkdownPlugin(): JSX.Element {
-  return <MarkdownShortcutPlugin transformers={PLAYGROUND_TRANSFORMERS} />
+  return <MarkdownShortcutPlugin transformers={PLAYGROUND_TRANSFORMERS} />;
 }

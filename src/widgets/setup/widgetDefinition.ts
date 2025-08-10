@@ -5,7 +5,7 @@ import type { WidgetComponentProps, WidgetModule } from "./types";
 
 export type WidgetDefinition<
   PSchema extends z.ZodTypeAny = z.ZodAny,
-  SSchema extends z.ZodTypeAny = z.ZodAny
+  SSchema extends z.ZodTypeAny = z.ZodAny,
 > = {
   id: string; // unique
   widgetKey: string; // registry key
@@ -26,14 +26,10 @@ export type WidgetDefinition<
   // === Component hook-up (one of the two) ===
 
   // 1) Eager (core widgets)
-  component?: React.ComponentType<
-    WidgetComponentProps<z.infer<PSchema>, z.infer<SSchema>>
-  >;
+  component?: React.ComponentType<WidgetComponentProps<z.infer<PSchema>, z.infer<SSchema>>>;
 
   // 2) Lazy (recommended)
-  getComponent?: () => Promise<
-    WidgetModule<z.infer<PSchema>, z.infer<SSchema>>
-  >;
+  getComponent?: () => Promise<WidgetModule<z.infer<PSchema>, z.infer<SSchema>>>;
 
   // Optional hints for grid
   constraints?: {
@@ -44,9 +40,7 @@ export type WidgetDefinition<
     aspectRatio?: number | [number, number];
     lockAspectRatio?: boolean;
     preferredSize?: { w: number; h: number };
-    resizeHandles?: Array<
-      "s" | "w" | "e" | "n" | "sw" | "nw" | "se" | "ne"
-    >;
+    resizeHandles?: Array<"s" | "w" | "e" | "n" | "sw" | "nw" | "se" | "ne">;
   };
 
   layoutTemplate?: { w: number; h: number; x?: number; y?: number };

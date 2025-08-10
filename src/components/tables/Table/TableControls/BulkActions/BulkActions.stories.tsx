@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Meta, StoryObj } from '@storybook/nextjs-vite';
+import React, { useState } from "react";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import {
   useReactTable,
   getCoreRowModel,
@@ -7,22 +7,30 @@ import {
   ColumnDef,
   RowSelectionState,
   Table as TanstackTable,
-} from '@tanstack/react-table';
-import { action } from 'storybook/actions';
-import { BulkActions } from './BulkActions';
-import { Table, TableBody, TableRow, TableCell, TableHead, TableHeader, TableFooter } from '@/components/atoms/ui/table';
+} from "@tanstack/react-table";
+import { action } from "storybook/actions";
+import { BulkActions } from "./BulkActions";
+import {
+  Table,
+  TableBody,
+  TableRow,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableFooter,
+} from "@/components/atoms/ui/table";
 
 type Person = { id: string; name: string; age: number };
 
 const sampleData: Person[] = [
-  { id: '1', name: 'Alice', age: 28 },
-  { id: '2', name: 'Bob', age: 34 },
-  { id: '3', name: 'Carol', age: 22 },
+  { id: "1", name: "Alice", age: 28 },
+  { id: "2", name: "Bob", age: 34 },
+  { id: "3", name: "Carol", age: 22 },
 ];
 
 const columns: ColumnDef<Person>[] = [
   {
-    id: 'select',
+    id: "select",
     header: ({ table }) => (
       <input
         type="checkbox"
@@ -42,8 +50,8 @@ const columns: ColumnDef<Person>[] = [
       />
     ),
   },
-  { accessorKey: 'name', header: 'Name' },
-  { accessorKey: 'age', header: 'Age' },
+  { accessorKey: "name", header: "Name" },
+  { accessorKey: "age", header: "Age" },
 ];
 
 interface TableWithBulkProps {
@@ -66,25 +74,22 @@ const TableWithBulk: React.FC<TableWithBulkProps> = ({ initialSelection = {} }) 
     <div style={{ padding: 24 }}>
       <Table border={1} cellPadding={8}>
         <TableHead>
-          {table.getHeaderGroups().map(headerGroup => (
+          {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map(header => (
+              {headerGroup.headers.map((header) => (
                 <TableHeader key={header.id}>
                   {header.isPlaceholder
                     ? null
-                    : flexRender(
-                      header.column.columnDef.header,
-                      header.getContext()
-                    )}
+                    : flexRender(header.column.columnDef.header, header.getContext())}
                 </TableHeader>
               ))}
             </TableRow>
           ))}
         </TableHead>
         <TableBody>
-          {table.getRowModel().rows.map(row => (
+          {table.getRowModel().rows.map((row) => (
             <TableRow key={row.id}>
-              {row.getVisibleCells().map(cell => (
+              {row.getVisibleCells().map((cell) => (
                 <TableCell key={cell.id}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </TableCell>
@@ -98,7 +103,7 @@ const TableWithBulk: React.FC<TableWithBulkProps> = ({ initialSelection = {} }) 
         <BulkActions
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           table={table as unknown as TanstackTable<any>}
-          onBulkDelete={action('onBulkDelete')}
+          onBulkDelete={action("onBulkDelete")}
         />
       </TableFooter>
     </div>
@@ -106,7 +111,7 @@ const TableWithBulk: React.FC<TableWithBulkProps> = ({ initialSelection = {} }) 
 };
 
 const meta: Meta<typeof BulkActions> = {
-  title: 'Table/BulkActions',
+  title: "Table/BulkActions",
   component: BulkActions,
 };
 
@@ -115,10 +120,10 @@ type Story = StoryObj<typeof BulkActions>;
 
 export const NoSelection: Story = {
   render: () => <TableWithBulk initialSelection={{}} />,
-  name: 'No Rows Selected',
+  name: "No Rows Selected",
 };
 
 export const SomeSelected: Story = {
-  render: () => <TableWithBulk initialSelection={{ '1': true, '3': true }} />,
-  name: 'Some Rows Selected',
+  render: () => <TableWithBulk initialSelection={{ "1": true, "3": true }} />,
+  name: "Some Rows Selected",
 };

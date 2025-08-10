@@ -1,13 +1,16 @@
-'use client';
+"use client";
 
-import { useEffect, useMemo } from 'react';
-import { useNoteStore } from '@/stores/resources/noteStore';
+import { useEffect, useMemo } from "react";
+import { useNoteStore } from "@/stores/resources/noteStore";
 // import { Note } from '@/stores';
-import { NoteCard } from '@/components/notes/cards/NoteCard';
-import { AddNoteCard } from '@/components/notes/cards/AddNoteCard';
-import { CardItemBase, MasonryVirtualWindow } from '@/components/molecules/VirtualizedGrid/MasonryVirtualizedGrid';
-import { getExcerpt } from '@/utils/getExcerpt';
-import { useShallow } from 'zustand/shallow';
+import { NoteCard } from "@/components/notes/cards/NoteCard";
+import { AddNoteCard } from "@/components/notes/cards/AddNoteCard";
+import {
+  CardItemBase,
+  MasonryVirtualWindow,
+} from "@/components/molecules/VirtualizedGrid/MasonryVirtualizedGrid";
+import { getExcerpt } from "@/utils/getExcerpt";
+import { useShallow } from "zustand/shallow";
 
 // type NoteResource = Note & { id: string };
 
@@ -16,20 +19,20 @@ interface NoteCardItem extends CardItemBase {
 }
 
 export function NotesMasonryGrid() {
-  const notes = useNoteStore(useShallow(s => s.items))
-  const hasHydrated = useNoteStore(s => s.hasHydrated);
+  const notes = useNoteStore(useShallow((s) => s.items));
+  const hasHydrated = useNoteStore((s) => s.hasHydrated);
 
   useEffect(() => {
     if (!hasHydrated) return;
   }, [hasHydrated]);
 
   const items: NoteCardItem[] = useMemo(() => {
-    return Object.values(notes).map(n => ({
+    return Object.values(notes).map((n) => ({
       id: n.id,
-      title: n.title.trim() || 'Untitled',
+      title: n.title.trim() || "Untitled",
       excerpt: getExcerpt(n),
     }));
-  }, [notes])
+  }, [notes]);
 
   return (
     <MasonryVirtualWindow<NoteCardItem>
@@ -38,7 +41,7 @@ export function NotesMasonryGrid() {
       estimatedCardHeight={180}
       overscanScreens={1}
       renderAddNew={() => <AddNoteCard />}
-      renderCard={item => (
+      renderCard={(item) => (
         <NoteCard
           key={item.id}
           id={item.id}

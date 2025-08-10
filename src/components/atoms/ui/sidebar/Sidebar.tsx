@@ -10,7 +10,12 @@ import {
   SheetTitle,
   SheetDescription,
 } from "@/components/atoms/ui/sheet";
-import { useSidebarModuleStore, SIDEBAR_DIMENSIONS, SIDEBAR_STATES, SidebarSettings } from "@/components/atoms/ui/sidebar/useSidebarModuleStore";
+import {
+  useSidebarModuleStore,
+  SIDEBAR_DIMENSIONS,
+  SIDEBAR_STATES,
+  SidebarSettings,
+} from "@/components/atoms/ui/sidebar/useSidebarModuleStore";
 import { useShallow } from "zustand/shallow";
 
 export function Sidebar({
@@ -31,32 +36,23 @@ export function Sidebar({
   resizable?: boolean;
   hover?: boolean;
 }) {
-  const {
-    sidebarId,
-    isMobile,
-    sidebarState,
-    setSidebarState,
-    openMobile,
-    setOpenMobile,
-  } = useSidebar();
-
+  const { sidebarId, isMobile, sidebarState, setSidebarState, openMobile, setOpenMobile } =
+    useSidebar();
 
   const settings = useSidebarModuleStore(useShallow((s) => s.getSettings(sidebarId)));
   const updateSettings = useSidebarModuleStore((s) => s.updateSettings);
 
-
   const [width, setWidth] = React.useState(
-    (settings as SidebarSettings)?.width ?? (variant === "icon" ? SIDEBAR_DIMENSIONS.ICON_WIDTH : SIDEBAR_DIMENSIONS.DEFAULT)
+    (settings as SidebarSettings)?.width ??
+      (variant === "icon" ? SIDEBAR_DIMENSIONS.ICON_WIDTH : SIDEBAR_DIMENSIONS.DEFAULT)
   );
   const resizing = React.useRef(false);
-
 
   React.useEffect(() => {
     if (!resizable || isMobile) return;
     document.documentElement.style.setProperty("--sidebar-width", `${width}px`);
     updateSettings(sidebarId, { width });
   }, [width, resizable, isMobile, sidebarId, updateSettings]);
-
 
   React.useEffect(() => {
     if (!resizable || isMobile) return;
@@ -86,22 +82,16 @@ export function Sidebar({
     e.preventDefault();
   };
 
-
   const isExpanded = sidebarState === SIDEBAR_STATES.EXPANDED;
   const isIcon = sidebarState === SIDEBAR_STATES.ICON && collapsible === "icon";
-  const isOffcanvas =
-    sidebarState === SIDEBAR_STATES.OFFCANVAS &&
-    collapsible === "offcanvas";
-
+  const isOffcanvas = sidebarState === SIDEBAR_STATES.OFFCANVAS && collapsible === "offcanvas";
 
   const onEnter = () => {
     if (auto && isIcon) setSidebarState(SIDEBAR_STATES.EXPANDED);
   };
   const onLeave = () => {
-    if (auto && isExpanded && collapsible === "icon")
-      setSidebarState(SIDEBAR_STATES.ICON);
+    if (auto && isExpanded && collapsible === "icon") setSidebarState(SIDEBAR_STATES.ICON);
   };
-
 
   if (isMobile) {
     return (
@@ -122,34 +112,32 @@ export function Sidebar({
     );
   }
 
-
-  const containerWidth = variant === "icon" ? SIDEBAR_DIMENSIONS.ICON_WIDTH : isExpanded
-    ? width
-    : isIcon
-      ? SIDEBAR_DIMENSIONS.ICON
-      : isOffcanvas
+  const containerWidth =
+    variant === "icon"
+      ? SIDEBAR_DIMENSIONS.ICON_WIDTH
+      : isExpanded
         ? width
-        : width;
-
+        : isIcon
+          ? SIDEBAR_DIMENSIONS.ICON
+          : isOffcanvas
+            ? width
+            : width;
 
   const offcanvasStyles: React.CSSProperties = isOffcanvas
     ? {
-      position: "absolute",
-      top: 0,
-      bottom: 0,
-      [side]: 0,
-      transform:
-        side === "left"
-          ? `translateX(-${width}px)`
-          : `translateX(${width}px)`,
-      transition: "transform 0.2s ease",
-    }
+        position: "absolute",
+        top: 0,
+        bottom: 0,
+        [side]: 0,
+        transform: side === "left" ? `translateX(-${width}px)` : `translateX(${width}px)`,
+        transition: "transform 0.2s ease",
+      }
     : {};
 
   return (
     <div
-      onMouseEnter={hover ? (() => onEnter()) : undefined}
-      onMouseLeave={hover ? (() => onLeave()) : undefined}
+      onMouseEnter={hover ? () => onEnter() : undefined}
+      onMouseLeave={hover ? () => onLeave() : undefined}
       className={cn(
         "relative flex h-full flex-col overflow-hidden group z-10",
         variant === "floating" && "p-2",
@@ -184,14 +172,12 @@ export function Sidebar({
           data-slot="sidebar-inner"
           className={cn(
             "bg-(--sidebar-background) text-(--sidebar-foreground) min-h-0 flex flex-col flex-1",
-            variant === "floating" &&
-            "rounded-md border border-(--sidebar-border) shadow-sm"
+            variant === "floating" && "rounded-md border border-(--sidebar-border) shadow-sm"
           )}
         >
           {children}
         </div>
       )}
-
     </div>
   );
 }

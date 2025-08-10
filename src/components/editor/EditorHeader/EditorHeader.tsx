@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useState } from "react";
 import { TagPills } from "@/components/tables/pills";
@@ -10,8 +10,7 @@ export default function EditorHeader() {
     { label: "Idea", value: "idea", color: "#10b981" },
   ]);
 
-  const handleRemoveTag = (value: string) =>
-    setTags(tags.filter(tag => tag.value !== value));
+  const handleRemoveTag = (value: string) => setTags(tags.filter((tag) => tag.value !== value));
 
   const handleTagClick = (value: string) => alert(`Tag clicked: ${value}`);
 

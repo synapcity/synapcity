@@ -1,32 +1,50 @@
 import { z } from "zod";
 import { ResourceSchema } from "../factory";
-import {
-  defaultFlags,
-  handles,
-  resizeHandleLiterals,
-  defaultResizeHandles,
-} from "./defaults";
-
+import { defaultFlags, handles, resizeHandleLiterals, defaultResizeHandles } from "./defaults";
 
 import type { Layout as RGLLayout } from "react-grid-layout";
 
 export const breakpoints = ["xxs", "xs", "sm", "md", "lg", "xl", "xxl"] as const;
-export type BreakpointType = typeof breakpoints[number];
+export type BreakpointType = (typeof breakpoints)[number];
 
 export type LayoutItem = RGLLayout; // Always use this type for each grid item
 export type Layouts = Record<BreakpointType, LayoutItem[]>;
 
 export const defaultBreakpoints: Record<BreakpointType, number> = {
-  xxs: 320, xs: 480, sm: 640, md: 768, lg: 1024, xl: 1280, xxl: 1400,
+  xxs: 320,
+  xs: 480,
+  sm: 640,
+  md: 768,
+  lg: 1024,
+  xl: 1280,
+  xxl: 1400,
 };
 export const defaultCols: Record<BreakpointType, number> = {
-  xxs: 2, xs: 3, sm: 4, md: 8, lg: 12, xl: 14, xxl: 16,
+  xxs: 2,
+  xs: 3,
+  sm: 4,
+  md: 8,
+  lg: 12,
+  xl: 14,
+  xxl: 16,
 };
 export const defaultMargin: Record<BreakpointType, [number, number]> = {
-  xxs: [0,0], xs: [10,10], sm: [10,10], md: [20,20], lg: [20,20], xl: [30,30], xxl: [30,30],
+  xxs: [0, 0],
+  xs: [10, 10],
+  sm: [10, 10],
+  md: [20, 20],
+  lg: [20, 20],
+  xl: [30, 30],
+  xxl: [30, 30],
 };
 export const defaultContainerPadding: Record<BreakpointType, [number, number]> = {
-  xxs: [0,0], xs: [10,10], sm: [10,10], md: [20,20], lg: [20,20], xl: [30,30], xxl: [30,30],
+  xxs: [0, 0],
+  xs: [10, 10],
+  sm: [10, 10],
+  md: [20, 20],
+  lg: [20, 20],
+  xl: [30, 30],
+  xxl: [30, 30],
 };
 
 function fillDefaults<T>(
@@ -62,9 +80,14 @@ export const LayoutItemSchema = z.object({
 });
 export const LayoutSchema = z.array(LayoutItemSchema);
 export const LayoutsSchema = z.record(z.enum(breakpoints), LayoutSchema).default({
-  xxs: [], xs: [], sm: [], md: [], lg: [], xl: [], xxl: [],
+  xxs: [],
+  xs: [],
+  sm: [],
+  md: [],
+  lg: [],
+  xl: [],
+  xxl: [],
 });
-
 
 // --- 3. Config/Flags/Handles schemas ---
 export const GridHandlesSchema = z.object({
@@ -87,17 +110,21 @@ export type GridFlags = z.infer<typeof GridFlagsSchema>;
 
 export const GridConfigSchema = z.object({
   label: z.string().optional().default("Untitled"),
-  breakpoints: z.record(z.enum(breakpoints), z.number()).default({...defaultBreakpoints}),
-  cols: z.record(z.enum(breakpoints), z.number()).default({...defaultCols}),
-  margin: z.record(z.enum(breakpoints), z.tuple([z.number(), z.number()])).default({...defaultMargin}),
-  containerPadding: z.record(z.enum(breakpoints), z.tuple([z.number(), z.number()])).default({ ...defaultContainerPadding}),
+  breakpoints: z.record(z.enum(breakpoints), z.number()).default({ ...defaultBreakpoints }),
+  cols: z.record(z.enum(breakpoints), z.number()).default({ ...defaultCols }),
+  margin: z
+    .record(z.enum(breakpoints), z.tuple([z.number(), z.number()]))
+    .default({ ...defaultMargin }),
+  containerPadding: z
+    .record(z.enum(breakpoints), z.tuple([z.number(), z.number()]))
+    .default({ ...defaultContainerPadding }),
   rowHeight: z.number().default(30),
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   compactType: z.enum(["vertical", "horizontal", null as any]).default("vertical"),
   resizeHandles: z.array(z.enum(resizeHandleLiterals)).default(defaultResizeHandles),
   autoSize: z.boolean().optional().default(true),
   flags: GridFlagsSchema,
-  handles: GridHandlesSchema.default({...handles}),
+  handles: GridHandlesSchema.default({ ...handles }),
 });
 export type GridConfig = z.infer<typeof GridConfigSchema>;
 
@@ -152,7 +179,7 @@ export function createGrid(partial: Partial<Grid>): Grid {
     },
     handles: {
       ...handles,
-      ...(partial.config?.handles ?? {...handles}),
+      ...(partial.config?.handles ?? { ...handles }),
     },
     label: partial.config?.label ?? "",
   };
@@ -166,10 +193,15 @@ export function createGrid(partial: Partial<Grid>): Grid {
     layout: partial.state?.layout ?? [],
     // ⬇️ Ensure layouts are parsed through Zod defaults
     layouts: partial.state?.layouts ?? {
-      xxs: [], xs: [], sm: [], md: [], lg: [], xl: [], xxl: [],
+      xxs: [],
+      xs: [],
+      sm: [],
+      md: [],
+      lg: [],
+      xl: [],
+      xxl: [],
     },
   };
-
 
   return GridResourceSchema.parse({
     id,

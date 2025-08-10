@@ -27,12 +27,7 @@ interface Props {
 
 export function UrlField({ config, meta, field }: Props) {
   const { name, label, placeholder } = config;
-  const {
-    tooltip,
-    helpText,
-    required,
-    disabled,
-  } = meta ?? {};
+  const { tooltip, helpText, required, disabled } = meta ?? {};
 
   const id = `url-${name}`;
   const labelId = `${id}-label`;
@@ -69,9 +64,7 @@ export function UrlField({ config, meta, field }: Props) {
         ) : (
           inputEl
         )}
-        {helpText && (
-          <p className="text-xs text-muted-foreground mt-1">{helpText}</p>
-        )}
+        {helpText && <p className="text-xs text-muted-foreground mt-1">{helpText}</p>}
         {message && (
           <UIFormMessage id={`${id}-error`} className="text-red-600 mt-1">
             {message}

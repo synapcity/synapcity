@@ -64,7 +64,6 @@ describe("Input component", () => {
     expect(input).toHaveAttribute("type", "text"); // visibility toggled
   });
 
-
   it("sets input type to password initially when isPassword is true", () => {
     const { container } = render(<Input isPassword type="password" />);
     const input = container.querySelector('[data-slot="input"]') as HTMLInputElement;

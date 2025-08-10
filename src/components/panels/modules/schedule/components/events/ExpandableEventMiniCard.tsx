@@ -21,8 +21,8 @@ type Props = {
   isPast?: boolean;
 };
 
-const EventTitle = ({ id, done, title }: { id: string; done: boolean; title: string; }) => {
-  const updateEvent = useScheduleStore(s => s.updateEvent);
+const EventTitle = ({ id, done, title }: { id: string; done: boolean; title: string }) => {
+  const updateEvent = useScheduleStore((s) => s.updateEvent);
   return (
     <div className="flex items-center gap-2">
       {done ? (
@@ -40,18 +40,38 @@ const EventTitle = ({ id, done, title }: { id: string; done: boolean; title: str
   );
 };
 
-const EventDateTime = ({ allDay, end, start, setType }: { allDay: boolean; end?: Date | string; start: Date | string; setType: (type: string) => void; }) => {
+const EventDateTime = ({
+  allDay,
+  end,
+  start,
+  setType,
+}: {
+  allDay: boolean;
+  end?: Date | string;
+  start: Date | string;
+  setType: (type: string) => void;
+}) => {
   return (
     <div className="text-xs text-(--foreground)" onClick={() => setType("form")}>
       {allDay
         ? "All Day"
         : new Date(start).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-      {end && <> - {new Date(end).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</>}
+      {end && (
+        <> - {new Date(end).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</>
+      )}
     </div>
   );
 };
 
-const MoreEventInfo = ({ type, event, setType }: { type: string; setType: (type: string | null) => void; event: ScheduleEvent; }) => {
+const MoreEventInfo = ({
+  type,
+  event,
+  setType,
+}: {
+  type: string;
+  setType: (type: string | null) => void;
+  event: ScheduleEvent;
+}) => {
   if (!type) return null;
   return (
     <div className="w-full">
@@ -61,10 +81,18 @@ const MoreEventInfo = ({ type, event, setType }: { type: string; setType: (type:
   );
 };
 
-const EventDetails = ({ event, isPast, setType }: { event: ScheduleEvent; isPast?: boolean; setType: (type: string) => void; }) => {
+const EventDetails = ({
+  event,
+  isPast,
+  setType,
+}: {
+  event: ScheduleEvent;
+  isPast?: boolean;
+  setType: (type: string) => void;
+}) => {
   return (
     <div className="flex w-full justify-between items-center">
-      <div className="flex flex-col" onClick={e => e.stopPropagation()}>
+      <div className="flex flex-col" onClick={(e) => e.stopPropagation()}>
         <EventTitle
           id={event.id}
           title={event.title}
@@ -83,13 +111,7 @@ const EventDetails = ({ event, isPast, setType }: { event: ScheduleEvent; isPast
   );
 };
 
-export function ExpandableEventMiniCard({
-  event,
-  open,
-  onToggle,
-  isNext,
-  isPast,
-}: Props) {
+export function ExpandableEventMiniCard({ event, open, onToggle, isNext, isPast }: Props) {
   const [type, setType] = useState<string | null>(null);
 
   const handleOpenType = (newType: string | null) => {
@@ -121,7 +143,7 @@ export function ExpandableEventMiniCard({
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.98, y: -5 }}
               transition={{ duration: 0.2 }}
-              onClick={e => e.stopPropagation()}
+              onClick={(e) => e.stopPropagation()}
               className="w-full flex flex-col"
             >
               <Separator className="w-full my-4 text-(--foreground)" />

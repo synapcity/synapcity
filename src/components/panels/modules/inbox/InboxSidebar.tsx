@@ -1,21 +1,21 @@
-"use client"
+"use client";
 
-import { useInboxStore } from "@/stores/inboxStore"
-import { cn } from "@/utils"
-import { format, isToday, isYesterday, parseISO } from "date-fns"
-import { InboxCaptureForm } from "./InboxCaptureForm"
+import { useInboxStore } from "@/stores/inboxStore";
+import { cn } from "@/utils";
+import { format, isToday, isYesterday, parseISO } from "date-fns";
+import { InboxCaptureForm } from "./InboxCaptureForm";
 
 export const InboxSidebar = () => {
-  const grouped = useInboxStore((s) => s.getGroupedByDate)()
-  const selectedDate = useInboxStore((s) => s.selectedDate)
-  const selectDate = useInboxStore((s) => s.selectDate)
+  const grouped = useInboxStore((s) => s.getGroupedByDate)();
+  const selectedDate = useInboxStore((s) => s.selectedDate);
+  const selectDate = useInboxStore((s) => s.selectDate);
 
   const getLabel = (dateStr: string) => {
-    const date = parseISO(dateStr)
-    if (isToday(date)) return "Today"
-    if (isYesterday(date)) return "Yesterday"
-    return format(date, "MMMM d, yyyy")
-  }
+    const date = parseISO(dateStr);
+    if (isToday(date)) return "Today";
+    if (isYesterday(date)) return "Yesterday";
+    return format(date, "MMMM d, yyyy");
+  };
 
   return (
     <aside className="w-full p-2 space-y-1">
@@ -36,5 +36,5 @@ export const InboxSidebar = () => {
           </button>
         ))}
     </aside>
-  )
-}
+  );
+};

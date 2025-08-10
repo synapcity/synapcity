@@ -5,14 +5,20 @@ import { convertToHexColor, getContrastingColor } from "@/theme/utils";
 import dynamic from "next/dynamic";
 import { useMemo } from "react";
 
-const SwatchPickerComponent = dynamic(() => import("@/components/theme/color/SwatchPickerComponent").then((mod) => mod.default), {
-  loading: () => <div className="h-52" />,
-  ssr: false
-})
-const PopoverWrapper = dynamic(() => import("@/components/molecules/PopoverWrapper/PopoverWrapper").then(mod => mod.PopoverWrapper))
-const Button = dynamic(() => import("@/components/atoms/buttons/Button/Button").then((mod) => mod.Button))
-const Label = dynamic(() => import("@/components/atoms/Label/Label").then((mod) => mod.Label))
-
+const SwatchPickerComponent = dynamic(
+  () => import("@/components/theme/color/SwatchPickerComponent").then((mod) => mod.default),
+  {
+    loading: () => <div className="h-52" />,
+    ssr: false,
+  }
+);
+const PopoverWrapper = dynamic(() =>
+  import("@/components/molecules/PopoverWrapper/PopoverWrapper").then((mod) => mod.PopoverWrapper)
+);
+const Button = dynamic(() =>
+  import("@/components/atoms/buttons/Button/Button").then((mod) => mod.Button)
+);
+const Label = dynamic(() => import("@/components/atoms/Label/Label").then((mod) => mod.Label));
 
 export const ColorField = ({ name, label }: { name: string; label: string }) => {
   const { control } = useFormContext();
@@ -25,7 +31,6 @@ export const ColorField = ({ name, label }: { name: string; label: string }) => 
       control={control}
       name={name}
       render={({ field }) => {
-
         return (
           <div
             className="flex justify-around items-center w-full"
@@ -35,9 +40,7 @@ export const ColorField = ({ name, label }: { name: string; label: string }) => 
             }}
           >
             <SwatchPickerComponent value={currentColor} onChange={field.onChange} />
-            <Label>
-              {label}
-            </Label>
+            <Label>{label}</Label>
           </div>
         );
       }}
@@ -45,13 +48,7 @@ export const ColorField = ({ name, label }: { name: string; label: string }) => 
   );
 };
 
-export function ColorFieldPopover({
-  name,
-  label,
-}: {
-  name: string;
-  label: string;
-}) {
+export function ColorFieldPopover({ name, label }: { name: string; label: string }) {
   const { control } = useFormContext();
 
   const currentColor = useWatch({ control, name });

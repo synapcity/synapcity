@@ -1,4 +1,4 @@
-import clsx from "clsx"
+import clsx from "clsx";
 import { Circle, StickyNote } from "lucide-react";
 import dynamic from "next/dynamic";
 import { ConvertDropdown } from "./ConvertDropdown";
@@ -16,19 +16,17 @@ interface CaptureInboxItemProps {
   removeItem: (id: string) => void;
 }
 
-const X = dynamic(() => import("lucide-react").then((mod) => mod.X), { ssr: false })
+const X = dynamic(() => import("lucide-react").then((mod) => mod.X), { ssr: false });
 export const CaptureInboxItem = ({ item, removeItem }: CaptureInboxItemProps) => {
-  const widgets = useWidgetStore(state => state.widgets)
+  const widgets = useWidgetStore((state) => state.widgets);
   const linkToNote = () => {
     // Placeholder for linking to note
-  }
+  };
 
-  const notes = widgets.filter((widget) => widget.type === "notes") as unknown as Note[]
+  const notes = widgets.filter((widget) => widget.type === "notes") as unknown as Note[];
   return (
-    <li
-      className="p-2 bg-neutral-900 hover:bg-neutral-800 rounded transition group flex justify-between items-start gap-2"
-    >
-      <button onClick={() => { }}>
+    <li className="p-2 bg-neutral-900 hover:bg-neutral-800 rounded transition group flex justify-between items-start gap-2">
+      <button onClick={() => {}}>
         <Circle size={16} />
       </button>
       <div className="flex justify-between items-center m-0 p-0">
@@ -49,10 +47,12 @@ export const CaptureInboxItem = ({ item, removeItem }: CaptureInboxItemProps) =>
       </div>
       <button
         onClick={() => removeItem(item.id)}
-        className={clsx("text-neutral-500 hover:text-red-500 opacity-0 group-hover:opacity-100 transition")}
+        className={clsx(
+          "text-neutral-500 hover:text-red-500 opacity-0 group-hover:opacity-100 transition"
+        )}
       >
         <X size={16} />
       </button>
     </li>
-  )
-}
+  );
+};

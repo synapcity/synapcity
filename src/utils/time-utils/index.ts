@@ -1,1 +1,1 @@
-export { fmtTime, isTimeOrderValid } from "./time-utils"
+export { fmtTime, isTimeOrderValid } from "./time-utils";

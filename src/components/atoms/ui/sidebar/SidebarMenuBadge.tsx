@@ -1,13 +1,10 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-import { cn } from "@/utils/index"
+import { cn } from "@/utils/index";
 
-export function SidebarMenuBadge({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
+export function SidebarMenuBadge({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="sidebar-menu-badge"
@@ -23,5 +20,5 @@ export function SidebarMenuBadge({
       )}
       {...props}
     />
-  )
+  );
 }

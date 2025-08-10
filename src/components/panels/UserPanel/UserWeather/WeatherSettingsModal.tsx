@@ -1,7 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/atoms/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/atoms/ui/dialog";
 import { Input, Label, IconButton } from "@/components/atoms";
 import { Switch } from "@/components/molecules";
 import { useWeatherStore } from "@/stores/weatherStore";
@@ -13,8 +19,8 @@ export function WeatherSettingsModal() {
   const close = useModalStore((s) => s.closeModal);
   const setPreferences = useWeatherStore((s) => s.setPreferences);
   const preferences = useWeatherStore((s) => s.preferences);
-  const setLoading = useWeatherStore(s => s.setLoading)
-  const setData = useWeatherStore(s => s.setData)
+  const setLoading = useWeatherStore((s) => s.setLoading);
+  const setData = useWeatherStore((s) => s.setData);
   const [zipcode, setZipcode] = useState(preferences.zipcode ?? "");
   const [unit, setUnit] = useState(preferences.unit);
   const [alertsEnabled, setAlertsEnabled] = useState(preferences.alertsEnabled);
@@ -65,7 +71,7 @@ export function WeatherSettingsModal() {
                       const { latitude, longitude } = pos.coords;
 
                       setLoading(true);
-                      setData(null)
+                      setData(null);
                       setPreferences({
                         unit: preferences.unit,
                         alertsEnabled: preferences.alertsEnabled,
@@ -89,9 +95,7 @@ export function WeatherSettingsModal() {
                       setLoading(false);
                     }
                   );
-
                 }}
-
               />
             </div>
           </div>

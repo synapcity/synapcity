@@ -1,9 +1,6 @@
-import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import {
-  INSERT_UNORDERED_LIST_COMMAND,
-  INSERT_ORDERED_LIST_COMMAND,
-} from '@lexical/list';
-import { IconButton } from '@/components';
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+import { INSERT_UNORDERED_LIST_COMMAND, INSERT_ORDERED_LIST_COMMAND } from "@lexical/list";
+import { IconButton } from "@/components";
 
 export default function ListToolbar() {
   const [editor] = useLexicalComposerContext();
@@ -16,7 +13,7 @@ export default function ListToolbar() {
         size="sm"
       />
       <IconButton
-        icon='listOrdered'
+        icon="listOrdered"
         onClick={() => editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, undefined)}
         size="sm"
       />

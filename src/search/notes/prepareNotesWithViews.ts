@@ -2,38 +2,35 @@ import type { Note } from "@/stores/resources/noteStore/note-schema";
 import type { CombinedEditor } from "@/stores/resources/noteViewStore/view-schema";
 import type { SearchableNoteItem, SearchEntityType } from "./types";
 
-export function prepareNotes(notes: Note[]){
-	return notes.map((note) => ({
-		id: note.id,
-		parentNoteId: note.id,
-		entityType: "note" as SearchEntityType,
-		title: note.title,
-		summary: note.summary,
-		tags: note.tags,
-	}));
+export function prepareNotes(notes: Note[]) {
+  return notes.map((note) => ({
+    id: note.id,
+    parentNoteId: note.id,
+    entityType: "note" as SearchEntityType,
+    title: note.title,
+    summary: note.summary,
+    tags: note.tags,
+  }));
 }
 
-export function prepareViews(views: CombinedEditor[]){
-		const editorViews = views.filter(
-		(v) => v.entity === "note" && v.type === "editor" && v.content
-	);
+export function prepareViews(views: CombinedEditor[]) {
+  const editorViews = views.filter((v) => v.entity === "note" && v.type === "editor" && v.content);
 
-	return editorViews.map((view) => ({
-		id: view.id,
-		parentNoteId: view.entityId,
-		entityType: "editorView" as SearchEntityType,
-		content: view.content,
-		viewLabel: view.label,
-	}));
+  return editorViews.map((view) => ({
+    id: view.id,
+    parentNoteId: view.entityId,
+    entityType: "editorView" as SearchEntityType,
+    content: view.content,
+    viewLabel: view.label,
+  }));
 }
 
 export function prepareNotesWithViews(
-	notes: Note[],
-	views: CombinedEditor[]
+  notes: Note[],
+  views: CombinedEditor[]
 ): SearchableNoteItem[] {
+  const noteItems = prepareNotes(notes);
+  const viewItems = prepareViews(views);
 
-	const noteItems = prepareNotes(notes)
-	const viewItems = prepareViews(views)
-
-	return [...noteItems, ...viewItems]
+  return [...noteItems, ...viewItems];
 }

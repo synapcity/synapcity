@@ -17,9 +17,9 @@ export interface MainMenuItem {
 }
 
 export function SidebarMainMenu() {
-  const router = useRouter()
-  const setIsCommandOpen = useCommandMenuStore(s => s.setOpen)
-  const toggleCompState = useUIStore(s => s.toggleCompState)
+  const router = useRouter();
+  const setIsCommandOpen = useCommandMenuStore((s) => s.setOpen);
+  const toggleCompState = useUIStore((s) => s.toggleCompState);
 
   useKeyboardShortcut({
     key: "k",
@@ -30,19 +30,40 @@ export function SidebarMainMenu() {
   useKeyboardShortcut({
     key: "i",
     metaKey: true,
-    onKeyPressed: () => toggleCompState("userPanel", "isVisible")
-  })
+    onKeyPressed: () => toggleCompState("userPanel", "isVisible"),
+  });
 
   useKeyboardShortcut({
     key: "h",
     metaKey: true,
-    onKeyPressed: () => router.push("/home")
-  })
+    onKeyPressed: () => router.push("/home"),
+  });
 
   const items = [
-    { title: "Home", url: "/home", icon: Home, shortcut: "⌘H", action: () => router.push("/home"), shortcutTooltip: "Cmd+H" },
-    { title: "Inbox", url: "#", icon: Inbox, shortcut: "⌘I", action: () => toggleCompState("userPanel", "isVisible"), shortcutTooltip: "Cmd+I" },
-    { title: "Search", url: "#", icon: Search, shortcut: "⌘K", action: () => setIsCommandOpen(true), shortcutTooltip: "Cmd+K" },
+    {
+      title: "Home",
+      url: "/home",
+      icon: Home,
+      shortcut: "⌘H",
+      action: () => router.push("/home"),
+      shortcutTooltip: "Cmd+H",
+    },
+    {
+      title: "Inbox",
+      url: "#",
+      icon: Inbox,
+      shortcut: "⌘I",
+      action: () => toggleCompState("userPanel", "isVisible"),
+      shortcutTooltip: "Cmd+I",
+    },
+    {
+      title: "Search",
+      url: "#",
+      icon: Search,
+      shortcut: "⌘K",
+      action: () => setIsCommandOpen(true),
+      shortcutTooltip: "Cmd+K",
+    },
   ];
   return (
     <div>
@@ -65,7 +86,7 @@ export function SidebarMainMenu() {
                   </span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
-            )
+            );
           })}
         </SidebarMenu>
         <GlobalCommandMenu key="global-search" />

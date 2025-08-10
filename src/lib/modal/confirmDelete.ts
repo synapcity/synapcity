@@ -3,37 +3,37 @@
  * Opens a confirm modal and resolves to true/false.
  */
 export function confirmDelete({
-	_title = "Are you sure you'd like to delete?",
-_description = "This action cannot be undone.",
-	_confirmText = "Delete",
-	_cancelText = "Cancel",
+  _title = "Are you sure you'd like to delete?",
+  _description = "This action cannot be undone.",
+  _confirmText = "Delete",
+  _cancelText = "Cancel",
 }: {
-	_title?: string;
-_description?: string;
-	_confirmText?: string;
-	_cancelText?: string;
+  _title?: string;
+  _description?: string;
+  _confirmText?: string;
+  _cancelText?: string;
 }): Promise<boolean> {
   return new Promise((_resolve) => {
-  //   const openModal = useModalStore.getState().openModal;
-  //   openModal("confirm", {
-  //     id: "confirm-delete",
-  //     title,
-  //     description,
-  //     actions: [
-  //       {
-  //         label: cancelText,
-  //         variant: "ghost",
-  //         onClick: () => resolve(false),
-  //       },
-  //       {
-  //         label: confirmText,
-  //         variant: "primary",
-  //         onClick: () => resolve(true),
-  //       },
-  //     ],
-  //     onCancel: () => resolve(false),
-  //     onConfirm: () => resolve(true),
-  //   });
+    //   const openModal = useModalStore.getState().openModal;
+    //   openModal("confirm", {
+    //     id: "confirm-delete",
+    //     title,
+    //     description,
+    //     actions: [
+    //       {
+    //         label: cancelText,
+    //         variant: "ghost",
+    //         onClick: () => resolve(false),
+    //       },
+    //       {
+    //         label: confirmText,
+    //         variant: "primary",
+    //         onClick: () => resolve(true),
+    //       },
+    //     ],
+    //     onCancel: () => resolve(false),
+    //     onConfirm: () => resolve(true),
+    //   });
   });
 }
 

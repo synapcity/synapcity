@@ -1,10 +1,6 @@
 "use client";
 
-import React, {
-  useState,
-  useMemo,
-  RefObject,
-} from "react";
+import React, { useState, useMemo, RefObject } from "react";
 import ReactDOM from "react-dom";
 import type { Table, RowData } from "@tanstack/react-table";
 
@@ -34,8 +30,7 @@ export function TableGlobalSearchInline<TData extends RowData>({
   const items = useMemo(() => {
     return table
       .getCoreRowModel()
-      .rows
-      .map((row) => {
+      .rows.map((row) => {
         const label = row
           .getAllCells()
           .map((cell) => String(cell.getValue()))
@@ -50,11 +45,8 @@ export function TableGlobalSearchInline<TData extends RowData>({
           },
         };
       })
-      .filter((item) =>
-        item.label.toLowerCase().includes(query.toLowerCase())
-      );
+      .filter((item) => item.label.toLowerCase().includes(query.toLowerCase()));
   }, [table, query]);
-
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const v = e.target.value;

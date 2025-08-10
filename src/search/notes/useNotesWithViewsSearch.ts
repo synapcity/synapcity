@@ -11,21 +11,15 @@ import type { NoteSearchResult } from "./types";
  * Returns Fuse.js results for all notes (titles, tags, summary) AND their editor views (content/label).
  */
 export function useNotesWithViewsSearch(
-	notes: Note[],
-	views: CombinedEditor[],
-	query: string
+  notes: Note[],
+  views: CombinedEditor[],
+  query: string
 ): NoteSearchResult[] {
-	const searchItems = useMemo(
-		() => prepareNotesWithViews(notes, views),
-		[notes, views]
-	);
-	const fuse = useMemo(
-		() => new Fuse(searchItems, noteSearchOptions),
-		[searchItems]
-	);
+  const searchItems = useMemo(() => prepareNotesWithViews(notes, views), [notes, views]);
+  const fuse = useMemo(() => new Fuse(searchItems, noteSearchOptions), [searchItems]);
 
-	return useMemo(() => {
-		if (!query.trim()) return [];
-		return fuse.search(query);
-	}, [fuse, query]);
+  return useMemo(() => {
+    if (!query.trim()) return [];
+    return fuse.search(query);
+  }, [fuse, query]);
 }

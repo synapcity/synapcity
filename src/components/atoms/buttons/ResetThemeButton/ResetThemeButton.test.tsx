@@ -23,13 +23,7 @@ describe("ResetThemeButton", () => {
   it("calls resetTheme with scope, id, and element", () => {
     const element = document.createElement("div");
 
-    render(
-      <ResetThemeButton
-        scope="note"
-        id="abc"
-        element={element}
-      />
-    );
+    render(<ResetThemeButton scope="note" id="abc" element={element} />);
 
     const button = screen.getByTestId("reset-theme-button");
     fireEvent.click(button);

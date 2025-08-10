@@ -14,10 +14,10 @@ interface SearchInputProps {
 export function SearchInput({
   value,
   onChange,
-  placeholder = 'Search dashboards…',
+  placeholder = "Search dashboards…",
   isLoading = false,
   onClear,
-  className
+  className,
 }: SearchInputProps) {
   return (
     <div className="flex-1 flex min-w-[200px] relative">
@@ -46,4 +46,3 @@ export function SearchInput({
     </div>
   );
 }
-

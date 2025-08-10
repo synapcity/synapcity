@@ -1,1 +1,1 @@
-export { useFramerScroller } from "./useFramerScroller"
+export { useFramerScroller } from "./useFramerScroller";

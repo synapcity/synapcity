@@ -17,21 +17,22 @@ export function ScheduleSidebar() {
   const [editingEvent, setEditingEvent] = useState<ScheduleEvent | null>(null);
 
   // DnD order
-  const [order, setOrder] = useState(events.map(e => e.id));
+  const [order, setOrder] = useState(events.map((e) => e.id));
   // Sync order with store if events change
-  if (order.length !== events.length) setOrder(events.map(e => e.id));
+  if (order.length !== events.length) setOrder(events.map((e) => e.id));
 
   const now = new Date();
   const todayIso = now.toISOString().slice(0, 10);
 
   // Only show today's events in sidebar
-  const todayEvents = order.map(id => events.find(e => e.id === id))
+  const todayEvents = order
+    .map((id) => events.find((e) => e.id === id))
     .filter(Boolean)
-    .filter(e => e!.start.slice(0, 10) === todayIso) as typeof events;
+    .filter((e) => e!.start.slice(0, 10) === todayIso) as typeof events;
 
-  const past = todayEvents.filter(e => !e.done && new Date(e.end ?? e.start) < now);
-  const future = todayEvents.filter(e => !e.done && new Date(e.start) >= now);
-  const done = todayEvents.filter(e => e.done);
+  const past = todayEvents.filter((e) => !e.done && new Date(e.end ?? e.start) < now);
+  const future = todayEvents.filter((e) => !e.done && new Date(e.start) >= now);
+  const done = todayEvents.filter((e) => e.done);
 
   const [showPast, setShowPast] = useState(false);
   const [showDone, setShowDone] = useState(false);
@@ -58,7 +59,7 @@ export function ScheduleSidebar() {
 
   function handleSave(data: any) {
     if (editingEvent) {
-      updateEvent(editingEvent.id, data)
+      updateEvent(editingEvent.id, data);
     } else {
       addEvent(data);
     }
@@ -80,15 +81,15 @@ export function ScheduleSidebar() {
         <div>
           <button
             className="w-full text-xs text-[var(--primary-foreground)] hover:text-(--primary-background) font-medium mb-1"
-            onClick={() => setShowPast(p => !p)}
+            onClick={() => setShowPast((p) => !p)}
           >
             {showPast ? "Hide Past Events" : `Show Past Events (${past.length})`}
           </button>
           <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-            <SortableContext items={past.map(e => e.id)} strategy={verticalListSortingStrategy}>
+            <SortableContext items={past.map((e) => e.id)} strategy={verticalListSortingStrategy}>
               {showPast && (
                 <div className="flex flex-col gap-2 mb-2">
-                  {past.map(e => (
+                  {past.map((e) => (
                     <ExpandableEventMiniCard
                       key={e.id}
                       event={e}
@@ -105,12 +106,10 @@ export function ScheduleSidebar() {
       )}
       {/* Next/Upcoming Events (DnD enabled) */}
       <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-        <SortableContext items={future.map(e => e.id)} strategy={verticalListSortingStrategy}>
+        <SortableContext items={future.map((e) => e.id)} strategy={verticalListSortingStrategy}>
           <div className="flex flex-col gap-2">
             {future.length === 0 && (
-              <div className="text-xs text-(--foreground) text-center">
-                No more events today 🎉
-              </div>
+              <div className="text-xs text-(--foreground) text-center">No more events today 🎉</div>
             )}
             {future.map((e, i) => (
               <ExpandableEventMiniCard
@@ -129,13 +128,13 @@ export function ScheduleSidebar() {
         <div className="mt-3">
           <button
             className="w-full text-xs text-muted-foreground hover:text-primary font-medium mb-1"
-            onClick={() => setShowDone(d => !d)}
+            onClick={() => setShowDone((d) => !d)}
           >
             {showDone ? "Hide Completed" : `Show Completed (${done.length})`}
           </button>
           {showDone && (
             <div className="flex flex-col gap-2 mb-2">
-              {done.map(e => (
+              {done.map((e) => (
                 <ExpandableEventMiniCard
                   key={e.id}
                   event={e}

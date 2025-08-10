@@ -28,7 +28,7 @@ export const Default: Story = {
 export const WithIcon: Story = {
   args: {
     placeholder: "Search",
-    icon: "Search"
+    icon: "Search",
   },
 };
 

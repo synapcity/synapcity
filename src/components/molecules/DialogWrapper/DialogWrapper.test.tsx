@@ -9,14 +9,16 @@ describe("DialogWrapper", () => {
     description: "This is a test description",
     trigger: <Button asChild>Open Dialog</Button>,
     children: <div>Dialog content</div>,
-    actions: [{
-      type: "submit",
-      label: "Submit",
-      onClick: jest.fn(),
-    }],
+    actions: [
+      {
+        type: "submit",
+        label: "Submit",
+        onClick: jest.fn(),
+      },
+    ],
     open: false,
-    onOpenChange: jest.fn()
-  }
+    onOpenChange: jest.fn(),
+  };
 
   it("renders title and description when open", () => {
     render(<DialogWrapper {...defaultProps} open showTitle showDescription />);
@@ -28,10 +30,9 @@ describe("DialogWrapper", () => {
 
   it("shows title visually when showTitle is true", () => {
     render(<DialogWrapper {...defaultProps} open showTitle showDescription={false} />);
-    const title = screen.getByTestId("dialog-title")
-    expect(title).not.toHaveClass("sr-only")
-
-  })
+    const title = screen.getByTestId("dialog-title");
+    expect(title).not.toHaveClass("sr-only");
+  });
 
   it("hides title and description visually when showTitle/showDescription are false", () => {
     render(<DialogWrapper {...defaultProps} open showTitle={false} showDescription={false} />);
@@ -44,13 +45,11 @@ describe("DialogWrapper", () => {
   });
 
   it("renders trigger and opens dialog on click", async () => {
-    render(
-      <DialogWrapper {...defaultProps} open showTitle showDescription />
-    )
+    render(<DialogWrapper {...defaultProps} open showTitle showDescription />);
 
     const trigger = screen.getByText("Open Dialog");
     expect(trigger).toBeInTheDocument();
-    fireEvent.click(trigger)
+    fireEvent.click(trigger);
 
     await waitFor(() => {
       expect(screen.getByRole("dialog")).toBeInTheDocument();
@@ -64,9 +63,9 @@ describe("DialogWrapper", () => {
       {
         type: "submit",
         label: "Confirm",
-        onClick: onConfirm
-      }
-    ] as DialogAction[]
+        onClick: onConfirm,
+      },
+    ] as DialogAction[];
 
     render(<DialogWrapper {...defaultProps} open showTitle showDescription actions={actions} />);
     fireEvent.click(screen.getByText("Confirm"));
@@ -75,14 +74,14 @@ describe("DialogWrapper", () => {
   });
 
   it("closes when cancel button is clicked", async () => {
-    const onCancel = jest.fn()
+    const onCancel = jest.fn();
     const actions = [
       {
         type: "button",
         label: "Cancel",
-        onClick: onCancel
-      }
-    ] as DialogAction[]
+        onClick: onCancel,
+      },
+    ] as DialogAction[];
     render(<DialogWrapper {...defaultProps} open showTitle showDescription actions={actions} />);
 
     fireEvent.click(screen.getByText("Cancel"));
@@ -99,15 +98,15 @@ describe("DialogWrapper", () => {
         type: "submit",
         label: "Confirm",
         loading: true,
-        onClick: jest.fn()
+        onClick: jest.fn(),
       },
       {
         type: "button",
         label: "Cancel",
         loading: false,
-        onClick: jest.fn()
-      }
-    ] as DialogAction[]
+        onClick: jest.fn(),
+      },
+    ] as DialogAction[];
     render(<DialogWrapper {...defaultProps} open showTitle showDescription actions={actions} />);
 
     expect(screen.getByText("Confirm")).toBeDisabled();

@@ -1,13 +1,16 @@
-'use client';
+"use client";
 
-import { motion, AnimatePresence } from 'framer-motion';
-import ScheduleForm from '../ScheduleForm';
-import { useUIStore } from '@/stores/ui/uiStore';
+import { motion, AnimatePresence } from "framer-motion";
+import ScheduleForm from "../ScheduleForm";
+import { useUIStore } from "@/stores/ui/uiStore";
 
 export default function UserPanelScheduleModal() {
-  const isScheduleModalOpen = useUIStore(state => state.components["scheduleModal"].isVisible ?? false)
-  const setCompState = useUIStore(state => state.setCompState)
-  const toggleModal = (value?: boolean) => setCompState("scheduleModal", "isVisible", value ?? !isScheduleModalOpen)
+  const isScheduleModalOpen = useUIStore(
+    (state) => state.components["scheduleModal"].isVisible ?? false
+  );
+  const setCompState = useUIStore((state) => state.setCompState);
+  const toggleModal = (value?: boolean) =>
+    setCompState("scheduleModal", "isVisible", value ?? !isScheduleModalOpen);
 
   return (
     <AnimatePresence>

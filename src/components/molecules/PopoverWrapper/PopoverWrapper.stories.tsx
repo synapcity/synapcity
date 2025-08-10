@@ -30,9 +30,7 @@ export const Controlled: Story = {
 
     return (
       <div className="space-y-4">
-        <Button onClick={() => setOpen((prev) => !prev)}>
-          Toggle from Outside
-        </Button>
+        <Button onClick={() => setOpen((prev) => !prev)}>Toggle from Outside</Button>
 
         <PopoverWrapper
           open={open}
@@ -81,9 +79,7 @@ export const WithAnchor: Story = {
   render: () => (
     <PopoverWrapper
       withAnchor
-      anchorEl={
-        <span className="inline-block w-3 h-3 rounded-full bg-red-500" />
-      }
+      anchorEl={<span className="inline-block w-3 h-3 rounded-full bg-red-500" />}
       trigger={<Button>Trigger</Button>}
       content={<div className="text-sm">Positioned relative to anchor</div>}
     />
@@ -122,4 +118,3 @@ export const OnDarkBackground: Story = {
     />
   ),
 };
-

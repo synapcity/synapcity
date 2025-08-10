@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  DecoratorNode,
-  type NodeKey,
-  type SerializedLexicalNode,
-} from "lexical";
+import { DecoratorNode, type NodeKey, type SerializedLexicalNode } from "lexical";
 import { JSX } from "react";
 
 interface SerializedPlanNode extends SerializedLexicalNode {
@@ -63,22 +59,13 @@ export class PlanNode extends DecoratorNode<JSX.Element> {
         <h4 className="font-bold mb-2">🗒️ Plan for {this.__date}</h4>
         <ol className="list-decimal list-inside text-sm space-y-1">
           <li>
-            <input
-              placeholder="Top task #1"
-              className="w-full border-b focus:outline-none"
-            />
+            <input placeholder="Top task #1" className="w-full border-b focus:outline-none" />
           </li>
           <li>
-            <input
-              placeholder="Top task #2"
-              className="w-full border-b focus:outline-none"
-            />
+            <input placeholder="Top task #2" className="w-full border-b focus:outline-none" />
           </li>
           <li>
-            <input
-              placeholder="Top task #3"
-              className="w-full border-b focus:outline-none"
-            />
+            <input placeholder="Top task #3" className="w-full border-b focus:outline-none" />
           </li>
         </ol>
       </div>

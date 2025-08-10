@@ -4,13 +4,7 @@
 import { useScheduleStore } from "@/stores/scheduleStore";
 import { ScheduleEventForm } from "./ScheduleEventForm";
 
-export function EventResourceForm({
-  event,
-  onClose,
-}: {
-  event: any;
-  onClose: () => void;
-}) {
+export function EventResourceForm({ event, onClose }: { event: any; onClose: () => void }) {
   const updateEvent = useScheduleStore((s) => s.updateEvent);
 
   function handleSave(data: any) {
@@ -22,8 +16,5 @@ export function EventResourceForm({
     onClose();
   }
 
-
-  return (
-    <ScheduleEventForm event={event} onSave={handleSave} onCancel={onClose} />
-  );
+  return <ScheduleEventForm event={event} onSave={handleSave} onCancel={onClose} />;
 }

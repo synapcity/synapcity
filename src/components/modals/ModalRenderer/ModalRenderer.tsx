@@ -8,14 +8,10 @@ import { createPortal } from "react-dom";
 interface ModalRendererProps {
   scope: string;
   instanceId?: string;
-  container?: RefObject<HTMLElement | null>
+  container?: RefObject<HTMLElement | null>;
 }
 
-export const ModalRenderer = ({
-  scope,
-  instanceId,
-  container,
-}: ModalRendererProps) => {
+export const ModalRenderer = ({ scope, instanceId, container }: ModalRendererProps) => {
   const modalType = useModalStore((s) => s.modalType);
   const modalProps = useModalStore((s) => s.modalProps);
   const storeScope = useModalStore((s) => s.scope);

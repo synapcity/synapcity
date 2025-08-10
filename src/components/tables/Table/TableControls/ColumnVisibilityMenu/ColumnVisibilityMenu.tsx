@@ -1,7 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { Table } from "@tanstack/react-table";
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuCheckboxItem } from "@/components/atoms/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuCheckboxItem,
+} from "@/components/atoms/ui/dropdown-menu";
 import { ColumnsIcon, ChevronDown } from "lucide-react";
 
 export function ColumnVisibilityMenu({ table }: { table: Table<any> }) {
@@ -15,13 +20,14 @@ export function ColumnVisibilityMenu({ table }: { table: Table<any> }) {
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-44">
-        {table.getAllLeafColumns()
-          .filter(col => col.getCanHide())
-          .map(col => (
+        {table
+          .getAllLeafColumns()
+          .filter((col) => col.getCanHide())
+          .map((col) => (
             <DropdownMenuCheckboxItem
               key={col.id}
               checked={col.getIsVisible()}
-              onCheckedChange={checked => col.toggleVisibility(!!checked)}
+              onCheckedChange={(checked) => col.toggleVisibility(!!checked)}
               className="capitalize"
             >
               {col.id}

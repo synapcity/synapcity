@@ -5,8 +5,8 @@ import { useSidebarModuleStore } from "../useSidebarModuleStore";
 import { Checkbox } from "@/components/atoms/ui/checkbox";
 
 export function SidebarModulePreferences({ id }: { id: string }) {
-  const sidebarModule = useSidebarModuleStore(useShallow(s => s.sidebarModulesById[id]))
-const setModulePrefs = useSidebarModuleStore(s => s.updateModule)
+  const sidebarModule = useSidebarModuleStore(useShallow((s) => s.sidebarModulesById[id]));
+  const setModulePrefs = useSidebarModuleStore((s) => s.updateModule);
 
   return (
     <div className="space-y-2">

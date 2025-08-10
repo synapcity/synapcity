@@ -297,20 +297,24 @@ function HighlightMatch({
 
   return container
     ? createPortal(
-      <div
-        className={cn(`absolute pointer-events-none rounded-sm border border-yellow-500 bg-yellow-300/40 ${isActive ? "ring-2 ring-yellow-600" : ""
-          }`, {
-          "bg-accent-300 text-accent-900 border-accent-600": isActive,
-        })}
-        style={{
-          top,
-          left,
-          width: rect.width,
-          height: rect.height,
-        }}
-      />,
-      container
-    )
+        <div
+          className={cn(
+            `absolute pointer-events-none rounded-sm border border-yellow-500 bg-yellow-300/40 ${
+              isActive ? "ring-2 ring-yellow-600" : ""
+            }`,
+            {
+              "bg-accent-300 text-accent-900 border-accent-600": isActive,
+            }
+          )}
+          style={{
+            top,
+            left,
+            width: rect.width,
+            height: rect.height,
+          }}
+        />,
+        container
+      )
     : null;
 }
 
@@ -349,9 +353,9 @@ export function SearchHighlightPlugin({
       } else if (e.key === "Tab") {
         e.preventDefault();
         if (e.shiftKey) {
-          prevMatch()
+          prevMatch();
         } else {
-          nextMatch()
+          nextMatch();
         }
       }
     };
@@ -637,7 +641,6 @@ export function SearchHighlightPlugin({
 
     return () => clearTimeout((handler as any).timer); // cleanup if needed
   }, [query, editor, setMatches]);
-
 
   return (
     <>

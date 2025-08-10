@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { Table } from "@tanstack/react-table";
 import { Button } from "@/components";
@@ -7,8 +7,12 @@ import { Button } from "@/components";
 export default function TablePagination({ table }: { table: Table<any> }) {
   return (
     <div className="flex justify-end gap-2 p-2 border-t bg-muted">
-      <Button onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>Prev</Button>
-      <Button onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>Next</Button>
+      <Button onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
+        Prev
+      </Button>
+      <Button onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
+        Next
+      </Button>
       <span className="ml-2 text-xs">{`Page ${table.getState().pagination.pageIndex + 1} of ${table.getPageCount()}`}</span>
     </div>
   );

@@ -34,7 +34,6 @@ describe("GlobalSearchBar", () => {
     },
   ];
 
-
   beforeEach(() => {
     jest.clearAllMocks();
   });

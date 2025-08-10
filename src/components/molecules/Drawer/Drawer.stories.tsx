@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from "@storybook/nextjs-vite"
-import { Drawer } from "./Drawer"
-import { Button } from "@/components/atoms"
-import React from "react"
+import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import { Drawer } from "./Drawer";
+import { Button } from "@/components/atoms";
+import React from "react";
 
 const meta: Meta<typeof Drawer> = {
   title: "Molecules/Drawer",
@@ -10,25 +10,25 @@ const meta: Meta<typeof Drawer> = {
     layout: "fullscreen",
   },
   tags: ["autodocs"],
-}
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof Drawer>
+type Story = StoryObj<typeof Drawer>;
 
 const drawerBody = (
   <div>
     <p className="mb-2">Here is some drawer content.</p>
     <p>This can include forms, navigation, settings, or anything else.</p>
   </div>
-)
+);
 
 const drawerFooter = (
   <div className="flex justify-end gap-2">
     <Button variant="outline">Cancel</Button>
     <Button>Save</Button>
   </div>
-)
+);
 
 export const Default: Story = {
   args: {
@@ -39,7 +39,7 @@ export const Default: Story = {
     showTitle: true,
     showDescription: true,
   },
-}
+};
 
 export const OpenOnLoad: Story = {
   args: {
@@ -50,7 +50,7 @@ export const OpenOnLoad: Story = {
     showTitle: true,
     showDescription: true,
   },
-}
+};
 
 export const WithFooterCloseButton: Story = {
   args: {
@@ -61,7 +61,7 @@ export const WithFooterCloseButton: Story = {
     showFooterClose: true,
     showTitle: true,
   },
-}
+};
 
 export const WithoutHeader: Story = {
   args: {
@@ -70,7 +70,7 @@ export const WithoutHeader: Story = {
     showTitle: false,
     showDescription: false,
   },
-}
+};
 
 export const TopSide: Story = {
   args: {
@@ -82,7 +82,7 @@ export const TopSide: Story = {
     showTitle: true,
     showDescription: true,
   },
-}
+};
 
 export const LeftSide: Story = {
   args: {
@@ -94,7 +94,7 @@ export const LeftSide: Story = {
     showTitle: true,
     showDescription: true,
   },
-}
+};
 
 export const BottomSide: Story = {
   args: {
@@ -106,11 +106,11 @@ export const BottomSide: Story = {
     showTitle: true,
     showDescription: true,
   },
-}
+};
 
 export const ControlledOpenState: Story = {
   render: () => {
-    const [open, setOpen] = React.useState(false)
+    const [open, setOpen] = React.useState(false);
 
     return (
       <div className="p-4">
@@ -133,6 +133,6 @@ export const ControlledOpenState: Story = {
           {drawerBody}
         </Drawer>
       </div>
-    )
+    );
   },
-}
+};

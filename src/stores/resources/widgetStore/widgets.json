@@ -7,9 +7,7 @@
     "widgetKey": "todo",
     "label": "My Tasks",
     "type": "productivity",
-    "category": [
-      "productivity"
-    ],
+    "category": ["productivity"],
     "icon": "ListChecks",
     "description": "",
     "props": {
@@ -31,10 +29,7 @@
     "widgetKey": "clock",
     "label": "Local Time",
     "type": "utility",
-    "category": [
-      "time",
-      "utility"
-    ],
+    "category": ["time", "utility"],
     "icon": "Clock",
     "description": "Simple time display by timezone.",
     "props": {

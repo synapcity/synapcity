@@ -21,31 +21,35 @@ export const KeyboardMovePlugin: React.FC = () => {
   const [editor] = useLexicalComposerContext();
   const pickedKeyRef = useRef<string | null>(null);
 
-  const moveNode = React.useCallback((key: string, direction: "up" | "down") => {
-    editor.update(() => {
-      const root = $getRoot();
-      const nodes = root.getChildren();
-      const idx = nodes.findIndex((n) => n.getKey() === key);
-      if (idx < 0) return;
+  const moveNode = React.useCallback(
+    (key: string, direction: "up" | "down") => {
+      editor.update(() => {
+        const root = $getRoot();
+        const nodes = root.getChildren();
+        const idx = nodes.findIndex((n) => n.getKey() === key);
+        if (idx < 0) return;
 
-      const node = nodes[idx];
-      const target = nodes[direction === "up" ? idx - 1 : idx + 1];
-      if (!target) return;
+        const node = nodes[idx];
+        const target = nodes[direction === "up" ? idx - 1 : idx + 1];
+        if (!target) return;
 
-      node.remove();
-      if (direction === "up") {
-        target.insertBefore(node);
-      } else {
-        target.insertAfter(node);
-      }
-      pickedKeyRef.current = node.getKey();
-    });
-  }, [editor]);
+        node.remove();
+        if (direction === "up") {
+          target.insertBefore(node);
+        } else {
+          target.insertAfter(node);
+        }
+        pickedKeyRef.current = node.getKey();
+      });
+    },
+    [editor]
+  );
 
   useEffect(() => {
     const highlightDom = (key: string | null) => {
-      document.querySelectorAll(".lexical-block-keyboard-selected")
-        .forEach(el => el.classList.remove("lexical-block-keyboard-selected"));
+      document
+        .querySelectorAll(".lexical-block-keyboard-selected")
+        .forEach((el) => el.classList.remove("lexical-block-keyboard-selected"));
 
       if (key) {
         const el = document.querySelector(`[data-lexical-key="${key}"]`);
@@ -67,7 +71,7 @@ export const KeyboardMovePlugin: React.FC = () => {
             }
           }
           const key = anchorNode?.getKey() ?? null;
-          pickedKeyRef.current = (pickedKeyRef.current === key) ? null : key;
+          pickedKeyRef.current = pickedKeyRef.current === key ? null : key;
           highlightDom(pickedKeyRef.current);
         });
         return true;

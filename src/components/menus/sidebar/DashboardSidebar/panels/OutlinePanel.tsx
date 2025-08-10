@@ -1,9 +1,5 @@
 "use client";
 
 export default function OutlinePanel() {
-  return (
-    <div>
-      Outline
-    </div>
-  )
+  return <div>Outline</div>;
 }

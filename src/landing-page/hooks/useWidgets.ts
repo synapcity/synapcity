@@ -6,63 +6,63 @@ import { scrollVariants as scrollAnimation } from "@/landing-page/lib/variants";
 import { useFramerScroller } from "./useFramerScroller";
 
 export const useWidgets = (maxWidgets = 20) => {
-	const widgets = useWidgetStore((state) => state.widgets);
-	const loadMoreWidgets = useWidgetStore((state) => state.loadMoreWidgets);
-	const [loading, setLoading] = useState(false);
-	const [widgetWidth, setWidgetWidth] = useState(0);
+  const widgets = useWidgetStore((state) => state.widgets);
+  const loadMoreWidgets = useWidgetStore((state) => state.loadMoreWidgets);
+  const [loading, setLoading] = useState(false);
+  const [widgetWidth, setWidgetWidth] = useState(0);
 
-	const loadMore = useCallback(() => {
-		if (loading || widgets.length >= maxWidgets) return;
-		setLoading(true);
-		setTimeout(() => {
-			loadMoreWidgets();
-			setLoading(false);
-		}, 800);
-	}, [loading, widgets.length, loadMoreWidgets, maxWidgets]);
+  const loadMore = useCallback(() => {
+    if (loading || widgets.length >= maxWidgets) return;
+    setLoading(true);
+    setTimeout(() => {
+      loadMoreWidgets();
+      setLoading(false);
+    }, 800);
+  }, [loading, widgets.length, loadMoreWidgets, maxWidgets]);
 
-	const calculateWidgetWidth = useCallback(() => {
-		const widgets = document.querySelectorAll(".widget-container");
-		const width = Array.from(widgets).reduce(
-			(prev, widget) => prev + widget.getBoundingClientRect().width,
-			0
-		);
-		if (width) {
-			setWidgetWidth(width);
-		}
-	}, []);
+  const calculateWidgetWidth = useCallback(() => {
+    const widgets = document.querySelectorAll(".widget-container");
+    const width = Array.from(widgets).reduce(
+      (prev, widget) => prev + widget.getBoundingClientRect().width,
+      0
+    );
+    if (width) {
+      setWidgetWidth(width);
+    }
+  }, []);
 
-	useEffect(() => {
-		calculateWidgetWidth();
-	}, [calculateWidgetWidth]);
+  useEffect(() => {
+    calculateWidgetWidth();
+  }, [calculateWidgetWidth]);
 
-	return { widgets, widgetWidth, loadMore, loading };
+  return { widgets, widgetWidth, loadMore, loading };
 };
 
 export const useWidgetGalleryController = (maxWidgets = 20) => {
-	const { widgets, widgetWidth, loadMore, loading } = useWidgets(maxWidgets);
+  const { widgets, widgetWidth, loadMore, loading } = useWidgets(maxWidgets);
 
-	const { x, controls, start, stop } = useFramerScroller({
-		animation: scrollAnimation,
-		threshold: 0.75,
-		getTotalWidth: () => widgetWidth * 2,
-		onThresholdReach: () => {
-			loadMore();
-		},
-	});
+  const { x, controls, start, stop } = useFramerScroller({
+    animation: scrollAnimation,
+    threshold: 0.75,
+    getTotalWidth: () => widgetWidth * 2,
+    onThresholdReach: () => {
+      loadMore();
+    },
+  });
 
-	useEffect(() => {
-		if (widgets.length === 0) {
-			loadMore();
-		}
-	}, [loadMore, widgets.length]);
+  useEffect(() => {
+    if (widgets.length === 0) {
+      loadMore();
+    }
+  }, [loadMore, widgets.length]);
 
-	return {
-		widgets,
-		loading,
-		x,
-		controls,
-		start,
-		stop,
-		widgetWidth,
-	};
+  return {
+    widgets,
+    loading,
+    x,
+    controls,
+    start,
+    stop,
+    widgetWidth,
+  };
 };

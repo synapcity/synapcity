@@ -6,63 +6,61 @@ export type ModalScope = "global" | "userPanelMain" | "userPanelSidebar";
 export type ModalType = "confirm" | "weatherSettings" | "scheduleForm";
 
 interface WeatherSettingsModalProps {
-	initialUnit: "F" | "C";
-	onSave(unit: "F" | "C"): void;
+  initialUnit: "F" | "C";
+  onSave(unit: "F" | "C"): void;
 }
 
 interface ScheduleFormModalProps {
-	initialData?: ScheduleEvent;
-	onSave(data: ScheduleEvent): void;
-	onCancel(): void;
+  initialData?: ScheduleEvent;
+  onSave(data: ScheduleEvent): void;
+  onCancel(): void;
 }
 
 type ModalPropsMap = {
-	confirm: ConfirmModalProps;
-	weatherSettings: WeatherSettingsModalProps;
-	scheduleForm: ScheduleFormModalProps;
+  confirm: ConfirmModalProps;
+  weatherSettings: WeatherSettingsModalProps;
+  scheduleForm: ScheduleFormModalProps;
 };
 
 export interface BaseModalProps {
-	open: boolean;
-	onOpenChange(open: boolean): void;
-	title?: string;
-	description?: string;
-	trigger?: React.ReactNode;
-	triggerAsChild?: boolean;
+  open: boolean;
+  onOpenChange(open: boolean): void;
+  title?: string;
+  description?: string;
+  trigger?: React.ReactNode;
+  triggerAsChild?: boolean;
 }
 
-export type CombinedModalProps = Partial<
-	BaseModalProps & ModalPropsMap[ModalType]
-> | null;
+export type CombinedModalProps = Partial<BaseModalProps & ModalPropsMap[ModalType]> | null;
 
 interface ModalState {
-	scope: ModalScope;
-	instanceId?: string;
-	modalType: ModalType | null;
-	modalProps: CombinedModalProps;
+  scope: ModalScope;
+  instanceId?: string;
+  modalType: ModalType | null;
+  modalProps: CombinedModalProps;
 
-	openModal(
-		type: ModalType,
-		scope?: ModalScope,
-		instanceId?: string,
-		props?: CombinedModalProps
-	): void;
+  openModal(
+    type: ModalType,
+    scope?: ModalScope,
+    instanceId?: string,
+    props?: CombinedModalProps
+  ): void;
 
-	closeModal(): void;
+  closeModal(): void;
 }
 
 export const useModalStore = create<ModalState>((set) => ({
-	scope: "global",
-	instanceId: undefined,
-	modalType: null,
-	modalProps: null,
+  scope: "global",
+  instanceId: undefined,
+  modalType: null,
+  modalProps: null,
 
-	openModal: (type, scope = "global", instanceId, props = null) =>
-		set({ modalType: type, modalProps: props, scope, instanceId }),
+  openModal: (type, scope = "global", instanceId, props = null) =>
+    set({ modalType: type, modalProps: props, scope, instanceId }),
 
-	closeModal: () => {
-		set({ modalType: null, modalProps: null, instanceId: undefined });
-	},
+  closeModal: () => {
+    set({ modalType: null, modalProps: null, instanceId: undefined });
+  },
 }));
 
 // /* eslint-disable @typescript-eslint/no-explicit-any */

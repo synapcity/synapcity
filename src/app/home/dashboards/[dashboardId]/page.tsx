@@ -16,5 +16,5 @@ export default function DashboardShowPage() {
     <div className="flex flex-col flex-1">
       <DashboardPage dashboardId={dashboardId} />
     </div>
-  )
+  );
 }

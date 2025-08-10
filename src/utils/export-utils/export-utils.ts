@@ -13,86 +13,84 @@ import { prepareFlatData } from "@/components/tables/Table/TableControls/ExportB
  * or newlines in double quotes, replacing the old backslash-comma logic.
  */
 export function csvCell(value: unknown): string {
-        if (value == null) return "";
+  if (value == null) return "";
 
-        const raw = typeof value === "object" ? JSON.stringify(value) : String(value);
+  const raw = typeof value === "object" ? JSON.stringify(value) : String(value);
 
-        const escaped = raw.replace(/"/g, '""');
-        // Quote fields containing commas, quotes, or newlines
-        return /[",\n]/.test(escaped) ? `"${escaped}"` : escaped;
+  const escaped = raw.replace(/"/g, '""');
+  // Quote fields containing commas, quotes, or newlines
+  return /[",\n]/.test(escaped) ? `"${escaped}"` : escaped;
 }
 
 // csvCell applies RFC 4180 escaping (doubling quotes and quoting fields with
 // commas, quotes, or newlines), replacing the old backslash-comma approach
 
 export function downloadBlob(blob: Blob, filename: string) {
-	const url = URL.createObjectURL(blob);
-	const a = document.createElement("a");
-	a.href = url;
-	a.download = filename;
-	a.click();
-	URL.revokeObjectURL(url);
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
 }
-
 
 /**
  * Export rows as CSV using csvCell for RFC 4180-compliant escaping.
  * Legacy backslash-comma escaping is obsolete and no longer used.
  */
 export function exportCsv(
-        data: Record<string, unknown>[],
-        mergeNested = false,
-        fileName = "export"
+  data: Record<string, unknown>[],
+  mergeNested = false,
+  fileName = "export"
 ) {
-        const safeName = sanitizeFileName(fileName);
+  const safeName = sanitizeFileName(fileName);
 
-        const flat = prepareFlatData(data);
+  const flat = prepareFlatData(data);
 
-	
-	const headers = flat.length ? Object.keys(flat[0]) : [];
+  const headers = flat.length ? Object.keys(flat[0]) : [];
 
-	
-	const nestedKeys = mergeNested
-		? Object.entries(data[0] || {})
-				.filter(([_, v]) => v && typeof v === "object" && !Array.isArray(v))
-				.map(([k]) => k)
-		: [];
-    
-	
+  const nestedKeys = mergeNested
+    ? Object.entries(data[0] || {})
+        .filter(([_, v]) => v && typeof v === "object" && !Array.isArray(v))
+        .map(([k]) => k)
+    : [];
+
   const rows = flat.map((rowObj, rowIndex) => {
-      return headers.map((h) => {
-      if (mergeNested && rowIndex > 0 && nestedKeys.includes(h)) {
+    return headers
+      .map((h) => {
+        if (mergeNested && rowIndex > 0 && nestedKeys.includes(h)) {
           return "";
-      }
-      
-      return csvCell(rowObj[h]);
-      }).join(",");
+        }
+
+        return csvCell(rowObj[h]);
+      })
+      .join(",");
   });
-	
-	const csv = [headers.join(","), ...rows].join("\n");
-	downloadBlob(new Blob([csv], { type: "text/csv" }), `${safeName}.csv`);
+
+  const csv = [headers.join(","), ...rows].join("\n");
+  downloadBlob(new Blob([csv], { type: "text/csv" }), `${safeName}.csv`);
 }
 
 /**
  * Export as JSON (preserves nesting).
  */
 export function exportJson(rows: Record<string, unknown>[], fileName = "export") {
-        const safeName = sanitizeFileName(fileName);
-        const blob = new Blob([JSON.stringify(rows, null, 2)], {
-                type: "application/json;charset=utf-8",
-        });
-        saveAs(blob, `${safeName}.json`);
+  const safeName = sanitizeFileName(fileName);
+  const blob = new Blob([JSON.stringify(rows, null, 2)], {
+    type: "application/json;charset=utf-8",
+  });
+  saveAs(blob, `${safeName}.json`);
 }
 
 /** Helper: for XLSX & PDF table exports, stringify objects */
 export function scrubRowForTable(row: Record<string, unknown>) {
-        const out: Record<string, unknown> = {};
-        for (const [k, v] of Object.entries(row)) {
-                if (v == null) out[k] = "";
-                else if (typeof v === "object") out[k] = JSON.stringify(v);
-                else out[k] = v;
-        }
-        return out;
+  const out: Record<string, unknown> = {};
+  for (const [k, v] of Object.entries(row)) {
+    if (v == null) out[k] = "";
+    else if (typeof v === "object") out[k] = JSON.stringify(v);
+    else out[k] = v;
+  }
+  return out;
 }
 
 /**
@@ -100,53 +98,51 @@ export function scrubRowForTable(row: Record<string, unknown>) {
  * Stringifies nested objects so they appear as JSON in cells.
  */
 export function exportXlsx(rows: Record<string, unknown>[], fileName = "export") {
-        const safeName = sanitizeFileName(fileName);
-        const sheetData = rows.map(scrubRowForTable);
-        const ws = utils.json_to_sheet(sheetData);
-	const wb = utils.book_new();
-	utils.book_append_sheet(wb, ws, "Sheet1");
-	const buffer = write(wb, { bookType: "xlsx", type: "array" });
-	const blob = new Blob([buffer], {
-		type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8",
-	});
-	saveAs(blob, `${safeName}.xlsx`);
+  const safeName = sanitizeFileName(fileName);
+  const sheetData = rows.map(scrubRowForTable);
+  const ws = utils.json_to_sheet(sheetData);
+  const wb = utils.book_new();
+  utils.book_append_sheet(wb, ws, "Sheet1");
+  const buffer = write(wb, { bookType: "xlsx", type: "array" });
+  const blob = new Blob([buffer], {
+    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8",
+  });
+  saveAs(blob, `${safeName}.xlsx`);
 }
 
 /**
  * Export as PDF (flow text or table).
  */
 export function exportPdf(rows: Record<string, unknown>[], fileName = "export") {
-        const safeName = sanitizeFileName(fileName);
-        const doc = new jsPDF();
+  const safeName = sanitizeFileName(fileName);
+  const doc = new jsPDF();
 
-        if (rows.length > 0 && typeof (rows[0] as { content?: unknown }).content === "string") {
-                renderPdfText(doc, rows);
-        } else if (rows.length > 0) {
-                const tableRows = rows.map(scrubRowForTable);
-                const columns: PdfColumn[] = Object.keys(tableRows[0]).map((key) => ({
-                        header: key,
-                        dataKey: key,
-                }));
-                preparePdfTable(doc, tableRows, columns);
-        }
+  if (rows.length > 0 && typeof (rows[0] as { content?: unknown }).content === "string") {
+    renderPdfText(doc, rows);
+  } else if (rows.length > 0) {
+    const tableRows = rows.map(scrubRowForTable);
+    const columns: PdfColumn[] = Object.keys(tableRows[0]).map((key) => ({
+      header: key,
+      dataKey: key,
+    }));
+    preparePdfTable(doc, tableRows, columns);
+  }
 
-	const blob = doc.output("blob");
-	saveAs(blob, `${safeName}.pdf`);
+  const blob = doc.output("blob");
+  saveAs(blob, `${safeName}.pdf`);
 }
 
 /**
  * Export as plain text (one JSON block per paragraph).
  */
 export function exportTxt(rows: Record<string, unknown>[], fileName = "export") {
-        const safeName = sanitizeFileName(fileName);
-        const text = rows
-                .map((r) => {
-                        const content = (r as { content?: unknown }).content;
-                        return typeof content === "string"
-                                ? content
-                                : JSON.stringify(r, null, 2);
-                })
-                .join("\n\n");
-        const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
-        saveAs(blob, `${safeName}.txt`);
+  const safeName = sanitizeFileName(fileName);
+  const text = rows
+    .map((r) => {
+      const content = (r as { content?: unknown }).content;
+      return typeof content === "string" ? content : JSON.stringify(r, null, 2);
+    })
+    .join("\n\n");
+  const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+  saveAs(blob, `${safeName}.txt`);
 }

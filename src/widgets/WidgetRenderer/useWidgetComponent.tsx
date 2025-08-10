@@ -6,9 +6,7 @@ import { WidgetKey, widgetRegistry } from "../registry";
 
 export function useWidgetComponent(key: WidgetKey | null) {
   const def = key ? widgetRegistry[key] : null;
-  const [Comp, setComp] = useState<ComponentType<any> | null>(
-    def?.component ?? null
-  );
+  const [Comp, setComp] = useState<ComponentType<any> | null>(def?.component ?? null);
   const loadedKey = useRef<string | null>(def?.id ?? null);
 
   useEffect(() => {

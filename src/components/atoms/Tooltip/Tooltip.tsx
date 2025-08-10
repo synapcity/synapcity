@@ -1,4 +1,10 @@
-import { UITooltipProvider, UITooltip, UITooltipContent, UITooltipTrigger, UITooltipProps } from "@/components/atoms/ui";
+import {
+  UITooltipProvider,
+  UITooltip,
+  UITooltipContent,
+  UITooltipTrigger,
+  UITooltipProps,
+} from "@/components/atoms/ui";
 import { cn } from "@/utils";
 
 export interface TooltipProps extends UITooltipProps {
@@ -32,22 +38,24 @@ export const Tooltip = ({
     defaultOpen: props.defaultOpen,
     onOpenChange: props.onOpenChange,
     disableHoverableContent: props.disableHoverableContent,
-  }
+  };
   return (
     <UITooltipProvider {...providerProps}>
-      <UITooltip
-        {...providerProps}
-        data-testid="tooltip-container"
-        delayDuration={delayDuration}
-      >
-        <UITooltipTrigger data-testid="tooltip-trigger" asChild={asChild}>{trigger || children}</UITooltipTrigger>
+      <UITooltip {...providerProps} data-testid="tooltip-container" delayDuration={delayDuration}>
+        <UITooltipTrigger data-testid="tooltip-trigger" asChild={asChild}>
+          {trigger || children}
+        </UITooltipTrigger>
         <UITooltipContent {...props}>
-          <span data-testid="tooltip-content" data-side={props.side} data-align={props.align} className={cn("text-xs text-balance", className)}>
+          <span
+            data-testid="tooltip-content"
+            data-side={props.side}
+            data-align={props.align}
+            className={cn("text-xs text-balance", className)}
+          >
             {content}
           </span>
         </UITooltipContent>
       </UITooltip>
     </UITooltipProvider>
   );
-}
-
+};

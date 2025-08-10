@@ -7,7 +7,6 @@
 //   resetAll(): void;
 // }
 
-
 // const _useWidgetStore = createResourceStore<Widget>({
 //   resourceName: "Widget",
 //   schema: WidgetResourceSchema,
@@ -47,7 +46,7 @@ import { WidgetKey } from "@/widgets";
 
 export interface WidgetStore extends ResourceStore<Widget> {
   resetAll(): void;
-    instantiateWidget(key: WidgetKey, opts?: InstantiateOptions): Promise<Widget>;
+  instantiateWidget(key: WidgetKey, opts?: InstantiateOptions): Promise<Widget>;
 }
 
 const _useWidgetStore = createResourceStore<Widget>({
@@ -85,6 +84,4 @@ const _useWidgetStore = createResourceStore<Widget>({
   }),
 });
 
-export const useWidgetStore = _useWidgetStore as unknown as UseBoundStore<
-  StoreApi<WidgetStore>
->;
+export const useWidgetStore = _useWidgetStore as unknown as UseBoundStore<StoreApi<WidgetStore>>;

@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { InboxTrigger } from "./InboxTrigger";
 import { Collapsible } from "@/components/atoms/ui/collapsible";
 
-
 const meta: Meta<typeof InboxTrigger> = {
   title: "Components/molecules/Inbox/Triggers/InboxTrigger",
   component: InboxTrigger,
@@ -24,7 +23,7 @@ export const Default: Story = {
     <Collapsible>
       <InboxTrigger {...args} />,
     </Collapsible>
-  )
+  ),
 };
 
 export const CustomLabel: Story = {
@@ -35,7 +34,7 @@ export const CustomLabel: Story = {
     <Collapsible>
       <InboxTrigger {...args} />,
     </Collapsible>
-  )
+  ),
 };
 
 export const WithCustomClass: Story = {
@@ -46,5 +45,5 @@ export const WithCustomClass: Story = {
     <Collapsible>
       <InboxTrigger {...args} />,
     </Collapsible>
-  )
+  ),
 };

@@ -3,7 +3,6 @@ jest.mock("nanoid", () => ({
   nanoid: () => "mock-id",
 }));
 
-
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -54,7 +53,7 @@ describe("Icon component", () => {
   });
 
   it("renders fallback icon when name not found in lucide icons", () => {
-    jest.spyOn(console, "warn").mockImplementation(() => { });
+    jest.spyOn(console, "warn").mockImplementation(() => {});
 
     render(<Icon name="NonExistentIcon" />);
     expect(screen.getByTestId("lucide-alert-circle")).toBeInTheDocument();
@@ -62,9 +61,8 @@ describe("Icon component", () => {
     (console.warn as jest.Mock).mockRestore();
   });
 
-
   it("renders fallback icon for non-existent name regardless of casing", () => {
-    jest.spyOn(console, "warn").mockImplementation(() => { });
+    jest.spyOn(console, "warn").mockImplementation(() => {});
 
     render(<Icon name="NonexistentICON" />);
     expect(screen.getByTestId("lucide-alert-circle")).toBeInTheDocument();
@@ -77,7 +75,6 @@ describe("Icon component", () => {
 
     const icon = screen.getByTestId("lucide-settings");
     expect(icon).toBeInTheDocument();
-
 
     expect(screen.queryByText("Settings tooltip")).toBeNull();
 

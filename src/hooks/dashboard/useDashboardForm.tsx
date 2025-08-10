@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client"
+"use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -7,7 +7,11 @@ import { nanoid } from "nanoid";
 import { Dashboard } from "@/stores";
 import { useDashboardStore } from "@/stores/resources/dashboardStore/useDashboardStore";
 
-export function useDashboardForm(initialData?: { id?: string; name?: string; description?: string }) {
+export function useDashboardForm(initialData?: {
+  id?: string;
+  name?: string;
+  description?: string;
+}) {
   const router = useRouter();
   const addDashboard = useDashboardStore((s) => s.addResource);
   const updateResource = useDashboardStore((s) => s.updateResource);

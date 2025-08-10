@@ -1,8 +1,8 @@
 "use client";
 
-import React from "react"
-import { Meta, StoryObj } from "@storybook/nextjs-vite"
-import { Toggle, ToggleProps } from "./Toggle"
+import React from "react";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
+import { Toggle, ToggleProps } from "./Toggle";
 
 const meta: Meta = {
   title: "Components/atoms/Toggle",
@@ -14,17 +14,15 @@ const meta: Meta = {
     showIcons: { control: "boolean" },
     pressed: { control: "boolean" },
   },
-}
+};
 
-export default meta
+export default meta;
 
-export const Default: StoryObj = (args: ToggleProps) => (
-  <Toggle {...args}>Toggle me!</Toggle>
-)
+export const Default: StoryObj = (args: ToggleProps) => <Toggle {...args}>Toggle me!</Toggle>;
 Default.args = {
   label: "Enable feature",
   description: "This toggle enables or disables a specific feature.",
-}
+};
 
 // export const WithIcons: StoryObj = (args: ToggleProps) => (
 //   <Toggle {...args} showIcons={true}>

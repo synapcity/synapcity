@@ -23,18 +23,9 @@ interface Props {
 }
 
 export function CheckboxField({ config, meta, field }: Props) {
-  const {
-    name,
-    label,
-    options,
-  } = config;
+  const { name, label, options } = config;
 
-  const {
-    tooltip,
-    helpText,
-    disabled = false,
-    required = false,
-  } = meta ?? {};
+  const { tooltip, helpText, disabled = false, required = false } = meta ?? {};
 
   const id = `checkbox-${name}`;
   const labelId = `${id}-label`;

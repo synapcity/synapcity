@@ -64,9 +64,7 @@ export function Dropdown({ trigger, items, align = "end", children }: DropdownPr
                       {subItem.label}
                     </span>
                     {subItem.shortcut && (
-                      <span className="text-xs text-muted-foreground">
-                        {subItem.shortcut}
-                      </span>
+                      <span className="text-xs text-muted-foreground">{subItem.shortcut}</span>
                     )}
                   </DropdownMenuItem>
                 ))}
@@ -92,9 +90,7 @@ export function Dropdown({ trigger, items, align = "end", children }: DropdownPr
                 {item.label}
               </span>
               {item.shortcut && (
-                <span className="text-xs text-muted-foreground">
-                  {item.shortcut}
-                </span>
+                <span className="text-xs text-muted-foreground">{item.shortcut}</span>
               )}
             </DropdownMenuItem>
           );

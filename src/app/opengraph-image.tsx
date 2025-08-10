@@ -22,22 +22,24 @@ export default function Image({
   return new ImageResponse(
     (
       <div
-        style={{
-          "--primary": primary,
-          "--accent": accent,
-          height: "100%",
-          width: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          background:
-            "linear-gradient(135deg, var(--primary) 0%, var(--accent) 60%, #111827 100%)",
-          color: "white",
-          fontSize: 72,
-          fontWeight: 800,
-          letterSpacing: -1,
-          padding: 64,
-        } as React.CSSProperties}
+        style={
+          {
+            "--primary": primary,
+            "--accent": accent,
+            height: "100%",
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background:
+              "linear-gradient(135deg, var(--primary) 0%, var(--accent) 60%, #111827 100%)",
+            color: "white",
+            fontSize: 72,
+            fontWeight: 800,
+            letterSpacing: -1,
+            padding: 64,
+          } as React.CSSProperties
+        }
       >
         {title}
       </div>

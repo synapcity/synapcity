@@ -1,9 +1,18 @@
-"use client"
+"use client";
 
-import dynamic from "next/dynamic"
+import dynamic from "next/dynamic";
 
-const ScopedThemePopover = dynamic(() => import("@/components/theme/ScopedThemePopover/ScopedThemePopover").then((mod) => mod.ScopedThemePopover), { ssr: false })
-const TestWidgetLayout = dynamic(() => import("@/components/theme/TestWidgetLayout").then((mod) => mod.default), { ssr: true })
+const ScopedThemePopover = dynamic(
+  () =>
+    import("@/components/theme/ScopedThemePopover/ScopedThemePopover").then(
+      (mod) => mod.ScopedThemePopover
+    ),
+  { ssr: false }
+);
+const TestWidgetLayout = dynamic(
+  () => import("@/components/theme/TestWidgetLayout").then((mod) => mod.default),
+  { ssr: true }
+);
 
 export const TestWidget = () => {
   return (
@@ -16,5 +25,5 @@ export const TestWidget = () => {
         </div>
       </TestWidgetLayout>
     </div>
-  )
-}
+  );
+};

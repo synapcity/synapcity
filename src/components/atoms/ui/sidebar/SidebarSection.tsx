@@ -38,7 +38,7 @@ export function SidebarSection<T extends { id: string }>({
   getItemLabel,
   keyboardShortcut,
   keyboardShortcutTooltip,
-  activeItemId
+  activeItemId,
 }: SidebarSectionProps<T>) {
   return (
     <SidebarGroup>
@@ -57,7 +57,6 @@ export function SidebarSection<T extends { id: string }>({
               {keyboardShortcut}
             </CommandShortcut>
           )}
-
         </span>
       </div>
       <SidebarGroupContent className="max-h-[300px]">
@@ -73,7 +72,7 @@ export function SidebarSection<T extends { id: string }>({
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
-              )
+              );
             })
           ) : (
             <SidebarMenuItem>

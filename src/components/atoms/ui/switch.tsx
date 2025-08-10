@@ -1,9 +1,9 @@
 // components/atoms/ui-switch.tsx
-"use client"
+"use client";
 
-import * as React from "react"
-import * as SwitchPrimitive from "@radix-ui/react-switch"
-import { cn } from "@/utils"
+import * as React from "react";
+import * as SwitchPrimitive from "@radix-ui/react-switch";
+import { cn } from "@/utils";
 
 const UISwitch = React.forwardRef<
   React.ComponentRef<typeof SwitchPrimitive.Root>,
@@ -18,7 +18,7 @@ const UISwitch = React.forwardRef<
     )}
     {...props}
   />
-))
+));
 
 const UISwitchThumb = React.forwardRef<
   React.ComponentRef<typeof SwitchPrimitive.Thumb>,
@@ -33,9 +33,9 @@ const UISwitchThumb = React.forwardRef<
     )}
     {...props}
   />
-))
+));
 
-UISwitch.displayName = "UISwitch"
-UISwitchThumb.displayName = "UISwitchThumb"
+UISwitch.displayName = "UISwitch";
+UISwitchThumb.displayName = "UISwitchThumb";
 
-export { UISwitch, UISwitchThumb }
+export { UISwitch, UISwitchThumb };

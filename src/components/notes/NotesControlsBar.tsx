@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import { SortKey, SortDir } from '@/components/atoms/controls';
-import { SearchableMultiSelect, SearchableMultiSelectOption } from '../search';
-import { NoteLike } from '@/hooks/notes/useNotesSearchSort/useNotesSearchSort';
-import dynamic from 'next/dynamic';
-import { SkeletonOrLoading } from '../loading';
-import { DropdownMenuSkeleton } from '../loading/skeletons/DropdownMenuSkeleton';
+import * as React from "react";
+import { SortKey, SortDir } from "@/components/atoms/controls";
+import { SearchableMultiSelect, SearchableMultiSelectOption } from "../search";
+import { NoteLike } from "@/hooks/notes/useNotesSearchSort/useNotesSearchSort";
+import dynamic from "next/dynamic";
+import { SkeletonOrLoading } from "../loading";
+import { DropdownMenuSkeleton } from "../loading/skeletons/DropdownMenuSkeleton";
 
 interface Props {
   searchTerm: string;
@@ -25,10 +25,29 @@ interface Props {
   isSearching?: boolean;
 }
 
-const SortControl = dynamic(() => import("@/components/atoms/controls/SortControl/SortControl").then(mod => mod.SortControl), { ssr: false, loading: ({ isLoading }) => <SkeletonOrLoading isLoading={isLoading} skeleton={<DropdownMenuSkeleton />} /> })
-const DateRangePicker = dynamic(() => import("@/components/atoms/controls/DateRangePicker").then(mod => mod.DateRangePicker), { ssr: false, loading: ({ isLoading }) => <SkeletonOrLoading isLoading={isLoading} skeleton={<DropdownMenuSkeleton />} /> })
-const SearchInput = dynamic(() => import("@/components/atoms/controls/SearchInput").then(mod => mod.SearchInput), { ssr: false, loading: ({ isLoading }) => <SkeletonOrLoading isLoading={isLoading} /> })
-
+const SortControl = dynamic(
+  () =>
+    import("@/components/atoms/controls/SortControl/SortControl").then((mod) => mod.SortControl),
+  {
+    ssr: false,
+    loading: ({ isLoading }) => (
+      <SkeletonOrLoading isLoading={isLoading} skeleton={<DropdownMenuSkeleton />} />
+    ),
+  }
+);
+const DateRangePicker = dynamic(
+  () => import("@/components/atoms/controls/DateRangePicker").then((mod) => mod.DateRangePicker),
+  {
+    ssr: false,
+    loading: ({ isLoading }) => (
+      <SkeletonOrLoading isLoading={isLoading} skeleton={<DropdownMenuSkeleton />} />
+    ),
+  }
+);
+const SearchInput = dynamic(
+  () => import("@/components/atoms/controls/SearchInput").then((mod) => mod.SearchInput),
+  { ssr: false, loading: ({ isLoading }) => <SkeletonOrLoading isLoading={isLoading} /> }
+);
 
 export function NotesControlsBar({
   searchTerm,
@@ -46,7 +65,6 @@ export function NotesControlsBar({
   setSelectedTags,
   isSearching = false,
 }: Props) {
-
   const tagOptions: SearchableMultiSelectOption[] = React.useMemo(() => {
     const tags = new Set<string>();
     allNotes.forEach((n) => (n.tags || []).forEach((t) => tags.add(t)));
@@ -61,12 +79,17 @@ export function NotesControlsBar({
         value={searchTerm}
         onChange={onSearchChange}
         isLoading={isSearching}
-        onClear={() => onSearchChange('')}
+        onClear={() => onSearchChange("")}
         placeholder="Search Notes..."
         className="flex-1"
       />
 
-      <SortControl sortDir={sortDir} sortKey={sortKey} onKeyChange={onSortKeyChange} onDirToggle={toggleSortDir} />
+      <SortControl
+        sortDir={sortDir}
+        sortKey={sortKey}
+        onKeyChange={onSortKeyChange}
+        onDirToggle={toggleSortDir}
+      />
 
       <DateRangePicker
         from={dateFrom}

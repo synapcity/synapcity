@@ -8,7 +8,7 @@ export const SIDEBAR_MODULES: SidebarModule[] = [
     icon: Inbox,
     component: <div className="p-4">Inbox content</div>,
     pinned: true,
-    hidden: false
+    hidden: false,
   },
   {
     id: "notebooks",
@@ -16,7 +16,7 @@ export const SIDEBAR_MODULES: SidebarModule[] = [
     icon: Notebook,
     component: <div className="p-4">Notebooks</div>,
     hidden: false,
-    pinned: false
+    pinned: false,
   },
   {
     id: "explore",
@@ -24,7 +24,7 @@ export const SIDEBAR_MODULES: SidebarModule[] = [
     icon: Compass,
     component: <div className="p-4">Explore panel</div>,
     hidden: false,
-    pinned: false
+    pinned: false,
   },
 ];
 

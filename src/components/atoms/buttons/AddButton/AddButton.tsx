@@ -7,12 +7,7 @@ export function AddButton({ size, onSubmit }: { size?: ButtonSize; onSubmit: () 
       data-testid="add-button-wrapper"
       className="bg-(--sidebar-primary) text-(--sidebar-primary-foreground) flex aspect-square size-auto items-center justify-center rounded-lg"
     >
-      <IconButton
-        icon="plus"
-        tooltip="Add Tab"
-        size={size}
-        onClick={onSubmit}
-      />
+      <IconButton icon="plus" tooltip="Add Tab" size={size} onClick={onSubmit} />
     </div>
   );
 }

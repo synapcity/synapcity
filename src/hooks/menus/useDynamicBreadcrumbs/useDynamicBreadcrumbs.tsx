@@ -55,7 +55,7 @@ export function useDynamicBreadcrumbs(segments: string[]): BreadcrumbItem[] {
       items.push({
         label: dashboards[segment].name,
         href: path,
-        icon: dashboards[segment].icon
+        icon: dashboards[segment].icon,
       });
       return;
     }
@@ -64,7 +64,7 @@ export function useDynamicBreadcrumbs(segments: string[]): BreadcrumbItem[] {
       items.push({
         label: notes[segment].title,
         href: path,
-        icon: notes[segment].icon
+        icon: notes[segment].icon,
       });
       return;
     }

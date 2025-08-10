@@ -1,27 +1,31 @@
 import React from "react";
 import { Tooltip } from "./Tooltip";
 import { mount } from "cypress/react";
-import "@testing-library/cypress"
+import "@testing-library/cypress";
 import "cypress-real-events";
-
 
 describe("<Tooltip />", () => {
   it("shows content on hover using `trigger`", () => {
     mount(
-      <div style={{ minHeight: "100vh", padding: 100, display: "flex", justifyContent: "center", alignItems: "center" }}>
+      <div
+        style={{
+          minHeight: "100vh",
+          padding: 100,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <Tooltip content="Hello Tooltip" trigger={<button>Hover me</button>} />
       </div>
     );
-
 
     cy.get('[data-testid="tooltip-trigger"]').realHover();
     cy.get('[data-testid="tooltip-content"]').contains("Hello Tooltip").should("exist");
   });
 
   it("shows content on hover using `children` if no trigger is provided", () => {
-    mount(
-      <Tooltip content="Fallback content">Hover via children</Tooltip>
-    );
+    mount(<Tooltip content="Fallback content">Hover via children</Tooltip>);
 
     cy.get('[data-testid="tooltip-trigger"]').realHover();
     cy.contains("Fallback content").should("exist");

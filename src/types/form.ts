@@ -3,21 +3,21 @@
 import { SelectOption } from "@/components";
 
 export type FieldDefinition = {
-	name: string;
-	label: string;
-	type: FieldType;
-	placeholder?: string;
-	description?: string;
-	defaultValue?: any;
-	options?: { label: string; value: string }[];
-	meta?: {
-		required?: boolean;
-		[key: string]: any;
-	};
+  name: string;
+  label: string;
+  type: FieldType;
+  placeholder?: string;
+  description?: string;
+  defaultValue?: any;
+  options?: { label: string; value: string }[];
+  meta?: {
+    required?: boolean;
+    [key: string]: any;
+  };
 };
 
 export type FieldDefinitionMap = {
-	[key: string]: FieldDefinition;
+  [key: string]: FieldDefinition;
 };
 
 // export type FieldType =
@@ -50,61 +50,61 @@ export type FieldDefinitionMap = {
 export type FieldType = "text" | "select" | "password";
 
 export interface FieldOption {
-	label: string;
-	value: any;
+  label: string;
+  value: any;
 }
 
 export interface FieldConfig {
-	name: string;
-	label: string;
-	type: FieldType;
-	placeholder?: string;
-	options?: FieldOption[];
-	defaultValue?: any;
-	icon?: any;
-	readOnly?: boolean;
-	autoFocus?: boolean;
+  name: string;
+  label: string;
+  type: FieldType;
+  placeholder?: string;
+  options?: FieldOption[];
+  defaultValue?: any;
+  icon?: any;
+  readOnly?: boolean;
+  autoFocus?: boolean;
 }
 
 export interface FieldMeta {
-	validationMessage?: string;
-	language?: string;
-	height?: number;
-	editable?: boolean;
-	tooltip?: string;
-	helpText?: string;
-	toggleVisible?: boolean;
-	showReset?: boolean;
-	disabled?: boolean;
-	required?: boolean;
-	min?: number;
-	max?: number;
-	step?: number;
-	allowCustom?: boolean;
-	group?: string;
-	order?: number;
-	direction?: "horizontal" | "vertical";
-	multiple?: boolean;
-	accept?: string;
-	mode?: "delta" | "range" | "iso";
+  validationMessage?: string;
+  language?: string;
+  height?: number;
+  editable?: boolean;
+  tooltip?: string;
+  helpText?: string;
+  toggleVisible?: boolean;
+  showReset?: boolean;
+  disabled?: boolean;
+  required?: boolean;
+  min?: number;
+  max?: number;
+  step?: number;
+  allowCustom?: boolean;
+  group?: string;
+  order?: number;
+  direction?: "horizontal" | "vertical";
+  multiple?: boolean;
+  accept?: string;
+  mode?: "delta" | "range" | "iso";
 }
 
 export type SelectFieldProps = BaseFieldComponent & {
-	value: string;
-	onValueChange: (value: string) => void;
-	options: SelectOption[];
+  value: string;
+  onValueChange: (value: string) => void;
+  options: SelectOption[];
 };
 
 export type BaseFieldComponent = {
-	config: FieldConfig;
-	meta?: FieldMeta;
-	field: {
-		name: string;
-		value: string;
-		onChange: (value: string) => void;
-		onBlur: () => void;
-		ref?: React.Ref<HTMLElement>;
-		[key: string]: any;
-	};
-	trigger?: (name: string) => void;
+  config: FieldConfig;
+  meta?: FieldMeta;
+  field: {
+    name: string;
+    value: string;
+    onChange: (value: string) => void;
+    onBlur: () => void;
+    ref?: React.Ref<HTMLElement>;
+    [key: string]: any;
+  };
+  trigger?: (name: string) => void;
 };

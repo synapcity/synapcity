@@ -39,8 +39,7 @@ const securityHeaders = [
 ];
 
 const withBundleAnalyzer = createAnalyzer({
-enabled: process.env.ANALYZE === "true",
-
+  enabled: process.env.ANALYZE === "true",
 });
 
 const nextConfig = withBundleAnalyzer({

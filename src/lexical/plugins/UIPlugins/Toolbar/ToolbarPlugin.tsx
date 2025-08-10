@@ -9,9 +9,7 @@ import clsx from "clsx";
 import { Button } from "@/components";
 export default function Toolbar() {
   return (
-    <div
-      className="absolute right-0 left-0 top-0 group md:border-r shadow-lg bg-(--background)"
-    >
+    <div className="absolute right-0 left-0 top-0 group md:border-r shadow-lg bg-(--background)">
       <div
         className={clsx(
           "justify-evenly md:relative w-full flex gap-4 p-2 border-t md:border-t-0",
@@ -49,10 +47,7 @@ export default function Toolbar() {
         <ToolbarDivider />
 
         <ToolbarSection>
-          <Button
-            variant="primary"
-            className="w-full"
-          >
+          <Button variant="primary" className="w-full">
             Save
           </Button>
         </ToolbarSection>

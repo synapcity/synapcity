@@ -1,12 +1,13 @@
-
-"use client"
+"use client";
 import { cn } from "@/landing-page/lib/utils";
 import clsx from "clsx";
 import { MotionConfigProps } from "framer-motion";
 import dynamic from "next/dynamic";
 import { ReactNode, ElementType, forwardRef } from "react";
 
-const MotionDiv = dynamic(() => import("../../Motion/Motion").then((mod) => mod.MotionDiv), { ssr: false })
+const MotionDiv = dynamic(() => import("../../Motion/Motion").then((mod) => mod.MotionDiv), {
+  ssr: false,
+});
 export type FlexProps<E extends ElementType = "div"> = {
   as?: E;
   children?: ReactNode;
@@ -20,7 +21,6 @@ export type FlexProps<E extends ElementType = "div"> = {
   margin?: string | { base?: string; sm?: string; md?: string; lg?: string; xl?: string };
   motionProps?: MotionConfigProps;
 } & Omit<React.ComponentPropsWithoutRef<E>, "as">;
-
 
 export const Flex = forwardRef(
   <E extends ElementType = "div">(
@@ -49,9 +49,9 @@ export const Flex = forwardRef(
       justify && `justify-${justify}`,
       align && `items-${align}`,
       gap &&
-      (typeof gap === "string"
-        ? `gap-${gap}`
-        : `gap-${gap.base ?? "4"} sm:gap-${gap.sm ?? gap.base ?? "4"} md:gap-${gap.md ?? gap.base ?? "4"} lg:gap-${gap.lg ?? gap.base ?? "4"} xl:gap-${gap.xl ?? gap.base ?? "4"}`),
+        (typeof gap === "string"
+          ? `gap-${gap}`
+          : `gap-${gap.base ?? "4"} sm:gap-${gap.sm ?? gap.base ?? "4"} md:gap-${gap.md ?? gap.base ?? "4"} lg:gap-${gap.lg ?? gap.base ?? "4"} xl:gap-${gap.xl ?? gap.base ?? "4"}`),
       className
     );
 

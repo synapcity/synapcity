@@ -1,7 +1,12 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { SidebarContent, SidebarGroup, SidebarGroupContent, SidebarMenu } from "@/components/atoms/ui/sidebar";
+import {
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarMenu,
+} from "@/components/atoms/ui/sidebar";
 import { IconSidebarItem } from "./IconSidebarItem";
 import { usePanels } from "@/hooks/sidebar/usePanels";
 import { SidebarScope, SidebarPanel, useSidebarStore } from "@/stores/ui/sidebarStore";
@@ -50,7 +55,6 @@ interface IconSidebarContentProps {
 //   );
 // }
 
-
 export function IconSidebarContent({ scope, id }: IconSidebarContentProps) {
   const router = useRouter();
   const { panels, activeId } = usePanels(scope, id);
@@ -58,13 +62,10 @@ export function IconSidebarContent({ scope, id }: IconSidebarContentProps) {
 
   function handleClick(panel: SidebarPanel) {
     if (panel.onClick) return panel.onClick();
-    if (panel.href) return panel.external
-      ? window.open(panel.href, "_blank")
-      : router.push(panel.href);
+    if (panel.href)
+      return panel.external ? window.open(panel.href, "_blank") : router.push(panel.href);
     setActive(scope, id, panel.id);
   }
-
-
 
   return (
     <SidebarContent>

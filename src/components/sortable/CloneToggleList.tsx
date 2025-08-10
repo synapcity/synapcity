@@ -1,7 +1,6 @@
-"use client"
+"use client";
 
-
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   DndContext,
   closestCenter,
@@ -12,14 +11,14 @@ import {
   useDroppable,
   Active,
   Over,
-} from '@dnd-kit/core';
+} from "@dnd-kit/core";
 import {
   SortableContext,
   useSortable,
   verticalListSortingStrategy,
   arrayMove,
-} from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 type Task = { id: string; text: string };
 
@@ -39,12 +38,10 @@ export default function SortableTodoList() {
   const [activeId, setActiveId] = useState<string | null>(null);
 
   // New-task input and mode toggle
-  const [newTaskText, setNewTaskText] = useState('');
+  const [newTaskText, setNewTaskText] = useState("");
   const [cloneMode, setCloneMode] = useState(false);
 
-  const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 5 } })
-  );
+  const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
 
   const findContainer = (id: string) => {
     for (const key in lists) if (lists[key].some((t) => t.id === id)) return key;
@@ -56,7 +53,7 @@ export default function SortableTodoList() {
     if (!text) return;
     const newTask: Task = { id: Date.now().toString(), text };
     setLists((prev) => ({ ...prev, todo: [...prev.todo, newTask] }));
-    setNewTaskText('');
+    setNewTaskText("");
   };
   const handleDragStart = ({ active }: { active: Active }) => {
     setActiveId(active.id as string);
@@ -92,11 +89,7 @@ export default function SortableTodoList() {
       const clone: Task = { id: Date.now().toString(), text: moving.text };
       setLists((prev) => ({
         ...prev,
-        [to]: [
-          ...prev[to].slice(0, destIndex),
-          clone,
-          ...prev[to].slice(destIndex),
-        ],
+        [to]: [...prev[to].slice(0, destIndex), clone, ...prev[to].slice(destIndex)],
       }));
     } else {
       // Move across lists
@@ -104,11 +97,7 @@ export default function SortableTodoList() {
       setLists((prev) => ({
         ...prev,
         [from]: prev[from].filter((t) => t.id !== activeId),
-        [to]: [
-          ...prev[to].slice(0, destIndex),
-          moving,
-          ...prev[to].slice(destIndex),
-        ],
+        [to]: [...prev[to].slice(0, destIndex), moving, ...prev[to].slice(destIndex)],
       }));
     }
   };
@@ -120,7 +109,7 @@ export default function SortableTodoList() {
           type="text"
           value={newTaskText}
           onChange={(e) => setNewTaskText(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && handleAdd()}
+          onKeyDown={(e) => e.key === "Enter" && handleAdd()}
           placeholder="Enter a new task"
           className="flex-1 p-2 border rounded-l"
         />
@@ -128,11 +117,7 @@ export default function SortableTodoList() {
           Add
         </button>
         <label className="inline-flex items-center gap-2">
-          <input
-            type="checkbox"
-            checked={cloneMode}
-            onChange={() => setCloneMode((v) => !v)}
-          />
+          <input type="checkbox" checked={cloneMode} onChange={() => setCloneMode((v) => !v)} />
           Clone Mode
         </label>
       </div>
@@ -147,9 +132,7 @@ export default function SortableTodoList() {
         >
           {Object.keys(lists).map((containerId) => (
             <DroppableList key={containerId} id={containerId}>
-              <h3 className="font-semibold mb-2 capitalize text-lg">
-                {containerId}
-              </h3>
+              <h3 className="font-semibold mb-2 capitalize text-lg">{containerId}</h3>
               <SortableContext
                 items={lists[containerId].map((t) => t.id)}
                 strategy={verticalListSortingStrategy}
@@ -177,8 +160,14 @@ export default function SortableTodoList() {
 }
 
 function SortableItem({ id, children }: { id: string; children: React.ReactNode }) {
-  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id });
-  const style = { transform: CSS.Transform.toString(transform), transition, opacity: isDragging ? 0.5 : 1 };
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+    id,
+  });
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : 1,
+  };
   return (
     <div
       ref={setNodeRef}

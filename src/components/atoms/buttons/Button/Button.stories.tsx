@@ -110,5 +110,5 @@ export const WithTooltip: Story = {
   args: {
     children: "Hover me",
     tooltip: "This is a button tooltip",
-  }
-}
+  },
+};

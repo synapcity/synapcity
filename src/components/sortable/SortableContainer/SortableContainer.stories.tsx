@@ -74,25 +74,16 @@ const Component = () => {
         Simulate Reorder
       </button>
 
-      <SortableContainer
-        items={items}
-        onReorder={setItems}
-        renderItem={renderItem}
-      />
+      <SortableContainer items={items} onReorder={setItems} renderItem={renderItem} />
     </div>
   );
-}
+};
 
 export const Default: Story = {
   render: () => <Component />,
 };
 export const Empty: Story = {
-  render: () => (
-    <SortableContainer
-      items={[]}
-      renderItem={() => null}
-    />
-  ),
+  render: () => <SortableContainer items={[]} renderItem={() => null} />,
 };
 
 const ComponentWithCustomDrag = () => {
@@ -119,14 +110,8 @@ const ComponentWithCustomDrag = () => {
     </div>
   );
 
-  return (
-    <SortableContainer
-      items={items}
-      onReorder={setItems}
-      renderItem={renderItem}
-    />
-  );
-}
+  return <SortableContainer items={items} onReorder={setItems} renderItem={renderItem} />;
+};
 export const WithCustomStyles: Story = {
   render: () => <ComponentWithCustomDrag />,
 };

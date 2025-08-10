@@ -18,11 +18,12 @@ interface DashboardsSidebarProps {
   id: string;
 }
 
-export function DashboardsSidebar(
-  { id, ...props }: DashboardsSidebarProps & React.ComponentProps<typeof Sidebar>
-) {
-  const currentDashboard = useDashboardStore(useShallow(s => s.getResourceById(id)));
-  const createDashboard = useDashboardStore(s => s.addResource);
+export function DashboardsSidebar({
+  id,
+  ...props
+}: DashboardsSidebarProps & React.ComponentProps<typeof Sidebar>) {
+  const currentDashboard = useDashboardStore(useShallow((s) => s.getResourceById(id)));
+  const createDashboard = useDashboardStore((s) => s.addResource);
   const dashboardExists = Boolean(currentDashboard);
   const { panels, activePanel } = usePanels("dashboard", id);
 

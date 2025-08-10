@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { createContext, useContext, useMemo, useCallback, useEffect } from "react";
 import { useGridStore } from "./useGridStore";
@@ -18,9 +18,11 @@ export function useCurrentGrid() {
 }
 
 export function useGrid(id?: string, scope?: string, parentId?: string) {
-  const gridId = id ?? nanoid()
-  const hasInitialized = useGridStore(useShallow(s => !!s.items[gridId] && !!s.items[gridId]?.state.isInitialized));
-  const initGrid = useGridStore(s => s.initGrid);
+  const gridId = id ?? nanoid();
+  const hasInitialized = useGridStore(
+    useShallow((s) => !!s.items[gridId] && !!s.items[gridId]?.state.isInitialized)
+  );
+  const initGrid = useGridStore((s) => s.initGrid);
 
   useEffect(() => {
     if (!hasInitialized && scope && parentId) {
@@ -29,8 +31,8 @@ export function useGrid(id?: string, scope?: string, parentId?: string) {
   }, [gridId, hasInitialized, initGrid, parentId, scope]);
 
   const grid = useGridStore(useShallow((s) => s.getGrid(gridId)));
-  const config = useGridStore(useShallow(s => s.getConfig(gridId)))
-  const state = useGridStore(useShallow((s) => s.getState(gridId)))
+  const config = useGridStore(useShallow((s) => s.getConfig(gridId)));
+  const state = useGridStore(useShallow((s) => s.getState(gridId)));
   const setState = useGridStore((s) => s.updateGridState);
   const setConfig = useGridStore((s) => s.updateGridConfig);
   const removeGrid = useGridStore((s) => s.removeGrid);
@@ -38,9 +40,18 @@ export function useGrid(id?: string, scope?: string, parentId?: string) {
   const importGrid = useGridStore((s) => s.importGrid);
   const cloneGrid = useGridStore((s) => s.cloneGrid);
 
-  const updateState = useCallback((patch: Partial<GridState>) => setState(gridId, patch), [setState, gridId]);
-  const updateConfig = useCallback((patch: Partial<GridConfig>) => setConfig(gridId, patch), [setConfig, gridId]);
-  const clone = useCallback((opts?: { scope?: string; parentId?: string; label?: string }) => cloneGrid(gridId, opts), [cloneGrid, gridId]);
+  const updateState = useCallback(
+    (patch: Partial<GridState>) => setState(gridId, patch),
+    [setState, gridId]
+  );
+  const updateConfig = useCallback(
+    (patch: Partial<GridConfig>) => setConfig(gridId, patch),
+    [setConfig, gridId]
+  );
+  const clone = useCallback(
+    (opts?: { scope?: string; parentId?: string; label?: string }) => cloneGrid(gridId, opts),
+    [cloneGrid, gridId]
+  );
 
   return useMemo(
     () => ({
@@ -55,7 +66,18 @@ export function useGrid(id?: string, scope?: string, parentId?: string) {
       importGrid,
       clone,
     }),
-    [gridId, grid, config, state, updateState, updateConfig, removeGrid, exportGrid, importGrid, clone]
+    [
+      gridId,
+      grid,
+      config,
+      state,
+      updateState,
+      updateConfig,
+      removeGrid,
+      exportGrid,
+      importGrid,
+      clone,
+    ]
   );
 }
 

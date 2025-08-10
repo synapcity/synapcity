@@ -1,14 +1,13 @@
-
-import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { $getSelection, $isRangeSelection, FORMAT_TEXT_COMMAND, TextFormatType } from 'lexical';
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+import { $getSelection, $isRangeSelection, FORMAT_TEXT_COMMAND, TextFormatType } from "lexical";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/atoms/ui/dropdown-menu';
-import { Button } from '@/components';
-import { useEffect, useState } from 'react';
+} from "@/components/atoms/ui/dropdown-menu";
+import { Button } from "@/components";
+import { useEffect, useState } from "react";
 
 export default function TextFormatDropdown() {
   const [editor] = useLexicalComposerContext();
@@ -24,8 +23,8 @@ export default function TextFormatDropdown() {
           return;
         }
 
-        const newFormats = ['bold', 'italic', 'underline', 'strikethrough', 'code'].filter((format) =>
-          selection.hasFormat(format as TextFormatType)
+        const newFormats = ["bold", "italic", "underline", "strikethrough", "code"].filter(
+          (format) => selection.hasFormat(format as TextFormatType)
         );
 
         if (
@@ -54,11 +53,13 @@ export default function TextFormatDropdown() {
         <Button variant="outline">Text Format</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        {['bold', 'italic', 'underline', 'strikethrough', 'code'].map((format) => (
+        {["bold", "italic", "underline", "strikethrough", "code"].map((format) => (
           <DropdownMenuItem
             key={format}
             onClick={() => formatText(format as TextFormatType)}
-            className={activeFormats.includes(format as TextFormatType) ? 'bg-gray-200 font-semibold' : ''}
+            className={
+              activeFormats.includes(format as TextFormatType) ? "bg-gray-200 font-semibold" : ""
+            }
           >
             {format.charAt(0).toUpperCase() + format.slice(1)}
           </DropdownMenuItem>

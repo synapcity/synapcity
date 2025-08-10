@@ -1,11 +1,11 @@
-import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import EditorHeader from './EditorHeader';
+import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import EditorHeader from "./EditorHeader";
 
 const meta: Meta<typeof EditorHeader> = {
-  title: 'Components/EditorHeader',
+  title: "Components/EditorHeader",
   component: EditorHeader,
   parameters: {
-    layout: 'fullscreen',
+    layout: "fullscreen",
   },
 };
 

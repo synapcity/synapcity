@@ -1,23 +1,12 @@
 "use client";
 
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import {
-  $getSelection,
-  $isRangeSelection,
-  FORMAT_TEXT_COMMAND,
-  TextFormatType,
-} from "lexical";
+import { $getSelection, $isRangeSelection, FORMAT_TEXT_COMMAND, TextFormatType } from "lexical";
 import { useEffect, useState } from "react";
 import { IconButton } from "@/components";
 import { commonButtonToolbarProps } from "./UndoRedoTools";
 
-const FORMATS: TextFormatType[] = [
-  "bold",
-  "italic",
-  "underline",
-  "strikethrough",
-  "code",
-];
+const FORMATS: TextFormatType[] = ["bold", "italic", "underline", "strikethrough", "code"];
 
 export default function TextFormat() {
   const [editor] = useLexicalComposerContext();
@@ -32,9 +21,7 @@ export default function TextFormat() {
           return;
         }
 
-        const newFormats = FORMATS.filter((format) =>
-          selection.hasFormat(format)
-        );
+        const newFormats = FORMATS.filter((format) => selection.hasFormat(format));
 
         setActiveFormats(newFormats);
       });
@@ -61,9 +48,7 @@ export default function TextFormat() {
           label={`Format text as ${format}`}
           tooltip={`Format text as ${format}`}
         >
-          <span className="sr-only">
-            {format.charAt(0).toUpperCase() + format.slice(1)}
-          </span>
+          <span className="sr-only">{format.charAt(0).toUpperCase() + format.slice(1)}</span>
         </IconButton>
       ))}
     </div>

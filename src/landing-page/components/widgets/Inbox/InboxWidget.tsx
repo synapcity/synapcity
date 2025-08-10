@@ -4,14 +4,7 @@ import { MailIcon } from "lucide-react";
 import { CardComponent as Card } from "@/landing-page/components/ui/CardComponent/CardComponent";
 import { InboxMessage } from "./InboxMessage";
 
-export const InboxWidget = ({
-  title,
-  messages,
-}: {
-  title: string;
-  messages: InboxMessage[];
-}) => {
-
+export const InboxWidget = ({ title, messages }: { title: string; messages: InboxMessage[] }) => {
   return (
     <Card
       title={title}

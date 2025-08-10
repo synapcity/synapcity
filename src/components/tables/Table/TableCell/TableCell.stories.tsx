@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import TableCell from './TableCell';
-import type { Row, Cell } from '@tanstack/react-table';
+import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import TableCell from "./TableCell";
+import type { Row, Cell } from "@tanstack/react-table";
 
 const metaCell: Meta<typeof TableCell> = {
-  title: 'Table/TableCell',
+  title: "Table/TableCell",
   component: TableCell,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
 };
 export default metaCell;
 
@@ -20,31 +20,31 @@ function makeCell(id: string, content: any): Cell<any, any> {
     getContext: () => ({}),
   } as unknown as Cell<any, any>;
 }
-const fakeRow = { original: { id: '1' } } as unknown as Row<any>;
+const fakeRow = { original: { id: "1" } } as unknown as Row<any>;
 
 export const Plain: StoryCell = {
   args: {
-    cell: makeCell('name', 'Hello World'),
+    cell: makeCell("name", "Hello World"),
     row: fakeRow,
-    onDelete: () => { },
-    onUpdate: () => { },
+    onDelete: () => {},
+    onUpdate: () => {},
   },
 };
 
 export const LinkedResources: StoryCell = {
   args: {
-    cell: makeCell('linkedResources', [{ resourceId: '1', label: 'Res', type: 'note' }]),
+    cell: makeCell("linkedResources", [{ resourceId: "1", label: "Res", type: "note" }]),
     row: fakeRow,
-    onDelete: () => { },
-    onUpdate: () => { },
+    onDelete: () => {},
+    onUpdate: () => {},
   },
 };
 
 export const Actions: StoryCell = {
   args: {
-    cell: makeCell('actions', null),
+    cell: makeCell("actions", null),
     row: fakeRow,
     onDelete: (id: string) => console.log(id),
-    onUpdate: () => { },
+    onUpdate: () => {},
   },
 };

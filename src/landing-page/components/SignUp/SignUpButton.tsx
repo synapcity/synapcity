@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { MotionButton } from "../ui"
+import { MotionButton } from "../ui";
 
 export const SignUpButton = ({ label = "Sign Up" }: { label?: string }) => {
   return (
@@ -11,5 +11,5 @@ export const SignUpButton = ({ label = "Sign Up" }: { label?: string }) => {
     >
       {label}
     </MotionButton>
-  )
-}
+  );
+};

@@ -18,29 +18,30 @@ import { normalizeLayouts } from "@/utils";
 const ResponsiveGrid = WidthProvider(Responsive);
 
 export const ReactGridLayout = ({ layoutRef }: { layoutRef: RefObject<LayoutItem[]> }) => {
-  const { setState, state, config } = useCurrentGrid()
+  const { setState, state, config } = useCurrentGrid();
   const hasHydrated = useGridStore((state) => state.hasHydrated);
   const currentBreakpoint = state?.activeBreakpoint ?? "lg";
 
   const debouncedSetLayout = useMemo(() => {
     return debounce((bp: BreakpointType, layout: LayoutItem[]) => {
-      const layouts: Layouts = normalizeLayouts({ ...state?.layouts, [bp]: layout })
-      setState({ layouts: { ...layouts } })
+      const layouts: Layouts = normalizeLayouts({ ...state?.layouts, [bp]: layout });
+      setState({ layouts: { ...layouts } });
     }, 500);
   }, [setState, state?.layouts]);
 
   if (!hasHydrated) return null;
 
-
-  const safeLayouts = normalizeLayouts(state?.layouts ?? {
-    xxs: [],
-    xs: [],
-    sm: [],
-    md: [],
-    lg: [],
-    xl: [],
-    xxl: []
-  });
+  const safeLayouts = normalizeLayouts(
+    state?.layouts ?? {
+      xxs: [],
+      xs: [],
+      sm: [],
+      md: [],
+      lg: [],
+      xl: [],
+      xxl: [],
+    }
+  );
 
   return (
     <ResponsiveGrid
@@ -50,17 +51,18 @@ export const ReactGridLayout = ({ layoutRef }: { layoutRef: RefObject<LayoutItem
       layouts={safeLayouts}
       resizeHandles={config?.resizeHandles as any}
       onLayoutChange={(layout, allLayouts) => {
-        handleLayoutChange(layoutRef, debouncedSetLayout, currentBreakpoint, allLayouts[currentBreakpoint] || layout);
-      }}
-      onBreakpointChange={(bp: BreakpointType) => {
-        handleBreakpointChange(
+        handleLayoutChange(
           layoutRef,
-          safeLayouts,
-          bp,
-          (breakpoint: BreakpointType) => setState({ activeBreakpoint: breakpoint })
+          debouncedSetLayout,
+          currentBreakpoint,
+          allLayouts[currentBreakpoint] || layout
         );
       }}
-
+      onBreakpointChange={(bp: BreakpointType) => {
+        handleBreakpointChange(layoutRef, safeLayouts, bp, (breakpoint: BreakpointType) =>
+          setState({ activeBreakpoint: breakpoint })
+        );
+      }}
       useCSSTransforms={hasHydrated}
       {...config}
       isDraggable={true}

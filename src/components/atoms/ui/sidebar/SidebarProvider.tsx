@@ -4,7 +4,12 @@ import * as React from "react";
 import { useIsMobile } from "@/hooks/ui/use-mobile";
 import { TooltipProvider } from "@/components/atoms/ui/tooltip";
 import { cn } from "@/utils";
-import { useSidebarModuleStore, SIDEBAR_STATES, SidebarState, SIDEBAR_DIMENSIONS } from "@/components/atoms/ui/sidebar/useSidebarModuleStore";
+import {
+  useSidebarModuleStore,
+  SIDEBAR_STATES,
+  SidebarState,
+  SIDEBAR_DIMENSIONS,
+} from "@/components/atoms/ui/sidebar/useSidebarModuleStore";
 import { useShallow } from "zustand/shallow";
 
 const SIDEBAR_KEYBOARD_SHORTCUT = "b";
@@ -67,7 +72,15 @@ export function SidebarProvider({
   const sidebarState = settings ? settings.collapsedState : SIDEBAR_STATES.EXPANDED;
   const setSidebarState = React.useCallback(
     (state: SidebarState) =>
-      updateSettings(sidebarId, { collapsedState: state, width: (state === "icon" ? SIDEBAR_DIMENSIONS.ICON : state === "offcanvas" ? SIDEBAR_DIMENSIONS.MIN : SIDEBAR_DIMENSIONS.DEFAULT) }),
+      updateSettings(sidebarId, {
+        collapsedState: state,
+        width:
+          state === "icon"
+            ? SIDEBAR_DIMENSIONS.ICON
+            : state === "offcanvas"
+              ? SIDEBAR_DIMENSIONS.MIN
+              : SIDEBAR_DIMENSIONS.DEFAULT,
+      }),
     [sidebarId, updateSettings]
   );
 
@@ -87,14 +100,14 @@ export function SidebarProvider({
       if (sidebarState === SIDEBAR_STATES.EXPANDED) {
         if (collapsible === "icon") {
           setSidebarState(SIDEBAR_STATES.ICON);
-          updateSettings(sidebarId, { width: SIDEBAR_DIMENSIONS.ICON })
+          updateSettings(sidebarId, { width: SIDEBAR_DIMENSIONS.ICON });
         } else if (collapsible === "offcanvas") {
           setSidebarState(SIDEBAR_STATES.OFFCANVAS);
-          updateSettings(sidebarId, { width: SIDEBAR_DIMENSIONS.MAX })
+          updateSettings(sidebarId, { width: SIDEBAR_DIMENSIONS.MAX });
         }
       } else {
         setSidebarState(SIDEBAR_STATES.EXPANDED);
-        updateSettings(sidebarId, { width: SIDEBAR_DIMENSIONS.MAX })
+        updateSettings(sidebarId, { width: SIDEBAR_DIMENSIONS.MAX });
       }
     }
   }, [isMobile, sidebarState, collapsible, setSidebarState, sidebarId, updateSettings]);

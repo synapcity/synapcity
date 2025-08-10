@@ -11,27 +11,27 @@ const TabIndentation = loadPluginByName("TabIndentation");
 const ListPlugin = loadPluginByName("List", true);
 
 const RichTextPlugin = dynamic(
-  () => import("@lexical/react/LexicalRichTextPlugin").then(mod => mod.RichTextPlugin),
+  () => import("@lexical/react/LexicalRichTextPlugin").then((mod) => mod.RichTextPlugin),
   { ssr: false }
 );
 
 const LexicalErrorBoundary = dynamic(
-  () => import("@lexical/react/LexicalErrorBoundary").then(mod => mod.LexicalErrorBoundary),
+  () => import("@lexical/react/LexicalErrorBoundary").then((mod) => mod.LexicalErrorBoundary),
   { ssr: false }
 );
 
 const DraggableWrapper = dynamic(
-  () => import("../BehaviorPlugins/Draggable/components/DraggableWrapper").then(mod => mod.DraggableWrapper),
+  () =>
+    import("../BehaviorPlugins/Draggable/components/DraggableWrapper").then(
+      (mod) => mod.DraggableWrapper
+    ),
   { ssr: false }
 );
 
-const EditorPlaceholder = dynamic(
-  () => import("./UIPlaceholder"),
-  { ssr: false }
-);
+const EditorPlaceholder = dynamic(() => import("./UIPlaceholder"), { ssr: false });
 
 const Editable = () => {
-  const scrollContainerRef = useRef<HTMLDivElement | null>(null)
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   return (
     <DraggableWrapper>
       <div

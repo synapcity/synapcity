@@ -3,8 +3,8 @@
 const mockDragEnd = jest.fn();
 const mockDraggingItem = { id: "1", label: "Item 1" };
 
-jest.mock('@/hooks/sortable', () => ({
-  ...jest.requireActual('@/hooks/sortable'),
+jest.mock("@/hooks/sortable", () => ({
+  ...jest.requireActual("@/hooks/sortable"),
   useSortableSetup: () => ({ dndContextProps: {} }),
   useDragOverlay: () => ({
     draggingItem: mockDraggingItem,
@@ -12,7 +12,7 @@ jest.mock('@/hooks/sortable', () => ({
   }),
 }));
 
-jest.mock('../SortableList/SortableList', () => ({
+jest.mock("../SortableList/SortableList", () => ({
   SortableList: ({ items, renderItem }: any) => (
     <ul data-testid="sortable-list">
       {items.map((item: any, idx: number) => (
@@ -37,9 +37,7 @@ describe("SortableWidgetContainer", () => {
   // ──────────── RENDERING ────────────
   describe("Rendering", () => {
     it("renders nothing when items array is empty", () => {
-      const { container } = render(
-        <SortableWidgetContainer items={[]} renderItem={renderItem} />
-      );
+      const { container } = render(<SortableWidgetContainer items={[]} renderItem={renderItem} />);
       expect(container).toBeEmptyDOMElement();
     });
 
@@ -72,7 +70,7 @@ describe("SortableWidgetContainer", () => {
     });
 
     it("does not render DragOverlay when draggingItem is null", () => {
-      jest.doMock('@/hooks/sortable', () => ({
+      jest.doMock("@/hooks/sortable", () => ({
         useDragOverlay: () => ({ draggingItem: null, onDragEnd: jest.fn() }),
       }));
       const { container } = render(
@@ -89,12 +87,8 @@ describe("SortableWidgetContainer", () => {
 
       // Re-import to use updated mocks
       const { container } = render(
-        <SortableWidgetContainer
-          items={items}
-          renderItem={renderItem}
-          onReorder={onReorder}
-        />
-      )
+        <SortableWidgetContainer items={items} renderItem={renderItem} onReorder={onReorder} />
+      );
       const dndContext = container.querySelector('[data-testid="sortable-list"]');
       expect(dndContext).toBeInTheDocument();
 

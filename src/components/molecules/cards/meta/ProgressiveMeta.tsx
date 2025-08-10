@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { format, formatDistanceToNow } from "date-fns";
 
@@ -8,7 +8,6 @@ interface MetaProps {
   createdAt: string;
   updatedAt: string;
 }
-
 
 export function ProgressiveMeta({ createdAt, updatedAt }: MetaProps) {
   const relative = formatDistanceToNow(new Date(updatedAt), { addSuffix: true });

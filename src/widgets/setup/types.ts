@@ -6,7 +6,6 @@ export type WidgetComponentProps<P, S> = {
   props: P;
   settings: S;
   className?: string;
-  
 };
 
 export type WidgetModule<P, S> = {

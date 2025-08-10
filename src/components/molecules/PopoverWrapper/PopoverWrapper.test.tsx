@@ -4,12 +4,7 @@ import { PopoverWrapper } from "./PopoverWrapper";
 
 describe("<PopoverWrapper />", () => {
   it("renders trigger and does not show content by default (uncontrolled)", () => {
-    render(
-      <PopoverWrapper
-        trigger={<button>Open</button>}
-        content={<div>Popover Content</div>}
-      />
-    );
+    render(<PopoverWrapper trigger={<button>Open</button>} content={<div>Popover Content</div>} />);
 
     expect(screen.getByRole("button", { name: /open/i })).toBeInTheDocument();
     expect(screen.queryByText(/popover content/i)).not.toBeInTheDocument();

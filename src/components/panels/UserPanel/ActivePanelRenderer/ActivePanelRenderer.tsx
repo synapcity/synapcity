@@ -1,15 +1,11 @@
-"use client"
+"use client";
 
 import { useUserPanel } from "@/hooks/features/useUserPanel/useUserPanel";
 
 export function ActivePanelRenderer() {
-  const { activeModule } = useUserPanel()
+  const { activeModule } = useUserPanel();
   if (!activeModule)
-    return (
-      <div className="text-muted-foreground p-4 text-sm">
-        No module selected.
-      </div>
-    );
+    return <div className="text-muted-foreground p-4 text-sm">No module selected.</div>;
 
   const Panel = activeModule.component;
 

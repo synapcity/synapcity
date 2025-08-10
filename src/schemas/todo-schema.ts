@@ -7,25 +7,25 @@ export type TodoStatus = z.infer<typeof TodoStatusSchema>;
 
 // 3. TodoItem schema (extends EntityBase)
 export const TodoItemSchema = BaseResourceSchema.extend({
-	content: z.string(),
-	status: TodoStatusSchema,
+  content: z.string(),
+  status: TodoStatusSchema,
 });
- type TodoItem = z.infer<typeof TodoItemSchema>;
+type TodoItem = z.infer<typeof TodoItemSchema>;
 
 // 4. Example: createItem factory using schema defaults
 export function createTodoItem(partial: Partial<TodoItem> = {}): TodoItem {
-	const now = new Date().toISOString();
-	const base = {
-		id: partial.id || crypto.randomUUID(),
-		createdAt: partial.createdAt || now,
-		updatedAt: partial.updatedAt || now,
-		deletedAt: partial.deletedAt ?? null,
-	};
-	return TodoItemSchema.parse({
-		...base,
-		content: partial.content || "",
-		status: partial.status || "not-started",
-	});
+  const now = new Date().toISOString();
+  const base = {
+    id: partial.id || crypto.randomUUID(),
+    createdAt: partial.createdAt || now,
+    updatedAt: partial.updatedAt || now,
+    deletedAt: partial.deletedAt ?? null,
+  };
+  return TodoItemSchema.parse({
+    ...base,
+    content: partial.content || "",
+    status: partial.status || "not-started",
+  });
 }
 
 // 5. Extend this pattern for other entities:
@@ -35,8 +35,8 @@ export function createTodoItem(partial: Partial<TodoItem> = {}): TodoItem {
 
 // 6. Form schema for creating/updating a todo (no id/date fields)
 export const TodoFormSchema = z.object({
-	content: z.string().min(1, "Content is required"),
-	status: TodoStatusSchema,
+  content: z.string().min(1, "Content is required"),
+  status: TodoStatusSchema,
 });
 export type TodoForm = z.infer<typeof TodoFormSchema>;
 

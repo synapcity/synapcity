@@ -1,11 +1,11 @@
-'use client'
+"use client";
 
-import { Button } from '@/components/atoms'
-import { SunIcon, MoonIcon } from 'lucide-react'
-import { useThemeStore } from '@/stores/ui'
+import { Button } from "@/components/atoms";
+import { SunIcon, MoonIcon } from "lucide-react";
+import { useThemeStore } from "@/stores/ui";
 
 export const DarkModeToggle = () => {
-  const toggleDarkMode = useThemeStore(s => s.toggleGlobalMode)
+  const toggleDarkMode = useThemeStore((s) => s.toggleGlobalMode);
   return (
     <Button
       id="dark-mode-toggle"
@@ -23,6 +23,6 @@ export const DarkModeToggle = () => {
         className="size-full absolute rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
       />
       <span className="sr-only">Toggle theme</span>
-    </Button >
-  )
-}
+    </Button>
+  );
+};

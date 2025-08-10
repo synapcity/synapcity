@@ -32,7 +32,6 @@ export const Disabled: Story = {
   },
 };
 
-
 export const SubmitType: Story = {
   args: {
     children: "Submit",

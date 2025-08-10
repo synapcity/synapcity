@@ -22,7 +22,11 @@ describe("Label component", () => {
   });
 
   it("does not render helper text if `error` is true", () => {
-    render(<Label helperText="Some helpful text" error>Label</Label>);
+    render(
+      <Label helperText="Some helpful text" error>
+        Label
+      </Label>
+    );
     expect(screen.queryByText("Some helpful text")).not.toBeInTheDocument();
   });
 

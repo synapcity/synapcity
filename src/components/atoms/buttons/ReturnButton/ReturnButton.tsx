@@ -6,7 +6,7 @@ import { Button } from "@/components/atoms/ui/button";
 
 export const ReturnButton = ({
   returnItems,
-  returnRoute
+  returnRoute,
 }: {
   returnItems: string;
   returnRoute: string;
@@ -18,5 +18,5 @@ export const ReturnButton = ({
         Return to {returnItems}
       </Link>
     </Button>
-  )
-}
+  );
+};

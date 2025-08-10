@@ -1,12 +1,7 @@
 "use client";
 
 import { Input } from "@/components/atoms";
-import {
-  WidgetSkeleton,
-  widgetRegistry,
-  type WidgetKey,
-  useWidgetComponent,
-} from "@/widgets";
+import { WidgetSkeleton, widgetRegistry, type WidgetKey, useWidgetComponent } from "@/widgets";
 
 function WidgetPreview({ widgetKey }: { widgetKey: WidgetKey }) {
   const def = widgetRegistry[widgetKey];

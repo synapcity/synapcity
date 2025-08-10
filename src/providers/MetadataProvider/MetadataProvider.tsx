@@ -5,23 +5,16 @@ import { MetadataContext } from "./metadata-context";
 import { useMetadataStore } from "@/stores";
 import { useShallow } from "zustand/shallow";
 
-export type MetadataScope = "global" | "dashboard" | "note"
+export type MetadataScope = "global" | "dashboard" | "note";
 
 export const MetadataProvider: React.FC<{
-  scope: MetadataScope
+  scope: MetadataScope;
   entityId?: string;
   children: ReactNode;
 }> = ({ scope = "global", entityId, children }) => {
-  const {
-    language,
-    setLanguage,
-    themeMode,
-    setThemeMode,
-    selected,
-    setSelected,
-    hasHydrated,
-  } = useMetadataStore();
-  const localStatus = useMetadataStore(useShallow(s => s.status[entityId ?? "global"]))
+  const { language, setLanguage, themeMode, setThemeMode, selected, setSelected, hasHydrated } =
+    useMetadataStore();
+  const localStatus = useMetadataStore(useShallow((s) => s.status[entityId ?? "global"]));
 
   // useTabSync(scope as EntityType, entityId)
 
@@ -37,7 +30,7 @@ export const MetadataProvider: React.FC<{
         selected,
         setSelected,
         status: localStatus,
-        hasHydrated
+        hasHydrated,
       }}
     >
       {children}

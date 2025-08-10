@@ -12,11 +12,7 @@ export function useElementSize<T extends HTMLElement = HTMLElement>(
   ref: React.RefObject<T>,
   options: UseElementSizeOptions = {}
 ) {
-  const {
-    cssVarPrefix,
-    onSizeChange,
-    observe = true,
-  } = options;
+  const { cssVarPrefix, onSizeChange, observe = true } = options;
 
   const [size, setSize] = useState({ width: 0, height: 0 });
 

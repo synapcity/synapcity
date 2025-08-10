@@ -12,7 +12,7 @@ interface FontSizeControlProps {
 
 export function FontSizeControls({ value = "md", onChange }: FontSizeControlProps) {
   const currentIndex = fontSizes.findIndex((k) => k === value);
-  const lastIndex = fontSizes.length - 1
+  const lastIndex = fontSizes.length - 1;
 
   const decrease = () => {
     const next = fontSizes[Math.max(0, currentIndex - 1)];
@@ -35,9 +35,7 @@ export function FontSizeControls({ value = "md", onChange }: FontSizeControlProp
       >
         A-
       </Button>
-      <span className="text-sm font-medium uppercase">
-        {value}
-      </span>
+      <span className="text-sm font-medium uppercase">{value}</span>
       <Button
         variant="outline"
         onClick={increase}

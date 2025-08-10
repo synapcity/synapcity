@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import { useState } from 'react';
-import { arrayMove } from '@dnd-kit/sortable';
+import { useState } from "react";
+import { arrayMove } from "@dnd-kit/sortable";
 
 export function useSortableList<T extends { id: string }>(initialItems: T[]) {
   const [items, setItems] = useState(initialItems);

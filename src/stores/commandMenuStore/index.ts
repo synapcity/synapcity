@@ -1,1 +1,1 @@
-export * from "./useCommandMenuStore"
+export * from "./useCommandMenuStore";

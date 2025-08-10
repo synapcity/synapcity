@@ -2,7 +2,11 @@ import { CardComponent as Card } from "@/landing-page/components/ui/CardComponen
 import { BaseProps } from "@/landing-page/types";
 import { NotebookPen } from "lucide-react";
 
-export const NoteWidget = ({ title, content, ...props }: { title: string; content: string } & BaseProps) => {
+export const NoteWidget = ({
+  title,
+  content,
+  ...props
+}: { title: string; content: string } & BaseProps) => {
   return (
     <Card
       title={title}
@@ -17,7 +21,5 @@ export const NoteWidget = ({ title, content, ...props }: { title: string; conten
         className="flex-1 bg-neutral-900 rounded p-2 text-sm text-neutral-100 size-full"
       />
     </Card>
-
   );
-
-}
+};

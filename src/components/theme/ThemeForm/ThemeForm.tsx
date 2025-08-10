@@ -12,17 +12,28 @@ import dynamic from "next/dynamic";
 import { ResetThemeButton } from "@/components/atoms/buttons/ResetThemeButton";
 import { useShallow } from "zustand/shallow";
 
-const ThemeFormFields = dynamic(() => import("@/components/theme/ThemeForm/ThemeFormFields/ThemeFormFields").then((mod) => mod.ThemeFormFields), {
-  ssr: true,
-  loading: () => <div>Loading...</div>
-})
+const ThemeFormFields = dynamic(
+  () =>
+    import("@/components/theme/ThemeForm/ThemeFormFields/ThemeFormFields").then(
+      (mod) => mod.ThemeFormFields
+    ),
+  {
+    ssr: true,
+    loading: () => <div>Loading...</div>,
+  }
+);
 
-const ThemePreview = dynamic(() => import("@/components/theme/ThemePreview/ThemePreview").then((mod) => mod.ThemePreview), {
-  ssr: false,
-  loading: () => <div>Loading...</div>
-})
+const ThemePreview = dynamic(
+  () => import("@/components/theme/ThemePreview/ThemePreview").then((mod) => mod.ThemePreview),
+  {
+    ssr: false,
+    loading: () => <div>Loading...</div>,
+  }
+);
 
-const Button = dynamic(() => import("@/components/atoms/buttons/Button/Button").then((mod) => mod.Button))
+const Button = dynamic(() =>
+  import("@/components/atoms/buttons/Button/Button").then((mod) => mod.Button)
+);
 
 export const ThemeForm = ({
   entityId,
@@ -35,31 +46,33 @@ export const ThemeForm = ({
   className?: string;
   onSubmit: (values: ThemePreferencesFormValues) => void;
 }) => {
-  const hasHydrated = useThemeStore(s => s.hasHydrated)
-  const scopedPreferences = useThemeStore(useShallow(theme => theme.scopedPreferences[scope as EntityType]?.[entityId ?? ""]))
-  const globalPreferences = useThemeStore(theme => theme.globalPreferences)
-  const theme = scope === "global" ? globalPreferences : scopedPreferences
-  const { isCustom } = useTheme()
+  const hasHydrated = useThemeStore((s) => s.hasHydrated);
+  const scopedPreferences = useThemeStore(
+    useShallow((theme) => theme.scopedPreferences[scope as EntityType]?.[entityId ?? ""])
+  );
+  const globalPreferences = useThemeStore((theme) => theme.globalPreferences);
+  const theme = scope === "global" ? globalPreferences : scopedPreferences;
+  const { isCustom } = useTheme();
   const formTheme = useMemo(() => {
     return {
       ...theme,
       primary: theme.primary.base,
-      accent: theme.accent.base
-    }
-  }, [theme])
+      accent: theme.accent.base,
+    };
+  }, [theme]);
   const methods = useForm<ThemePreferencesFormValues>({
     defaultValues: {
       ...formTheme,
       primary: theme.primary.base,
-      accent: theme.accent.base
+      accent: theme.accent.base,
     },
     resolver: zodResolver(themePreferencesSchema),
   });
   const { reset } = methods;
 
   useEffect(() => {
-    if (!hasHydrated) return
-  }, [hasHydrated])
+    if (!hasHydrated) return;
+  }, [hasHydrated]);
 
   useEffect(() => {
     reset(formTheme);
@@ -76,13 +89,13 @@ export const ThemeForm = ({
           <ThemePreview />
         </div>
 
-        <div className={cn("w-full flex items-center", {
-          "justify-between": isCustom,
-          "justify-end": !isCustom
-        })}>
-          {isCustom && (
-            <ResetThemeButton />
-          )}
+        <div
+          className={cn("w-full flex items-center", {
+            "justify-between": isCustom,
+            "justify-end": !isCustom,
+          })}
+        >
+          {isCustom && <ResetThemeButton />}
           <Button type="submit">Submit</Button>
         </div>
       </form>

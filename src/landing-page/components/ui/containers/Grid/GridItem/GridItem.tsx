@@ -12,7 +12,7 @@ export type GridItemProps<E extends ElementType = "div"> = {
   rowStart?: string;
   justify?: "start" | "end" | "center" | "between" | "around" | "evenly";
   align?: "start" | "end" | "center" | "baseline" | "stretch";
-  gap?: string;  // Custom gap for this item
+  gap?: string; // Custom gap for this item
 } & Omit<React.ComponentPropsWithoutRef<E>, "as">;
 
 export function GridItem<E extends ElementType = "div">({

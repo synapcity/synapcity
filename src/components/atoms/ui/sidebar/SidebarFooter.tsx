@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-import { cn } from "@/utils/index"
+import { cn } from "@/utils/index";
 
 export function SidebarFooter({ className, ...props }: React.ComponentProps<"div">) {
   return (
@@ -12,5 +12,5 @@ export function SidebarFooter({ className, ...props }: React.ComponentProps<"div
       className={cn("flex flex-col gap-2 p-2", className)}
       {...props}
     />
-  )
+  );
 }

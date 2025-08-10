@@ -4,7 +4,12 @@
 import React, { ComponentType, HTMLAttributes } from "react";
 import { Icon as IconifyIcon } from "@iconify/react";
 import { lucideIcons } from "./lucideIcons";
-import { UITooltip, UITooltipContent, UITooltipProvider, UITooltipTrigger } from "@/components/atoms";
+import {
+  UITooltip,
+  UITooltipContent,
+  UITooltipProvider,
+  UITooltipTrigger,
+} from "@/components/atoms";
 import { AlertCircle } from "lucide-react";
 import { testId } from "@/utils/testId/testId";
 
@@ -91,7 +96,6 @@ export const Icon = ({
     const LucideIcon =
       lucideIcons[normalizedName as keyof typeof lucideIcons] ||
       lucideIcons[name as keyof typeof lucideIcons];
-
 
     if (LucideIcon) {
       return (

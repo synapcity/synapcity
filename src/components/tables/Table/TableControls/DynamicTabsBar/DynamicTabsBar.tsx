@@ -21,7 +21,7 @@ export function DynamicTabsBar({
   return (
     <div className="flex flex-1 items-center gap-2 max-w-full">
       <TabsList className="gap-1 overflow-x-auto w-full no-scrollbar min-w-0">
-        {tabs.map(tab => {
+        {tabs.map((tab) => {
           const isActive = tab.value === value;
           return (
             <div
@@ -48,16 +48,10 @@ export function DynamicTabsBar({
           );
         })}
       </TabsList>
-      <IconButton
-        icon="plus"
-        size="sm"
-        onClick={onAdd}
-        aria-label="Add tab"
-      />
+      <IconButton icon="plus" size="sm" onClick={onAdd} aria-label="Add tab" />
     </div>
   );
 }
-
 
 export interface DynamicTabsWrapperProps {
   value: string;
@@ -66,10 +60,19 @@ export interface DynamicTabsWrapperProps {
   children: React.ReactNode;
 }
 
-export const DynamicTabsWrapper = ({ value, onChange, className, children }: DynamicTabsWrapperProps) => {
+export const DynamicTabsWrapper = ({
+  value,
+  onChange,
+  className,
+  children,
+}: DynamicTabsWrapperProps) => {
   return (
-    <Tabs value={value} onValueChange={onChange} className={cn("w-full flex flex-col flex-1", className)}>
+    <Tabs
+      value={value}
+      onValueChange={onChange}
+      className={cn("w-full flex flex-col flex-1", className)}
+    >
       {children}
     </Tabs>
-  )
-}
+  );
+};

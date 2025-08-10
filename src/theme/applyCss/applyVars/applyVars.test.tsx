@@ -1,4 +1,3 @@
-
 import { applyVars } from "@/theme/applyCss/applyVars";
 
 describe("applyVars", () => {
@@ -22,5 +21,4 @@ describe("applyVars", () => {
 
     expect(() => applyVars(vars, null as unknown as HTMLElement)).not.toThrow();
   });
-
 });

@@ -1,10 +1,24 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-'use client';
+"use client";
 
 import { IconButton } from "@/components";
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator } from "@/components/atoms/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+} from "@/components/atoms/ui/dropdown-menu";
 
-export default function RowActionsCell({ row, onDelete, onUpdate }: { row: any; onDelete: (id: string) => void; onUpdate: (id: string, updates: Record<string, any>) => void; }) {
+export default function RowActionsCell({
+  row,
+  onDelete,
+  onUpdate,
+}: {
+  row: any;
+  onDelete: (id: string) => void;
+  onUpdate: (id: string, updates: Record<string, any>) => void;
+}) {
   return (
     <div className="flex gap-1">
       <DropdownMenu>

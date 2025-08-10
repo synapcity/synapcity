@@ -1,13 +1,12 @@
 {
   "editor.defaultFormatter": "exceptionptr.vscode-prettier-eslint",
-  "editor.formatOnType": false, 
-  "editor.formatOnPaste": true, 
-  "editor.formatOnSave": true, 
-  "editor.formatOnSaveMode": "file", 
+  "editor.formatOnType": false,
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "editor.formatOnSaveMode": "file",
   "files.autoSave": "onFocusChange",
   "editor.tokenColorCustomizations": {
     "comments": "",
     "textMateRules": []
-  },
-  
+  }
 }

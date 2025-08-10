@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import React from 'react';
-import type { Format } from '@/types/export';
-import { Select } from '@/components';
+import React from "react";
+import type { Format } from "@/types/export";
+import { Select } from "@/components";
 
 interface FormatPickerProps {
   /** Currently selected format */
@@ -18,18 +18,13 @@ interface FormatPickerProps {
 /**
  * A simple <select> dropdown for choosing export formats.
  */
-export function FormatPicker({
-  value,
-  formats,
-  disabled = false,
-  onChange,
-}: FormatPickerProps) {
+export function FormatPicker({ value, formats, disabled = false, onChange }: FormatPickerProps) {
   const options = formats.map((fmt) => {
     return {
       value: fmt,
-      label: fmt.toUpperCase()
-    }
-  })
+      label: fmt.toUpperCase(),
+    };
+  });
   return (
     <Select
       value={value}
@@ -40,9 +35,6 @@ export function FormatPicker({
     />
   );
 }
-
-
-
 
 // "use client"
 // import React from 'react';

@@ -50,7 +50,6 @@ export function SidebarModal({
     el.focus();
   }, [open]);
 
-
   return (
     <AnimatePresence>
       {open && (
@@ -64,8 +63,7 @@ export function SidebarModal({
           className={`fixed top-0 right-0 h-full max-w-xs w-full z-50 shadow-2xl border-l bg-background outline-none
             ${className}
             `}
-          style={{
-          }}
+          style={{}}
           role="dialog"
           aria-modal="true"
         >

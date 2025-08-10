@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { WidgetSkeleton } from "@/components";
 import { useWidgetStore } from "@/stores";
@@ -60,17 +60,14 @@ export function WidgetRenderer({
       className="h-full w-full"
     />
   ) : (
-    loadingFallback ?? <WidgetSkeleton />
+    (loadingFallback ?? <WidgetSkeleton />)
   );
 
   const wrapped = contentWrapper ? contentWrapper(inner) : inner;
 
   return (
     <WidgetErrorBoundary widgetId={widgetId}>
-      <div
-        className={cn("relative h-full w-full", className)}
-        data-widget-type={def.id}
-      >
+      <div className={cn("relative h-full w-full", className)} data-widget-type={def.id}>
         {headerSlot && (
           <div className="absolute top-0 left-0 right-0 z-10 pointer-events-none">
             <div className="flex items-center justify-end gap-2 p-2 pointer-events-auto">
@@ -79,9 +76,7 @@ export function WidgetRenderer({
           </div>
         )}
 
-        <Suspense fallback={loadingFallback ?? <WidgetSkeleton />}>
-          {wrapped}
-        </Suspense>
+        <Suspense fallback={loadingFallback ?? <WidgetSkeleton />}>{wrapped}</Suspense>
       </div>
     </WidgetErrorBoundary>
   );
@@ -89,4 +84,4 @@ export function WidgetRenderer({
 
 export * from "./useWidgetComponent";
 export * from "./fallbacks";
-export * from "./useDevValidatePropsSetting"
+export * from "./useDevValidatePropsSetting";

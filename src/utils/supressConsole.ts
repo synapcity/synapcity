@@ -1,6 +1,6 @@
-export {}
+export {};
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === "production") {
   const noop = () => {};
   console.log = noop;
   console.info = noop;

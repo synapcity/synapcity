@@ -23,31 +23,31 @@
 // }
 
 export type SidebarScope =
-| "global"
-	| "note"
-	| "dashboard"
-	| "resource"
-	| "annotation"
-	| "connection";
+  | "global"
+  | "note"
+  | "dashboard"
+  | "resource"
+  | "annotation"
+  | "connection";
 export type SidebarPanel = {
-	id: string;
-	label: string;
-	icon?: string;
-	tooltip?: string;
-	component: React.ComponentType<any>;
-	order?: number;
-	props?: Record<string, unknown>;
-	href?: string;
-	external?: boolean;
-	onClick?: () => void;
-	defaultPinned?: boolean;
-	defaultHidden?: boolean;
-	__dynamic?: boolean;
+  id: string;
+  label: string;
+  icon?: string;
+  tooltip?: string;
+  component: React.ComponentType<any>;
+  order?: number;
+  props?: Record<string, unknown>;
+  href?: string;
+  external?: boolean;
+  onClick?: () => void;
+  defaultPinned?: boolean;
+  defaultHidden?: boolean;
+  __dynamic?: boolean;
 };
 
 export interface SidebarPrefs {
-	activePanel: string | null;
-	pinned: string[];
-	hidden: string[];
-	panels: SidebarPanel[];
+  activePanel: string | null;
+  pinned: string[];
+  hidden: string[];
+  panels: SidebarPanel[];
 }

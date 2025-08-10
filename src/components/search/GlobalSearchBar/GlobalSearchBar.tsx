@@ -11,7 +11,6 @@ import {
 } from "@/components/atoms/ui/command";
 import { SearchItem } from "@/theme/types/search";
 
-
 type GlobalSearchBarProps = {
   items: SearchItem[];
   placeholder?: string;
@@ -41,11 +40,7 @@ export function GlobalSearchBar({ items, placeholder = "Search..." }: GlobalSear
   return (
     <div className="relative w-full max-w-xl">
       <Command className="border rounded-md shadow-sm bg-background">
-        <CommandInput
-          placeholder={placeholder}
-          value={query}
-          onValueChange={setQuery}
-        />
+        <CommandInput placeholder={placeholder} value={query} onValueChange={setQuery} />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
 

@@ -11,12 +11,12 @@ import { IconButton } from "@/components/atoms";
 import { useState } from "react";
 
 export default function InfoPanel() {
-  const { id } = useMetadata()
-  const dashboard = useDashboardStore(useShallow(s => s.items[id!]))
-  const update = useDashboardStore(s => s.updateResource)
-  const startStatus = useDashboardStore(s => s.startStatus)
-  const finishStatus = useDashboardStore(s => s.finishStatus)
-  const [edit, setEdit] = useState(false)
+  const { id } = useMetadata();
+  const dashboard = useDashboardStore(useShallow((s) => s.items[id!]));
+  const update = useDashboardStore((s) => s.updateResource);
+  const startStatus = useDashboardStore((s) => s.startStatus);
+  const finishStatus = useDashboardStore((s) => s.finishStatus);
+  const [edit, setEdit] = useState(false);
 
   if (!dashboard) return <Skeleton className="p-6" />;
 
@@ -29,15 +29,17 @@ export default function InfoPanel() {
         <div className="flex justify-between items-center">
           <section className="flex flex-col justify-between space-y-4">
             <div className="flex flex-col space-y-4">
-              <h2 className="text-xs uppercase tracking-wide text-[var(--muted-foreground) mb-1">Title</h2>
+              <h2 className="text-xs uppercase tracking-wide text-[var(--muted-foreground) mb-1">
+                Title
+              </h2>
               <EditableText
                 value={dashboard.name}
                 onEdit={() => {
-                  startStatus("editing", dashboard.id)
+                  startStatus("editing", dashboard.id);
                 }}
                 onSave={(newName: string) => {
-                  update(dashboard.id, { name: newName })
-                  finishStatus("editing", dashboard.id)
+                  update(dashboard.id, { name: newName });
+                  finishStatus("editing", dashboard.id);
                 }}
                 as="h4"
               />
@@ -46,38 +48,34 @@ export default function InfoPanel() {
               <h2 className="text-xs uppercase tracking-wide text-(--muted-foreground) mb-1">
                 Description
               </h2>
-              {(dashboard.description || edit) ? (
+              {dashboard.description || edit ? (
                 <EditableText
                   value={dashboard.description}
                   onEdit={() => {
-                    startStatus("editing", dashboard.id)
+                    startStatus("editing", dashboard.id);
                   }}
                   onSave={(newDescription: string) => {
-                    update(dashboard.id, { description: newDescription })
-                    finishStatus("editing", dashboard.id)
+                    update(dashboard.id, { description: newDescription });
+                    finishStatus("editing", dashboard.id);
                   }}
                   as="p"
                   onBlur={() => {
-                    setEdit(false)
-                    finishStatus("editing", dashboard.id)
+                    setEdit(false);
+                    finishStatus("editing", dashboard.id);
                   }}
                 />
               ) : (
-                <IconButton
-                  icon="plus"
-                  onClick={() => setEdit(true)}
-                />
+                <IconButton icon="plus" onClick={() => setEdit(true)} />
               )}
             </div>
           </section>
 
-          <Separator
-            orientation="vertical"
-            className="mr-2 data-[orientation=vertical]:h-4"
-          />
+          <Separator orientation="vertical" className="mr-2 data-[orientation=vertical]:h-4" />
         </div>
         <section>
-          <h2 className="text-xs uppercase tracking-wide text-[var(--muted-foreground)] mb-1">Timestamps</h2>
+          <h2 className="text-xs uppercase tracking-wide text-[var(--muted-foreground)] mb-1">
+            Timestamps
+          </h2>
           <div className="flex flex-col gap-1">
             <div>
               <span className="font-medium text-[var(--foreground)]">Created: </span>
@@ -91,9 +89,10 @@ export default function InfoPanel() {
         </section>
       </div>
 
-
       <section>
-        <h2 className="text-xs uppercase tracking-wide text-[var(--muted-foreground)] mb-1">Dashboard ID</h2>
+        <h2 className="text-xs uppercase tracking-wide text-[var(--muted-foreground)] mb-1">
+          Dashboard ID
+        </h2>
         <p className="text-xs font-mono text-[var(--muted)] break-all">{dashboard.id}</p>
       </section>
     </div>

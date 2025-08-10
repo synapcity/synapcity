@@ -21,7 +21,7 @@ export const Typography = ({
   ...props
 }: TypographyProps) => {
   const isHeading = variant in headingVariants;
-  const Tag = as || (isHeading ? variant : "p") as ElementType;
+  const Tag = as || ((isHeading ? variant : "p") as ElementType);
 
   const styles = isHeading
     ? headingVariants[variant as HeadingVariant]

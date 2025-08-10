@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   DndContext,
   closestCenter,
@@ -8,25 +8,20 @@ import {
   useSensor,
   useSensors,
   DragOverlay,
-} from '@dnd-kit/core';
+} from "@dnd-kit/core";
 import {
   SortableContext,
   useSortable,
   verticalListSortingStrategy,
   arrayMove,
-} from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 // A sortable list item
 function SortableItem({ id, children }: { id: string; children: React.ReactNode }) {
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({ id });
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+    id,
+  });
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -51,18 +46,16 @@ function SortableItem({ id, children }: { id: string; children: React.ReactNode 
 export default function SortableTodoList() {
   const [tasks, setTasks] = useState<string[]>([]);
   const [activeId, setActiveId] = useState<string | null>(null);
-  const [newTask, setNewTask] = useState('');
+  const [newTask, setNewTask] = useState("");
 
   // Configure pointer sensor
-  const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 5 } })
-  );
+  const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
 
   const handleAdd = () => {
     const trimmed = newTask.trim();
     if (trimmed) {
       setTasks((prev) => [...prev, trimmed]);
-      setNewTask('');
+      setNewTask("");
     }
   };
 
@@ -74,14 +67,11 @@ export default function SortableTodoList() {
           type="text"
           value={newTask}
           onChange={(e) => setNewTask(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && handleAdd()}
+          onKeyDown={(e) => e.key === "Enter" && handleAdd()}
           placeholder="Add a task..."
           className="flex-1 p-2 border rounded-l"
         />
-        <button
-          onClick={handleAdd}
-          className="px-4 bg-blue-500 text-white rounded-r"
-        >
+        <button onClick={handleAdd} className="px-4 bg-blue-500 text-white rounded-r">
           Add
         </button>
       </div>
@@ -94,11 +84,7 @@ export default function SortableTodoList() {
           setActiveId(null);
           if (over && active.id !== over.id) {
             setTasks((items) =>
-              arrayMove(
-                items,
-                items.indexOf(active.id as string),
-                items.indexOf(over.id as string)
-              )
+              arrayMove(items, items.indexOf(active.id as string), items.indexOf(over.id as string))
             );
           }
         }}
@@ -113,11 +99,7 @@ export default function SortableTodoList() {
         </SortableContext>
 
         <DragOverlay dropAnimation={null}>
-          {activeId ? (
-            <div className="p-2 bg-white rounded shadow">
-              {activeId}
-            </div>
-          ) : null}
+          {activeId ? <div className="p-2 bg-white rounded shadow">{activeId}</div> : null}
         </DragOverlay>
       </DndContext>
     </div>

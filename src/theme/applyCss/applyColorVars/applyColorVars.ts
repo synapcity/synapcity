@@ -3,16 +3,16 @@ import { applyVars } from "../applyVars";
 import type { SemanticColor } from "@/theme/types";
 
 export function applyColorVars(
-	color: SemanticColor,
-	mode: "light" | "dark",
-	type: "primary" | "accent",
-	element: HTMLElement
+  color: SemanticColor,
+  mode: "light" | "dark",
+  type: "primary" | "accent",
+  element: HTMLElement
 ) {
-	const colorVars = generateColorVars(color, mode, type);
+  const colorVars = generateColorVars(color, mode, type);
 
-	const mergedVars = {
-		...colorVars,
-	};
+  const mergedVars = {
+    ...colorVars,
+  };
 
-	applyVars(mergedVars, element);
+  applyVars(mergedVars, element);
 }

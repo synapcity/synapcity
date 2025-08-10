@@ -1,34 +1,34 @@
-import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import { NoteEditorHeader, NoteEditorHeaderProps } from './NoteEditorHeader';
-import { DynamicTabsWrapper } from '../../tables/Table/TableControls/DynamicTabsBar/DynamicTabsBar';
-import { useState } from 'react';
-import { useNoteStore } from '@/stores/resources/noteStore';
+import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import { NoteEditorHeader, NoteEditorHeaderProps } from "./NoteEditorHeader";
+import { DynamicTabsWrapper } from "../../tables/Table/TableControls/DynamicTabsBar/DynamicTabsBar";
+import { useState } from "react";
+import { useNoteStore } from "@/stores/resources/noteStore";
 
 const meta: Meta<NoteEditorHeaderProps> = {
-  title: 'Components/NoteEditorHeader',
+  title: "Components/NoteEditorHeader",
   component: NoteEditorHeader,
   parameters: {
-    layout: 'fullscreen',
+    layout: "fullscreen",
   },
 };
 export default meta;
 type Story = StoryObj<NoteEditorHeaderProps>;
 
 const baseArgs: NoteEditorHeaderProps = {
-  noteId: 'note-123',
-  onTitleSave: (savedTitle) => console.log('Title saved', savedTitle),
+  noteId: "note-123",
+  onTitleSave: (savedTitle) => console.log("Title saved", savedTitle),
   tags: [
-    { label: 'Research', value: 'research', color: '#6366f1' },
-    { label: 'Todo', value: 'todo', color: '#f59e42' },
-    { label: 'Idea', value: 'idea', color: '#10b981' },
+    { label: "Research", value: "research", color: "#6366f1" },
+    { label: "Todo", value: "todo", color: "#f59e42" },
+    { label: "Idea", value: "idea", color: "#10b981" },
   ],
-  onTagClick: (val) => console.log('Tag clicked', val),
+  onTagClick: (val) => console.log("Tag clicked", val),
   onTagRemove: (val) => useNoteStore.getState().removeTag("note-123", val),
   createdAt: new Date(2025, 6, 15),
   updatedAt: new Date(2025, 6, 19),
   wordCount: 1207,
 };
-function withTabsList(status?: 'idle' | 'saving' | 'syncing' | 'error') {
+function withTabsList(status?: "idle" | "saving" | "syncing" | "error") {
   // eslint-disable-next-line react/display-name
   return (args: NoteEditorHeaderProps) => {
     const noteId = args.noteId || "note-123";
@@ -44,17 +44,16 @@ function withTabsList(status?: 'idle' | 'saving' | 'syncing' | 'error') {
       store.resetStatus(noteId);
     }
 
-    const [currentTab, setCurrentTab] = useState("edit")
+    const [currentTab, setCurrentTab] = useState("edit");
     return (
       <DynamicTabsWrapper value={currentTab} onChange={setCurrentTab}>
         <NoteEditorHeader {...args} />
       </DynamicTabsWrapper>
     );
-  }
+  };
 }
 
-withTabsList.displayName = "withTabsList"
-
+withTabsList.displayName = "withTabsList";
 
 export const Default: Story = {
   args: { ...baseArgs },
@@ -86,14 +85,12 @@ export const LongTitle: Story = {
     ...baseArgs,
   },
   render: () => {
-    const store = useNoteStore.getState()
-    store.updateTitle("note-123",
-      'This is an extremely long note title to test wrapping and overflow behavior in the header component which might break layouts')
-    return (
-      <>
-        {withTabsList()}
-      </>
-    )
+    const store = useNoteStore.getState();
+    store.updateTitle(
+      "note-123",
+      "This is an extremely long note title to test wrapping and overflow behavior in the header component which might break layouts"
+    );
+    return <>{withTabsList()}</>;
   },
 };
 

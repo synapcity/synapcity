@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useUserStore } from "@/stores";
 import { UserWeather } from "../../UserWeather/UserWeather";

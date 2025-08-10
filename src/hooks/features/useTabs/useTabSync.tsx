@@ -46,7 +46,6 @@
 //   const activeTabIdByEntity = useTabStore(s => s.selected)
 //   const activeTabId = activeTabIdByEntity[entityId ?? ""]
 
-
 //   const entityTabs = Object.values(items ?? {}).filter(
 //     (tab) => tab?.entity === scope && tab.entityId === entityId
 //   ) ?? {}

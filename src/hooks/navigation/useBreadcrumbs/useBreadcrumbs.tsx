@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import type { BreadcrumbItem } from "@/components/molecules/Breadcrumbs";
 import { useDashboardStore } from "@/stores/resources/dashboardStore/useDashboardStore";
@@ -20,7 +20,7 @@ export function useBreadcrumbs(segments: string[]): BreadcrumbItem[] {
         label: "Home",
         href: "/home",
         icon: <HomeIcon className="h-4 w-4" />,
-        iconOnly: true
+        iconOnly: true,
       });
       return;
     }

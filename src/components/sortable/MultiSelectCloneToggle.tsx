@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   DndContext,
   closestCenter,
@@ -11,14 +11,14 @@ import {
   useDroppable,
   Active,
   Over,
-} from '@dnd-kit/core';
+} from "@dnd-kit/core";
 import {
   SortableContext,
   useSortable,
   verticalListSortingStrategy,
   arrayMove,
-} from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 type Task = { id: string; text: string };
 
@@ -39,12 +39,10 @@ export default function MultiSelectTodoList() {
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
   // New task input & clone/move toggle
-  const [newTaskText, setNewTaskText] = useState('');
+  const [newTaskText, setNewTaskText] = useState("");
   const [cloneMode, setCloneMode] = useState(false);
 
-  const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 5 } })
-  );
+  const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
 
   // Find which container a task belongs to
   const findContainer = (id: string) => {
@@ -58,9 +56,8 @@ export default function MultiSelectTodoList() {
     if (!text) return;
     const newTask: Task = { id: Date.now().toString(), text };
     setLists((prev) => ({ ...prev, todo: [...prev.todo, newTask] }));
-    setNewTaskText('');
+    setNewTaskText("");
   };
-
 
   const handleDragStart = ({ active }: { active: Active }) => {
     const id = active.id as string;
@@ -138,8 +135,14 @@ export default function MultiSelectTodoList() {
 
   // Inner component: sortable item with selection
   function SortableItem({ id, children }: { id: string; children: React.ReactNode }) {
-    const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id });
-    const style = { transform: CSS.Transform.toString(transform), transition, opacity: isDragging ? 0.5 : 1 };
+    const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+      id,
+    });
+    const style = {
+      transform: CSS.Transform.toString(transform),
+      transition,
+      opacity: isDragging ? 0.5 : 1,
+    };
     const isSelected = selectedIds.includes(id);
 
     return (
@@ -156,7 +159,7 @@ export default function MultiSelectTodoList() {
             );
           }
         }}
-        className={`${isSelected ? 'ring-2 ring-blue-500' : ''} p-2 mb-2 bg-white rounded shadow cursor-move`}
+        className={`${isSelected ? "ring-2 ring-blue-500" : ""} p-2 mb-2 bg-white rounded shadow cursor-move`}
       >
         {children}
       </div>
@@ -171,7 +174,7 @@ export default function MultiSelectTodoList() {
           type="text"
           value={newTaskText}
           onChange={(e) => setNewTaskText(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && handleAdd()}
+          onKeyDown={(e) => e.key === "Enter" && handleAdd()}
           placeholder="Enter a new task"
           className="flex-1 p-2 border rounded-l"
         />
@@ -179,11 +182,7 @@ export default function MultiSelectTodoList() {
           Add
         </button>
         <label className="inline-flex items-center gap-2">
-          <input
-            type="checkbox"
-            checked={cloneMode}
-            onChange={() => setCloneMode((v) => !v)}
-          />
+          <input type="checkbox" checked={cloneMode} onChange={() => setCloneMode((v) => !v)} />
           Clone Mode
         </label>
       </div>
@@ -200,9 +199,14 @@ export default function MultiSelectTodoList() {
           {Object.keys(lists).map((containerId) => (
             <DroppableList key={containerId} id={containerId}>
               <h3 className="font-semibold mb-2 capitalize text-lg">{containerId}</h3>
-              <SortableContext items={lists[containerId].map((t) => t.id)} strategy={verticalListSortingStrategy}>
+              <SortableContext
+                items={lists[containerId].map((t) => t.id)}
+                strategy={verticalListSortingStrategy}
+              >
                 {lists[containerId].map((task) => (
-                  <SortableItem key={task.id} id={task.id}>{task.text}</SortableItem>
+                  <SortableItem key={task.id} id={task.id}>
+                    {task.text}
+                  </SortableItem>
                 ))}
               </SortableContext>
             </DroppableList>

@@ -47,7 +47,14 @@ export const Iconify: Story = {
 };
 
 const CustomIcon = (props: any) => (
-  <svg data-testid="custom-icon" {...props} width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+  <svg
+    data-testid="custom-icon"
+    {...props}
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+  >
     <circle cx="12" cy="12" r="10" />
   </svg>
 );
@@ -109,7 +116,12 @@ export const AllSizesLucide: Story = {
     <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
       {["xs", "sm", "md", "lg", "xl"].map((size) => (
         <div key={size} style={{ textAlign: "center" }}>
-          <Icon name="star" size={size as IconProps["size"]} source="lucide" label={`Star ${size}`} />
+          <Icon
+            name="star"
+            size={size as IconProps["size"]}
+            source="lucide"
+            label={`Star ${size}`}
+          />
           <div style={{ fontSize: 12 }}>{size}</div>
         </div>
       ))}
@@ -123,7 +135,12 @@ export const AllSizesIconify: Story = {
     <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
       {["xs", "sm", "md", "lg", "xl"].map((size) => (
         <div key={size} style={{ textAlign: "center" }}>
-          <Icon name="mdi:star" size={size as IconProps["size"]} source="iconify" label={`Star ${size}`} />
+          <Icon
+            name="mdi:star"
+            size={size as IconProps["size"]}
+            source="iconify"
+            label={`Star ${size}`}
+          />
           <div style={{ fontSize: 12 }}>{size}</div>
         </div>
       ))}

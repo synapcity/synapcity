@@ -6,11 +6,9 @@ import { MinimalMeta } from "../../../molecules/cards/meta/MinimalMeta";
 import { StackedMeta } from "../../../molecules/cards/meta/StackedMeta";
 import { ProgressiveMeta } from "../../../molecules/cards/meta/ProgressiveMeta";
 
-
 const now = new Date();
 const fourHoursAgo = new Date(now.getTime() - 4 * 60 * 60 * 1000).toISOString();
 const createdAtSample = new Date(now.getTime() - 24 * 60 * 60 * 1000).toISOString();
-
 
 interface CardProps {
   title: string;
@@ -20,19 +18,9 @@ interface CardProps {
   variant: "minimal" | "stacked" | "progressive";
 }
 
-const Card: React.FC<CardProps> = ({
-  title,
-  excerpt,
-  createdAt,
-  updatedAt,
-  variant,
-}) => {
+const Card: React.FC<CardProps> = ({ title, excerpt, createdAt, updatedAt, variant }) => {
   const MetaComponent =
-    variant === "minimal"
-      ? MinimalMeta
-      : variant === "stacked"
-        ? StackedMeta
-        : ProgressiveMeta;
+    variant === "minimal" ? MinimalMeta : variant === "stacked" ? StackedMeta : ProgressiveMeta;
 
   return (
     <div

@@ -25,7 +25,7 @@ export type LayoutItem = {
 // Layout is an array of items
 export type Layout = ReadonlyArray<LayoutItem>;
 
-export type Layouts = Record<BreakpointType, Layout>
+export type Layouts = Record<BreakpointType, Layout>;
 // Positioning
 export type Position = {
   left: number;

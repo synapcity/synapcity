@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import React, { JSX, Suspense } from 'react';
-import { Skeleton } from '@/components/atoms/ui/skeleton';
-import { usePanels } from '@/hooks/sidebar/usePanels';
-import { SidebarScope } from '@/stores/ui/sidebarStore';
-import { useSidebar } from '@/components/atoms/ui/sidebar';
-import { useNoteStore } from '@/stores';
+import React, { JSX, Suspense } from "react";
+import { Skeleton } from "@/components/atoms/ui/skeleton";
+import { usePanels } from "@/hooks/sidebar/usePanels";
+import { SidebarScope } from "@/stores/ui/sidebarStore";
+import { useSidebar } from "@/components/atoms/ui/sidebar";
+import { useNoteStore } from "@/stores";
 
 interface SidebarRendererProps {
   scope: SidebarScope;
@@ -16,7 +16,7 @@ export function SidebarRenderer({ scope, id }: SidebarRendererProps): JSX.Elemen
   const { sidebarState } = useSidebar();
 
   const isExpanded = sidebarState === "expanded";
-  const { activePanel } = usePanels(scope, id)
+  const { activePanel } = usePanels(scope, id);
 
   const isHydrated = useNoteStore((s) => s.hasHydrated);
 

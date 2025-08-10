@@ -1,4 +1,4 @@
-import { UISkeleton } from "@/components/atoms"
+import { UISkeleton } from "@/components/atoms";
 
 export function TransitionButtonSkeleton() {
   return (
@@ -6,5 +6,5 @@ export function TransitionButtonSkeleton() {
       <UISkeleton as="span" className="h-5 w-5 rounded-full" />
       <UISkeleton as="span" className="h-4 w-20 rounded-md" />
     </div>
-  )
+  );
 }

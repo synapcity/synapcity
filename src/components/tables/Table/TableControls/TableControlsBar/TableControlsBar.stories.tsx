@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client"
+"use client";
 
-import React, { useEffect, useState, forwardRef } from 'react';
-import { Meta, StoryObj } from '@storybook/nextjs-vite';
-import TableControlsBar from './TableControlsBar';
+import React, { useEffect, useState, forwardRef } from "react";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
+import TableControlsBar from "./TableControlsBar";
 import {
   createColumnHelper,
   getCoreRowModel,
@@ -11,9 +11,8 @@ import {
   getPaginationRowModel,
   useReactTable,
   Table,
-} from '@tanstack/react-table';
-import { TabOption } from '../DynamicTabsBar';
-
+} from "@tanstack/react-table";
+import { TabOption } from "../DynamicTabsBar";
 
 type Person = {
   firstName: string;
@@ -22,17 +21,17 @@ type Person = {
 };
 
 const sampleData: Person[] = [
-  { firstName: 'Alice', lastName: 'Johnson', age: 30 },
-  { firstName: 'Bob', lastName: 'Smith', age: 45 },
-  { firstName: 'Carol', lastName: 'Williams', age: 27 },
-  { firstName: 'Dave', lastName: 'Brown', age: 52 },
+  { firstName: "Alice", lastName: "Johnson", age: 30 },
+  { firstName: "Bob", lastName: "Smith", age: 45 },
+  { firstName: "Carol", lastName: "Williams", age: 27 },
+  { firstName: "Dave", lastName: "Brown", age: 52 },
 ];
 
 const columnHelper = createColumnHelper<Person>();
 const columns = [
-  columnHelper.accessor('firstName', { header: 'First Name' }),
-  columnHelper.accessor('lastName', { header: 'Last Name' }),
-  columnHelper.accessor('age', { header: 'Age' }),
+  columnHelper.accessor("firstName", { header: "First Name" }),
+  columnHelper.accessor("lastName", { header: "Last Name" }),
+  columnHelper.accessor("age", { header: "Age" }),
 ];
 
 interface TableControlsWrapperProps {
@@ -41,8 +40,8 @@ interface TableControlsWrapperProps {
 }
 
 const TableControlsWrapper = forwardRef<any, TableControlsWrapperProps>(
-  ({ initialSelection = {}, onBulkDelete = () => { } }, ref) => {
-    const [globalFilter, setGlobalFilter] = useState('');
+  ({ initialSelection = {}, onBulkDelete = () => {} }, ref) => {
+    const [globalFilter, setGlobalFilter] = useState("");
     const [rowSelection, setRowSelection] = useState<Record<number, boolean>>(initialSelection);
     const table = useReactTable<Person>({
       data: sampleData,
@@ -57,7 +56,7 @@ const TableControlsWrapper = forwardRef<any, TableControlsWrapperProps>(
     });
 
     useEffect(() => {
-      if (ref && typeof ref === 'object' && 'current' in ref) {
+      if (ref && typeof ref === "object" && "current" in ref) {
         (ref as any).current = { setGlobalFilter };
       }
     }, [ref]);
@@ -68,17 +67,22 @@ const TableControlsWrapper = forwardRef<any, TableControlsWrapperProps>(
       { label: "Archived", value: "archived" },
     ];
     return (
-      <TableControlsBar table={table as Table<any>} data={sampleData} onBulkDelete={onBulkDelete} tabs={tabs} />
+      <TableControlsBar
+        table={table as Table<any>}
+        data={sampleData}
+        onBulkDelete={onBulkDelete}
+        tabs={tabs}
+      />
     );
   }
 );
 
-TableControlsWrapper.displayName = "TableControlsWrapper"
+TableControlsWrapper.displayName = "TableControlsWrapper";
 
 const meta: Meta<typeof TableControlsBar> = {
-  title: 'Table/TableControlsBar',
+  title: "Table/TableControlsBar",
   component: TableControlsBar,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
 };
 
 export default meta;
@@ -98,7 +102,7 @@ export const ProgrammaticGlobalSearch: Story = {
     const ref = React.useRef<{ setGlobalFilter: (filter: string) => void }>(null);
     React.useEffect(() => {
       setTimeout(() => {
-        ref.current?.setGlobalFilter('Bob');
+        ref.current?.setGlobalFilter("Bob");
       }, 500);
     }, []);
     return <TableControlsWrapper ref={ref} />;
@@ -109,7 +113,7 @@ export const ColumnVisibilityToggling: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Demonstrates toggling column visibility via the ColumnVisibilityMenu.',
+        story: "Demonstrates toggling column visibility via the ColumnVisibilityMenu.",
       },
     },
   },

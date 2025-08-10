@@ -15,19 +15,16 @@ import React from "react";
 import { render } from "@testing-library/react";
 import { SortableItem } from "./SortableItem";
 
-
 describe("SortableItem", () => {
   const mockItem = { id: "1", label: "Test Item" };
   beforeEach(() => {
     setDragging(false);
-  })
+  });
 
   it("calls renderItem with correct props", () => {
     const renderItem = jest.fn(() => <div>Item</div>);
 
-    render(
-      <SortableItem item={mockItem} renderItem={renderItem} />
-    );
+    render(<SortableItem item={mockItem} renderItem={renderItem} />);
 
     expect(renderItem).toHaveBeenCalledWith(
       mockItem,
@@ -67,9 +64,7 @@ describe("SortableItem", () => {
       return <div {...props}>Item</div>;
     };
 
-    const { container } = render(
-      <SortableItem item={mockItem} renderItem={renderItem} />
-    );
+    const { container } = render(<SortableItem item={mockItem} renderItem={renderItem} />);
 
     const item = container.firstChild as HTMLElement;
     expect(item.style.transform).toBe("translate3d(10px, 20px, 0)");
@@ -84,12 +79,10 @@ describe("SortableItem", () => {
       return <div {...props}>Item</div>;
     };
 
-    const { container } = render(
-      <SortableItem item={mockItem} renderItem={renderItem} />
-    );
+    const { container } = render(<SortableItem item={mockItem} renderItem={renderItem} />);
 
     const item = container.firstChild as HTMLElement;
     expect(item.style.transform).toBe("translate3d(10px, 20px, 0)");
     expect(item.style.opacity).toBe("0.5");
   });
-})
+});

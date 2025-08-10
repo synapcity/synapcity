@@ -28,9 +28,7 @@ export function DateRangePicker({ from, to, onChange }: DateRangePickerProps) {
   }, []);
 
   const hasRange = !!from || !!to;
-  const displayLabel = from || to
-    ? `${from ?? "…"} — ${to ?? "…"}`
-    : "Select date range";
+  const displayLabel = from || to ? `${from ?? "…"} — ${to ?? "…"}` : "Select date range";
 
   return (
     <div className="relative inline-block" ref={wrapperRef}>
@@ -89,11 +87,7 @@ export function DateRangePicker({ from, to, onChange }: DateRangePickerProps) {
             >
               Clear
             </button>
-            <button
-              type="button"
-              onClick={() => setOpen(false)}
-              className="text-xs font-medium"
-            >
+            <button type="button" onClick={() => setOpen(false)} className="text-xs font-medium">
               Done
             </button>
           </div>

@@ -12,18 +12,13 @@ export const Hero = () => {
         justify: "between",
         align: "start",
         gap: "8",
-        padding: "0"
+        padding: "0",
       }}
       className="section-container"
       left
     >
       <BuiltWith className="absolute top-0" />
-      <SectionHeading
-        size="xl"
-        display
-        motion={fadeInUp}
-        left
-      >
+      <SectionHeading size="xl" display motion={fadeInUp} left>
         Your Ideas. Your Space. Effortlessly Organized.
       </SectionHeading>
       <SectionHeading
@@ -32,12 +27,8 @@ export const Hero = () => {
         className="flex flex-col items-start gap-6 font-normal mt-0 mb-16"
         left
       >
-        <span>
-          Synapcity is a customizable dashboard where you control what matters most.
-        </span>
-        <span>
-          Build your perfect digital workspace -- no clutter, no limits.
-        </span>
+        <span>Synapcity is a customizable dashboard where you control what matters most.</span>
+        <span>Build your perfect digital workspace -- no clutter, no limits.</span>
       </SectionHeading>
 
       <HStack justify={"center"} gap={"8"} center>

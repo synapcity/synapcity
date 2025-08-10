@@ -65,9 +65,7 @@ export function ResizableSidebarWrapper({
           </div>
 
           {/* Main content area can scroll independently if it needs to */}
-          <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden">
-            {children}
-          </div>
+          <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden">{children}</div>
         </ResizablePanel>
 
         {sidebarState === "expanded" && (
@@ -92,9 +90,7 @@ export function ResizableSidebarWrapper({
         >
           {/* Fixed header (non-scrolling) */}
           <div className="shrink-0 flex items-center justify-between px-3 py-2 border-b bg-(--accent-background) text-(--accent-foreground)">
-            <h2 className="text-sm font-medium text-(--accent-foreground)">
-              {activePanel?.label}
-            </h2>
+            <h2 className="text-sm font-medium text-(--accent-foreground)">{activePanel?.label}</h2>
             <button onClick={toggleSidebar} className="p-1 rounded hover:bg-gray-600/30">
               <PanelRightClose size={16} />
             </button>

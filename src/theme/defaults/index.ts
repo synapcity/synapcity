@@ -6,12 +6,12 @@ const LANGUAGE = "en";
 const MODE = "dark";
 
 const THEME: ThemePreferences = {
-	language: LANGUAGE,
-	mode: MODE,
-	primary: defaultPrimary,
-	accent: defaultAccent,
-	...defaultFontValues,
-	inheritsFromGlobalTheme: true,
+  language: LANGUAGE,
+  mode: MODE,
+  primary: defaultPrimary,
+  accent: defaultAccent,
+  ...defaultFontValues,
+  inheritsFromGlobalTheme: true,
 };
 
 export const DEFAULT = { LANGUAGE, MODE, THEME };

@@ -2,12 +2,9 @@
 
 import { useEffect } from "react";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import {
-  $getRoot,
-  $createParagraphNode,
-} from "lexical";
+import { $getRoot, $createParagraphNode } from "lexical";
 import { PlanNode } from "@/lexical/nodes/DailyPlanNode";
-import { isToday } from "date-fns"
+import { isToday } from "date-fns";
 export function DailyPlanPlugin() {
   const [editor] = useLexicalComposerContext();
 
@@ -22,7 +19,7 @@ export function DailyPlanPlugin() {
         return;
       }
 
-      const data = new Date().toISOString()
+      const data = new Date().toISOString();
       // 2) Create the new PlanNode
       const planNode = new PlanNode(data);
 
@@ -38,7 +35,6 @@ export function DailyPlanPlugin() {
       planNode.insertAfter(para);
     });
   }, [editor]);
-
 
   return null;
 }

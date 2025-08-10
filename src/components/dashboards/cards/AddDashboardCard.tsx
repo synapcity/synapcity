@@ -20,8 +20,7 @@ export const AddDashboardCard = () => {
         }}
         getSuccessPath={() => "#"}
         ariaLabel="Create new dashboard"
-        onFinish={() => {
-        }}
+        onFinish={() => {}}
       />
       {openModal && <CreateDashboardModal open={openModal} setOpen={setOpenModal} />}
     </>

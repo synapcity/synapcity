@@ -39,9 +39,7 @@ export function CreateModalShell({
 }: CreateModalShellProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        {trigger}
-      </DialogTrigger>
+      <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -50,16 +48,14 @@ export function CreateModalShell({
           transition={{ duration: 0.3 }}
         >
           <DialogTitle>{title}</DialogTitle>
-          {description && (
-            <DialogDescription className="mb-4">
-              {description}
-            </DialogDescription>
-          )}
+          {description && <DialogDescription className="mb-4">{description}</DialogDescription>}
           <form onSubmit={onSubmit} className="flex flex-col gap-4">
             {children}
             <div className="flex justify-end gap-2">
               <DialogClose asChild>
-                <Button variant="ghost" type="button">{cancelLabel}</Button>
+                <Button variant="ghost" type="button">
+                  {cancelLabel}
+                </Button>
               </DialogClose>
               <Button type="submit" disabled={!canSubmit}>
                 {submitLabel}

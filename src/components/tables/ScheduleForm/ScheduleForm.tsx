@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { useForm, Controller } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import { z } from 'zod';
-import { useScheduleStore } from '@/stores/scheduleStore';
-import { Input, Button, Label, Select } from '@/components';
-import { Checkbox } from '@/components/atoms/ui/checkbox';
+import React from "react";
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { z } from "zod";
+import { useScheduleStore } from "@/stores/scheduleStore";
+import { Input, Button, Label, Select } from "@/components";
+import { Checkbox } from "@/components/atoms/ui/checkbox";
 
 const schema = z.object({
   title: z.string().min(1),
@@ -17,11 +17,15 @@ const schema = z.object({
   allDay: z.boolean().optional(),
   start: z.date().optional(),
   end: z.date().optional(),
-  status: z.enum(['Scheduled', 'In Progress', 'Done', 'Cancelled']),
-  linkedResources: z.array(z.object({
-    type: z.enum(['note', 'dashboard', 'widget']),
-    resourceId: z.string(),
-  })).optional(),
+  status: z.enum(["Scheduled", "In Progress", "Done", "Cancelled"]),
+  linkedResources: z
+    .array(
+      z.object({
+        type: z.enum(["note", "dashboard", "widget"]),
+        resourceId: z.string(),
+      })
+    )
+    .optional(),
   trackingEnabled: z.boolean().optional(),
   trackingCategory: z.string().optional(),
 });
@@ -31,10 +35,10 @@ export default function ScheduleForm({ onClose }: { onClose: () => void }) {
   type ScheduleFormValues = z.infer<typeof schema>;
   const { register, handleSubmit, control, watch } = useForm<ScheduleFormValues>({
     resolver: zodResolver(schema),
-    defaultValues: { allDay: true, status: 'Scheduled' },
+    defaultValues: { allDay: true, status: "Scheduled" },
   });
 
-  const allDay = watch('allDay');
+  const allDay = watch("allDay");
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSubmit = (data: any) => {
@@ -43,7 +47,9 @@ export default function ScheduleForm({ onClose }: { onClose: () => void }) {
       date: data.date.toISOString(),
       start: data.start?.toISOString(),
       end: data.end?.toISOString(),
-      tracking: data.trackingEnabled ? { enabled: true, category: data.trackingCategory } : undefined,
+      tracking: data.trackingEnabled
+        ? { enabled: true, category: data.trackingCategory }
+        : undefined,
     });
     onClose();
   };
@@ -51,7 +57,7 @@ export default function ScheduleForm({ onClose }: { onClose: () => void }) {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <Label>Title *</Label>
-      <Input {...register('title')} required />
+      <Input {...register("title")} required />
 
       <Label>Date *</Label>
       <Controller
@@ -63,7 +69,7 @@ export default function ScheduleForm({ onClose }: { onClose: () => void }) {
       />
 
       <Label>All-Day</Label>
-      <Checkbox {...register('allDay')} />
+      <Checkbox {...register("allDay")} />
 
       {!allDay && (
         <>
@@ -72,7 +78,16 @@ export default function ScheduleForm({ onClose }: { onClose: () => void }) {
             control={control}
             name="start"
             render={({ field }) => (
-              <DatePicker selected={field.value} onChange={field.onChange} showTimeSelect showTimeSelectOnly timeIntervals={15} timeCaption="Start" dateFormat="h:mm aa" className="input" />
+              <DatePicker
+                selected={field.value}
+                onChange={field.onChange}
+                showTimeSelect
+                showTimeSelectOnly
+                timeIntervals={15}
+                timeCaption="Start"
+                dateFormat="h:mm aa"
+                className="input"
+              />
             )}
           />
 
@@ -81,41 +96,37 @@ export default function ScheduleForm({ onClose }: { onClose: () => void }) {
             control={control}
             name="end"
             render={({ field }) => (
-              <DatePicker selected={field.value} onChange={field.onChange} showTimeSelect showTimeSelectOnly timeIntervals={15} timeCaption="End" dateFormat="h:mm aa" className="input" />
+              <DatePicker
+                selected={field.value}
+                onChange={field.onChange}
+                showTimeSelect
+                showTimeSelectOnly
+                timeIntervals={15}
+                timeCaption="End"
+                dateFormat="h:mm aa"
+                className="input"
+              />
             )}
           />
         </>
       )}
 
       <Label>Status</Label>
-      <Select {...register('status')}>
+      <Select {...register("status")}>
         <option>Scheduled</option>
         <option>In Progress</option>
         <option>Done</option>
         <option>Cancelled</option>
       </Select>
       <Label>Enable Time Tracking</Label>
-      <Checkbox {...register('trackingEnabled')} />
+      <Checkbox {...register("trackingEnabled")} />
       <Label>Tracking Category</Label>
-      <Input {...register('trackingCategory')} placeholder="Reading, Exercise..." />
+      <Input {...register("trackingCategory")} placeholder="Reading, Exercise..." />
 
       <Button type="submit">Save Event</Button>
     </form>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // // 'use client';
 

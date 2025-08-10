@@ -14,8 +14,9 @@ interface InboxItem {
   createdAt: string;
 }
 
-const InboxIcon = dynamic(() => import("lucide-react").then((mod) => mod.InboxIcon), { ssr: false })
-
+const InboxIcon = dynamic(() => import("lucide-react").then((mod) => mod.InboxIcon), {
+  ssr: false,
+});
 
 export const CaptureInboxWidget = ({
   title = "Inbox",

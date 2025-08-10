@@ -1,6 +1,16 @@
-import Link from "next/link"
+import Link from "next/link";
 
-export const TextCard = ({ date, heading, subheading, description }: { date: string; heading: string; subheading: string; description: string; }) => {
+export const TextCard = ({
+  date,
+  heading,
+  subheading,
+  description,
+}: {
+  date: string;
+  heading: string;
+  subheading: string;
+  description: string;
+}) => {
   return (
     <Link
       href="#"
@@ -12,5 +22,5 @@ export const TextCard = ({ date, heading, subheading, description }: { date: str
       <span className="font-medium">{subheading}</span>
       <span className="line-clamp-2 w-[260px] whitespace-break-spaces text-xs">{description}</span>
     </Link>
-  )
-}
+  );
+};

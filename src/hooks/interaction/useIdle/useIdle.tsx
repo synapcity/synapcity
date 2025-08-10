@@ -1,6 +1,6 @@
 // hooks/useIdle.tsx
-'use client';
-import { useState, useEffect, useRef, RefObject, useCallback } from 'react';
+"use client";
+import { useState, useEffect, useRef, RefObject, useCallback } from "react";
 
 export interface UseIdleOptions {
   /** Milliseconds of inactivity before `isIdle === true` */
@@ -19,13 +19,14 @@ export interface UseIdleOptions {
  * Tracks activity on the given `ref` (or on window if no ref provided).
  * Returns `{ ref, isIdle }`.
  */
-export function useIdle(
-  options: UseIdleOptions = {}
-): { ref: RefObject<HTMLDivElement | null>; isIdle: boolean } {
+export function useIdle(options: UseIdleOptions = {}): {
+  ref: RefObject<HTMLDivElement | null>;
+  isIdle: boolean;
+} {
   const {
     delay = 10_000,
     disabled = false,
-    elementEvents = ['mousemove', 'mousedown', 'keydown', 'touchstart'],
+    elementEvents = ["mousemove", "mousedown", "keydown", "touchstart"],
     globalEvents = [],
     enabled = true,
   } = options;
@@ -39,14 +40,14 @@ export function useIdle(
     if (!disabled && enabled) {
       timeout.current = setTimeout(() => setIsIdle(true), delay);
     }
-  }, [delay, disabled, enabled])
+  }, [delay, disabled, enabled]);
 
   // activity handler
   const handleActivity = useCallback(() => {
     if (disabled || !enabled) return;
     if (isIdle) setIsIdle(false);
-    resetTimer()
-  }, [disabled, enabled, isIdle, resetTimer])
+    resetTimer();
+  }, [disabled, enabled, isIdle, resetTimer]);
 
   useEffect(() => {
     if (disabled || !enabled) return;
@@ -54,9 +55,7 @@ export function useIdle(
     const el = nodeRef.current;
     const targets = el ? [el] : [];
     // attach element events
-    targets.forEach((t) =>
-      elementEvents.forEach((ev) => t.addEventListener(ev, handleActivity))
-    );
+    targets.forEach((t) => elementEvents.forEach((ev) => t.addEventListener(ev, handleActivity)));
     // attach global events
     globalEvents.forEach((ev) => window.addEventListener(ev, handleActivity));
 

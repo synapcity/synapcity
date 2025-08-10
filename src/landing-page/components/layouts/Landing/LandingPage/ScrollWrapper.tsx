@@ -54,7 +54,11 @@ export const ScrollWrapper = ({ children }: ScrollWrapperProps) => {
 
   const elements = Children.toArray(children);
   if (elements.length > 0) {
-    elements[0] = <div key="hero" ref={heroRef}>{elements[0]}</div>;
+    elements[0] = (
+      <div key="hero" ref={heroRef}>
+        {elements[0]}
+      </div>
+    );
   }
 
   return (
@@ -64,7 +68,7 @@ export const ScrollWrapper = ({ children }: ScrollWrapperProps) => {
       dragScroll
       showProgressBar
       snap
-      onReachEnd={() => { }}
+      onReachEnd={() => {}}
       className="flex-col"
     >
       {elements}

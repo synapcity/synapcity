@@ -57,13 +57,7 @@ export function getInputIcon({
   }
 
   if (icon) {
-    return (
-      <Icon
-        icon={icon}
-        className={iconStyles}
-        aria-label={label || "input icon"}
-      />
-    );
+    return <Icon icon={icon} className={iconStyles} aria-label={label || "input icon"} />;
   }
 
   return null;

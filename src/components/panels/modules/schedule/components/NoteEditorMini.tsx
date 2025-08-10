@@ -52,12 +52,16 @@ export function NoteEditorMini({ noteId }: { noteId: string }) {
         placeholder="Jot notes here…"
       />
       <div className="flex gap-2 text-xs text-(--foreground)">
-        <button onClick={handleCopy} className="underline">Copy</button>
-        <button onClick={handleDownload} className="underline">Download</button>
-        <button onClick={handlePrint} className="underline">Print</button>
-        <span className="ml-auto">
-          Saved {new Date(note.updatedAt).toLocaleTimeString()}
-        </span>
+        <button onClick={handleCopy} className="underline">
+          Copy
+        </button>
+        <button onClick={handleDownload} className="underline">
+          Download
+        </button>
+        <button onClick={handlePrint} className="underline">
+          Print
+        </button>
+        <span className="ml-auto">Saved {new Date(note.updatedAt).toLocaleTimeString()}</span>
       </div>
     </div>
   );

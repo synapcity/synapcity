@@ -1,14 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import {
-  useLexicalComposerContext,
-} from "@lexical/react/LexicalComposerContext";
-import {
-  $createParagraphNode,
-  $getSelection,
-  $isRangeSelection,
-} from "lexical";
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+import { $createParagraphNode, $getSelection, $isRangeSelection } from "lexical";
 import { useCallback, useMemo, useState } from "react";
 import { $createHeadingNode, $createQuoteNode } from "@lexical/rich-text";
 import { MenuOption, LexicalTypeaheadMenuPlugin } from "@lexical/react/LexicalTypeaheadMenuPlugin";
@@ -32,7 +26,7 @@ export default function SlashCommandPlugin() {
   const [, setMenuOpen] = useState(false);
 
   const closeMenu = useCallback(() => {
-    setMenuOpen(false)
+    setMenuOpen(false);
   }, []);
 
   const options = useMemo(
@@ -45,7 +39,7 @@ export default function SlashCommandPlugin() {
             const paragraph = $createParagraphNode();
             paragraph.append(...parent.getChildren());
             parent.replace(paragraph);
-            paragraph.clear()
+            paragraph.clear();
             close();
           }
         });
@@ -58,8 +52,8 @@ export default function SlashCommandPlugin() {
             const h1 = $createHeadingNode("h1");
             h1.append(...parent.getChildren());
             parent.replace(h1);
-            h1.clear()
-            close()
+            h1.clear();
+            close();
           }
         });
       }),
@@ -71,7 +65,7 @@ export default function SlashCommandPlugin() {
             const h2 = $createHeadingNode("h2");
             h2.append(...parent.getChildren());
             parent.replace(h2);
-            h2.clear()
+            h2.clear();
             close();
           }
         });
@@ -84,7 +78,7 @@ export default function SlashCommandPlugin() {
             const quote = $createQuoteNode();
             quote.append(...parent.getChildren());
             parent.replace(quote);
-            quote.clear()
+            quote.clear();
             close();
           }
         });
@@ -95,32 +89,42 @@ export default function SlashCommandPlugin() {
 
   const checkForTriggerMatch = useCallback((text: string) => {
     const match = /(?:^|\s)\/(\w*)$/.exec(text);
-    return match ? {
-      leadOffset: match.index + match[0].indexOf("/"),
-      matchingString: match[1],
-      replaceableString: match[0],
-    } : null;
+    return match
+      ? {
+          leadOffset: match.index + match[0].indexOf("/"),
+          matchingString: match[1],
+          replaceableString: match[0],
+        }
+      : null;
   }, []);
 
-  const onSelectOption = useCallback((option: SlashCommandOption) => {
-    option.onSelect(closeMenu);
-  }, [closeMenu]);
+  const onSelectOption = useCallback(
+    (option: SlashCommandOption) => {
+      option.onSelect(closeMenu);
+    },
+    [closeMenu]
+  );
 
   return (
     <LexicalTypeaheadMenuPlugin
       triggerFn={checkForTriggerMatch}
-      options={queryString === "" ? options : options.filter((opt) =>
-        opt.title.toLowerCase().includes(queryString.toLowerCase()) ||
-        opt.keywords.some(k => k.includes(queryString.toLowerCase()))
-      )}
+      options={
+        queryString === ""
+          ? options
+          : options.filter(
+              (opt) =>
+                opt.title.toLowerCase().includes(queryString.toLowerCase()) ||
+                opt.keywords.some((k) => k.includes(queryString.toLowerCase()))
+            )
+      }
       onQueryChange={(query) => {
         setQueryString(query ?? "");
       }}
       onSelectOption={(option: any) => {
-        onSelectOption(option as SlashCommandOption)
+        onSelectOption(option as SlashCommandOption);
         setQueryString("");
       }}
-      menuRenderFn={(anchorRef, { selectedIndex, options, selectOptionAndCleanUp }) => (
+      menuRenderFn={(anchorRef, { selectedIndex, options, selectOptionAndCleanUp }) =>
         anchorRef.current && options.length > 0 ? (
           <div className="absolute z-50 mt-2 w-56 bg-white shadow-lg border border-gray-200 rounded-md">
             {options.map((option, i) => (
@@ -134,7 +138,7 @@ export default function SlashCommandPlugin() {
             ))}
           </div>
         ) : null
-      )}
+      }
     />
   );
 }

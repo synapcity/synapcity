@@ -11,19 +11,13 @@ import { GridProvider } from "@/stores/resources/gridStore/useGrid";
 import { useGridStore } from "@/stores";
 import { MetadataProvider } from "@/providers";
 
-function DashboardScopedProviders({
-  id,
-  children,
-}: {
-  id: string;
-  children: React.ReactNode;
-}) {
-  const selectDashboard = useDashboardStore(s => s.setSelected)
-  const selected = useDashboardStore(useShallow(s => s.selected['dashboard']))
-  const grid = useGridStore(useShallow(s => s.findByParent(id, "dashboard")))
+function DashboardScopedProviders({ id, children }: { id: string; children: React.ReactNode }) {
+  const selectDashboard = useDashboardStore((s) => s.setSelected);
+  const selected = useDashboardStore(useShallow((s) => s.selected["dashboard"]));
+  const grid = useGridStore(useShallow((s) => s.findByParent(id, "dashboard")));
 
   useEffect(() => {
-    if (!id) return
+    if (!id) return;
     if (id !== selected) selectDashboard("dashboard", id);
   }, [id, selectDashboard, selected]);
 
@@ -46,20 +40,26 @@ function DashboardScopedProviders({
   );
 }
 
-export function DashboardShowProviders({ dashboardId, children }: { dashboardId: string; children: React.ReactNode }) {
-  const dashboard = useDashboardStore(useShallow(state => state.items[dashboardId]))
+export function DashboardShowProviders({
+  dashboardId,
+  children,
+}: {
+  dashboardId: string;
+  children: React.ReactNode;
+}) {
+  const dashboard = useDashboardStore(useShallow((state) => state.items[dashboardId]));
   const [canRender, setCanRender] = useState(false);
 
   useEffect(() => {
     if (!dashboardId) return;
-    setCanRender(true)
+    setCanRender(true);
   }, [dashboardId]);
 
   useEffect(() => {
     if (dashboard) {
       // TODO: Handle when dashboard exists
     }
-  }, [dashboard])
+  }, [dashboard]);
 
   if (!dashboardId) return null;
   if (!canRender) return <FullPageLoading message="Loading Dashboard..." />;

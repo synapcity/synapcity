@@ -1,6 +1,6 @@
-import React from 'react';
-import { useDraggableLineStore } from '../../store/useDraggableStore';
-import './DraggableLine.css';
+import React from "react";
+import { useDraggableLineStore } from "../../store/useDraggableStore";
+import "./DraggableLine.css";
 
 const OnDragLine: React.FC = () => {
   const { line } = useDraggableLineStore();

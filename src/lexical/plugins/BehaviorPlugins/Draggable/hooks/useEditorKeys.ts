@@ -6,21 +6,21 @@ import { $getRoot } from "lexical";
 import { useDraggableStore } from "../store/useDraggableStore";
 
 export const useEditorKeys = () => {
-	const [editor] = useLexicalComposerContext();
-	const { resetState } = useDraggableStore();
+  const [editor] = useLexicalComposerContext();
+  const { resetState } = useDraggableStore();
 
-	const getEditorKeys = useCallback(() => {
-		return editor.getEditorState().read(() => $getRoot().getChildrenKeys());
-	}, [editor]);
+  const getEditorKeys = useCallback(() => {
+    return editor.getEditorState().read(() => $getRoot().getChildrenKeys());
+  }, [editor]);
 
-	const [keys, setKeys] = useState<string[]>(getEditorKeys());
+  const [keys, setKeys] = useState<string[]>(getEditorKeys());
 
-	useEffect(() => {
-		return editor.registerUpdateListener(() => {
-			setKeys(getEditorKeys());
-			resetState();
-		});
-	}, [editor, getEditorKeys, resetState]);
+  useEffect(() => {
+    return editor.registerUpdateListener(() => {
+      setKeys(getEditorKeys());
+      resetState();
+    });
+  }, [editor, getEditorKeys, resetState]);
 
-	return { keys };
+  return { keys };
 };

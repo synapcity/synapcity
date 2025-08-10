@@ -27,7 +27,6 @@ const OverlayToggle: React.FC<OverlayToggleProps> = ({
       value={selectedValues}
       size="sm"
       onValueChange={(val) => {
-
         if (val.includes("rows") && !showRows) {
           toggleRows();
         }
@@ -44,15 +43,15 @@ const OverlayToggle: React.FC<OverlayToggleProps> = ({
       }}
       className="gap-1 flex items-center"
     >
-      <ToggleGroupItem value="cols" aria-label="Toggle columns overlay" >
+      <ToggleGroupItem value="cols" aria-label="Toggle columns overlay">
         <span className="sr-only">Toggle Columns Overlay</span>
         <Columns className="h-4 w-4" />
       </ToggleGroupItem>
-      <ToggleGroupItem value="rows" aria-label="Toggle rows overlay" >
+      <ToggleGroupItem value="rows" aria-label="Toggle rows overlay">
         <span className="sr-only">Toggle Rows Overlay</span>
         <Rows className="h-4 w-4" />
       </ToggleGroupItem>
-    </ToggleGroup >
+    </ToggleGroup>
   );
 };
 

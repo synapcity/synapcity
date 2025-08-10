@@ -13,7 +13,7 @@ export const sidebarMenuButtonVariants = cva(
         default: cn(
           "bg-transparent text-(--sidebar-foreground) hover:bg-muted/10 hover:text-foreground",
           "data-[active=true]:bg-accent-100 data-[active=true]:text-accent-foreground data-[active=true]:font-medium",
-          "hover:bg-muted/10 active:bg-muted/20 hover:text-(--accent)",
+          "hover:bg-muted/10 active:bg-muted/20 hover:text-(--accent)"
         ),
         outline: cn(
           "border border-border text-(--sidebar-foreground)",
@@ -21,30 +21,30 @@ export const sidebarMenuButtonVariants = cva(
           "data-[active=true]:border-accent data-[active=true]:text-accent-foreground"
         ),
         auto: cn(
-          "items-center h-auto p-auto",
+          "items-center h-auto p-auto"
           // "data-[active=true]:bg-(--sidebar-accent) data-[active=true]:text-(--sidebar-background)"
-        )
+        ),
       },
       size: {
         default: "h-9 px-2 text-sm",
         sm: "h-7 px-2 text-xs",
         lg: "h-11 px-3 text-base",
-        auto: "h-auto p-auto"
+        auto: "h-auto p-auto",
       },
       isActive: {
         true: "data-[active=true]:bg-(--sidebar-accent) data-[active=true]:text-(--sidebar-accent-foreground)",
-        false: ""
+        false: "",
       },
       icon: {
         sm: "[&>svg]:size-4",
-        default: "[&>svg]:size-6"
-      }
+        default: "[&>svg]:size-6",
+      },
     },
     defaultVariants: {
       variant: "default",
       size: "default",
       isActive: false,
-      icon: "default"
+      icon: "default",
     },
   }
 );
@@ -63,9 +63,9 @@ export function SidebarMenuButton({
   isActive?: boolean;
   size?: "default" | "sm" | "lg" | "auto";
   variant?: "default" | "outline" | "auto";
-  icon?: "sm" | "default"
+  icon?: "sm" | "default";
   tooltip?: string;
-  tooltipPosition?: "top" | "bottom" | "left" | "right"
+  tooltipPosition?: "top" | "bottom" | "left" | "right";
 }) {
   const Comp = asChild ? Slot : "button";
   const innerValue = (
@@ -86,16 +86,11 @@ export function SidebarMenuButton({
   );
   if (tooltip) {
     return (
-      <Tooltip
-        content={tooltip}
-        side={tooltipPosition}
-        asChild
-      >
+      <Tooltip content={tooltip} side={tooltipPosition} asChild>
         {innerValue}
       </Tooltip>
-    )
+    );
   } else {
-    return innerValue
+    return innerValue;
   }
-
 }

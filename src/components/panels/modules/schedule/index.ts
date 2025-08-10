@@ -1,3 +1,3 @@
 export * from "./components";
 export * from "./ScheduleSidebar";
-export * from "./SchedulePanel"
+export * from "./SchedulePanel";

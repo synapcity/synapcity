@@ -28,7 +28,7 @@ describe("isTimeOrderValid", () => {
     expect(isTimeOrderValid([{ start: "bad" }])).toBe(false);
   });
 
-    it("returns true for an empty list", () => {
+  it("returns true for an empty list", () => {
     expect(isTimeOrderValid([])).toBe(true);
   });
 
@@ -61,7 +61,7 @@ describe("isTimeOrderValid", () => {
     expect(isTimeOrderValid(events)).toBe(false);
   });
 
-    it("returns true when times are equal", () => {
+  it("returns true when times are equal", () => {
     const events = [
       { start: "2024-01-01T09:00:00Z", end: "2024-01-01T10:00:00Z" },
       { start: "2024-01-01T10:00:00Z" },

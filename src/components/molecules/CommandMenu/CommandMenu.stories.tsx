@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { useState } from "react";
 import { CommandMenu } from "./CommandMenu";
 import { BookOpen, Plus, Settings } from "lucide-react";
-import { withNoteProvider } from "../../../../.storybook/decorators"
+import { withNoteProvider } from "../../../../.storybook/decorators";
 
 const meta: Meta<typeof CommandMenu> = {
   title: "Molecules/CommandMenu",

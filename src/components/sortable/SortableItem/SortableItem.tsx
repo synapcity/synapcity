@@ -12,36 +12,37 @@ type SortableItemProps<T extends { id: string }> = {
   ) => React.ReactNode;
 };
 
-export const SortableItem = React.memo(
-  function SortableItem<T extends { id: string }>({ item, renderItem }: SortableItemProps<T>) {
-    const {
-      attributes,
-      listeners,
-      setNodeRef,
-      transform,
-      transition,
-      isDragging,
-    } = useSortable({ id: item.id });
+export const SortableItem = React.memo(function SortableItem<T extends { id: string }>({
+  item,
+  renderItem,
+}: SortableItemProps<T>) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+    id: item.id,
+  });
 
-    const style = React.useMemo<React.CSSProperties>(() => ({
+  const style = React.useMemo<React.CSSProperties>(
+    () => ({
       transform: transform ? CSS.Transform.toString(transform) : undefined,
       transition: transition || undefined,
       cursor: "grab",
       opacity: isDragging ? 0.5 : 1,
-    }), [transform, transition, isDragging]);
+    }),
+    [transform, transition, isDragging]
+  );
 
-    const getSortableProps = useCallback(() => ({
+  const getSortableProps = useCallback(
+    () => ({
       ref: setNodeRef,
       style,
       ...attributes,
       ...listeners,
-    }), [setNodeRef, style, attributes, listeners]);
+    }),
+    [setNodeRef, style, attributes, listeners]
+  );
 
-    return renderItem(item,
-      {
-        isDragging,
-        getSortableProps
-
-      });
+  return renderItem(item, {
+    isDragging,
+    getSortableProps,
   });
+});
 SortableItem.displayName = "SortableItem";

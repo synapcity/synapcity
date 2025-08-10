@@ -2,16 +2,8 @@
 
 import * as React from "react";
 import { ToggleGroup, ToggleGroupItem } from "@/components/atoms/ui/toggle-group";
-import {
-  Phone,
-  Smartphone,
-  TabletSmartphone,
-  Tablet,
-  Laptop,
-  Monitor,
-} from "lucide-react";
+import { Phone, Smartphone, TabletSmartphone, Tablet, Laptop, Monitor } from "lucide-react";
 import { BreakpointType, defaultBreakpoints } from "@/stores";
-
 
 interface BreakpointToggleProps {
   value: BreakpointType;
@@ -26,7 +18,7 @@ const breakpointIcons: Record<BreakpointType, React.ReactNode> = {
   md: <Tablet className="h-4 w-4" />,
   lg: <Laptop className="h-4 w-4" />,
   xl: <Monitor className="h-4 w-4" />,
-  xxl: <Monitor className="h-4 w-4" />
+  xxl: <Monitor className="h-4 w-4" />,
 };
 
 // const breakpointTooltipContent: Record<Breakpoint, string> = {
@@ -69,7 +61,7 @@ const BreakpointToggle: React.FC<BreakpointToggleProps> = ({
           key={bp}
           value={bp}
           aria-label={bp.toUpperCase()}
-        // tooltip={breakpointTooltipContent[bp]}
+          // tooltip={breakpointTooltipContent[bp]}
         >
           {breakpointIcons[bp]}
         </ToggleGroupItem>

@@ -26,7 +26,10 @@ export const GridItem = React.forwardRef<HTMLDivElement, GridItemProps>(
     return (
       <div
         ref={ref}
-        className={cn("flex flex-col size-full relative overflow-hidden rounded-lg shadow-md group", className)}
+        className={cn(
+          "flex flex-col size-full relative overflow-hidden rounded-lg shadow-md group",
+          className
+        )}
         style={style}
         onMouseDown={onMouseDown}
         onMouseUp={onMouseUp}

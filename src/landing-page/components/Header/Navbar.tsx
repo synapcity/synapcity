@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import clsx from "clsx";
 
@@ -6,8 +6,9 @@ import { HeaderActions } from "./HeaderActions";
 import dynamic from "next/dynamic";
 import { NavMenu } from "./NavMenu";
 
-const MotionDiv = dynamic(() => import("../ui/Motion").then((mod) => mod.MotionDiv), { ssr: false })
-
+const MotionDiv = dynamic(() => import("../ui/Motion").then((mod) => mod.MotionDiv), {
+  ssr: false,
+});
 
 interface NavbarProps {
   isHovered: boolean;
@@ -27,5 +28,5 @@ export const Navbar = ({ isHovered }: NavbarProps) => {
       <NavMenu />
       <HeaderActions />
     </MotionDiv>
-  )
-}
+  );
+};

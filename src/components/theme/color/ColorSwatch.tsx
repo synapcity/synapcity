@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import React from 'react';
-import clsx from 'clsx';
-import { getContrastingColor } from '@/theme/utils/getContrastingColor/getContrastingColor';
+import React from "react";
+import clsx from "clsx";
+import { getContrastingColor } from "@/theme/utils/getContrastingColor/getContrastingColor";
 
 interface ColorSwatchProps {
   color: string;
@@ -17,7 +17,7 @@ export const ColorSwatch: React.FC<ColorSwatchProps> = ({
   active = false,
   onClick,
   onSwatchHover,
-  className = '',
+  className = "",
 }) => {
   const handleClick = (e: React.MouseEvent) => onClick?.(e, color);
   const handleHover = (e: React.MouseEvent) => onSwatchHover?.(e, color);
@@ -30,10 +30,10 @@ export const ColorSwatch: React.FC<ColorSwatchProps> = ({
       onClick={handleClick}
       onMouseOver={handleHover}
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      onKeyDown={(e) => e.key === 'Enter' && onClick?.(e as any, color)}
+      onKeyDown={(e) => e.key === "Enter" && onClick?.(e as any, color)}
       className={clsx(
-        'w-6 h-6 rounded ring-2 transition cursor-pointer',
-        active ? 'ring-black dark:ring-white' : 'ring-transparent',
+        "w-6 h-6 rounded ring-2 transition cursor-pointer",
+        active ? "ring-black dark:ring-white" : "ring-transparent",
         className
       )}
       style={{ backgroundColor: color }}

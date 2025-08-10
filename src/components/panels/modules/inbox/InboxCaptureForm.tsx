@@ -1,19 +1,19 @@
-"use client"
+"use client";
 
-import { useInboxStore } from "@/stores/inboxStore"
-import { InboxForm } from "@/components/forms/InboxForm/InboxForm"
-import { InboxFormValues } from "@/components/forms/InboxForm/inboxFormSchema"
+import { useInboxStore } from "@/stores/inboxStore";
+import { InboxForm } from "@/components/forms/InboxForm/InboxForm";
+import { InboxFormValues } from "@/components/forms/InboxForm/inboxFormSchema";
 
 export const InboxCaptureForm = () => {
-  const addItem = useInboxStore((s) => s.addItem)
+  const addItem = useInboxStore((s) => s.addItem);
 
   const handleSubmit = (data: InboxFormValues) => {
     const item = {
       ...data,
       // processed: data.processed ?? false,
-    }
-    addItem(item)
-  }
+    };
+    addItem(item);
+  };
 
   // const types = ["text"
   //   , "link"
@@ -28,11 +28,10 @@ export const InboxCaptureForm = () => {
       <InboxForm
         layout="inline"
         onSubmit={(data) => {
-          handleSubmit(data)
+          handleSubmit(data);
         }}
-
       />
       This is a form
     </div>
-  )
-}
+  );
+};

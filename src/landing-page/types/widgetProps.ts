@@ -3,30 +3,30 @@ import { LayoutItem } from "@/stores";
 import { IconType } from "react-icons";
 
 export type WidgetCardProps = {
-	id: string;
-	type: WidgetType;
-	component: React.ComponentType<any>;
-	props: Record<string, any>;
+  id: string;
+  type: WidgetType;
+  component: React.ComponentType<any>;
+  props: Record<string, any>;
 };
 
 export type AvailableWidget = {
-	type: WidgetType;
-	component: React.ComponentType<any>;
-	props: Record<string, any>;
-	info?: WidgetInfo;
+  type: WidgetType;
+  component: React.ComponentType<any>;
+  props: Record<string, any>;
+  info?: WidgetInfo;
 };
 
 /** Basic widget metadata/configuration */
 export type WidgetInfo = {
-	title: string;
-	icon: IconType;
-	height: number;
-	width: number;
-	maxHeight: number;
-	maxWidth: number;
-	minHeight: number;
-	minWidth: number;
-	defaultProps: Record<string, any>;
+  title: string;
+  icon: IconType;
+  height: number;
+  width: number;
+  maxHeight: number;
+  maxWidth: number;
+  minHeight: number;
+  minWidth: number;
+  defaultProps: Record<string, any>;
 };
 
 /** Possible widget type identifiers */
@@ -47,12 +47,12 @@ export type WidgetType = "list" | "notes" | "inbox";
 
 /** Widget runtime instance */
 export type Widget = {
-	id: string;
-	type: WidgetType;
-	component: React.ComponentType<any>;
-	props: Record<string, any>;
-	layout: LayoutItem;
-	isDeleted: boolean;
+  id: string;
+  type: WidgetType;
+  component: React.ComponentType<any>;
+  props: Record<string, any>;
+  layout: LayoutItem;
+  isDeleted: boolean;
 };
 
 /** Widget component map for rendering */
@@ -62,28 +62,28 @@ export type Widget = {
 
 /** List Widget-specific data */
 export type ListItem = {
-	content: string;
-	completed: boolean;
+  content: string;
+  completed: boolean;
 };
 
 export type List = {
-	title: string;
-	items: ListItem[];
+  title: string;
+  items: ListItem[];
 };
 
 /** Note Widget-specific data */
 export type Note = {
-	content: string;
+  content: string;
 };
 
 export type InboxItem = {
-	content: string;
-	createdAt: string;
+  content: string;
+  createdAt: string;
 };
 
 export type Inbox = {
-	title: string;
-	initialItems: InboxItem[];
+  title: string;
+  initialItems: InboxItem[];
 };
 
 /** Extended types for typed widget instances */

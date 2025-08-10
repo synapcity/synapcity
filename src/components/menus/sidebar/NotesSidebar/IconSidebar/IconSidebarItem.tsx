@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { IconButton } from "@/components/atoms";
 import { SidebarMenuItem, SidebarMenuButton, useSidebar } from "@/components/atoms/ui/sidebar";
@@ -11,7 +11,7 @@ interface SidebarIconItemProps {
 }
 
 export const IconSidebarItem = ({ item, isActive, onOpen }: SidebarIconItemProps) => {
-  const { setOpen } = useSidebar()
+  const { setOpen } = useSidebar();
 
   return (
     <SidebarMenuItem key={item.label}>
@@ -27,15 +27,14 @@ export const IconSidebarItem = ({ item, isActive, onOpen }: SidebarIconItemProps
           icon={item.icon ?? "fileText"}
           className="inline-flex justify-center items-center hover:bg-(--accent border) border-(--accent)/50 data-[state=open]:bg-(--accent)/50 dark:text-white"
           onClick={() => {
-            onOpen()
+            onOpen();
             if (isActive) {
-              setOpen(false)
+              setOpen(false);
             }
-            setOpen(true)
+            setOpen(true);
           }}
         />
       </SidebarMenuButton>
-
     </SidebarMenuItem>
-  )
-}
+  );
+};

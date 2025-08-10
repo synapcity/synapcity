@@ -10,10 +10,10 @@ export type MetadataContextType = {
   themeMode: ThemeMode;
   setThemeMode: (mode: ThemeMode) => void;
   selected: Record<string, any>;
-  setSelected: (scope: string, id: string | null) => void
+  setSelected: (scope: string, id: string | null) => void;
   status: UILocalStatus;
   hasHydrated: boolean;
-  scope: MetadataScope
+  scope: MetadataScope;
   id?: string;
-}
+};
 export const MetadataContext = createContext<MetadataContextType | null>(null);

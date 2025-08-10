@@ -256,17 +256,12 @@ function withModalRenderer(
   instanceId: string = "default",
   schema = defaultSchema,
   fieldMap = defaultFieldMap,
-  defaultValues = { fileName: "export", exportTitle: "" },
+  defaultValues = { fileName: "export", exportTitle: "" }
 ) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   return (
     <div ref={containerRef}>
-      <ExportButton
-        {...props}
-        schema={schema}
-        fieldMap={fieldMap}
-        defaultValues={defaultValues}
-      />
+      <ExportButton {...props} schema={schema} fieldMap={fieldMap} defaultValues={defaultValues} />
       <ModalRenderer scope="global" container={containerRef} instanceId={instanceId} />
     </div>
   );

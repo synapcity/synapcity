@@ -112,17 +112,9 @@ interface Props {
 
 export function SelectField({ config, meta, field }: Props) {
   const { message } = useFieldError(config.name);
-  const {
-    name,
-    placeholder,
-    options = [],
-  } = config;
+  const { name, placeholder, options = [] } = config;
 
-  const {
-    tooltip,
-    helpText,
-    disabled,
-  } = meta ?? {};
+  const { tooltip, helpText, disabled } = meta ?? {};
 
   const id = `select-${name}`;
   const labelId = `${id}-label`;
@@ -156,7 +148,6 @@ export function SelectField({ config, meta, field }: Props) {
   return (
     // <UIFormControl>
     <div>
-
       {tooltip ? (
         <UITooltip>
           <UITooltipTrigger asChild>{selectElement}</UITooltipTrigger>

@@ -1,32 +1,32 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client"
+"use client";
 
-import { DynamicFormErrorsDisplay, DynamicFormFields } from "../components"
-import { useFormEngine } from "../formEngine/useFormEngine"
-import { parseSchemaWithResolver } from "../formEngine/parseSchemaWithResolver"
-import { inboxFormSchema } from "./inboxFormSchema"
-import { getInboxFieldMap } from "./getInboxFields"
-import { FormLayoutWrapper } from "../components/FormLayoutWrapper"
-import { FormProvider } from "react-hook-form"
+import { DynamicFormErrorsDisplay, DynamicFormFields } from "../components";
+import { useFormEngine } from "../formEngine/useFormEngine";
+import { parseSchemaWithResolver } from "../formEngine/parseSchemaWithResolver";
+import { inboxFormSchema } from "./inboxFormSchema";
+import { getInboxFieldMap } from "./getInboxFields";
+import { FormLayoutWrapper } from "../components/FormLayoutWrapper";
+import { FormProvider } from "react-hook-form";
 
 export const InboxForm = ({
   onSubmit,
   onCancel,
   defaultValues,
-  layout = "vertical"
+  layout = "vertical",
 }: {
-  onSubmit: (values: any) => void
-  onCancel?: () => void
-  defaultValues?: any
-  layout?: "vertical" | "grid" | "inline"
+  onSubmit: (values: any) => void;
+  onCancel?: () => void;
+  defaultValues?: any;
+  layout?: "vertical" | "grid" | "inline";
 }) => {
-  const fieldMap = getInboxFieldMap(defaultValues?.type ?? "text")
-  const fields = parseSchemaWithResolver(inboxFormSchema, (k) => fieldMap[k])
+  const fieldMap = getInboxFieldMap(defaultValues?.type ?? "text");
+  const fields = parseSchemaWithResolver(inboxFormSchema, (k) => fieldMap[k]);
   const { form, handleSubmit } = useFormEngine({
     schema: inboxFormSchema,
     defaultValues,
     onSubmit,
-  })
+  });
 
   return (
     <FormProvider {...form}>
@@ -43,5 +43,5 @@ export const InboxForm = ({
         </FormLayoutWrapper>
       </form>
     </FormProvider>
-  )
-}
+  );
+};

@@ -1,7 +1,12 @@
 "use client";
 
 import * as React from "react";
-import { Sidebar, SidebarMenu, SidebarMenuItem, SidebarMenuButton } from "@/components/atoms/ui/sidebar";
+import {
+  Sidebar,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+} from "@/components/atoms/ui/sidebar";
 import { Icon, IconButton } from "@/components/atoms";
 import { useSidebar } from "@/components/atoms/ui/sidebar";
 import { SidebarScope } from "@/stores/ui/sidebarStore";
@@ -21,13 +26,12 @@ export function IconSidebar({ scope, id, side = "right" }: IconSidebarProps) {
   useKeyboardShortcut({
     key: "s",
     metaKey: true,
-    onKeyPressed: () => toggleSidebar()
-  })
-
+    onKeyPressed: () => toggleSidebar(),
+  });
 
   const isExpanded = sidebarState === "expanded";
-  const { panels: panelsObj, activeId, setActive } = usePanels(scope, id)
-  const panels = useMemo(() => Object.values(panelsObj), [panelsObj])
+  const { panels: panelsObj, activeId, setActive } = usePanels(scope, id);
+  const panels = useMemo(() => Object.values(panelsObj), [panelsObj]);
   const toggleSidebarIcon = (
     <IconButton
       variant="ghost"
@@ -36,7 +40,7 @@ export function IconSidebar({ scope, id, side = "right" }: IconSidebarProps) {
       onClick={toggleSidebar}
       aria-label={isExpanded ? "Collapse sidebar" : "Expand sidebar"}
     />
-  )
+  );
   return (
     <Sidebar
       side={side}
@@ -46,9 +50,7 @@ export function IconSidebar({ scope, id, side = "right" }: IconSidebarProps) {
     >
       <SidebarMenu className="flex-1 overflow-y-auto">
         <>
-          <CommandShortcut side="left">
-            ⌘S
-          </CommandShortcut>
+          <CommandShortcut side="left">⌘S</CommandShortcut>
           {panels.map((panel) => {
             return (
               <SidebarMenuItem key={panel.id} className="py-2 px-1 text-(--sidebar-foreground)">
@@ -57,11 +59,11 @@ export function IconSidebar({ scope, id, side = "right" }: IconSidebarProps) {
                   size="auto"
                   onClick={() => {
                     if (panel.id !== activeId) {
-                      setActive(panel.id)
+                      setActive(panel.id);
                     } else {
                       if (isExpanded) {
-                        setActive(null)
-                        toggleSidebar()
+                        setActive(null);
+                        toggleSidebar();
                       }
                     }
                     if (!isExpanded) {
@@ -74,10 +76,14 @@ export function IconSidebar({ scope, id, side = "right" }: IconSidebarProps) {
                   tooltip={panel.label}
                   tooltipPosition="left"
                 >
-                  {panel.id === activeId && isExpanded ? toggleSidebarIcon : <Icon name={panel.icon ?? "boxes"} />}
+                  {panel.id === activeId && isExpanded ? (
+                    toggleSidebarIcon
+                  ) : (
+                    <Icon name={panel.icon ?? "boxes"} />
+                  )}
                 </SidebarMenuButton>
               </SidebarMenuItem>
-            )
+            );
           })}
         </>
       </SidebarMenu>

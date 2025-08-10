@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   useReactTable,
@@ -29,10 +29,7 @@ export default function TableRoot({
   onDelete: (id: string) => void;
   reorderRows: (rows: RowData[]) => void;
 }) {
-  const columns = React.useMemo(
-    () => getDynamicColumns(onUpdate, onDelete),
-    [onUpdate, onDelete]
-  );
+  const columns = React.useMemo(() => getDynamicColumns(onUpdate, onDelete), [onUpdate, onDelete]);
 
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [pagination, setPagination] = React.useState<PaginationState>({
@@ -49,7 +46,7 @@ export default function TableRoot({
     getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
     onPaginationChange: setPagination,
-    getRowId: row => row.id,
+    getRowId: (row) => row.id,
   });
 
   return (
@@ -57,7 +54,12 @@ export default function TableRoot({
       <TableControls table={table} />
       <Table className="min-w-full text-sm flex flex-col items-center justify-around w-full">
         <TableHeader table={table} />
-        <TableRows table={table} onUpdate={onUpdate} onDelete={onDelete} reorderRows={reorderRows} />
+        <TableRows
+          table={table}
+          onUpdate={onUpdate}
+          onDelete={onDelete}
+          reorderRows={reorderRows}
+        />
       </Table>
       <TablePagination table={table} />
     </div>

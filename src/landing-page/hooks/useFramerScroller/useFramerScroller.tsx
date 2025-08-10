@@ -27,7 +27,6 @@ export const useFramerScroller = ({
     };
   }, []);
 
-
   const start = useCallback(() => {
     if (animation && isMounted.current) {
       controls.start(animation);

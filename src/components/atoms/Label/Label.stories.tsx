@@ -57,4 +57,3 @@ export const FullExample: Story = {
     error: true,
   },
 };
-

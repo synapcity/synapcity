@@ -11,17 +11,15 @@ export * from "./menus";
 export * from "./pages";
 export * from "./theme";
 export function useFieldError(name: string) {
-	const {
-		formState: { errors },
-	} = useFormContext();
+  const {
+    formState: { errors },
+  } = useFormContext();
 
-	const error = errors?.[name];
-	const message =
-		typeof error === "object" && "message" in error
-			? (error.message as string)
-			: undefined;
+  const error = errors?.[name];
+  const message =
+    typeof error === "object" && "message" in error ? (error.message as string) : undefined;
 
-	return { error, message };
+  return { error, message };
 }
 
 export * from "./editor";
@@ -32,4 +30,4 @@ export * from "./pages";
 export * from "./search";
 export * from "./sortable";
 export * from "./tables";
-export * from "./NotFoundWrapper"
+export * from "./NotFoundWrapper";

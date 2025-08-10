@@ -4,17 +4,17 @@ import { z } from "zod";
  * Zod schema for the base fields included in every resource.
  */
 export const BaseResourceSchema = z.object({
-	id: z.string(),
-	createdAt: z.string(),
-	updatedAt: z.string(),
-	deletedAt: z.string().nullable(),
+  id: z.string(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+  deletedAt: z.string().nullable(),
 });
 
 export const BaseEntitySchema = z.object({
-	id: z.string(),
-	createdAt: z.string(),
-	updatedAt: z.string(),
-	deletedAt: z.string().nullable(),
+  id: z.string(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+  deletedAt: z.string().nullable(),
 });
 
 /**
@@ -47,7 +47,7 @@ export type Resource<T extends object> = T & BaseResource;
  *   export type NoteResource = z.infer<typeof NoteResourceSchema>;
  */
 export function ResourceSchema<T extends z.ZodTypeAny>(
-	dataSchema: T
+  dataSchema: T
 ): z.ZodIntersection<T, typeof BaseResourceSchema> {
-	return z.intersection(dataSchema, BaseResourceSchema);
+  return z.intersection(dataSchema, BaseResourceSchema);
 }

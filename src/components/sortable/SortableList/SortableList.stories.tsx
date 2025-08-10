@@ -33,7 +33,7 @@ const StoryWithMockDrag = () => {
         {...getSortableProps?.()}
         data-testid={`item-${item.id}`}
         onMouseEnter={() => setDraggedId(item.id)} // Simulate drag start
-        onMouseLeave={() => setDraggedId(null)}   // Simulate drag end
+        onMouseLeave={() => setDraggedId(null)} // Simulate drag end
         style={{
           padding: "8px",
           marginBottom: "4px",
@@ -47,13 +47,7 @@ const StoryWithMockDrag = () => {
     );
   };
 
-  return (
-    <SortableList
-      items={items}
-      renderItem={renderItem}
-      handleDragEnd={() => { }}
-    />
-  );
+  return <SortableList items={items} renderItem={renderItem} handleDragEnd={() => {}} />;
 };
 
 export const WithMockDragVisual: Story = {

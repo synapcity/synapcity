@@ -1,1 +1,1 @@
-export {useDynamicBreadcrumbs } from "./useDynamicBreadcrumbs"
+export { useDynamicBreadcrumbs } from "./useDynamicBreadcrumbs";

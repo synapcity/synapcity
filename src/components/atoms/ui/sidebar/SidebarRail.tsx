@@ -8,10 +8,7 @@ import { useSidebar } from "./SidebarProvider";
  * The clickable gutter/rail area outside the collapsed sidebar.
  * Useful for click-to-expand or hover affordance.
  */
-export function SidebarRail({
-  className,
-  ...props
-}: React.ComponentProps<"button">) {
+export function SidebarRail({ className, ...props }: React.ComponentProps<"button">) {
   const { setSidebarState, sidebarState, toggleSidebar } = useSidebar();
   const isCollapsed = sidebarState !== "expanded";
 
@@ -45,4 +42,3 @@ export function SidebarRail({
     />
   );
 }
-

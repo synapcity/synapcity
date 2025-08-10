@@ -17,10 +17,12 @@ export function getNoteUrl(noteId: string, tabId?: string) {
 }
 
 export function NotesWithViewsSearch() {
-  const noteMap = useNoteStore(useShallow(s => s.items));
-  const notes: Note[] = useMemo(() => Object.values(noteMap), [noteMap])
-  const viewObj = useNoteViewStore(useShallow(s => s.items));
-  const views: CombinedEditor[] = useMemo(() => Object.values(viewObj), [viewObj]).filter(v => v.type === "editor")
+  const noteMap = useNoteStore(useShallow((s) => s.items));
+  const notes: Note[] = useMemo(() => Object.values(noteMap), [noteMap]);
+  const viewObj = useNoteViewStore(useShallow((s) => s.items));
+  const views: CombinedEditor[] = useMemo(() => Object.values(viewObj), [viewObj]).filter(
+    (v) => v.type === "editor"
+  );
   const [query, setQuery] = useState("");
   const deferredQuery = useDeferredValue(query);
 
@@ -32,7 +34,7 @@ export function NotesWithViewsSearch() {
         className="w-full mb-3 p-2 border rounded"
         placeholder="Search all notes & tabs…"
         value={query}
-        onChange={e => setQuery(e.target.value)}
+        onChange={(e) => setQuery(e.target.value)}
         autoFocus
       />
       {query && results.length === 0 && (
@@ -41,9 +43,7 @@ export function NotesWithViewsSearch() {
       <ul>
         {results.map(({ item, matches }) => {
           const isNote = item.entityType === "note";
-          const url = isNote
-            ? getNoteUrl(item.id)
-            : getNoteUrl(item.parentNoteId, item.id);
+          const url = isNote ? getNoteUrl(item.id) : getNoteUrl(item.parentNoteId, item.id);
 
           return (
             <li key={item.id}>
@@ -66,14 +66,22 @@ export function NotesWithViewsSearch() {
                   {isNote ? (
                     <>
                       <div className="font-bold truncate">
-                        {highlightMatches(item.title, matches?.filter(m => m.key === "title"))}
+                        {highlightMatches(
+                          item.title,
+                          matches?.filter((m) => m.key === "title")
+                        )}
                       </div>
                       {(item.tags || [])?.length > 0 && (
-                        <div className="text-xs text-gray-500 truncate">{item.tags?.join(", ")}</div>
+                        <div className="text-xs text-gray-500 truncate">
+                          {item.tags?.join(", ")}
+                        </div>
                       )}
                       {item.summary && (
                         <div className="text-xs text-gray-400 truncate">
-                          {highlightMatches(item.summary, matches?.filter(m => m.key === "summary"))}
+                          {highlightMatches(
+                            item.summary,
+                            matches?.filter((m) => m.key === "summary")
+                          )}
                         </div>
                       )}
                     </>
@@ -81,16 +89,24 @@ export function NotesWithViewsSearch() {
                     <>
                       <div className="font-bold truncate">
                         {noteMap[item.parentNoteId] && (
-                          <span className="text-indigo-500">{noteMap[item.parentNoteId].title}</span>
+                          <span className="text-indigo-500">
+                            {noteMap[item.parentNoteId].title}
+                          </span>
                         )}
                         <span className="mx-2 text-gray-300">/</span>
                         <span className="italic">
-                          {highlightMatches(item.viewLabel, matches?.filter(m => m.key === "viewLabel"))}
+                          {highlightMatches(
+                            item.viewLabel,
+                            matches?.filter((m) => m.key === "viewLabel")
+                          )}
                         </span>
                       </div>
                       {item.content && (
                         <div className="text-xs text-gray-500 truncate">
-                          {highlightMatches(item.content, matches?.filter(m => m.key === "content"))}
+                          {highlightMatches(
+                            item.content,
+                            matches?.filter((m) => m.key === "content")
+                          )}
                         </div>
                       )}
                     </>

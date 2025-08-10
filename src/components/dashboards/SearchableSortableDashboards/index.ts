@@ -1,2 +1,2 @@
 export * from "./DashboardControlsBar";
-export * from "./SearchableSortableDashboards"
+export * from "./SearchableSortableDashboards";

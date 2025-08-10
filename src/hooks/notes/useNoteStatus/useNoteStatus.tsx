@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useState, useEffect } from "react";
 import { useNoteTabs } from "../useNoteViews";
@@ -14,9 +14,7 @@ import type { ViewResource } from "@/stores";
  * - `activeView`: the current ViewResource (from useNoteTabs)
  * - `defaultView`: the default or first ViewResource
  */
-export function useNoteStatus(
-  noteId: string
-): {
+export function useNoteStatus(noteId: string): {
   activeStatus: StatusKeys | null;
   activeView?: ViewResource;
   defaultView?: ViewResource;
@@ -27,16 +25,15 @@ export function useNoteStatus(
 
   // local state for status key and full status object
   const [activeStatus, setActiveStatus] = useState<StatusKeys | null>(null);
-  const [status, setStatus] = useState<UILocalStatus | undefined>(() =>
-    useNoteStore.getState().status?.[noteId]
+  const [status, setStatus] = useState<UILocalStatus | undefined>(
+    () => useNoteStore.getState().status?.[noteId]
   );
 
   // subscribe to store.statusByType.note[noteId]
   useEffect(() => {
-    const unsub = useNoteStore.subscribe(state => (
-      state.status?.[noteId],
-      (newStatus: UILocalStatus) => setStatus(newStatus)
-    ));
+    const unsub = useNoteStore.subscribe(
+      (state) => (state.status?.[noteId], (newStatus: UILocalStatus) => setStatus(newStatus))
+    );
     setStatus(useNoteStore.getState().status?.[noteId]);
     return unsub;
   }, [noteId]);

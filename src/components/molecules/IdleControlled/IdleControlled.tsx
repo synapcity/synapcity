@@ -50,12 +50,7 @@ export const IdleControlled = ({
     [enabled, shouldEnable]
   );
 
-  const {
-    ref,
-    isActive,
-    onMouseEnter,
-    onMouseLeave,
-  } = useIdleVisibilityController(id, stateKey, {
+  const { ref, isActive, onMouseEnter, onMouseLeave } = useIdleVisibilityController(id, stateKey, {
     enabled: isEnabled,
     delay,
     globalEvents,
@@ -75,7 +70,9 @@ export const IdleControlled = ({
         <div
           className={cn(
             "fixed top-0 left-0 right-0 h-6 transition-opacity duration-200 z-[9999]",
-            isActive ? "opacity-100 h-auto pointer-events-auto" : "opacity-0 h-8 pointer-events-auto"
+            isActive
+              ? "opacity-100 h-auto pointer-events-auto"
+              : "opacity-0 h-8 pointer-events-auto"
           )}
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
@@ -93,8 +90,8 @@ export const IdleControlled = ({
       >
         {isValidElement(children)
           ? cloneElement(children as ReactElement<HTMLAttributes<any>>, {
-            className: cn((children as any).props?.className),
-          })
+              className: cn((children as any).props?.className),
+            })
           : children}
       </motion.div>
     </>

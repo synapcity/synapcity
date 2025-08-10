@@ -36,9 +36,7 @@ describe("processLexicalRow", () => {
 });
 
 describe("getProcessedData", () => {
-  const rows: Record<string, unknown>[] = [
-    { a: 1, nested: { b: 2 }, lexical: [{ text: "hi" }] },
-  ];
+  const rows: Record<string, unknown>[] = [{ a: 1, nested: { b: 2 }, lexical: [{ text: "hi" }] }];
 
   it("returns raw rows for 'nested'", () => {
     expect(getProcessedData(rows, "nested")).toEqual(rows);

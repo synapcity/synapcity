@@ -6,10 +6,7 @@
     "parentType": "dashboard",
     "parentId": "home",
     "description": "Tasks to knock out today",
-    "tags": [
-      "urgent",
-      "morning"
-    ],
+    "tags": ["urgent", "morning"],
     "theme": {
       "icon": "check-circle",
       "mode": "light"
@@ -63,10 +60,7 @@
     "parentType": "dashboard",
     "parentId": "home",
     "description": "Features & improvements queued up",
-    "tags": [
-      "backend",
-      "frontend"
-    ],
+    "tags": ["backend", "frontend"],
     "theme": {
       "icon": "clipboard-list",
       "mode": "dark"

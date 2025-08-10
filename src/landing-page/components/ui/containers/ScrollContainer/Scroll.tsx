@@ -1,12 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import React, {
-  useState,
-  forwardRef,
-  useImperativeHandle,
-  useRef,
-} from "react";
+import React, { useState, forwardRef, useImperativeHandle, useRef } from "react";
 import clsx from "clsx";
 import {
   useChildIntersectionObserver,
@@ -93,9 +88,7 @@ export const Scroll = forwardRef<ScrollRef, ScrollProps>(
       [direction, currentIndex]
     );
 
-    const getScrollStyles = (
-      direction: "horizontal" | "vertical"
-    ): string => {
+    const getScrollStyles = (direction: "horizontal" | "vertical"): string => {
       const base =
         "scroll-smooth size-full transition-all duration-300 ease-in-out scrollbar-hide flex flex-nowrap";
       const horizontalStyles =
@@ -107,11 +100,7 @@ export const Scroll = forwardRef<ScrollRef, ScrollProps>(
           ? " snap-x snap-mandatory"
           : " snap-y snap-mandatory"
         : "";
-      return (
-        base +
-        (direction === "vertical" ? verticalStyles : horizontalStyles) +
-        snapStyles
-      );
+      return base + (direction === "vertical" ? verticalStyles : horizontalStyles) + snapStyles;
     };
 
     return (

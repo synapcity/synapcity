@@ -1,1 +1,1 @@
-export * from "./useScheduleStore"
+export * from "./useScheduleStore";

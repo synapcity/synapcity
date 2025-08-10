@@ -7,7 +7,7 @@ import {
   defaultBreakpoints,
   defaultCols,
   defaultContainerPadding,
-  defaultMargin
+  defaultMargin,
 } from "./grid-schema"; // Update this import if needed
 import { nanoid } from "nanoid";
 import { deepMerge } from "@/utils/deepMerge";
@@ -24,7 +24,6 @@ export type InitGridArgs = {
   gridId?: string;
 };
 
-
 // -- Type signature for the store with all custom actions --
 export interface GridStore extends ResourceStore<Grid> {
   initGrid(args: InitGridArgs): string;
@@ -38,7 +37,10 @@ export interface GridStore extends ResourceStore<Grid> {
   findAllByParent(parentId: string, scope?: string): Grid[];
   exportGrid(gridId: string): Grid | undefined;
   importGrid(data: Grid, opts?: { scope?: string; parentId?: string; label?: string }): string;
-  cloneGrid(gridId: string, opts?: { scope?: string; parentId?: string; label?: string }): string | undefined;
+  cloneGrid(
+    gridId: string,
+    opts?: { scope?: string; parentId?: string; label?: string }
+  ): string | undefined;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getFullConfig(gridId: string): any | undefined;
 }
@@ -68,53 +70,51 @@ const _useGridStore = createResourceStore<Grid>({
         label,
         config: deepMerge(
           {
-            breakpoints: {...defaultBreakpoints},
-            cols: {...defaultCols},
-            margin: {...defaultMargin},
-            containerPadding: {...defaultContainerPadding},
+            breakpoints: { ...defaultBreakpoints },
+            cols: { ...defaultCols },
+            margin: { ...defaultMargin },
+            containerPadding: { ...defaultContainerPadding },
             rowHeight: 0,
             resizeHandles: [],
             compactType: "vertical",
             flags: defaultFlags,
             handles,
             label: "Untitled",
-            autoSize: true
+            autoSize: true,
           },
           config
         ),
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        state: { ...state, gridId: id, isInitialized: true } as any,   
+        state: { ...state, gridId: id, isInitialized: true } as any,
       });
       set((store) => ({
-        items: { ...store.items, [id]: grid }
+        items: { ...store.items, [id]: grid },
       }));
       return id;
     },
 
+    updateGridState: (gridId: string, patch: Partial<Grid["state"]>): void => {
+      const grid = get().items[gridId];
+      if (!grid) return;
 
-updateGridState: (gridId: string, patch: Partial<Grid["state"]>): void => {
-  const grid = get().items[gridId];
-  if (!grid) return;
+      const newPatch: Partial<Grid["state"]> = { ...patch };
 
-  const newPatch: Partial<Grid["state"]> = { ...patch };
-
-  if (patch.layouts) {
-    // Use the lenient normalizer for patches (merges, user edits)
-    newPatch.layouts = normalizeLayouts(patch.layouts);
-  }
-
-  set((store) => ({
-    items: {
-      ...store.items,
-      [gridId]: {
-        ...grid,
-        state: { ...grid.state, ...newPatch },
-        updatedAt: new Date().toISOString(),
+      if (patch.layouts) {
+        // Use the lenient normalizer for patches (merges, user edits)
+        newPatch.layouts = normalizeLayouts(patch.layouts);
       }
-    }
-  }));
-},
 
+      set((store) => ({
+        items: {
+          ...store.items,
+          [gridId]: {
+            ...grid,
+            state: { ...grid.state, ...newPatch },
+            updatedAt: new Date().toISOString(),
+          },
+        },
+      }));
+    },
 
     // 3. Patch only grid config
     updateGridConfig: (gridId: string, patch: Partial<Grid["config"]>): void => {
@@ -127,8 +127,8 @@ updateGridState: (gridId: string, patch: Partial<Grid["state"]>): void => {
             ...grid,
             config: { ...grid.config, ...patch },
             updatedAt: new Date().toISOString(),
-          }
-        }
+          },
+        },
       }));
     },
 
@@ -176,7 +176,7 @@ updateGridState: (gridId: string, patch: Partial<Grid["state"]>): void => {
         label: opts?.label ?? data.label,
       });
       set((store) => ({
-        items: { ...store.items, [id]: grid }
+        items: { ...store.items, [id]: grid },
       }));
       return id;
     },

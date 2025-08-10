@@ -16,7 +16,7 @@ import "jest-axe/extend-expect";
 import { cleanup } from "@testing-library/react";
 
 afterEach(() => {
-	cleanup();
-	jest.clearAllMocks();
-	jest.clearAllTimers();
+  cleanup();
+  jest.clearAllMocks();
+  jest.clearAllTimers();
 });

@@ -16,7 +16,7 @@ interface MobileDropdownProps {
   trigger?: {
     icon: string;
     label: string;
-  }
+  };
   children: ReactNode;
   className?: string;
   value: string;
@@ -27,7 +27,7 @@ interface MobileDropdownProps {
 export function MobileDropdown({
   trigger = {
     icon: "MenuIcon",
-    label: "Menu"
+    label: "Menu",
   },
   children,
   className,
@@ -42,26 +42,27 @@ export function MobileDropdown({
     lg: "max-w-lg",
     xl: "max-w-xl",
     full: "w-full",
-  }
+  };
 
   return (
     <Accordion type="single" collapsible className={cn("w-full", className)}>
       <AccordionItem value={value} className="relative">
         <AccordionTrigger className="text-base font-medium px-4 py-3 rounded-md hover:bg-gray-900 hover:text-gray-200">
-          {isIconOnly ? (<Icon name={trigger?.icon} />) : (
-            <Label icon={trigger?.icon}>
-              {trigger?.label}
-            </Label>
+          {isIconOnly ? (
+            <Icon name={trigger?.icon} />
+          ) : (
+            <Label icon={trigger?.icon}>{trigger?.label}</Label>
           )}
         </AccordionTrigger>
         <AccordionContent
-          className={clsx("absolute left-0 top-full z-50 bg-background shadow-md px-4 pb-3 pt-1 space-y-1 w-full", maxWidthMap[maxWidth])}
+          className={clsx(
+            "absolute left-0 top-full z-50 bg-background shadow-md px-4 pb-3 pt-1 space-y-1 w-full",
+            maxWidthMap[maxWidth]
+          )}
         >
           {children}
         </AccordionContent>
       </AccordionItem>
     </Accordion>
-
   );
 }
-

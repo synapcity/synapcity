@@ -15,7 +15,6 @@ interface LoadingProps {
   delayMs?: number;
   skeletonFallback?: React.ReactNode;
   variant?: "default" | "overlay" | "muted";
-
 }
 
 export const Loading = ({
@@ -28,7 +27,7 @@ export const Loading = ({
   withMargin = false,
   delayMs = 0,
   skeletonFallback,
-  variant = "default"
+  variant = "default",
 }: LoadingProps) => {
   const visible = useLoadingDelay(delayMs);
 
@@ -40,7 +39,6 @@ export const Loading = ({
     muted: "opacity-50",
   }[variant ?? "default"];
 
-
   return (
     <div
       className={cn(
@@ -51,12 +49,7 @@ export const Loading = ({
         className
       )}
     >
-      <Spinner
-        size={size}
-        label={label}
-        className={spinnerClassName}
-        withMargin={withMargin}
-      />
+      <Spinner size={size} label={label} className={spinnerClassName} withMargin={withMargin} />
     </div>
   );
 };

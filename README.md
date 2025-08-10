@@ -122,7 +122,7 @@ This project is configured for Cypress end-to-end and component testing.
 
 The configuration assumes the app is available at [http://localhost:3000](http://localhost:3000). Update the `baseUrl` in `cypress.config.ts` or set the `CYPRESS_BASE_URL` environment variable if your server runs elsewhere.
 
-*Note:()
+\*Note:()
 
 `npm run test:cypress:component` requires a `cypress/support/component-index.html` file. If it is missing, Cypress fails with an error like:
 
@@ -134,14 +134,14 @@ To run component tests locally:
 
 1. Create `cypress/support/component-index.html` containing a root element:
 
-    ```html
-    <!DOCTYPE html>
-    <html lang="en">
-      <body>
-        <div id="root"></div>
-      </body>
-    </html>
-    ```
+   ```html
+   <!DOCTYPE html>
+   <html lang="en">
+     <body>
+       <div id="root"></div>
+     </body>
+   </html>
+   ```
 
 2. Ensure `webpack.config.cjs` is present so Cypress can bundle React and TypeScript components.
 3. Re-run `npm run test:cypress:component`.
@@ -157,7 +157,7 @@ The workflow defined in `.github/cypress.yml` runs `npm run test:e2e` in GitHub 
   ```bash
   sudo apt-get install xvfb
   ```
-  
+
   Alternatively, prefix commands with `xvfb-run`.
 
 ### Production Build
@@ -173,8 +173,8 @@ npm start
 
 Create a `.env.local` file in the project root to configure environment variables.
 
-| Variable | Description |
-|----------|-------------|
+| Variable  | Description                                                     |
+| --------- | --------------------------------------------------------------- |
 | `ANALYZE` | Set to `true` to enable bundle analysis during `npm run build`. |
 
 `NODE_ENV` is managed automatically by Next.js.

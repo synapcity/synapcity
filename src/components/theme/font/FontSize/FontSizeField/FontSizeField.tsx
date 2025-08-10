@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import { Controller, useFormContext } from "react-hook-form"
-import { FontSizeControls } from "../FontSizeControls"
-import { Label } from "@/components"
-import type { FontSizeToken } from "@/theme/types"
+import { Controller, useFormContext } from "react-hook-form";
+import { FontSizeControls } from "../FontSizeControls";
+import { Label } from "@/components";
+import type { FontSizeToken } from "@/theme/types";
 
 export const FontSizeField = () => {
-  const { control } = useFormContext()
+  const { control } = useFormContext();
   return (
     <div className="space-y-2">
       <Label>Font Size</Label>
@@ -14,11 +14,14 @@ export const FontSizeField = () => {
         control={control}
         name="fontSize"
         render={({ field }) => (
-          <FontSizeControls value={field.value} onChange={(value: FontSizeToken) => {
-            field.onChange(value)
-          }} />
+          <FontSizeControls
+            value={field.value}
+            onChange={(value: FontSizeToken) => {
+              field.onChange(value);
+            }}
+          />
         )}
       />
     </div>
-  )
-}
+  );
+};

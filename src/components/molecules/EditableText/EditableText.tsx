@@ -1,14 +1,7 @@
-"use client"
+"use client";
 
 import { cn } from "@/utils";
-import {
-  useState,
-  useEffect,
-  useRef,
-  ChangeEvent,
-  KeyboardEvent,
-  JSX,
-} from "react";
+import { useState, useEffect, useRef, ChangeEvent, KeyboardEvent, JSX } from "react";
 
 interface EditableTextProps {
   value: string;
@@ -27,7 +20,7 @@ export const EditableText = ({
   as = "span",
   className = "",
   placeholder = "Untitled",
-  onBlur
+  onBlur,
 }: EditableTextProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [currentValue, setCurrentValue] = useState(value);
@@ -65,15 +58,20 @@ export const EditableText = ({
     if (currentValue !== value) {
       onSave(currentValue);
     }
-    onBlur?.()
+    onBlur?.();
   };
 
   const handleEditing = () => {
-    setEditing(true)
+    setEditing(true);
     onEdit?.();
-  }
+  };
   const Comp = as;
-  const textValue = currentValue.trim().length === 0 ? <span className="opacity-60">{placeholder}</span> : currentValue.trim()
+  const textValue =
+    currentValue.trim().length === 0 ? (
+      <span className="opacity-60">{placeholder}</span>
+    ) : (
+      currentValue.trim()
+    );
 
   const textStyles: Partial<Record<keyof JSX.IntrinsicElements, string>> = {
     h1: "text-4xl md:text-5xl font-bold tracking-tight leading-tight",
@@ -83,8 +81,8 @@ export const EditableText = ({
     h5: "text-lg md:text-xl font-medium leading-relaxed tracking-normal",
     h6: "text-base md:text-lg font-medium leading-relaxed tracking-wide",
     p: "font-body text-body text-base leading-relaxed",
-    span: "font-base text-body text-base leading-relaxed"
-  }
+    span: "font-base text-body text-base leading-relaxed",
+  };
 
   const text = () => {
     if (editing) {
@@ -96,23 +94,26 @@ export const EditableText = ({
           onChange={handleInput}
           onBlur={handleBlur}
           onKeyDown={handleKeyDown}
-          className={cn(`flex-grow bg-transparent border-none focus:ring-0 focus:border-b focus:border-accent-400 truncate w-full`, textStyles[as])}
+          className={cn(
+            `flex-grow bg-transparent border-none focus:ring-0 focus:border-b focus:border-accent-400 truncate w-full`,
+            textStyles[as]
+          )}
           placeholder={placeholder}
           aria-placeholder={placeholder}
           autoFocus
         />
-      )
+      );
     }
     return (
       <Comp
         className={cn(textStyles[as], className)}
         tabIndex={0}
         onDoubleClick={(e) => {
-          e.stopPropagation()
-          handleEditing()
+          e.stopPropagation();
+          handleEditing();
         }}
         onKeyDown={(e) => {
-          if (e.key === "Enter") handleEditing()
+          if (e.key === "Enter") handleEditing();
         }}
         style={{ cursor: "pointer" }}
         aria-label={`Edit ${textValue}`}
@@ -121,12 +122,8 @@ export const EditableText = ({
       >
         {textValue}
       </Comp>
-    )
-  }
+    );
+  };
 
-  return (
-    <div className={cn("my-2", className)}>
-      {text()}
-    </div>
-  )
+  return <div className={cn("my-2", className)}>{text()}</div>;
 };

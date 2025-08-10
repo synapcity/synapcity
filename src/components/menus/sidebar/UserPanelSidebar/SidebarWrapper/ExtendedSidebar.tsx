@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
   Sidebar,
@@ -6,15 +6,14 @@ import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarHeader,
-} from "@/components/atoms/ui/sidebar"
-import { ContextSelector } from "./ContextSelector"
+} from "@/components/atoms/ui/sidebar";
+import { ContextSelector } from "./ContextSelector";
 import { PanelModule } from "@/types/panels";
-import { PropsWithChildren } from "react"
+import { PropsWithChildren } from "react";
 import { useUserPanel } from "@/hooks/features/useUserPanel/useUserPanel";
 
-
 export const ExtendedSidebar = ({ children }: PropsWithChildren) => {
-  const { modules, activeModule, setActiveModuleId } = useUserPanel()
+  const { modules, activeModule, setActiveModuleId } = useUserPanel();
   return (
     <Sidebar auto collapsible="none" className="hidden flex-1 md:flex">
       <SidebarHeader className="gap-3.5 p-2">
@@ -32,5 +31,5 @@ export const ExtendedSidebar = ({ children }: PropsWithChildren) => {
         </SidebarGroup>
       </SidebarContent>
     </Sidebar>
-  )
-}
+  );
+};

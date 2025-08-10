@@ -5,12 +5,7 @@ import * as React from "react";
 import { parseDate } from "chrono-node";
 import { CalendarIcon, Clock } from "lucide-react";
 import type { Control, FieldValues, Path } from "react-hook-form";
-import {
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/atoms/ui/form";
+import { FormField, FormItem, FormLabel, FormMessage } from "@/components/atoms/ui/form";
 import { Button, Input } from "@/components";
 import { Calendar } from "@/components/atoms/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/atoms/ui/popover";
@@ -36,7 +31,8 @@ function parseTime(text: string): { h: number; m: number } | null {
   const pm = t.includes("pm");
   const clean = t.replace(/am|pm/g, "");
 
-  let h = 0, m = 0;
+  let h = 0,
+    m = 0;
   if (clean.includes(":")) {
     const [hh, mm] = clean.split(":");
     h = Number(hh);
@@ -54,7 +50,7 @@ function parseTime(text: string): { h: number; m: number } | null {
   if (Number.isNaN(h) || Number.isNaN(m) || h < 0 || h > 23 || m < 0 || m > 59) return null;
   if (am || pm) {
     if (h === 12) h = 0; // 12am -> 0
-    if (pm) h += 12;     // 2pm -> 14
+    if (pm) h += 12; // 2pm -> 14
     if (h === 24) h = 12; // 12pm -> 12
   }
   return { h, m };
@@ -114,9 +110,7 @@ export function DateTimeNLField<T extends FieldValues>({
             allowEmpty={allowEmpty}
             withTime={withTime}
           />
-          {description ? (
-            <p className="text-sm text-muted-foreground">{description}</p>
-          ) : null}
+          {description ? <p className="text-sm text-muted-foreground">{description}</p> : null}
           <FormMessage />
         </FormItem>
       )}

@@ -39,24 +39,23 @@ export function NoteEditorHeader({
   onTagClick,
   createdAt,
   updatedAt,
-  scrollContainer
-
+  scrollContainer,
 }: NoteEditorHeaderProps) {
   const headerRef = useRef<HTMLDivElement | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const titleRef = useRef<HTMLHeadingElement | null>(null);
   const [headerHeight, setHeaderHeight] = useState(HEADER_FULL);
-  const created = formatInputDate(createdAt, { style: "full" })
-  const updated = formatInputDate(updatedAt, { style: "relative" })
-  const startStatus = useNoteStore(s => s.startStatus)
-  const clearStatus = useNoteStore(s => s.resetStatus)
-  const viewObj = useNoteViewStore(useShallow(s => s.items))
+  const created = formatInputDate(createdAt, { style: "full" });
+  const updated = formatInputDate(updatedAt, { style: "relative" });
+  const startStatus = useNoteStore((s) => s.startStatus);
+  const clearStatus = useNoteStore((s) => s.resetStatus);
+  const viewObj = useNoteViewStore(useShallow((s) => s.items));
   const views = useMemo(() => {
-    return Object.values(viewObj).filter(v => v.entityId === noteId) ?? []
-  }, [viewObj, noteId])
-  const activeView = useNoteViewStore(useShallow(s => s.activeByScope[noteId]))
-  const setSelected = useNoteViewStore(s => s.setActive)
-  const removeTag = useNoteStore(s => s.removeTag)
+    return Object.values(viewObj).filter((v) => v.entityId === noteId) ?? [];
+  }, [viewObj, noteId]);
+  const activeView = useNoteViewStore(useShallow((s) => s.activeByScope[noteId]));
+  const setSelected = useNoteViewStore((s) => s.setActive);
+  const removeTag = useNoteStore((s) => s.removeTag);
 
   const { title, status } = useNoteStore(
     useShallow((s) => ({
@@ -94,7 +93,7 @@ export function NoteEditorHeader({
       scrollEl.removeEventListener("scroll", onScroll);
       if (raf !== null) cancelAnimationFrame(raf);
     };
-  }, [scrollContainer])
+  }, [scrollContainer]);
 
   const getStatus = () => {
     if (!status) {
@@ -135,9 +134,9 @@ export function NoteEditorHeader({
   const tabOptions = views.map((view) => {
     return {
       label: (view as ViewResource)?.label,
-      value: (view as ViewResource)?.id
-    }
-  })
+      value: (view as ViewResource)?.id,
+    };
+  });
 
   return (
     <div className="flex flex-col">
@@ -152,11 +151,11 @@ export function NoteEditorHeader({
               value={title ?? ""}
               as="h4"
               onSave={(value: string) => {
-                onTitleSave(value)
-                clearStatus(noteId)
+                onTitleSave(value);
+                clearStatus(noteId);
               }}
               onEdit={() => {
-                startStatus("editing", noteId)
+                startStatus("editing", noteId);
               }}
             />
             {getStatus()}
@@ -185,9 +184,7 @@ export function NoteEditorHeader({
                 <rect width="18" height="18" x="3" y="4" rx="2"></rect>
                 <path d="M3 10h18"></path>
               </svg>
-              <span>
-                {created}
-              </span>
+              <span>{created}</span>
             </span>
 
             <span className="flex items-center gap-1">
@@ -207,15 +204,17 @@ export function NoteEditorHeader({
                 <path d="M12 6v6l4 2"></path>
                 <circle cx="12" cy="12" r="10"></circle>
               </svg>
-              <span>
-                {updated}
-              </span>
+              <span>{updated}</span>
             </span>
           </div>
-          <TagPills tags={tags} onClick={onTagClick} onRemove={(tag) => {
-            removeTag(noteId, tag)
-            onTagRemove?.(tag)
-          }} />
+          <TagPills
+            tags={tags}
+            onClick={onTagClick}
+            onRemove={(tag) => {
+              removeTag(noteId, tag);
+              onTagRemove?.(tag);
+            }}
+          />
         </div>
         <div className="px-4 pb-3">
           <DynamicTabsBar

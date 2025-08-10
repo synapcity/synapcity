@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import * as React from "react";
 import { useWidgetGalleryController, useWidgets } from "@/landing-page/hooks";
 import { WidgetRenderer } from "./WidgetRenderer";
@@ -7,16 +7,9 @@ import { Scroll as ScrollContainer, MotionDiv, MarqueeScroller } from "@/landing
 import { useRef } from "react";
 
 export const WidgetGallery = () => {
-  const {
-    widgets,
-    loading,
-    x,
-    controls,
-    start,
-    stop,
-  } = useWidgetGalleryController();
+  const { widgets, loading, x, controls, start, stop } = useWidgetGalleryController();
   const { loadMore } = useWidgets();
-  const scrollRef = useRef(null)
+  const scrollRef = useRef(null);
 
   const handleClick = React.useCallback(() => stop(), [stop]);
   const handleHoverLeave = React.useCallback(() => start(), [start]);
@@ -30,25 +23,18 @@ export const WidgetGallery = () => {
       animate="visible"
       variants={containerVariants}
       transition={{
-        duration: 0.3
+        duration: 0.3,
       }}
     >
-
       <MotionDiv
         animate={controls}
         style={{ x }}
         className="flex size-full justify-center items-center gap-16"
       >
-        <ScrollContainer
-          ref={scrollRef}
-          direction="horizontal"
-          dragScroll
-          showProgressBar
-          snap
-        >
+        <ScrollContainer ref={scrollRef} direction="horizontal" dragScroll showProgressBar snap>
           <MarqueeScroller>
             {[...widgets, ...widgets].map((widget, index) => {
-              const isLast = index === (widgets.length * 1.5) - 1;
+              const isLast = index === widgets.length * 1.5 - 1;
               return (
                 <WidgetRenderer
                   key={widget.id + index}
@@ -62,9 +48,7 @@ export const WidgetGallery = () => {
         </ScrollContainer>
       </MotionDiv>
 
-      {loading && (
-        <p className="text-center py-4 text-neutral-400">Loading...</p>
-      )}
+      {loading && <p className="text-center py-4 text-neutral-400">Loading...</p>}
     </MotionDiv>
   );
 };

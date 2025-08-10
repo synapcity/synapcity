@@ -8,21 +8,19 @@ export function fmtTime(iso: string | undefined) {
   });
 }
 
-export function isTimeOrderValid(
-        events: { start: string; end?: string }[]
-): boolean {
-        const normalized = events
-                .map((e) => ({
-                        start: new Date(e.start).getTime(),
-                        end: new Date(e.end ?? e.start).getTime(),
-                }))
-                .sort((a, b) => a.start - b.start);
+export function isTimeOrderValid(events: { start: string; end?: string }[]): boolean {
+  const normalized = events
+    .map((e) => ({
+      start: new Date(e.start).getTime(),
+      end: new Date(e.end ?? e.start).getTime(),
+    }))
+    .sort((a, b) => a.start - b.start);
 
-        for (let i = 0; i < normalized.length; ++i) {
-                const { start, end } = normalized[i];
-                if (isNaN(start) || isNaN(end)) return false;
-                const next = normalized[i + 1];
-                if (next && end > next.start) return false;
-        }
-        return true;
+  for (let i = 0; i < normalized.length; ++i) {
+    const { start, end } = normalized[i];
+    if (isNaN(start) || isNaN(end)) return false;
+    const next = normalized[i + 1];
+    if (next && end > next.start) return false;
+  }
+  return true;
 }

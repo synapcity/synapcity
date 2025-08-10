@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { usePathname } from "next/navigation"
+import { usePathname } from "next/navigation";
 
 export function useNavLinkActive(href: string) {
-  const pathname = usePathname()
-  return pathname === href || (pathname.startsWith(href) && href !== "/")
+  const pathname = usePathname();
+  return pathname === href || (pathname.startsWith(href) && href !== "/");
 }

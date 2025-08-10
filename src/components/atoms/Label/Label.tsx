@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import * as React from "react";
 import { UILabel, Icon } from "@/components/atoms";
@@ -17,12 +17,8 @@ const Label = ({ className, icon, error = false, helperText, ...props }: LabelPr
         {icon && <Icon name={icon} className="mr-2" />}
         {props.children}
       </UILabel>
-      {helperText && !error && (
-        <p className="text-xs text-muted-foreground mt-1">{helperText}</p>
-      )}
-      {error && (
-        <p className="text-xs text-red-500 mt-1">This field is required</p>
-      )}
+      {helperText && !error && <p className="text-xs text-muted-foreground mt-1">{helperText}</p>}
+      {error && <p className="text-xs text-red-500 mt-1">This field is required</p>}
     </div>
   );
 };

@@ -1,16 +1,8 @@
 import React from "react";
-import {
-  render,
-  screen,
-  waitFor,
-  act as rtlAct,
-} from "@testing-library/react";
+import { render, screen, waitFor, act as rtlAct } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { z } from "zod";
-import {
-  FormWrapperWithRender,
-  FormWrapper,
-} from "./FormWrapper";
+import { FormWrapperWithRender, FormWrapper } from "./FormWrapper";
 import {
   FormField,
   FormItem,
@@ -69,10 +61,7 @@ describe("FormWrapperWithRender", () => {
     await user.click(screen.getByRole("button"));
 
     await waitFor(() =>
-      expect(onSubmit).toHaveBeenCalledWith(
-        { email: "user@example.com" },
-        expect.anything()
-      )
+      expect(onSubmit).toHaveBeenCalledWith({ email: "user@example.com" }, expect.anything())
     );
   });
 
@@ -84,7 +73,7 @@ describe("FormWrapperWithRender", () => {
         <FormWrapperWithRender
           schema={schema}
           defaultValues={{ email: "" }}
-          onSubmit={() => { }}
+          onSubmit={() => {}}
           onError={onError}
           showSubmitButton
           render={(methods) => (
@@ -123,7 +112,7 @@ describe("FormWrapperWithRender", () => {
         <FormWrapperWithRender
           schema={schema}
           defaultValues={{ email: "" }}
-          onSubmit={() => { }}
+          onSubmit={() => {}}
           methodsRef={ref}
           render={() => <div />}
         />
@@ -139,7 +128,7 @@ describe("FormWrapperWithRender", () => {
         <FormWrapperWithRender
           schema={schema}
           defaultValues={{ email: "" }}
-          onSubmit={() => { }}
+          onSubmit={() => {}}
           showSubmitButton
           loading
           submitLabel="Save"
@@ -263,10 +252,7 @@ describe("FormWrapper (static children)", () => {
 
     await rtlAct(async () => {
       render(
-        <FormWrapper<{ email: string }>
-          onSubmit={onSubmit}
-          defaultValues={{ email: "" }}
-        >
+        <FormWrapper<{ email: string }> onSubmit={onSubmit} defaultValues={{ email: "" }}>
           <input name="email" />
         </FormWrapper>
       );

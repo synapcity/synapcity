@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useDashboardStore } from "@/stores";
 import { useShallow } from "zustand/shallow";
@@ -6,21 +6,19 @@ import { EditableText } from "../molecules/EditableText";
 import { cn } from "@/utils";
 import { Icon } from "../atoms";
 
-export const DashboardHeader = ({ dashboardId }: { dashboardId: string; }) => {
-  const updateName = useDashboardStore(useShallow(s => s.updateName))
+export const DashboardHeader = ({ dashboardId }: { dashboardId: string }) => {
+  const updateName = useDashboardStore(useShallow((s) => s.updateName));
 
   const { name, status } = useDashboardStore(
     useShallow((s) => ({
       name: s.items[dashboardId]?.name,
       status: s.status[dashboardId],
       createdAt: s.items[dashboardId]?.createdAt,
-      updatedAt: s.items[dashboardId]?.updatedAt
+      updatedAt: s.items[dashboardId]?.updatedAt,
     }))
   );
-  const startStatus = useDashboardStore(s => s.startStatus)
-  const clearStatus = useDashboardStore(s => s.resetStatus)
-
-
+  const startStatus = useDashboardStore((s) => s.startStatus);
+  const clearStatus = useDashboardStore((s) => s.resetStatus);
 
   const getStatus = () => {
     if (!status) {
@@ -64,14 +62,14 @@ export const DashboardHeader = ({ dashboardId }: { dashboardId: string; }) => {
         as="h4"
         value={name ?? ""}
         onSave={(value: string) => {
-          updateName(dashboardId, value)
-          clearStatus()
+          updateName(dashboardId, value);
+          clearStatus();
         }}
         onEdit={() => {
-          startStatus("editing", dashboardId)
+          startStatus("editing", dashboardId);
         }}
       />
       {getStatus()}
     </div>
-  )
-}
+  );
+};

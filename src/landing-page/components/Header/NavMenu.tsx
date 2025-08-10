@@ -1,5 +1,3 @@
 export const NavMenu = () => {
-  return (
-    <div className="mx-auto"></div>
-  )
-}
+  return <div className="mx-auto"></div>;
+};

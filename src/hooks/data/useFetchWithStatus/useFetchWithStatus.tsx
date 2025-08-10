@@ -28,8 +28,6 @@
 //   return { data, loading };
 // }
 
-
-
 "use client";
 
 import { useState, useEffect } from "react";
@@ -51,7 +49,7 @@ export function useFetchWithStatus<T>(
     setLoading(true);
 
     withStatusAndToast<T>(statusField, fetcher, messages)
-      .then(res => {
+      .then((res) => {
         if (!cancelled && res !== undefined) {
           setData(res);
         }

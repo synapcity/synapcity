@@ -41,7 +41,6 @@ interface SelectProps {
   className?: string;
 }
 
-
 export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
   (
     {
@@ -57,7 +56,7 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
       name,
       size = "default",
       className,
-      groupedOptions
+      groupedOptions,
     },
     ref
   ) => {
@@ -69,10 +68,7 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
     return (
       <div className="bg-(--background) text-(--foreground)">
         {label && (
-          <label
-            htmlFor={selectId}
-            className="text-sm font-medium text-(--foreground)"
-          >
+          <label htmlFor={selectId} className="text-sm font-medium text-(--foreground)">
             {label}
           </label>
         )}
@@ -96,37 +92,42 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
 
           <UISelectContent className="bg-(--background) text-(--foreground)">
             <UISelectScrollUpButton />
-            {groupedOptions && groupedOptions.length > 0 || isGrouped
+            {(groupedOptions && groupedOptions.length > 0) || isGrouped
               ? groupedOptions?.map((group, index) => (
-                // <React.Fragment key={group.label ?? index}>
-                <UISelectGroup key={group.label ?? index} className="bg-(--background) text-(--foreground)">
-                  {group.label && <UISelectLabel>{group.label}</UISelectLabel>}
-                  {group.options.map((opt) => (
-                    <UISelectItem
-                      key={opt.value}
-                      value={opt.value}
-                      disabled={opt.disabled}
-                      aria-disabled={opt.disabled}
-                      className="hover:cursor-pointer hover:bg-(--primary-background) hover:text-(--foreground)"
-                    >
-                      {opt.label}
-                    </UISelectItem>
-                  ))}
-                  {index < groupedOptions.length - 1 && <UISelectSeparator data-testid="select-separator" />}
-                </UISelectGroup>
-                // </React.Fragment>
-              ))
+                  // <React.Fragment key={group.label ?? index}>
+                  <UISelectGroup
+                    key={group.label ?? index}
+                    className="bg-(--background) text-(--foreground)"
+                  >
+                    {group.label && <UISelectLabel>{group.label}</UISelectLabel>}
+                    {group.options.map((opt) => (
+                      <UISelectItem
+                        key={opt.value}
+                        value={opt.value}
+                        disabled={opt.disabled}
+                        aria-disabled={opt.disabled}
+                        className="hover:cursor-pointer hover:bg-(--primary-background) hover:text-(--foreground)"
+                      >
+                        {opt.label}
+                      </UISelectItem>
+                    ))}
+                    {index < groupedOptions.length - 1 && (
+                      <UISelectSeparator data-testid="select-separator" />
+                    )}
+                  </UISelectGroup>
+                  // </React.Fragment>
+                ))
               : options?.map((opt) => (
-                <UISelectItem
-                  key={opt.value}
-                  value={opt.value}
-                  disabled={opt.disabled}
-                  aria-disabled={opt.disabled}
-                  className="bg-(--background) text-(--foreground) hover:cursor-pointer hover:bg-(--primary-background) hover:text-(--foreground)"
-                >
-                  {opt.label}
-                </UISelectItem>
-              ))}
+                  <UISelectItem
+                    key={opt.value}
+                    value={opt.value}
+                    disabled={opt.disabled}
+                    aria-disabled={opt.disabled}
+                    className="bg-(--background) text-(--foreground) hover:cursor-pointer hover:bg-(--primary-background) hover:text-(--foreground)"
+                  >
+                    {opt.label}
+                  </UISelectItem>
+                ))}
 
             <UISelectScrollDownButton />
           </UISelectContent>
@@ -138,11 +139,7 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
           </p>
         )}
         {error && (
-          <p
-            id={`${selectId}-error`}
-            role="alert"
-            className="text-xs text-destructive"
-          >
+          <p id={`${selectId}-error`} role="alert" className="text-xs text-destructive">
             {error}
           </p>
         )}

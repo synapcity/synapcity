@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import type { SortKey, SortDir } from '../../atoms/controls';
-import { SkeletonOrLoading } from '@/components/loading';
-import dynamic from 'next/dynamic';
-import { DropdownMenuSkeleton } from '@/components/loading/skeletons/DropdownMenuSkeleton';
+import * as React from "react";
+import type { SortKey, SortDir } from "../../atoms/controls";
+import { SkeletonOrLoading } from "@/components/loading";
+import dynamic from "next/dynamic";
+import { DropdownMenuSkeleton } from "@/components/loading/skeletons/DropdownMenuSkeleton";
 
 export interface FilterChip {
   label: string;
@@ -26,9 +26,29 @@ interface Props {
   isSearching?: boolean;
 }
 
-const SortControl = dynamic(() => import("@/components/atoms/controls/SortControl/SortControl").then(mod => mod.SortControl), { ssr: false, loading: ({ isLoading }) => <SkeletonOrLoading isLoading={isLoading} skeleton={<DropdownMenuSkeleton />} /> })
-const DateRangePicker = dynamic(() => import("@/components/atoms/controls/DateRangePicker").then(mod => mod.DateRangePicker), { ssr: false, loading: ({ isLoading }) => <SkeletonOrLoading isLoading={isLoading} skeleton={<DropdownMenuSkeleton />} /> })
-const SearchInput = dynamic(() => import("@/components/atoms/controls/SearchInput").then(mod => mod.SearchInput), { ssr: false, loading: ({ isLoading }) => <SkeletonOrLoading isLoading={isLoading} /> })
+const SortControl = dynamic(
+  () =>
+    import("@/components/atoms/controls/SortControl/SortControl").then((mod) => mod.SortControl),
+  {
+    ssr: false,
+    loading: ({ isLoading }) => (
+      <SkeletonOrLoading isLoading={isLoading} skeleton={<DropdownMenuSkeleton />} />
+    ),
+  }
+);
+const DateRangePicker = dynamic(
+  () => import("@/components/atoms/controls/DateRangePicker").then((mod) => mod.DateRangePicker),
+  {
+    ssr: false,
+    loading: ({ isLoading }) => (
+      <SkeletonOrLoading isLoading={isLoading} skeleton={<DropdownMenuSkeleton />} />
+    ),
+  }
+);
+const SearchInput = dynamic(
+  () => import("@/components/atoms/controls/SearchInput").then((mod) => mod.SearchInput),
+  { ssr: false, loading: ({ isLoading }) => <SkeletonOrLoading isLoading={isLoading} /> }
+);
 
 export function DashboardsControlsBar({
   searchTerm,
@@ -49,10 +69,15 @@ export function DashboardsControlsBar({
         value={searchTerm}
         onChange={onSearchChange}
         isLoading={isSearching}
-        onClear={() => onSearchChange('')}
+        onClear={() => onSearchChange("")}
       />
 
-      <SortControl sortDir={sortDir} sortKey={sortKey} onKeyChange={onSortKeyChange} onDirToggle={toggleSortDir} />
+      <SortControl
+        sortDir={sortDir}
+        sortKey={sortKey}
+        onKeyChange={onSortKeyChange}
+        onDirToggle={toggleSortDir}
+      />
 
       <DateRangePicker
         from={dateFrom}

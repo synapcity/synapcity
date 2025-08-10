@@ -10,8 +10,6 @@ export const MailCard = (item: any) => (
       <span className="ml-auto text-xs">{item.date}</span>
     </div>
     <span className="font-medium">{item.subject}</span>
-    <span className="line-clamp-2 w-[260px] text-xs whitespace-break-spaces">
-      {item.teaser}
-    </span>
+    <span className="line-clamp-2 w-[260px] text-xs whitespace-break-spaces">{item.teaser}</span>
   </a>
-)
+);

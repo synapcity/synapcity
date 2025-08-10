@@ -9,7 +9,9 @@ const TodoPropsSchema = z.object({
 });
 const TodoSettingsSchema = z.object({
   groupBy: z.union([z.literal("none"), z.literal("tag"), z.literal("priority")]).default("none"),
-  sortBy: z.union([z.literal("createdAt"), z.literal("updatedAt"), z.literal("dueDate")]).default("createdAt"),
+  sortBy: z
+    .union([z.literal("createdAt"), z.literal("updatedAt"), z.literal("dueDate")])
+    .default("createdAt"),
 });
 
 export const todoWidget = defineWidget({
@@ -35,5 +37,7 @@ export const todoWidget = defineWidget({
     minW: 3,
     minH: 3,
   },
-  getComponent: lazyWidget(async () => import("./TodoWidget").then(mod => ({ default: mod.TodoWidget}))),
+  getComponent: lazyWidget(async () =>
+    import("./TodoWidget").then((mod) => ({ default: mod.TodoWidget }))
+  ),
 });

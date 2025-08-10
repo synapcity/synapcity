@@ -16,10 +16,7 @@ import { Button } from "@/components/atoms";
 import { cn } from "@/utils";
 
 // 👇🏽 ONLY ONE DEFINITION of BaseFormProps!
-export type BaseFormProps<
-  TInput extends FieldValues,
-  TOutput extends TInput = TInput
-> = {
+export type BaseFormProps<TInput extends FieldValues, TOutput extends TInput = TInput> = {
   schema?: ZodType<TOutput, TInput>;
   defaultValues?: UseFormProps<TInput>["defaultValues"];
   onSubmit: (values: TOutput) => void | Promise<void>;
@@ -32,10 +29,7 @@ export type BaseFormProps<
   methodsRef?: React.RefObject<UseFormReturn<TInput> | null>;
 } & React.FormHTMLAttributes<HTMLFormElement>;
 
-export function FormWrapper<
-  TInput extends FieldValues,
-  TOutput extends TInput = TInput
->({
+export function FormWrapper<TInput extends FieldValues, TOutput extends TInput = TInput>({
   schema,
   defaultValues,
   onSubmit,
@@ -55,7 +49,6 @@ export function FormWrapper<
     shouldUnregister: false,
     mode: "onSubmit",
   });
-
 
   React.useEffect(() => {
     if (methodsRef) methodsRef.current = methods;
@@ -91,15 +84,12 @@ export function FormWrapper<
 
 export type FormWrapperWithRenderProps<
   TInput extends FieldValues,
-  TOutput extends TInput = TInput
+  TOutput extends TInput = TInput,
 > = BaseFormProps<TInput, TOutput> & {
   render: (methods: UseFormReturn<TInput>) => React.ReactElement;
 };
 
-export function FormWrapperWithRender<
-  TInput extends FieldValues,
-  TOutput extends TInput = TInput
->({
+export function FormWrapperWithRender<TInput extends FieldValues, TOutput extends TInput = TInput>({
   schema,
   defaultValues,
   onSubmit,
@@ -119,7 +109,6 @@ export function FormWrapperWithRender<
     shouldUnregister: false,
     mode: "onSubmit",
   });
-
 
   React.useEffect(() => {
     if (methodsRef) methodsRef.current = methods;

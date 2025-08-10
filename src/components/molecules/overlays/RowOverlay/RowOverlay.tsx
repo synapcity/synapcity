@@ -7,12 +7,7 @@ interface RowOverlayProps {
   rowHeight: number;
 }
 
-const RowOverlay: React.FC<RowOverlayProps> = ({
-  rows,
-  marginY,
-  containerPaddingY,
-  rowHeight,
-}) => {
+const RowOverlay: React.FC<RowOverlayProps> = ({ rows, marginY, containerPaddingY, rowHeight }) => {
   return (
     <div
       className="absolute inset-0 z-10 pointer-events-none flex flex-col px-[10px]"
@@ -30,6 +25,6 @@ const RowOverlay: React.FC<RowOverlayProps> = ({
       ))}
     </div>
   );
-}
+};
 
 export default RowOverlay;

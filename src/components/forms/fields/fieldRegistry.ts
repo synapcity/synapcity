@@ -2,16 +2,16 @@
 import { InputField } from "./Input/InputField";
 
 import type {
-	// BaseFieldComponent,
-	FieldDefinition,
-	FieldType,
-	// SelectFieldProps,
+  // BaseFieldComponent,
+  FieldDefinition,
+  FieldType,
+  // SelectFieldProps,
 } from "@/types/form";
 import { SelectField } from "./Select/SelectField";
 // import { FormatSelect } from "@/components/tables/Table/TableControls/ExportButton/FormatSelect";
 
 export type EmptyProps = {
-	[key: string]: any;
+  [key: string]: any;
 };
 
 // export type FieldRegistryMap = {
@@ -25,19 +25,19 @@ export type EmptyProps = {
 // > | null;
 
 type FieldComponent = React.FC<{
-	config: FieldDefinition;
-	meta?: FieldDefinition["meta"];
-	field: any;
-	trigger?: (name: string) => void;
-	[key: string]: any;
+  config: FieldDefinition;
+  meta?: FieldDefinition["meta"];
+  field: any;
+  trigger?: (name: string) => void;
+  [key: string]: any;
 }>;
 
 export const fieldRegistry: Record<FieldType, FieldComponent> = {
-	text: InputField,
-	// textarea: TextareaField,
-	// checkbox: CheckboxField,
-	// url: UrlField,
-	select: SelectField,
-	// exportType: FormatSelect,
-	password: InputField,
+  text: InputField,
+  // textarea: TextareaField,
+  // checkbox: CheckboxField,
+  // url: UrlField,
+  select: SelectField,
+  // exportType: FormatSelect,
+  password: InputField,
 };

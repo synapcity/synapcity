@@ -5,17 +5,17 @@ import type { FontSizeToken } from "./fonts";
 export type ThemeMode = "light" | "dark";
 
 export interface ThemePreferences {
-	language: string;
-	mode: ThemeMode;
+  language: string;
+  mode: ThemeMode;
 
-	primary: SemanticColor;
-	accent: SemanticColor;
+  primary: SemanticColor;
+  accent: SemanticColor;
 
-	fontSize: FontSizeToken;
-	fontFamilyBody: string;
-	fontFamilyHeading: string;
+  fontSize: FontSizeToken;
+  fontFamilyBody: string;
+  fontFamilyHeading: string;
 
-	inheritsFromGlobalTheme: boolean;
+  inheritsFromGlobalTheme: boolean;
 }
 
 export type ThemeScope = "global" | EntityType;

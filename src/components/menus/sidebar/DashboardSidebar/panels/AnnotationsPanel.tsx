@@ -1,9 +1,5 @@
 "use client";
 
 export default function CommentsPanel() {
-  return (
-    <div>
-      Comments
-    </div>
-  )
+  return <div>Comments</div>;
 }

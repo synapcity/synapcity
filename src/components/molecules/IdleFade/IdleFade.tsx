@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { motion, HTMLMotionProps } from 'framer-motion';
-import { useIdle } from '@/hooks/interaction/useIdle';
-import { cn } from '@/utils';
+import { motion, HTMLMotionProps } from "framer-motion";
+import { useIdle } from "@/hooks/interaction/useIdle";
+import { cn } from "@/utils";
 
-export interface IdleFadeProps extends HTMLMotionProps<'div'> {
+export interface IdleFadeProps extends HTMLMotionProps<"div"> {
   /** Milliseconds before children fade out */
   delay?: number;
   /** Disable the idle fade behavior */
@@ -42,7 +42,7 @@ export function IdleFade({
       initial={{ opacity: 1 }}
       animate={{ opacity: shouldHide ? 0 : 1 }}
       transition={{ duration: 0.3 }}
-      className={cn(className, 'pointer-events-auto')}
+      className={cn(className, "pointer-events-auto")}
       style={style}
       {...rest}
     >

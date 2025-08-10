@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useState, useEffect } from "react";
 import { ScheduleEvent, useScheduleStore } from "@/stores/scheduleStore";
@@ -7,15 +7,17 @@ import { NoteEditorMini } from "../NoteEditorMini";
 import { SidebarModal } from "../SidebarModal";
 import { Note } from "@/stores";
 
-export function EventActions({ event }: { event: import("@/stores/scheduleStore/useScheduleStore/useScheduleStore").ScheduleEvent }) {
-  const updateEvent = useScheduleStore(s => s.updateEvent);
-  const addNote = useNoteStore(s => s.addResource);
-  const getNoteById = useNoteStore(s => s.getResourceById);
+export function EventActions({
+  event,
+}: {
+  event: import("@/stores/scheduleStore/useScheduleStore/useScheduleStore").ScheduleEvent;
+}) {
+  const updateEvent = useScheduleStore((s) => s.updateEvent);
+  const addNote = useNoteStore((s) => s.addResource);
+  const getNoteById = useNoteStore((s) => s.getResourceById);
 
-  const noteResource = event.resources?.find(r => r.type === "note");
-  const linkedNote = noteResource?.resourceId
-    ? getNoteById(noteResource.resourceId)
-    : undefined;
+  const noteResource = event.resources?.find((r) => r.type === "note");
+  const linkedNote = noteResource?.resourceId ? getNoteById(noteResource.resourceId) : undefined;
 
   const [note, setNote] = useState<Note | undefined>(linkedNote);
   const [showMini, setShowMini] = useState(false);
@@ -27,7 +29,7 @@ export function EventActions({ event }: { event: import("@/stores/scheduleStore/
 
   async function handleTakeNotes(event: ScheduleEvent) {
     if (note) {
-      setShowMini(v => !v);
+      setShowMini((v) => !v);
       return;
     }
     const newNote = await addNote({
@@ -51,16 +53,16 @@ export function EventActions({ event }: { event: import("@/stores/scheduleStore/
 
   return (
     <div>
-      <button onClick={() => handleTakeNotes(event)} className="text-xs underline flex items-center gap-1 mt-2">
+      <button
+        onClick={() => handleTakeNotes(event)}
+        className="text-xs underline flex items-center gap-1 mt-2"
+      >
         📝 {note ? (showMini ? "Hide Notes" : "Take/Continue Notes") : "Take Notes"}
       </button>
       {showMini && note && (
         <div className="mt-2 border-t pt-2">
           <NoteEditorMini noteId={note.id} />
-          <button
-            className="mt-2 text-xs underline text-primary"
-            onClick={handleOpenFull}
-          >
+          <button className="mt-2 text-xs underline text-primary" onClick={handleOpenFull}>
             Open as Full Note
           </button>
           <SidebarModal open={showFull} onClose={() => setShowFull(false)}>

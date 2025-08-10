@@ -6,20 +6,21 @@ import type { Note } from "@/stores/resources/noteStore/note-schema";
 import type { StatusField } from "@/types/ui";
 
 export function useUpdateNote(noteId: string) {
-  const status = useNoteStore(s => s.status)
-  const updateResource = useNoteStore(s => s.updateResource);
-  const startStatus = useNoteStore(s => s.startStatus);
-  const finishStatus = useNoteStore(s => s.finishStatus);
-  const failStatus = useNoteStore(s => s.failStatus);
+  const status = useNoteStore((s) => s.status);
+  const updateResource = useNoteStore((s) => s.updateResource);
+  const startStatus = useNoteStore((s) => s.startStatus);
+  const finishStatus = useNoteStore((s) => s.finishStatus);
+  const failStatus = useNoteStore((s) => s.failStatus);
 
   const editNote = useCallback(
     (ref: RefObject<HTMLElement | null>) => {
-      startStatus("editing", noteId)
+      startStatus("editing", noteId);
       ref.current?.addEventListener("blur", () => {
-        finishStatus("editing", noteId)
-      })
-    }, [noteId, startStatus, finishStatus]
-  )
+        finishStatus("editing", noteId);
+      });
+    },
+    [noteId, startStatus, finishStatus]
+  );
 
   const updateNote = useCallback(
     async (updates: Partial<Note>, status: StatusField = "saving") => {
@@ -40,6 +41,6 @@ export function useUpdateNote(noteId: string) {
   return {
     updateNote,
     editNote,
-    status
+    status,
   };
 }

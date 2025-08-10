@@ -65,25 +65,12 @@ describe("CommandMenu - Full Coverage", () => {
   });
 
   it("respects `showCloseButton=false`", () => {
-    render(
-      <CommandMenu
-        groups={mockGroups}
-        open
-        showCloseButton={false}
-        title="Test"
-      />
-    );
+    render(<CommandMenu groups={mockGroups} open showCloseButton={false} title="Test" />);
     expect(screen.queryByLabelText(/close/i)).not.toBeInTheDocument();
   });
 
   it("respects custom search placeholder", () => {
-    render(
-      <CommandMenu
-        open
-        groups={mockGroups}
-        searchPlaceholder="Search actions..."
-      />
-    );
+    render(<CommandMenu open groups={mockGroups} searchPlaceholder="Search actions..." />);
     expect(screen.getByPlaceholderText("Search actions...")).toBeInTheDocument();
   });
 
@@ -114,7 +101,6 @@ describe("CommandMenu - Full Coverage", () => {
     await user.click(screen.getByText("Open"));
 
     rerender(<CommandMenu groups={mockGroups} />);
-
   });
 
   it("does not throw if onOpenChange is undefined in controlled mode", async () => {
@@ -123,12 +109,11 @@ describe("CommandMenu - Full Coverage", () => {
     render(<CommandMenu groups={mockGroups} open={true} />);
 
     await user.click(screen.getByText("Open"));
-
   });
 
   it("does not throw when onOpenChange is undefined", async () => {
     const user = userEvent.setup();
-    const consoleSpy = jest.spyOn(console, "error").mockImplementation(() => { });
+    const consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {});
 
     render(<CommandMenu open={true} groups={mockGroups} />);
     await user.click(screen.getByText("Open"));

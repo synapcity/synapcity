@@ -7,7 +7,9 @@ import { Logo } from "./Logo";
 import { Navbar } from "./Navbar";
 import dynamic from "next/dynamic";
 
-const MotionDiv = dynamic(() => import("../ui/Motion").then((mod) => mod.MotionDiv), { ssr: false })
+const MotionDiv = dynamic(() => import("../ui/Motion").then((mod) => mod.MotionDiv), {
+  ssr: false,
+});
 
 export const Header = ({ visible }: { visible: boolean }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -40,7 +42,13 @@ export const Header = ({ visible }: { visible: boolean }) => {
             key="header"
             animate={{ y: visible ? 0 : -40, opacity: visible ? 1 : 0 }}
             exit={{ y: -40, opacity: 0 }}
-            transition={{ type: "spring", stiffness: 250, damping: 30, duration: 0.6, ease: "linear" }}
+            transition={{
+              type: "spring",
+              stiffness: 250,
+              damping: 30,
+              duration: 0.6,
+              ease: "linear",
+            }}
             className={clsx(
               "fixed top-0 left-0 right-0 z-50 shadow-sm flex justify-between items-center px-8 h-16 drop-shadow-2xl",
               {

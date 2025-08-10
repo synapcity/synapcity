@@ -43,7 +43,7 @@ function run(cwd: string, envVars?: NodeJS.ProcessEnv) {
     });
   } catch (e) {
     throw new Error(
-      `generate-sitemap script failed (cwd: ${cwd}). See output above. ${(e as Error).message}`,
+      `generate-sitemap script failed (cwd: ${cwd}). See output above. ${(e as Error).message}`
     );
   }
 

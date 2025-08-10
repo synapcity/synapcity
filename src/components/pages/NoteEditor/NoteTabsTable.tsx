@@ -19,7 +19,6 @@
 // export function NoteTabsTable({ noteId }: NoteTabsTableProps) {
 //   // const tabMap = useTabsStore((s) => s.tabs['note']?.[noteId] ?? {});
 
-
 //   const getTabsFor = useNoteViewStore(s => s.)
 //   const tabMap = useMemo(() => getTabsFor ? getTabsFor(noteId) : {}, [getTabsFor, noteId])
 //   const tabs = useMemo(() => Object.values(tabMap ?? {}), [tabMap]) as Tab[];
@@ -29,7 +28,6 @@
 //   // const setActive = useTabsStore((s) => s.setActiveTab);
 //   // const setTabs = useTabsStore((s) => s.setTabs);
 //   // const deleteTab = useTabsStore((s) => s.deleteTab);
-
 
 //   React.useEffect(() => {
 //     const currentTabs = useTabsStore.getState().tabs['note']?.[noteId] ?? {};
@@ -132,9 +130,5 @@
 // }
 
 export const NoteTabTable = () => {
-  return (
-    <div>
-      Tabs
-    </div>
-  )
-}
+  return <div>Tabs</div>;
+};

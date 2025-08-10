@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
   Sheet as UISheet,
@@ -10,26 +10,25 @@ import {
   SheetFooter as UISheetFooter,
   SheetClose as UISheetClose,
 } from "@/components/atoms/ui/sheet";
-import * as React from "react"
-import { Button } from "@/components/atoms"
-import { cn } from "@/utils"
-
+import * as React from "react";
+import { Button } from "@/components/atoms";
+import { cn } from "@/utils";
 
 export interface DrawerProps {
-  trigger?: React.ReactNode
-  title?: React.ReactNode
-  description?: React.ReactNode
-  children?: React.ReactNode
-  footer?: React.ReactNode
-  side?: "top" | "right" | "bottom" | "left"
-  open?: boolean
-  defaultOpen?: boolean
-  onOpenChange?: (open: boolean) => void
-  showCloseButton?: boolean
-  showFooterClose?: boolean
-  className?: string
-  showTitle?: boolean
-  showDescription?: boolean
+  trigger?: React.ReactNode;
+  title?: React.ReactNode;
+  description?: React.ReactNode;
+  children?: React.ReactNode;
+  footer?: React.ReactNode;
+  side?: "top" | "right" | "bottom" | "left";
+  open?: boolean;
+  defaultOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  showCloseButton?: boolean;
+  showFooterClose?: boolean;
+  className?: string;
+  showTitle?: boolean;
+  showDescription?: boolean;
 }
 
 export const Drawer: React.FC<DrawerProps> = ({
@@ -52,10 +51,10 @@ export const Drawer: React.FC<DrawerProps> = ({
     <UISheet open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
       {trigger && <UISheetTrigger asChild>{trigger}</UISheetTrigger>}
       <UISheetContent side={side} className={cn("p-0", className)}>
-        <UISheetHeader className={cn("border-b px-4 py-3", { "sr-only": !showTitle && !showDescription })}>
-          <UISheetTitle className={cn({ "sr-only": !showTitle })}>
-            {title ?? "Drawer"}
-          </UISheetTitle>
+        <UISheetHeader
+          className={cn("border-b px-4 py-3", { "sr-only": !showTitle && !showDescription })}
+        >
+          <UISheetTitle className={cn({ "sr-only": !showTitle })}>{title ?? "Drawer"}</UISheetTitle>
           <UISheetDescription className={cn({ "sr-only": !showDescription })}>
             {description ?? ""}
           </UISheetDescription>
@@ -68,18 +67,18 @@ export const Drawer: React.FC<DrawerProps> = ({
             {footer}
             {showFooterClose && (
               <UISheetClose asChild>
-                <Button data-testid="footer-close-button" variant="outline">Close</Button>
+                <Button data-testid="footer-close-button" variant="outline">
+                  Close
+                </Button>
               </UISheetClose>
             )}
           </UISheetFooter>
         )}
 
-        {showCloseButton && !footer && (
-          <UISheetClose className="sr-only">Close</UISheetClose>
-        )}
+        {showCloseButton && !footer && <UISheetClose className="sr-only">Close</UISheetClose>}
       </UISheetContent>
     </UISheet>
-  )
-}
+  );
+};
 
-Drawer.displayName = "Drawer"
+Drawer.displayName = "Drawer";

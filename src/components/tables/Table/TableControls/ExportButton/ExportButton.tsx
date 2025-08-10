@@ -1,18 +1,18 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { DownloadIcon, Loader } from 'lucide-react';
-import { Button, Icon, IconButton } from '@/components/atoms';
-import { ModalRenderer } from '@/components/modals';
-import { FormatPicker } from './FormatPicker';
-import { useExport } from '@/hooks/editor/useExport/useExport';
-import type { Format } from '@/types/export';
+import React from "react";
+import { DownloadIcon, Loader } from "lucide-react";
+import { Button, Icon, IconButton } from "@/components/atoms";
+import { ModalRenderer } from "@/components/modals";
+import { FormatPicker } from "./FormatPicker";
+import { useExport } from "@/hooks/editor/useExport/useExport";
+import type { Format } from "@/types/export";
 
 export interface ExportButtonProps {
   data: Record<string, unknown>[];
   /** 'table' allows all formats; 'document' only pdf/txt */
-  exportAs?: 'table' | 'document';
-  dataType?: 'default' | 'nested' | 'flattened' | 'lexical';
+  exportAs?: "table" | "document";
+  dataType?: "default" | "nested" | "flattened" | "lexical";
   /** Limits formats to this list before applying exportAs rules */
   exportFormats?: Format[];
   /** When true in 'table' mode, nested fields are merged/flattened upstream */
@@ -21,22 +21,21 @@ export interface ExportButtonProps {
 
 export function ExportButton({
   data,
-  exportAs = 'table',
-  dataType = 'default',
+  exportAs = "table",
+  dataType = "default",
   exportFormats,
   mergeNested = false,
 }: ExportButtonProps) {
-  const {
-    format,
-    setFormat,
-    loading,
-    formats,
-    triggerRef,
-    onStartExport,
-  } = useExport({ data, exportAs, dataType, mergeNested, exportFormats });
+  const { format, setFormat, loading, formats, triggerRef, onStartExport } = useExport({
+    data,
+    exportAs,
+    dataType,
+    mergeNested,
+    exportFormats,
+  });
 
   const ariaLabel = `Export as ${format.toUpperCase()}`;
-  const isDocumentMode = exportAs === 'document';
+  const isDocumentMode = exportAs === "document";
 
   return (
     <>
@@ -46,7 +45,7 @@ export function ExportButton({
             ref={triggerRef}
             onClick={onStartExport}
             disabled={loading}
-            icon={loading ? 'loader2' : 'export'}
+            icon={loading ? "loader2" : "export"}
             aria-label={ariaLabel}
             tooltip={ariaLabel}
             aria-busy={loading}
@@ -78,9 +77,9 @@ export function ExportButton({
               variant="outline"
               className="inline-flex items-center gap-1"
               // icon={loading ? "loader2" : "export"}
-              tooltip={loading
-                ? `Preparing ${format.toUpperCase()}...`
-                : `Export ${format.toUpperCase()}`}
+              tooltip={
+                loading ? `Preparing ${format.toUpperCase()}...` : `Export ${format.toUpperCase()}`
+              }
             >
               {loading ? (
                 <Loader className="animate-spin w-4 h-4" />
@@ -132,7 +131,6 @@ export function ExportButton({
 //   fieldMap?: FieldDefinitionMap;
 //   defaultValues?: Record<string, any>;
 // }
-
 
 // export function ExportButton({
 //   data,
@@ -258,13 +256,6 @@ export function ExportButton({
 //   );
 // }
 
-
-
-
-
-
-
-
 // {showModal && (
 //   <div className="fixed inset-0 flex items-center justify-center bg-black/50">
 //     <div className="bg-white text-(--foreground) p-6 rounded shadow-lg w-80 h-40">
@@ -316,7 +307,6 @@ export function ExportButton({
       </Button>
   </form>
 </Form> */
-
 
 // // // // // // /* eslint-disable @typescript-eslint/no-explicit-any */
 // // // // // // // /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -2765,7 +2755,6 @@ export function ExportButton({
 // //   mergeNested?: boolean;
 // // }
 
-
 // // export function ExportButton({ data, mergeNested = false, exportAs = "table", dataType = "default", exportFormats }: ExportButtonProps) {
 // //   const [format, setFormat] = useState<Format>(exportFormats ? exportFormats[0] : "csv");
 // //   const [loading, setLoading] = useState(false);
@@ -2931,8 +2920,6 @@ export function ExportButton({
 //     }, "global", "export-confirm");
 //   }
 
-
-
 //   const doExport = (name: string) => {
 //     setLoading(true);
 //     const rows = getProcessedData(data, dataType);
@@ -2976,7 +2963,6 @@ export function ExportButton({
 //       exportRef.current.focus();
 //     }
 //   }, [loading]); // Or trigger this when the modal closes
-
 
 //   return (
 //     <>
@@ -3022,5 +3008,3 @@ export function ExportButton({
 //     </>
 //   );
 // }
-
-

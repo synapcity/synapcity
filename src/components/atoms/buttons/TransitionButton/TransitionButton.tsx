@@ -93,15 +93,13 @@ export function TransitionButton({
         {!hideTextOnLoading || !loading ? (
           <motion.span
             key="text"
-            className={cn(
-              hideTextOnSmallScreens && "hidden sm:inline",
-            )}
+            className={cn(hideTextOnSmallScreens && "hidden sm:inline")}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.15 }}
           >
-            {loading ? loadingText : (showSuccess && successText) ? successText : children}
+            {loading ? loadingText : showSuccess && successText ? successText : children}
           </motion.span>
         ) : null}
       </AnimatePresence>
@@ -121,11 +119,9 @@ export function TransitionButton({
   );
 
   if ((hideTextOnLoading || hideTextOnSmallScreens) && tooltip) {
-    return (
-      <Tooltip asChild content={tooltip} trigger={buttonEl} />
-    );
+    return <Tooltip asChild content={tooltip} trigger={buttonEl} />;
   }
 
   return buttonEl;
 }
-TransitionButton.displayName = "TransitionButton"
+TransitionButton.displayName = "TransitionButton";

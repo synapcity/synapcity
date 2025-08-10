@@ -14,11 +14,7 @@ export function useMutationWithStatus<Args, Result>(
   async function mutate(args: Args): Promise<Result | undefined> {
     setLoading(true);
     try {
-      const res = await withStatusAndToast<Result>(
-        statusField,
-        () => mutator(args),
-        messages
-      );
+      const res = await withStatusAndToast<Result>(statusField, () => mutator(args), messages);
       return res;
     } finally {
       setLoading(false);

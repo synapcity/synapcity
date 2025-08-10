@@ -1,9 +1,15 @@
-"use client"
+"use client";
 import React, { RefObject, useCallback, useEffect, useRef, useState } from "react";
 import { OverlayToggle, BreakpointToggle } from "@/components/molecules/toggles";
 import { ColumnOverlay, RowOverlay } from "@/components/molecules/overlays";
 import { getBreakpointForWidth } from "@/utils/grid-utils";
-import { BreakpointType, defaultCols, defaultContainerPadding, defaultMargin, useGrid } from "@/stores";
+import {
+  BreakpointType,
+  defaultCols,
+  defaultContainerPadding,
+  defaultMargin,
+  useGrid,
+} from "@/stores";
 
 const widths: Record<BreakpointType, string> = {
   xxs: "max-w-[479px]",
@@ -12,16 +18,24 @@ const widths: Record<BreakpointType, string> = {
   md: "max-w-[1199px]",
   lg: "max-w-[1499px]",
   xl: "max-w-full",
-  xxl: "max-w-full"
+  xxl: "max-w-full",
 };
 
-const BreakpointToggleWrapper = ({ children, containerRef: externalContainerRef }: { children: React.ReactNode; containerRef: RefObject<HTMLDivElement | null> }) => {
-  const { config } = useGrid()
+const BreakpointToggleWrapper = ({
+  children,
+  containerRef: externalContainerRef,
+}: {
+  children: React.ReactNode;
+  containerRef: RefObject<HTMLDivElement | null>;
+}) => {
+  const { config } = useGrid();
   const [breakpoint, setBreakpoint] = useState<BreakpointType>("xl");
   const [rows, setRows] = useState(20);
   const [showCols, setShowCols] = useState(false);
   const [showRows, setShowRows] = useState(false);
-  const [windowWidth, setWindowWidth] = useState<number>(typeof window !== 'undefined' ? window.innerWidth : 0);
+  const [windowWidth, setWindowWidth] = useState<number>(
+    typeof window !== "undefined" ? window.innerWidth : 0
+  );
 
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -45,12 +59,12 @@ const BreakpointToggleWrapper = ({ children, containerRef: externalContainerRef 
 
   useEffect(() => {
     if (containerRef && containerRef.current && containerRef.current.clientWidth > windowWidth) {
-      const width = containerRef.current.clientWidth - containerPaddingX
-      setWindowWidth(width)
-      const breakpoint = getBreakpointForWidth(windowWidth)
-      setBreakpoint(breakpoint)
+      const width = containerRef.current.clientWidth - containerPaddingX;
+      setWindowWidth(width);
+      const breakpoint = getBreakpointForWidth(windowWidth);
+      setBreakpoint(breakpoint);
     }
-  }, [containerPaddingX, containerRef, windowWidth])
+  }, [containerPaddingX, containerRef, windowWidth]);
 
   useEffect(() => {
     calculateRows();
@@ -69,14 +83,20 @@ const BreakpointToggleWrapper = ({ children, containerRef: externalContainerRef 
 
   return (
     <>
-      <div className={`flex items-center justify-between mx-auto w-full shrink-0 ${containerWidthClass} absolute top-0 right-0 left-0 z-30 px-4`}>
+      <div
+        className={`flex items-center justify-between mx-auto w-full shrink-0 ${containerWidthClass} absolute top-0 right-0 left-0 z-30 px-4`}
+      >
         <OverlayToggle
           showCols={showCols}
           showRows={showRows}
           toggleCols={() => setShowCols((prev) => !prev)}
           toggleRows={() => setShowRows((prev) => !prev)}
         />
-        <BreakpointToggle value={breakpoint} onChange={setBreakpoint} containerWidth={windowWidth} />
+        <BreakpointToggle
+          value={breakpoint}
+          onChange={setBreakpoint}
+          containerWidth={windowWidth}
+        />
       </div>
 
       <div

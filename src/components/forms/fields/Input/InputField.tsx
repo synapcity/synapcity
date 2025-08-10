@@ -29,20 +29,9 @@ interface InputFieldProps {
   trigger?: (name: string) => void;
 }
 
-export function InputField({
-  config,
-  meta,
-  field,
-  trigger,
-}: InputFieldProps) {
+export function InputField({ config, meta, field, trigger }: InputFieldProps) {
   const { message } = useFieldError(config.name);
-  const {
-    name,
-    label,
-    placeholder,
-    readOnly = false,
-    type: baseType = "text",
-  } = config;
+  const { name, label, placeholder, readOnly = false, type: baseType = "text" } = config;
 
   const {
     disabled: metaDisabled,
@@ -58,7 +47,7 @@ export function InputField({
 
   const [visible, setVisible] = useState(false);
   const shouldShowReset = !readOnly && showReset && !!field.value;
-  const shouldShowToggle = baseType === "password" as FieldType && toggleVisible;
+  const shouldShowToggle = baseType === ("password" as FieldType) && toggleVisible;
 
   const showActionButton = shouldShowReset || shouldShowToggle;
 
@@ -74,7 +63,6 @@ export function InputField({
   const handleToggle = () => {
     setVisible((prev) => !prev);
   };
-
 
   const ActionButton = () => {
     const isReset = shouldShowReset;
@@ -149,7 +137,10 @@ export function InputField({
       />
       {showActionButton ? <ActionButton /> : <StaticIcon />}
       {helpText && (
-        <p className="mt-1 text-xs text-muted-foreground group-hover:visible invisible" id={`${name}-help`}>
+        <p
+          className="mt-1 text-xs text-muted-foreground group-hover:visible invisible"
+          id={`${name}-help`}
+        >
           {helpText}
         </p>
       )}
@@ -161,13 +152,14 @@ export function InputField({
     </div>
   );
 
-
   return tooltip ? (
     <UITooltip>
       <UITooltipTrigger asChild>{inputEl}</UITooltipTrigger>
       <UITooltipContent>{tooltip}</UITooltipContent>
     </UITooltip>
-  ) : inputEl
+  ) : (
+    inputEl
+  );
 }
 
 InputField.displayName = "InputField";

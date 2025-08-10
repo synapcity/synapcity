@@ -1,6 +1,6 @@
 "use client";
 import { DarkModeField } from "@/components/theme/ThemeForm/ThemeFormFields/DarkMode";
-import { SwitchField, FontSizeField } from "@/components/theme"
+import { SwitchField, FontSizeField } from "@/components/theme";
 import { useTheme } from "@/providers/ThemeProvider";
 
 export function GeneralTab() {

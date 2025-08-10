@@ -12,11 +12,20 @@ import { cn } from "@/utils";
 import dynamic from "next/dynamic";
 import { useShallow } from "zustand/shallow";
 
-const ResetThemeButton = dynamic(() => import("@/components/atoms/buttons/ResetThemeButton/ResetThemeButton").then(mod => mod.ResetThemeButton));
-const Button = dynamic(() => import("@/components/atoms/buttons/Button/Button").then(mod => mod.Button));
-const ThemeFormTabs = dynamic(() => import("../ThemeFormTabs/ThemeFormTabs").then(mod => mod.ThemeFormTabs), {
-  ssr: false,
-});
+const ResetThemeButton = dynamic(() =>
+  import("@/components/atoms/buttons/ResetThemeButton/ResetThemeButton").then(
+    (mod) => mod.ResetThemeButton
+  )
+);
+const Button = dynamic(() =>
+  import("@/components/atoms/buttons/Button/Button").then((mod) => mod.Button)
+);
+const ThemeFormTabs = dynamic(
+  () => import("../ThemeFormTabs/ThemeFormTabs").then((mod) => mod.ThemeFormTabs),
+  {
+    ssr: false,
+  }
+);
 
 export const ThemePopoverForm = ({
   entityId,
@@ -29,8 +38,10 @@ export const ThemePopoverForm = ({
   className?: string;
   onSubmit: (values: ThemePreferencesFormValues) => void;
 }) => {
-  const scopedPreferences = useThemeStore(useShallow(theme => theme.scopedPreferences[scope as EntityType]));
-  const globalPreferences = useThemeStore(theme => theme.globalPreferences);
+  const scopedPreferences = useThemeStore(
+    useShallow((theme) => theme.scopedPreferences[scope as EntityType])
+  );
+  const globalPreferences = useThemeStore((theme) => theme.globalPreferences);
   const { preferences: theme } = resolveThemeMetadata({
     entityType: scope,
     entityId,
@@ -42,15 +53,15 @@ export const ThemePopoverForm = ({
     return {
       ...theme,
       primary: theme.primary.base,
-      accent: theme.accent.base
-    }
-  }, [theme])
+      accent: theme.accent.base,
+    };
+  }, [theme]);
 
   const { isCustom } = useTheme();
 
   const methods = useForm<ThemePreferencesFormValues>({
     defaultValues: {
-      ...formTheme
+      ...formTheme,
     },
     resolver: zodResolver(themePreferencesSchema),
   });
@@ -69,9 +80,7 @@ export const ThemePopoverForm = ({
       >
         <ThemeFormTabs />
 
-        <div
-          className={cn("w-full flex items-end justify-between")}
-        >
+        <div className={cn("w-full flex items-end justify-between")}>
           {isCustom && <ResetThemeButton />}
           <Button type="submit">Submit</Button>
         </div>

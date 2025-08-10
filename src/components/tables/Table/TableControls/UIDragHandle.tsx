@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import { Button } from "@/components"
-import { useSortable } from "@dnd-kit/sortable"
+import { Button } from "@/components";
+import { useSortable } from "@dnd-kit/sortable";
 
 export function UIDragHandle({ id }: { id: string }) {
   const { attributes, listeners } = useSortable({
     id,
-  })
+  });
 
   return (
     <Button
@@ -21,5 +21,5 @@ export function UIDragHandle({ id }: { id: string }) {
     >
       <span className="sr-only">Drag to reorder</span>
     </Button>
-  )
+  );
 }

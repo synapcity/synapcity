@@ -84,20 +84,20 @@
 import { fallbackEditorState } from "@/lexical/constants";
 
 export function sanitizeEditorState(raw: string): string {
-	try {
-		const parsed = JSON.parse(raw);
-		if (
-			!parsed ||
-			typeof parsed !== "object" ||
-			parsed.type !== "editor" ||
-			!parsed.root ||
-			parsed.root.type !== "root"
-		) {
-			throw new Error("Malformed editor state");
-		}
-		return raw;
-	} catch (e) {
-		console.warn("[sanitizeEditorState]: Invalid state recovered:", e);
-		return fallbackEditorState;
-	}
+  try {
+    const parsed = JSON.parse(raw);
+    if (
+      !parsed ||
+      typeof parsed !== "object" ||
+      parsed.type !== "editor" ||
+      !parsed.root ||
+      parsed.root.type !== "root"
+    ) {
+      throw new Error("Malformed editor state");
+    }
+    return raw;
+  } catch (e) {
+    console.warn("[sanitizeEditorState]: Invalid state recovered:", e);
+    return fallbackEditorState;
+  }
 }

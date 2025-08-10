@@ -1,15 +1,33 @@
-'use client';
+"use client";
 
-import React, { useCallback, useMemo } from 'react';
-import { useDashboardStore } from '@/stores/resources/dashboardStore/useDashboardStore';
-import type { Dashboard } from '@/stores/resources/dashboardStore/dashboard-schema';
-import { useRouter } from 'next/navigation';
-import { useShallow } from 'zustand/shallow';
-import dynamic from 'next/dynamic';
+import React, { useCallback, useMemo } from "react";
+import { useDashboardStore } from "@/stores/resources/dashboardStore/useDashboardStore";
+import type { Dashboard } from "@/stores/resources/dashboardStore/dashboard-schema";
+import { useRouter } from "next/navigation";
+import { useShallow } from "zustand/shallow";
+import dynamic from "next/dynamic";
 
-const SkeletonOrLoading = dynamic(() => import("@/components/loading/SkeletonOrLoading/SkeletonOrLoading").then(mod => mod.SkeletonOrLoading), { ssr: true })
-const SearchableSortableDashboards = dynamic(() => import("@/components/dashboards/SearchableSortableDashboards/SearchableSortableDashboards").then(mod => mod.SearchableSortableDashboards), { ssr: false, loading: ({ isLoading }) => <SkeletonOrLoading isLoading={isLoading} /> })
-const DashboardCard = dynamic(() => import("@/components/dashboards/cards/DashboardCard/DashboardCard").then(mod => mod.DashboardCard), { ssr: false, loading: ({ isLoading }) => <SkeletonOrLoading isLoading={isLoading} /> })
+const SkeletonOrLoading = dynamic(
+  () =>
+    import("@/components/loading/SkeletonOrLoading/SkeletonOrLoading").then(
+      (mod) => mod.SkeletonOrLoading
+    ),
+  { ssr: true }
+);
+const SearchableSortableDashboards = dynamic(
+  () =>
+    import(
+      "@/components/dashboards/SearchableSortableDashboards/SearchableSortableDashboards"
+    ).then((mod) => mod.SearchableSortableDashboards),
+  { ssr: false, loading: ({ isLoading }) => <SkeletonOrLoading isLoading={isLoading} /> }
+);
+const DashboardCard = dynamic(
+  () =>
+    import("@/components/dashboards/cards/DashboardCard/DashboardCard").then(
+      (mod) => mod.DashboardCard
+    ),
+  { ssr: false, loading: ({ isLoading }) => <SkeletonOrLoading isLoading={isLoading} /> }
+);
 
 export default function DashboardsIndex() {
   const router = useRouter();
@@ -29,7 +47,6 @@ export default function DashboardsIndex() {
     ),
     [router]
   );
-
 
   return (
     <div className="flex-1 min-h-0 p-4 flex flex-col">

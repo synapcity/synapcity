@@ -2,7 +2,6 @@ import * as React from "react";
 import { cn } from "@/utils";
 import { Icon, IconButton, UIInput } from "../../atoms";
 
-
 interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: boolean;
   errorText?: string[];
@@ -47,16 +46,13 @@ const Input = React.forwardRef<HTMLInputElement, IInputProps>(
           ref={ref}
           type={inputType}
           data-slot="input"
-          className={cn(
-            error && "border-destructive",
-            success && "border-success",
-            className
-          )}
+          className={cn(error && "border-destructive", success && "border-success", className)}
           {...props}
         />
 
-        {icon && !isPassword && (
-          isIconButton ? (
+        {icon &&
+          !isPassword &&
+          (isIconButton ? (
             <span className="absolute right-0 top-0 flex justify-end items-center">
               <IconButton
                 icon={icon}
@@ -71,8 +67,7 @@ const Input = React.forwardRef<HTMLInputElement, IInputProps>(
             <span className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground">
               <Icon name={icon} className="w-4 h-4" />
             </span>
-          )
-        )}
+          ))}
 
         {isPassword && (
           <span className="absolute right-0 top-0 flex justify-end items-center">

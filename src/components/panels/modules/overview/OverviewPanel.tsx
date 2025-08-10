@@ -6,9 +6,7 @@ export const OverviewPanel = () => {
   return (
     <div className="p-6 flex gap-6 flex-wrap">
       <DashboardCard title="Today's Focus" accented>
-        <p className="text-sm text-muted-foreground">
-          Ship MVP and test sidebar flow
-        </p>
+        <p className="text-sm text-muted-foreground">Ship MVP and test sidebar flow</p>
       </DashboardCard>
       <DashboardCard title="Quick Stats">
         <ul className="space-y-1 leading-relaxed">
@@ -18,9 +16,7 @@ export const OverviewPanel = () => {
         </ul>
       </DashboardCard>
       <DashboardCard title="Mini Widgets">
-        <p className="text-sm text-muted-foreground">
-          Widget summary cards coming soon...
-        </p>
+        <p className="text-sm text-muted-foreground">Widget summary cards coming soon...</p>
       </DashboardCard>
     </div>
   );

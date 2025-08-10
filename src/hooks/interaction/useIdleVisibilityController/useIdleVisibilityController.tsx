@@ -29,7 +29,7 @@ export function useIdleVisibilityController(
   const setState = useCallback(
     (val: boolean) => setCompState(id, key, val),
     [id, key, setCompState]
-  )
+  );
 
   const resetTimer = useCallback(() => {
     if (!enabled) return;
@@ -53,7 +53,6 @@ export function useIdleVisibilityController(
     }
   }, [enabled, isActive, resetTimer, setState]);
 
-
   const onMouseEnter = () => {
     isHovering.current = true;
     setState(false);
@@ -64,7 +63,6 @@ export function useIdleVisibilityController(
     isHovering.current = false;
     resetTimer();
   };
-
 
   useEffect(() => {
     if (!enabled) return;

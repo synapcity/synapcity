@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
 interface EditorState {
   isDirty: boolean;
@@ -17,4 +17,3 @@ export const useEditorStore = create<EditorState>((set) => ({
   setLastSaved: (iso) => set({ lastSavedAt: iso }),
   setSaving: (saving) => set({ isSaving: saving }),
 }));
-

@@ -1,164 +1,164 @@
 @theme {
-	--heading-weight: 600;
-	--body-weight: 400;
-	--code-weight: 500;
-	--caption-weight: 300;
-	--text-xs: 0.75rem;
-	--text-sm: 0.875rem;
-	--text-base: 1rem;
-	--text-lg: 1.125rem;
-	--text-xl: 1.25rem;
-	--text-2xl: 1.5rem;
-	--text-3xl: 1.875rem;
-	--text-4xl: 2.25rem;
-	--text-5xl: 3rem;
-	--text-6xl: 3.75rem;
-	--text-7xl: 4.5rem;
-	--text-8xl: 6rem;
-	--text-9xl: 8rem;
+  --heading-weight: 600;
+  --body-weight: 400;
+  --code-weight: 500;
+  --caption-weight: 300;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3rem;
+  --text-6xl: 3.75rem;
+  --text-7xl: 4.5rem;
+  --text-8xl: 6rem;
+  --text-9xl: 8rem;
 }
 
 @theme inline {
-	--font-sans: var(--font-inter), sans-serif;
-	--font-serif: var(--font-space-grotesk), sans-serif;
-	--font-mono: var(--font-space-mono), monospace;
-	--font-body: var(--font-sans);
-	--font-heading: var(--font-serif);
-	--font-mono: var(--font-mono);
+  --font-sans: var(--font-inter), sans-serif;
+  --font-serif: var(--font-space-grotesk), sans-serif;
+  --font-mono: var(--font-space-mono), monospace;
+  --font-body: var(--font-sans);
+  --font-heading: var(--font-serif);
+  --font-mono: var(--font-mono);
 
-	--color-heading: var(--primary-800);
-	--color-subheading: var(--primary-700);
-	--color-body: var(--foreground);
-	--color-caption: var(--primary-600);
-	--color-subtle-text: var(--primary-600);
-	--color-placeholder: var(--primary-300);
-	--color-link: var(--foreground);
-	--color-link-hover: var(--accent-600);
+  --color-heading: var(--primary-800);
+  --color-subheading: var(--primary-700);
+  --color-body: var(--foreground);
+  --color-caption: var(--primary-600);
+  --color-subtle-text: var(--primary-600);
+  --color-placeholder: var(--primary-300);
+  --color-link: var(--foreground);
+  --color-link-hover: var(--accent-600);
 
-	--text-xs: var(--text-xs);
-	--text-sm: var(--text-sm);
-	--text-base: var(--text-base);
-	--text-lg: var(--text-lg);
-	--text-xl: var(--text-xl);
-	--text-2xl: var(--text-2xl);
-	--text-3xl: var(--text-3xl);
-	--text-4xl: var(--text-4xl);
-	--text-5xl: var(--text-5xl);
-	--text-6xl: var(--text-6xl);
-	--text-7xl: var(--text-7xl);
-	--text-8xl: var(--text-8xl);
-	--text-9xl: var(--text-9xl);
+  --text-xs: var(--text-xs);
+  --text-sm: var(--text-sm);
+  --text-base: var(--text-base);
+  --text-lg: var(--text-lg);
+  --text-xl: var(--text-xl);
+  --text-2xl: var(--text-2xl);
+  --text-3xl: var(--text-3xl);
+  --text-4xl: var(--text-4xl);
+  --text-5xl: var(--text-5xl);
+  --text-6xl: var(--text-6xl);
+  --text-7xl: var(--text-7xl);
+  --text-8xl: var(--text-8xl);
+  --text-9xl: var(--text-9xl);
 }
 
 @layer base {
-	html {
-		font-family: var(--font-sans);
-		background-color: var(--background);
-		color: var(--foreground);
-		@apply antialiased;
-	}
-	body {
-		@apply font-body text-base leading-relaxed;
-		@apply bg-[var(--background)] text-body;
-		font-weight: var(--body-weight);
-		line-height: 1.6;
-	}
+  html {
+    font-family: var(--font-sans);
+    background-color: var(--background);
+    color: var(--foreground);
+    @apply antialiased;
+  }
+  body {
+    @apply font-body text-base leading-relaxed;
+    @apply bg-[var(--background)] text-body;
+    font-weight: var(--body-weight);
+    line-height: 1.6;
+  }
 
-	h1,
-	h2,
-	h3,
-	h4,
-	h5,
-	h6 {
-		@apply font-heading text-heading transition-[font-size] ease-linear duration-200;
-		font-weight: var(--heading-weight);
-	}
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading text-heading transition-[font-size] ease-linear duration-200;
+    font-weight: var(--heading-weight);
+  }
 
-	h1:hover,
-	h2:hover,
-	h3:hover,
-	h4:hover,
-	h5:hover,
-	a:hover {
-		color: text-[var(--accent)];
-	}
+  h1:hover,
+  h2:hover,
+  h3:hover,
+  h4:hover,
+  h5:hover,
+  a:hover {
+    color: text-[var(--accent)];
+  }
 
-	h1 {
-		@apply text-4xl md:text-5xl font-bold tracking-tight leading-tight;
-	}
+  h1 {
+    @apply text-4xl md:text-5xl font-bold tracking-tight leading-tight;
+  }
 
-	h2 {
-		@apply text-3xl md:text-4xl font-semibold tracking-tight leading-snug;
-	}
+  h2 {
+    @apply text-3xl md:text-4xl font-semibold tracking-tight leading-snug;
+  }
 
-	h3 {
-		@apply text-2xl md:text-3xl font-semibold tracking-normal leading-snug;
-	}
+  h3 {
+    @apply text-2xl md:text-3xl font-semibold tracking-normal leading-snug;
+  }
 
-	h4 {
-		@apply text-xl md:text-2xl font-medium tracking-normal leading-snug;
-	}
+  h4 {
+    @apply text-xl md:text-2xl font-medium tracking-normal leading-snug;
+  }
 
-	h5 {
-		@apply text-lg md:text-xl font-medium leading-relaxed tracking-normal;
-	}
+  h5 {
+    @apply text-lg md:text-xl font-medium leading-relaxed tracking-normal;
+  }
 
-	h6 {
-		@apply text-base md:text-lg font-medium leading-relaxed tracking-wide;
-	}
+  h6 {
+    @apply text-base md:text-lg font-medium leading-relaxed tracking-wide;
+  }
 
-	strong {
-		@apply font-semibold text-[var(--foreground)];
-	}
+  strong {
+    @apply font-semibold text-[var(--foreground)];
+  }
 
-	em {
-		@apply italic text-[var(--foreground)];
-	}
+  em {
+    @apply italic text-[var(--foreground)];
+  }
 
-	p {
-		@apply font-body text-body;
-		@apply text-base leading-relaxed;
-	}
+  p {
+    @apply font-body text-body;
+    @apply text-base leading-relaxed;
+  }
 
-	a {
-		@apply text-inherit;
-		text-decoration: none;
-	}
+  a {
+    @apply text-inherit;
+    text-decoration: none;
+  }
 
-	a:hover,
-	button:hover {
-		cursor: pointer text-link-hover;
-	}
+  a:hover,
+  button:hover {
+    cursor: pointer text-link-hover;
+  }
 
-	.link {
-		@apply underline text-link hover:text-link-hover transition-colors ease-linear duration-200;
-		text-decoration: none;
-	}
+  .link {
+    @apply underline text-link hover:text-link-hover transition-colors ease-linear duration-200;
+    text-decoration: none;
+  }
 
-	blockquote {
-		@apply border-l-4 pl-4 italic text-muted-foreground;
-		border-color: var(--color-muted);
-		margin: 1.5rem 0;
-	}
+  blockquote {
+    @apply border-l-4 pl-4 italic text-muted-foreground;
+    border-color: var(--color-muted);
+    margin: 1.5rem 0;
+  }
 
-	code {
-		@apply font-mono text-sm px-1 py-0.5 rounded bg-muted text-muted-foreground;
-		font-weight: var(--code-weight);
-	}
+  code {
+    @apply font-mono text-sm px-1 py-0.5 rounded bg-muted text-muted-foreground;
+    font-weight: var(--code-weight);
+  }
 
-	pre {
-		@apply font-mono text-sm p-4 rounded-lg bg-muted text-muted-foreground overflow-x-auto;
-	}
+  pre {
+    @apply font-mono text-sm p-4 rounded-lg bg-muted text-muted-foreground overflow-x-auto;
+  }
 
-	hr {
-		@apply border-t border-border my-6;
-	}
+  hr {
+    @apply border-t border-border my-6;
+  }
 
-	small {
-		@apply text-sm text-muted-foreground;
-	}
+  small {
+    @apply text-sm text-muted-foreground;
+  }
 
-	mark {
-		@apply bg-accent text-accent-foreground px-1 py-0.5 rounded;
-	}
+  mark {
+    @apply bg-accent text-accent-foreground px-1 py-0.5 rounded;
+  }
 }

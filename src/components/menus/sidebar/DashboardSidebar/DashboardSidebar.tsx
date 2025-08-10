@@ -25,10 +25,7 @@ type AppSidebarProps = {
   id: string;
 } & React.ComponentProps<typeof Sidebar>;
 
-export function DashboardSidebar({
-  id,
-  ...props
-}: AppSidebarProps) {
+export function DashboardSidebar({ id, ...props }: AppSidebarProps) {
   const { open } = useSidebar();
   const { panels, activePanel } = usePanels("dashboard", id);
   // const dashTabs = useTabsForEntity(
@@ -72,10 +69,10 @@ export function DashboardSidebar({
         key={id}
         scope="dashboard"
         id={id}
-      // onAdd={dashTabs.handleAddTab}
+        // onAdd={dashTabs.handleAddTab}
       />
 
-      {(open) ? (
+      {open ? (
         <SidebarContent>
           <SidebarRenderer scope={"dashboard"} id={id} />
         </SidebarContent>
@@ -83,9 +80,7 @@ export function DashboardSidebar({
         <SidebarContent className="border-l">
           <SidebarHeader className="gap-3.5 border-b p-4">
             <div className="flex w-full items-center justify-between">
-              <div className="text-foreground text-base font-medium">
-                {activePanel?.label}
-              </div>
+              <div className="text-foreground text-base font-medium">{activePanel?.label}</div>
               <Label className="flex items-center gap-2 text-sm">
                 <span>Unreads</span>
                 <Switch className="shadow-none" />

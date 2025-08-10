@@ -2,7 +2,7 @@ import { widgetRegistry, WidgetKey } from "../registry/index";
 import { Widget, InstantiateOptions, WidgetResourceSchema } from "./widget-schema";
 
 export function createWidget(partial: Partial<Widget> & InstantiateOptions = {}): Widget {
-    if (!partial.widgetKey) {
+  if (!partial.widgetKey) {
     throw new Error("widgetKey is required");
   }
   const widgetKey = partial.widgetKey as WidgetKey;

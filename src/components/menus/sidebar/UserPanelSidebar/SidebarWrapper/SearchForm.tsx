@@ -1,8 +1,8 @@
-import type React from "react"
-import { Search } from "lucide-react"
+import type React from "react";
+import { Search } from "lucide-react";
 
-import { Label } from "@/components"
-import { SidebarGroup, SidebarGroupContent, SidebarInput } from "@/components/atoms/ui/sidebar"
+import { Label } from "@/components";
+import { SidebarGroup, SidebarGroupContent, SidebarInput } from "@/components/atoms/ui/sidebar";
 
 export function SearchForm({ ...props }: React.ComponentProps<"form">) {
   return (
@@ -17,5 +17,5 @@ export function SearchForm({ ...props }: React.ComponentProps<"form">) {
         </SidebarGroupContent>
       </SidebarGroup>
     </form>
-  )
+  );
 }

@@ -27,12 +27,7 @@ interface Props {
 
 export function TextareaField({ config, meta, field }: Props) {
   const { name, label, placeholder } = config;
-  const {
-    tooltip,
-    helpText,
-    required,
-    disabled,
-  } = meta ?? {};
+  const { tooltip, helpText, required, disabled } = meta ?? {};
 
   const id = `textarea-${name}`;
   const labelId = `${id}-label`;

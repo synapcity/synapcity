@@ -11,7 +11,7 @@ const meta: Meta<typeof DialogWrapper> = {
     title: "Confirm Action",
     description: "Are you sure you want to perform this action?",
     showTitle: true,
-    showDescription: true
+    showDescription: true,
   },
 };
 
@@ -22,7 +22,7 @@ export const Default: Story = {
   args: {
     trigger: <Button>Open Dialog</Button>,
     children: <p>This is some content inside the dialog.</p>,
-    asChild: true
+    asChild: true,
   },
 };
 
@@ -36,7 +36,7 @@ export const WithCustomFooter: Story = {
       </div>
     ),
     children: <p>You can insert any custom footer actions.</p>,
-    asChild: true
+    asChild: true,
   },
 };
 
@@ -44,7 +44,7 @@ export const LoadingState: Story = {
   args: {
     trigger: <Button>Open Dialog</Button>,
     children: <p>Simulating a pending state while confirming.</p>,
-    asChild: true
+    asChild: true,
   },
 };
 
@@ -54,7 +54,7 @@ export const NoTitleOrDescription: Story = {
     showTitle: false,
     showDescription: false,
     children: <p>The title and description are visually hidden.</p>,
-    asChild: true
+    asChild: true,
   },
 };
 

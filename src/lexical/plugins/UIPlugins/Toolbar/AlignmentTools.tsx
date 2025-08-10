@@ -29,7 +29,6 @@ export default function AlignmentTools() {
           const format = topNode.getFormat() as unknown as ElementFormatType;
           setActiveAlignment(format || "left");
         }
-
       });
     };
 

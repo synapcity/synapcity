@@ -15,7 +15,9 @@ export const OverviewSidebar = () => {
     <div className="px-4 py-6 space-y-6 text-sm text-muted-foreground">
       {/* Flow Section */}
       <section>
-        <h5 className="text-foreground font-semibold text-xs tracking-wide uppercase mb-2">Your Flow</h5>
+        <h5 className="text-foreground font-semibold text-xs tracking-wide uppercase mb-2">
+          Your Flow
+        </h5>
         <ul className="space-y-1">
           {(["start", "reflect", "end"] as const).map((key) => (
             <li key={key}>
@@ -27,7 +29,6 @@ export const OverviewSidebar = () => {
               >
                 {flow[key] ? "✅" : "⭕"} Start Day
               </Button>
-
             </li>
           ))}
         </ul>
@@ -35,7 +36,9 @@ export const OverviewSidebar = () => {
 
       {/* Journal Section */}
       <section>
-        <h5 className="text-foreground font-semibold text-xs tracking-wide uppercase mb-2">Journal</h5>
+        <h5 className="text-foreground font-semibold text-xs tracking-wide uppercase mb-2">
+          Journal
+        </h5>
         <p className="text-xs mb-1">Latest entry:</p>
         <blockquote className="italic rounded-sm border-l-2 pl-3 border-border text-foreground/80 mb-2">
           {journal}
@@ -52,14 +55,14 @@ export const OverviewSidebar = () => {
         >
           Add to Journal
         </Button>
-
       </section>
 
       {/* Schedule Section */}
       <section>
-        <h5 className="text-foreground font-semibold text-xs tracking-wide uppercase mb-2">Today</h5>
+        <h5 className="text-foreground font-semibold text-xs tracking-wide uppercase mb-2">
+          Today
+        </h5>
         <ul className="space-y-1 text-muted-foreground font-medium text-sm">
-
           <li>🕒 10:00 AM – Standup</li>
           <li>🎯 Push layout refactor</li>
           <li>📞 2:00 PM – Call with Sam</li>
@@ -68,7 +71,9 @@ export const OverviewSidebar = () => {
 
       {/* Quote Section */}
       <section>
-        <h5 className="text-foreground font-semibold text-xs tracking-wide uppercase mb-2">Quote of the Day</h5>
+        <h5 className="text-foreground font-semibold text-xs tracking-wide uppercase mb-2">
+          Quote of the Day
+        </h5>
         <blockquote className="italic text-muted-foreground">
           “Focus is the art of knowing what to ignore.” — James Clear
         </blockquote>
@@ -76,7 +81,9 @@ export const OverviewSidebar = () => {
 
       {/* Stats Section */}
       <section className="pt-3 border-t border-border">
-        <h5 className="text-foreground font-semibold text-xs tracking-wide uppercase mb-2">Stats</h5>
+        <h5 className="text-foreground font-semibold text-xs tracking-wide uppercase mb-2">
+          Stats
+        </h5>
         <ul className="space-y-1 text-foreground">
           <li>🔥 3-day streak</li>
           <li>✅ 60% goals completed</li>

@@ -1,12 +1,12 @@
 "use client";
 
 import { Label } from "@/components";
-import { ThemeMode } from "@/theme/types"
+import { ThemeMode } from "@/theme/types";
 import { RadioGroup, RadioGroupItem } from "@/components/atoms/ui/radio-group";
 
 export const DarkModeRadioGroup = ({
   value,
-  onChange
+  onChange,
 }: {
   value: ThemeMode;
   onChange: (value: ThemeMode) => void;
@@ -14,11 +14,7 @@ export const DarkModeRadioGroup = ({
   return (
     <div className="space-y-2">
       <Label className="block text-sm font-medium">Mode</Label>
-      <RadioGroup
-        value={value}
-        onValueChange={onChange}
-        className="flex items-center gap-4"
-      >
+      <RadioGroup value={value} onValueChange={onChange} className="flex items-center gap-4">
         <div className="flex items-center gap-2">
           <RadioGroupItem value="light" id="mode-light" />
           <Label htmlFor="mode-light">Light</Label>
@@ -29,5 +25,5 @@ export const DarkModeRadioGroup = ({
         </div>
       </RadioGroup>
     </div>
-  )
-}
+  );
+};

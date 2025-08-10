@@ -5,5 +5,5 @@ export default function TestWidgetLayout({ children }: { children: React.ReactNo
     <ThemeProvider scope="widget" entityId="widget-1">
       {children}
     </ThemeProvider>
-  )
+  );
 }

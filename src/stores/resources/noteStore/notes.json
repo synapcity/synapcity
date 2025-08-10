@@ -7,10 +7,7 @@
     "type": "editor",
     "title": "First Note",
     "summary": "This is the summary for the first note.",
-    "tags": [
-      "tag1",
-      "tag2"
-    ],
+    "tags": ["tag1", "tag2"],
     "icon": "note"
   },
   {
@@ -21,9 +18,7 @@
     "title": "Second Note",
     "type": "editor",
     "summary": "Summary for the second note goes here.",
-    "tags": [
-      "tag3"
-    ],
+    "tags": ["tag3"],
     "icon": "note"
   },
   {
@@ -34,11 +29,7 @@
     "title": "Third Note",
     "type": "editor",
     "summary": "Summary for the third note goes here.",
-    "tags": [
-      "tag4",
-      "tag5",
-      "tag6"
-    ],
+    "tags": ["tag4", "tag5", "tag6"],
     "icon": "note"
   },
   {
@@ -49,10 +40,7 @@
     "title": "Fourth Note",
     "type": "editor",
     "summary": "Summary for the fourth note goes here.",
-    "tags": [
-      "tag7",
-      "tag8"
-    ],
+    "tags": ["tag7", "tag8"],
     "icon": "note"
   },
   {
@@ -63,9 +51,7 @@
     "title": "Fifth Note",
     "type": "editor",
     "summary": "Summary for the fifth note goes here.",
-    "tags": [
-      "tag9"
-    ],
+    "tags": ["tag9"],
     "icon": "note"
   }
 ]

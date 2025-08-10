@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { Moon, Sun } from "lucide-react";
 import { Label } from "@/components/atoms";

@@ -90,10 +90,7 @@ export function CommandMenu({
         {groups.map((group, groupIdx) => (
           <React.Fragment key={group.heading}>
             {groupIdx > 0 && <CommandSeparator />}
-            <CommandGroup
-              heading={group.heading}
-              className="bg-(--background) text-(--foreground)"
-            >
+            <CommandGroup heading={group.heading} className="bg-(--background) text-(--foreground)">
               {group.items.map((item, idx) => (
                 <CommandItem
                   key={`${item.label}-${idx}`}
@@ -103,9 +100,7 @@ export function CommandMenu({
                 >
                   {item.icon}
                   {item.label}
-                  {item.shortcut && (
-                    <CommandShortcut>{item.shortcut}</CommandShortcut>
-                  )}
+                  {item.shortcut && <CommandShortcut>{item.shortcut}</CommandShortcut>}
                 </CommandItem>
               ))}
             </CommandGroup>

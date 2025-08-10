@@ -1,8 +1,8 @@
-import * as React from "react"
-import type { Meta, StoryObj } from "@storybook/nextjs-vite"
-import { GlobalSearchBar } from "./GlobalSearchBar"
-import { FileTextIcon, TagIcon, UserIcon } from "lucide-react"
-import type { SearchItem } from "@/theme/types/search"
+import * as React from "react";
+import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import { GlobalSearchBar } from "./GlobalSearchBar";
+import { FileTextIcon, TagIcon, UserIcon } from "lucide-react";
+import type { SearchItem } from "@/theme/types/search";
 
 const meta: Meta<typeof GlobalSearchBar> = {
   title: "Search/GlobalSearchBar",
@@ -11,11 +11,11 @@ const meta: Meta<typeof GlobalSearchBar> = {
   argTypes: {
     items: { control: false },
   },
-}
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof GlobalSearchBar>
+type Story = StoryObj<typeof GlobalSearchBar>;
 
 // 🔍 Dummy data for the stories
 const mockItems: SearchItem[] = [
@@ -61,39 +61,39 @@ const mockItems: SearchItem[] = [
     icon: <UserIcon className="size-4" />,
     onSelect: () => alert("Selected: Bob"),
   },
-]
+];
 
 export const Default: Story = {
   args: {
     items: mockItems,
     placeholder: "Search notes, tags, users...",
   },
-}
+};
 
 export const EmptyState: Story = {
   args: {
     items: [], // triggers "No results found."
     placeholder: "Try searching nothing",
   },
-}
+};
 
 export const FilteredNotesOnly: Story = {
   args: {
     items: mockItems.filter((item) => item.type === "note"),
     placeholder: "Search notes...",
   },
-}
+};
 
 export const FilteredTagsOnly: Story = {
   args: {
     items: mockItems.filter((item) => item.type === "tag"),
     placeholder: "Search tags...",
   },
-}
+};
 
 export const FilteredUsersOnly: Story = {
   args: {
     items: mockItems.filter((item) => item.type === "user"),
     placeholder: "Search users...",
   },
-}
+};

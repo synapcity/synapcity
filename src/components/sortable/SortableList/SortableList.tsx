@@ -9,7 +9,6 @@ export type SortableListProps<T> = {
 };
 
 export function SortableList({ items, renderItem, handleDragEnd }: SortableListProps<any>) {
-
   return items.map((item) => (
     <SortableItem
       key={item.id}

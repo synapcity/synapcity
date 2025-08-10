@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Slot } from "@radix-ui/react-slot"
+import * as React from "react";
+import { Slot } from "@radix-ui/react-slot";
 
-import { cn } from "@/utils/index"
+import { cn } from "@/utils/index";
 
 export function SidebarGroup({ className, ...props }: React.ComponentProps<"div">) {
   return (
@@ -13,7 +13,7 @@ export function SidebarGroup({ className, ...props }: React.ComponentProps<"div"
       className={cn("relative flex w-full overflow-hidden min-w-0 flex-col p-2", className)}
       {...props}
     />
-  )
+  );
 }
 
 export function SidebarGroupLabel({
@@ -21,7 +21,7 @@ export function SidebarGroupLabel({
   asChild = false,
   ...props
 }: React.ComponentProps<"div"> & { asChild?: boolean }) {
-  const Comp = asChild ? Slot : "div"
+  const Comp = asChild ? Slot : "div";
 
   return (
     <Comp
@@ -34,7 +34,7 @@ export function SidebarGroupLabel({
       )}
       {...props}
     />
-  )
+  );
 }
 
 export function SidebarGroupAction({
@@ -42,7 +42,7 @@ export function SidebarGroupAction({
   asChild = false,
   ...props
 }: React.ComponentProps<"button"> & { asChild?: boolean }) {
-  const Comp = asChild ? Slot : "button"
+  const Comp = asChild ? Slot : "button";
 
   return (
     <Comp
@@ -56,13 +56,10 @@ export function SidebarGroupAction({
       )}
       {...props}
     />
-  )
+  );
 }
 
-export function SidebarGroupContent({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
+export function SidebarGroupContent({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="sidebar-group-content"
@@ -70,5 +67,5 @@ export function SidebarGroupContent({
       className={cn("text-sm flex flex-col overflow-y-auto", className)}
       {...props}
     />
-  )
+  );
 }

@@ -1,16 +1,7 @@
 import { z } from "zod";
 import { ResourceSchema } from "@/stores/resources/factory/base-schema";
 
-export const ResizeHandleSchema = z.enum([
-  "s",
-  "w",
-  "e",
-  "n",
-  "sw",
-  "nw",
-  "se",
-  "ne",
-]);
+export const ResizeHandleSchema = z.enum(["s", "w", "e", "n", "sw", "nw", "se", "ne"]);
 export type ResizeHandle = z.infer<typeof ResizeHandleSchema>;
 
 /** Hints/guards for the grid. Not a layout; just constraints. */
@@ -76,4 +67,3 @@ export type WidgetInstanceData = z.infer<typeof WidgetInstanceDataSchema>;
 
 export const WidgetResourceSchema = ResourceSchema(WidgetInstanceDataSchema);
 export type Widget = z.infer<typeof WidgetResourceSchema>;
-

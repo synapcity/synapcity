@@ -1,12 +1,12 @@
-import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import LinkedResourcesCell from './LinkedResourcesCell';
+import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import LinkedResourcesCell from "./LinkedResourcesCell";
 
 const meta: Meta<typeof LinkedResourcesCell> = {
-  title: 'Table/LinkedResourcesCell',
+  title: "Table/LinkedResourcesCell",
   component: LinkedResourcesCell,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
-    resources: { control: 'object' },
+    resources: { control: "object" },
   },
 };
 export default meta;
@@ -18,14 +18,14 @@ export const Empty: Story = {
 };
 
 export const Single: Story = {
-  args: { resources: [{ resourceId: '1', label: 'One', type: 'note' }] },
+  args: { resources: [{ resourceId: "1", label: "One", type: "note" }] },
 };
 
 export const Multiple: Story = {
   args: {
     resources: [
-      { resourceId: '1', label: 'One', type: 'note' },
-      { resourceId: '2', label: 'Two', type: 'dashboard' },
+      { resourceId: "1", label: "One", type: "note" },
+      { resourceId: "2", label: "Two", type: "dashboard" },
     ],
   },
 };
@@ -33,7 +33,11 @@ export const Multiple: Story = {
 export const LongLabels: Story = {
   args: {
     resources: [
-      { resourceId: '3', label: 'This is a very long label to test wrapping in the cell component', type: 'note' },
+      {
+        resourceId: "3",
+        label: "This is a very long label to test wrapping in the cell component",
+        type: "note",
+      },
     ],
   },
 };

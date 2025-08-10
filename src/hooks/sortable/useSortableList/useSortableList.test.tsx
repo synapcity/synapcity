@@ -35,7 +35,7 @@ describe("useSortableList hook", () => {
       result.current.handleDragEnd({ active: { id: "1" }, over: { id: "3" } });
     });
     // Expect "1" to move from index 0 to index 2 (end)
-    expect(result.current.items.map(i => i.id)).toEqual(["2", "3", "1"]);
+    expect(result.current.items.map((i) => i.id)).toEqual(["2", "3", "1"]);
     expect(result.current.activeId).toBeNull();
   });
 

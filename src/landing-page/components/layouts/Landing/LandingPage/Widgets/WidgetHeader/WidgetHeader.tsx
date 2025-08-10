@@ -5,8 +5,9 @@ export const WidgetHeader = () => {
         Unleash the Power of Customizable Widgets
       </h2>
       <p className="mt-4 text-lg text-neutral-400">
-        A platform full of dynamic widgets that adapt to your needs. Choose from a range of widgets to personalize your dashboard and workflow.
+        A platform full of dynamic widgets that adapt to your needs. Choose from a range of widgets
+        to personalize your dashboard and workflow.
       </p>
     </header>
-  )
-}
+  );
+};

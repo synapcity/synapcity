@@ -105,7 +105,7 @@ export const CreateEntityCard: FC<CreateEntityCardProps<any>> = ({
       <div className="flex flex-col items-center justify-center text-gray-400 dark:text-gray-300 group-hover:text-(--accent)">
         {icon}
         <span className="mt-2 text-lg font-medium">
-          {isRunning ? creatingLabel ?? idleLabel + "…" : idleLabel}
+          {isRunning ? (creatingLabel ?? idleLabel + "…") : idleLabel}
         </span>
       </div>
     </CardWithLoading>

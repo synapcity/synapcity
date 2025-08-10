@@ -9,11 +9,7 @@ type SwatchesGroupProps = {
   onClick?: (e: React.MouseEvent, color: string) => void;
 };
 
-const SwatchesGroup: React.FC<SwatchesGroupProps> = ({
-  group,
-  active,
-  onClick,
-}) => {
+const SwatchesGroup: React.FC<SwatchesGroupProps> = ({ group, active, onClick }) => {
   return (
     <div className="pb-2 w-10 float-left mr-2.5">
       {group.map((color, i) => (

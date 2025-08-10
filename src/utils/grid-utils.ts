@@ -1,5 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { breakpoints, defaultBreakpoints, BreakpointType, LayoutItem, Layouts, LayoutsSchema } from "@/stores/resources/gridStore/grid-schema"
+import {
+  breakpoints,
+  defaultBreakpoints,
+  BreakpointType,
+  LayoutItem,
+  Layouts,
+  LayoutsSchema,
+} from "@/stores/resources/gridStore/grid-schema";
 /**
  * Returns the largest breakpoint whose value is <= width.
  * Falls back to the smallest breakpoint if none matches.
@@ -8,11 +15,13 @@ import { breakpoints, defaultBreakpoints, BreakpointType, LayoutItem, Layouts, L
  */
 export function getBreakpointForWidth(
   width: number,
-  breakpoints: Record<BreakpointType, number> = defaultBreakpoints,
+  breakpoints: Record<BreakpointType, number> = defaultBreakpoints
 ): BreakpointType {
   // Convert to array and sort by breakpoint value ascending
-  const sorted = Object.entries(breakpoints)
-    .sort((a, b) => a[1] - b[1]) as [BreakpointType, number][];
+  const sorted = Object.entries(breakpoints).sort((a, b) => a[1] - b[1]) as [
+    BreakpointType,
+    number,
+  ][];
 
   // Find the largest breakpoint that is <= width
   let matched: BreakpointType = sorted[0][0];

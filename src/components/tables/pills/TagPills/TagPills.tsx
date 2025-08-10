@@ -17,7 +17,7 @@ export function TagPills({
 }) {
   return (
     <div className={`flex gap-2 flex-wrap ${className}`}>
-      {tags.map(tag => (
+      {tags.map((tag) => (
         <span
           key={tag.value}
           className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium`}
@@ -32,7 +32,7 @@ export function TagPills({
           {tag.label}
           {onRemove && (
             <button
-              onClick={e => {
+              onClick={(e) => {
                 e.stopPropagation();
                 onRemove(tag.value);
               }}

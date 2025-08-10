@@ -1,21 +1,21 @@
-'use client';
+"use client";
 
-import React, { useEffect, useRef, useCallback, useMemo } from 'react';
-import { LexicalComposer } from '@lexical/react/LexicalComposer';
-import { PlainTextPlugin } from '@lexical/react/LexicalPlainTextPlugin';
-import { ContentEditable } from '@lexical/react/LexicalContentEditable';
-import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
-import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
-import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { $getRoot, $createTextNode, EditorState } from 'lexical';
-import { debounce } from './debounce';
-import { useEditorStore } from './useEditorStore';
-import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary';
+import React, { useEffect, useRef, useCallback, useMemo } from "react";
+import { LexicalComposer } from "@lexical/react/LexicalComposer";
+import { PlainTextPlugin } from "@lexical/react/LexicalPlainTextPlugin";
+import { ContentEditable } from "@lexical/react/LexicalContentEditable";
+import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
+import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+import { $getRoot, $createTextNode, EditorState } from "lexical";
+import { debounce } from "./debounce";
+import { useEditorStore } from "./useEditorStore";
+import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
 
 const defaultConfig = {
-  namespace: 'PlainTextEditor',
+  namespace: "PlainTextEditor",
   onError: (error: Error) => {
-    console.error('Lexical error:', error);
+    console.error("Lexical error:", error);
   },
   theme: {},
 };
@@ -38,7 +38,7 @@ const PlainTextHydrationPlugin: React.FC<{ storageKey: string }> = ({ storageKey
     editor.update(() => {
       const root = $getRoot();
       const current = root.getTextContent();
-      if (current.trim() === '') {
+      if (current.trim() === "") {
         root.clear();
         root.append($createTextNode(saved));
       }

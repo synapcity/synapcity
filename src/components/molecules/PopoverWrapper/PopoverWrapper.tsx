@@ -1,12 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {
-  UIPopover,
-  UIPopoverTrigger,
-  UIPopoverContent,
-  UIPopoverAnchor,
-} from "@/components/atoms";
+import { UIPopover, UIPopoverTrigger, UIPopoverContent, UIPopoverAnchor } from "@/components/atoms";
 
 import { cn } from "@/utils";
 
@@ -23,7 +18,7 @@ interface PopoverWrapperProps {
   className?: string;
   withAnchor?: boolean;
   anchorEl?: React.ReactNode;
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'default';
+  size?: "xs" | "sm" | "md" | "lg" | "xl" | "default";
 }
 
 export function PopoverWrapper({
@@ -39,15 +34,15 @@ export function PopoverWrapper({
   className,
   withAnchor = false,
   anchorEl,
-  size = "default"
+  size = "default",
 }: PopoverWrapperProps) {
   const sizeClasses = {
-    default: 'w-96',
-    xs: 'w-32',
-    sm: 'w-48',
-    md: 'w-64',
-    lg: 'w-80',
-    xl: 'w-96',
+    default: "w-96",
+    xs: "w-32",
+    sm: "w-48",
+    md: "w-64",
+    lg: "w-80",
+    xl: "w-96",
   };
 
   return (

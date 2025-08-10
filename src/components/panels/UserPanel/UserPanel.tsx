@@ -11,7 +11,9 @@ import { ModalRenderer } from "@/components/modals";
 import dynamic from "next/dynamic";
 // import { IconSidebar } from "@/components/menus/sidebar";
 
-const UserPanelContainer = dynamic(() => import("../UserPanelContainer").then(mod => mod.UserContainer))
+const UserPanelContainer = dynamic(() =>
+  import("../UserPanelContainer").then((mod) => mod.UserContainer)
+);
 
 export const UserPanel = () => {
   return (
@@ -34,5 +36,5 @@ export const UserPanel = () => {
         </SidebarInset>
       </div>
     </UserPanelContainer>
-  )
-}
+  );
+};

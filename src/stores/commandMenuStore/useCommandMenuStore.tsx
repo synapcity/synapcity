@@ -45,8 +45,7 @@ export const useCommandMenuStore = create<CommandMenuStore>()(
       pins: [],
       pin: (id) =>
         set((state) => ({ pins: Array.from(new Set([id, ...state.pins])).slice(0, 10) })),
-      unpin: (id) =>
-        set((state) => ({ pins: state.pins.filter((pid) => pid !== id) })),
+      unpin: (id) => set((state) => ({ pins: state.pins.filter((pid) => pid !== id) })),
       isPinned: (id) => get().pins.includes(id),
     }),
     { name: "synapcity-command-menu", partialize: (s) => ({ recents: s.recents, pins: s.pins }) }

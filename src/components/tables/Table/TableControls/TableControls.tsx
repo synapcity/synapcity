@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { Table } from '@tanstack/react-table';
+import { Table } from "@tanstack/react-table";
 
 type TableControlsProps<TData> = { table: Table<TData> };
 
@@ -10,10 +10,7 @@ export function TableControls<TData>({ table }: TableControlsProps<TData>) {
       <span className="font-semibold">Table Controls</span>
       <div className="flex space-x-4">
         {table.getAllLeafColumns().map((column) => (
-          <label
-            key={column.id}
-            className="inline-flex items-center text-sm"
-          >
+          <label key={column.id} className="inline-flex items-center text-sm">
             <input
               type="checkbox"
               checked={column.getIsVisible()}

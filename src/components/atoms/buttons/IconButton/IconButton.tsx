@@ -6,7 +6,7 @@ import { ButtonSize, ButtonVariant } from "../variants";
 
 export interface IconButtonProps extends Omit<ButtonProps, "variant" | "size"> {
   icon: string;
-  iconSource?: IconSource
+  iconSource?: IconSource;
   size?: ButtonSize;
   iconSize?: IconSize;
   iconClassName?: string;
@@ -38,9 +38,13 @@ export const IconButton = ({
       className={className}
       icon={icon}
       isIconOnly
-      {...props}>
+      {...props}
+    >
       {isLoading && <Spinner />}
-      {!isLoading && <Icon name={icon} source={iconSource} size={iconSize} className={iconClassName} />}
+      {!isLoading && (
+        <Icon name={icon} source={iconSource} size={iconSize} className={iconClassName} />
+      )}
       <span className="sr-only">{props["aria-label"] || props["aria-labelledby"] || "Button"}</span>
-    </Button>);
+    </Button>
+  );
 };

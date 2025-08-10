@@ -83,9 +83,7 @@ export const Controlled: Story = {
           onValueChange={setValue}
           options={baseOptions}
         />
-        <p className="mt-2 text-sm text-muted-foreground">
-          Current: {value}
-        </p>
+        <p className="mt-2 text-sm text-muted-foreground">Current: {value}</p>
       </div>
     );
   },

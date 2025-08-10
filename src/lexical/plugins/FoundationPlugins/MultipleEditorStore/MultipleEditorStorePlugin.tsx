@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { useEditor } from "@/providers/EditorProvider";
 
-export default function MultipleEditorStorePlugin({ id }: { id: string; }) {
+export default function MultipleEditorStorePlugin({ id }: { id: string }) {
   const [editor] = useLexicalComposerContext();
   const { registerEditor, unregisterEditor } = useEditor();
   useEffect(() => {
@@ -12,4 +12,4 @@ export default function MultipleEditorStorePlugin({ id }: { id: string; }) {
     return () => unregisterEditor(id);
   }, [id, editor, registerEditor, unregisterEditor]);
   return null;
-};
+}

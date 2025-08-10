@@ -78,12 +78,7 @@ export function CreateDashboardModal({ open, setOpen, initialData }: Props) {
       open={open}
       setOpen={setOpen}
       trigger={
-        <IconButton
-          variant="ghost"
-          label="Add Dashboard"
-          tooltip="Add Dashboard"
-          icon="plus"
-        />
+        <IconButton variant="ghost" label="Add Dashboard" tooltip="Add Dashboard" icon="plus" />
       }
       title={
         initialData

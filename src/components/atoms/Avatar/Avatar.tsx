@@ -1,8 +1,4 @@
-import {
-  Avatar as BaseAvatar,
-  AvatarFallback,
-  AvatarImage,
-} from "../ui/avatar";
+import { Avatar as BaseAvatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { cn } from "@/utils";
 import { Icon } from "../Icon";
 
@@ -43,18 +39,16 @@ export const Avatar = ({
 
   const statusClass = status
     ? {
-      online: "bg-green-500",
-      offline: "bg-gray-400",
-      busy: "bg-red-500",
-      away: "bg-yellow-400",
-    }[status]
+        online: "bg-green-500",
+        offline: "bg-gray-400",
+        busy: "bg-red-500",
+        away: "bg-yellow-400",
+      }[status]
     : null;
 
   return (
     <div className="relative inline-block">
-      <BaseAvatar
-        className={cn(sizeClass, ring && "ring-2 ring-ring", className)}
-      >
+      <BaseAvatar className={cn(sizeClass, ring && "ring-2 ring-ring", className)}>
         {src && <AvatarImage src={src} alt={alt} />}
         <AvatarFallback className="flex items-center justify-center">
           {fallbackIcon ? (
@@ -81,4 +75,3 @@ export const Avatar = ({
     </div>
   );
 };
-

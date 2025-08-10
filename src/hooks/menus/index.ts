@@ -1,1 +1,1 @@
-export * from "./useDynamicBreadcrumbs"
+export * from "./useDynamicBreadcrumbs";

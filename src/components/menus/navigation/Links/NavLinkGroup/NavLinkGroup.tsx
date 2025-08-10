@@ -45,7 +45,7 @@ export function NavLinkGroup({
       )}
     >
       {items.map((item) => {
-        const actions = item.href ? { href: item.href } : { onClick: item.onClick }
+        const actions = item.href ? { href: item.href } : { onClick: item.onClick };
         return (
           <NavLink
             key={item.id}
@@ -55,7 +55,7 @@ export function NavLinkGroup({
             isActive={pathname === item.href}
             activeClassName={activeClassName}
           />
-        )
+        );
       })}
     </div>
   );

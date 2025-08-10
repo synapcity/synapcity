@@ -1,24 +1,21 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Command as CommandPrimitive, useCommandState } from "cmdk"
-import { SearchIcon } from "lucide-react"
+import * as React from "react";
+import { Command as CommandPrimitive, useCommandState } from "cmdk";
+import { SearchIcon } from "lucide-react";
 
-import { cn } from "@/utils/index"
+import { cn } from "@/utils/index";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/components/atoms/ui/dialog"
-import { Tooltip } from "../Tooltip"
-import { useShallow } from "zustand/shallow"
+} from "@/components/atoms/ui/dialog";
+import { Tooltip } from "../Tooltip";
+import { useShallow } from "zustand/shallow";
 
-function Command({
-  className,
-  ...props
-}: React.ComponentProps<typeof CommandPrimitive>) {
+function Command({ className, ...props }: React.ComponentProps<typeof CommandPrimitive>) {
   return (
     <CommandPrimitive
       data-slot="command"
@@ -28,9 +25,8 @@ function Command({
       )}
       {...props}
     />
-  )
+  );
 }
-
 
 function CommandDialog({
   title = "Command Palette",
@@ -42,10 +38,10 @@ function CommandDialog({
   shouldFilter = true,
   ...props
 }: React.ComponentProps<typeof Dialog> & {
-  title?: string
-  description?: string
-  className?: string
-  showCloseButton?: boolean
+  title?: string;
+  description?: string;
+  className?: string;
+  showCloseButton?: boolean;
   loop?: boolean;
   shouldFilter?: boolean;
 }) {
@@ -59,12 +55,17 @@ function CommandDialog({
         className={cn("overflow-hidden p-0", className)}
         showCloseButton={showCloseButton}
       >
-        <Command className="text-foreground [&_[cmdk-group-heading]]:text-foreground **:data-[slot=command-input-wrapper]:h-12 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group]]:px-2 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5" label={title} loop={loop} shouldFilter={shouldFilter}>
+        <Command
+          className="text-foreground [&_[cmdk-group-heading]]:text-foreground **:data-[slot=command-input-wrapper]:h-12 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group]]:px-2 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5"
+          label={title}
+          loop={loop}
+          shouldFilter={shouldFilter}
+        >
           {children}
         </Command>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
 
 function CommandInput({
@@ -72,10 +73,7 @@ function CommandInput({
   ...props
 }: React.ComponentProps<typeof CommandPrimitive.Input>) {
   return (
-    <div
-      data-slot="command-input-wrapper"
-      className="flex h-9 items-center gap-2 border-b px-3"
-    >
+    <div data-slot="command-input-wrapper" className="flex h-9 items-center gap-2 border-b px-3">
       <SearchIcon className="size-4 shrink-0 opacity-50" />
       <CommandPrimitive.Input
         data-slot="command-input"
@@ -84,39 +82,30 @@ function CommandInput({
           className
         )}
         autoFocus
-
         {...props}
       />
     </div>
-  )
+  );
 }
 
-function CommandList({
-  className,
-  ...props
-}: React.ComponentProps<typeof CommandPrimitive.List>) {
+function CommandList({ className, ...props }: React.ComponentProps<typeof CommandPrimitive.List>) {
   return (
     <CommandPrimitive.List
       data-slot="command-list"
-      className={cn(
-        "max-h-[300px] scroll-py-1 overflow-x-hidden overflow-y-auto",
-        className
-      )}
+      className={cn("max-h-[300px] scroll-py-1 overflow-x-hidden overflow-y-auto", className)}
       {...props}
     />
-  )
+  );
 }
 
-function CommandEmpty({
-  ...props
-}: React.ComponentProps<typeof CommandPrimitive.Empty>) {
+function CommandEmpty({ ...props }: React.ComponentProps<typeof CommandPrimitive.Empty>) {
   return (
     <CommandPrimitive.Empty
       data-slot="command-empty"
       className="py-6 text-center text-sm"
       {...props}
     />
-  )
+  );
 }
 
 function CommandGroup({
@@ -132,7 +121,7 @@ function CommandGroup({
       )}
       {...props}
     />
-  )
+  );
 }
 
 function CommandSeparator({
@@ -145,13 +134,10 @@ function CommandSeparator({
       className={cn("bg-border -mx-1 h-px", className)}
       {...props}
     />
-  )
+  );
 }
 
-function CommandItem({
-  className,
-  ...props
-}: React.ComponentProps<typeof CommandPrimitive.Item>) {
+function CommandItem({ className, ...props }: React.ComponentProps<typeof CommandPrimitive.Item>) {
   return (
     <CommandPrimitive.Item
       data-slot="command-item"
@@ -161,22 +147,13 @@ function CommandItem({
       )}
       {...props}
     />
-  )
+  );
 }
 
-function CommandSubItem({
-  className,
-  ...props
-}: React.ComponentProps<typeof CommandItem>) {
-  const search = useCommandState(useShallow((state) => state.search))
-  if (!search) return null
-  return (
-    <CommandItem
-      data-slot="command-sub-item"
-      className={cn("pl-4", className)}
-      {...props}
-    />
-  )
+function CommandSubItem({ className, ...props }: React.ComponentProps<typeof CommandItem>) {
+  const search = useCommandState(useShallow((state) => state.search));
+  if (!search) return null;
+  return <CommandItem data-slot="command-sub-item" className={cn("pl-4", className)} {...props} />;
 }
 
 function CommandShortcut({
@@ -184,7 +161,10 @@ function CommandShortcut({
   side,
   content,
   ...props
-}: React.ComponentProps<"span"> & { side?: "right" | "top" | "bottom" | "left"; content?: string | React.ReactNode; }) {
+}: React.ComponentProps<"span"> & {
+  side?: "right" | "top" | "bottom" | "left";
+  content?: string | React.ReactNode;
+}) {
   return (
     <Tooltip content={content ?? props.children} side={side}>
       <span
@@ -196,7 +176,7 @@ function CommandShortcut({
         {...props}
       />
     </Tooltip>
-  )
+  );
 }
 
 export {
@@ -209,5 +189,5 @@ export {
   CommandItem,
   CommandShortcut,
   CommandSeparator,
-  CommandSubItem
-}
+  CommandSubItem,
+};

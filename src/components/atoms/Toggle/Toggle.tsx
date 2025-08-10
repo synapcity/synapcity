@@ -1,87 +1,89 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { UIToggle } from "../ui"
-import { cn } from "@/utils"
-import { Label } from "../Label"
-import { Typography } from "../Typography"
-import { Icon, IconSource } from "../Icon"
+import * as React from "react";
+import { UIToggle } from "../ui";
+import { cn } from "@/utils";
+import { Label } from "../Label";
+import { Typography } from "../Typography";
+import { Icon, IconSource } from "../Icon";
 
-export interface ToggleProps
-  extends React.ComponentProps<typeof UIToggle> {
-  label?: string
-  description?: string
-  error?: boolean
-  showIcons?: boolean
+export interface ToggleProps extends React.ComponentProps<typeof UIToggle> {
+  label?: string;
+  description?: string;
+  error?: boolean;
+  showIcons?: boolean;
   isIconOnly?: boolean;
   icon?: string;
-  source?: IconSource
+  source?: IconSource;
 }
 
-const Toggle = React.forwardRef<
-  HTMLButtonElement,
-  ToggleProps
->(({ label, description, error, icon, showIcons = false, className, children, pressed, isIconOnly, source, ...props }, ref) => {
-  const id = React.useId()
-  return (
-    <div className="grid gap-1.5">
-      {!isIconOnly && label && (
-        <Label
-          htmlFor={id}
-          className={cn(
-            error && "text-destructive"
-          )}
-        >
-          {label}
-        </Label>
-      )}
-      <UIToggle
-        ref={ref}
-        id={id}
-        aria-invalid={error || undefined}
-        pressed={pressed}
-        className={cn("border border-[var(--accent)] hover:cursor-pointer", className)}
-        {...props}
-      >
-        {showIcons ? (
-          <Icon name={pressed ? "Check" : "X"} source={source} />
-        ) : icon && (
-          <Icon
-            name={icon}
-            source={source}
-            className={cn(pressed ? "text-white" : "text-[var(--accent)]")}
-          />
+const Toggle = React.forwardRef<HTMLButtonElement, ToggleProps>(
+  (
+    {
+      label,
+      description,
+      error,
+      icon,
+      showIcons = false,
+      className,
+      children,
+      pressed,
+      isIconOnly,
+      source,
+      ...props
+    },
+    ref
+  ) => {
+    const id = React.useId();
+    return (
+      <div className="grid gap-1.5">
+        {!isIconOnly && label && (
+          <Label htmlFor={id} className={cn(error && "text-destructive")}>
+            {label}
+          </Label>
         )}
-
-
-        {!isIconOnly && (
-          <span
-            className={cn(
-              "ml-2 transition-all ease-linear duration-200",
-              isIconOnly ? "opacity-0 w-0 overflow-hidden" : "opacity-100 w-auto"
-            )}
-          >
-            {children}
-          </span>
-
-        )}
-      </UIToggle>
-
-
-      {description && (
-        <Typography
-          variant="small"
-          className={cn(
-            error && "text-destructive"
-          )}
+        <UIToggle
+          ref={ref}
+          id={id}
+          aria-invalid={error || undefined}
+          pressed={pressed}
+          className={cn("border border-[var(--accent)] hover:cursor-pointer", className)}
+          {...props}
         >
-          {description}
-        </Typography>
-      )}
-    </div>
-  )
-})
+          {showIcons ? (
+            <Icon name={pressed ? "Check" : "X"} source={source} />
+          ) : (
+            icon && (
+              <Icon
+                name={icon}
+                source={source}
+                className={cn(pressed ? "text-white" : "text-[var(--accent)]")}
+              />
+            )
+          )}
 
-Toggle.displayName = "Toggle"
+          {!isIconOnly && (
+            <span
+              className={cn(
+                "ml-2 transition-all ease-linear duration-200",
+                isIconOnly ? "opacity-0 w-0 overflow-hidden" : "opacity-100 w-auto"
+              )}
+            >
+              {children}
+            </span>
+          )}
+        </UIToggle>
 
-export { Toggle }
+        {description && (
+          <Typography variant="small" className={cn(error && "text-destructive")}>
+            {description}
+          </Typography>
+        )}
+      </div>
+    );
+  }
+);
+
+Toggle.displayName = "Toggle";
+
+export { Toggle };

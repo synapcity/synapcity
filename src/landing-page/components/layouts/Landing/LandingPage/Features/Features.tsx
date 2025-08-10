@@ -1,10 +1,14 @@
-"use client"
+"use client";
 
 import { useInView } from "react-intersection-observer";
 import dynamic from "next/dynamic";
 
-const FeatureHeader = dynamic(() => import("./components").then((mod) => mod.FeatureHeader), { ssr: false })
-const FeatureContainer = dynamic(() => import("./components").then((mod) => mod.FeatureContainer), { ssr: false })
+const FeatureHeader = dynamic(() => import("./components").then((mod) => mod.FeatureHeader), {
+  ssr: false,
+});
+const FeatureContainer = dynamic(() => import("./components").then((mod) => mod.FeatureContainer), {
+  ssr: false,
+});
 
 export const Features = () => {
   const { ref: featuresRef, inView: featuresInView } = useInView({
@@ -18,5 +22,5 @@ export const Features = () => {
         <FeatureContainer inView={featuresInView} />
       </div>
     </section>
-  )
-}
+  );
+};

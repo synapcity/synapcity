@@ -1,10 +1,9 @@
-"use client"
+"use client";
 
-import React, { PropsWithChildren, useEffect, useRef } from 'react';
-import { draggableStore } from '../store/useDraggableStore';
+import React, { PropsWithChildren, useEffect, useRef } from "react";
+import { draggableStore } from "../store/useDraggableStore";
 
-export const DRAGGABLE_WRAPPER_ID = 'lexical-draggable-wrapper-id';
-
+export const DRAGGABLE_WRAPPER_ID = "lexical-draggable-wrapper-id";
 
 export const DraggableWrapper: React.FC<PropsWithChildren> = ({ children }) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -16,10 +15,10 @@ export const DraggableWrapper: React.FC<PropsWithChildren> = ({ children }) => {
 
     const current = ref.current;
 
-    current?.addEventListener('mouseleave', callback);
+    current?.addEventListener("mouseleave", callback);
 
     return () => {
-      current?.removeEventListener('mouseleave', callback);
+      current?.removeEventListener("mouseleave", callback);
     };
   }, []);
 

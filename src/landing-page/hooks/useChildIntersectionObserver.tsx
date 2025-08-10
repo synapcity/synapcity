@@ -1,24 +1,26 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 
 export const useChildIntersectionObserver = (
   containerRef: React.RefObject<HTMLDivElement | null>,
   threshold: number = 0.8
 ) => {
-  const [currentIndex, setCurrentIndex] = useState(0)
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    const container = containerRef.current
-    if (!container) return
+    const container = containerRef.current;
+    if (!container) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
-        const visibleEntries = entries.filter((entry) => entry.isIntersecting)
+        const visibleEntries = entries.filter((entry) => entry.isIntersecting);
         if (visibleEntries.length > 0) {
-          const index = Array.from(container.children).indexOf(visibleEntries[0].target as HTMLElement)
+          const index = Array.from(container.children).indexOf(
+            visibleEntries[0].target as HTMLElement
+          );
           if (index !== -1) {
-            setCurrentIndex(index)
+            setCurrentIndex(index);
           }
         }
       },
@@ -26,12 +28,12 @@ export const useChildIntersectionObserver = (
         root: container,
         threshold,
       }
-    )
+    );
 
-    Array.from(container.children).forEach((child) => observer.observe(child))
+    Array.from(container.children).forEach((child) => observer.observe(child));
 
-    return () => observer.disconnect()
-  }, [containerRef, threshold])
+    return () => observer.disconnect();
+  }, [containerRef, threshold]);
 
-  return { currentIndex }
-}
+  return { currentIndex };
+};

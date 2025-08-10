@@ -1,1 +1,1 @@
-export * from "./GlobalPage"
+export * from "./GlobalPage";

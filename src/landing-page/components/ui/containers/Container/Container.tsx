@@ -4,7 +4,6 @@ import { MotionProps } from "framer-motion";
 import { BaseProps } from "@/landing-page/types";
 import clsx from "clsx";
 
-
 export type ContainerProps<E extends ElementType = "div"> = {
   as?: E;
   children?: ReactNode;
@@ -13,35 +12,35 @@ export type ContainerProps<E extends ElementType = "div"> = {
   motion?: MotionProps;
   center?: boolean;
   left?: boolean;
-} & Omit<React.ComponentPropsWithoutRef<E>, "as"> & BaseProps;
+} & Omit<React.ComponentPropsWithoutRef<E>, "as"> &
+  BaseProps;
 
-export const Container = forwardRef(<E extends ElementType = "div">(
-  {
-    as,
-    children,
-    className,
-    maxWidth = "7xl",
-    padding = "8",
-    center,
-    left,
-    motion,
-    ...rest
-  }: ContainerProps<E>,
-  ref: React.Ref<HTMLElement>
-) => {
-  const Component = motion ? (as === "section" ? MotionSection : MotionDiv) : as || "div";
-  const paddingClass = center ? `px-${padding}` : left ? `pr-${padding}` : `pl-${padding}`
-  const marginClass = center ? `mx-auto` : left ? `mr-auto` : `ml-auto`
-  const classes = clsx(
-    `max-w-${maxWidth}`, paddingClass, marginClass,
-    className
-  );
+export const Container = forwardRef(
+  <E extends ElementType = "div">(
+    {
+      as,
+      children,
+      className,
+      maxWidth = "7xl",
+      padding = "8",
+      center,
+      left,
+      motion,
+      ...rest
+    }: ContainerProps<E>,
+    ref: React.Ref<HTMLElement>
+  ) => {
+    const Component = motion ? (as === "section" ? MotionSection : MotionDiv) : as || "div";
+    const paddingClass = center ? `px-${padding}` : left ? `pr-${padding}` : `pl-${padding}`;
+    const marginClass = center ? `mx-auto` : left ? `mr-auto` : `ml-auto`;
+    const classes = clsx(`max-w-${maxWidth}`, paddingClass, marginClass, className);
 
-  return (
-    <Component ref={ref} className={classes} motion={motion} {...rest}>
-      {children}
-    </Component>
-  );
-});
+    return (
+      <Component ref={ref} className={classes} motion={motion} {...rest}>
+        {children}
+      </Component>
+    );
+  }
+);
 
 Container.displayName = "Container";

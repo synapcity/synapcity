@@ -11,7 +11,10 @@ const NoteWidget = dynamic(
   { ssr: true }
 );
 const InboxWidget = dynamic(
-  () => import("@/landing-page/components/widgets/CaptureInbox/CaptureInboxWidget").then((mod) => mod.CaptureInboxWidget),
+  () =>
+    import("@/landing-page/components/widgets/CaptureInbox/CaptureInboxWidget").then(
+      (mod) => mod.CaptureInboxWidget
+    ),
   { ssr: true }
 );
 
@@ -42,7 +45,7 @@ export const widgetRegistry = {
     schema: z.object({
       title: z.string(),
       content: z.string(),
-    })
+    }),
   },
   inbox: {
     component: InboxWidget,
@@ -57,7 +60,7 @@ export const widgetRegistry = {
           content: z.string(),
           createdAt: z.string(),
         })
-      )
-    })
-  }
+      ),
+    }),
+  },
 };

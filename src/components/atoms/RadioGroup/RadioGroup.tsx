@@ -1,24 +1,24 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { UIRadioGroup, UIRadioGroupItem, Label } from "@/components/atoms"
-import { cn } from "@/utils"
+import * as React from "react";
+import { UIRadioGroup, UIRadioGroupItem, Label } from "@/components/atoms";
+import { cn } from "@/utils";
 
 export interface RadioOption {
-  label: string
-  value: string
-  description?: string
-  disabled?: boolean
+  label: string;
+  value: string;
+  description?: string;
+  disabled?: boolean;
 }
 
 export interface RadioGroupProps {
-  options: RadioOption[]
-  value?: string
-  onChange?: (value: string) => void
-  name?: string
-  className?: string
-  itemClassName?: string
-  direction?: "vertical" | "horizontal"
+  options: RadioOption[];
+  value?: string;
+  onChange?: (value: string) => void;
+  name?: string;
+  className?: string;
+  itemClassName?: string;
+  direction?: "vertical" | "horizontal";
 }
 
 export function RadioGroup({
@@ -35,10 +35,7 @@ export function RadioGroup({
       value={value}
       onValueChange={onChange}
       name={name}
-      className={cn(
-        direction === "horizontal" ? "flex gap-4" : "flex flex-col gap-3",
-        className
-      )}
+      className={cn(direction === "horizontal" ? "flex gap-4" : "flex flex-col gap-3", className)}
     >
       {options.map(({ label, value, description, disabled }) => (
         <div key={value} className="flex items-start gap-2">
@@ -53,12 +50,10 @@ export function RadioGroup({
             className={cn("text-sm leading-tight", disabled && "opacity-60")}
           >
             <div className="font-medium">{label}</div>
-            {description && (
-              <div className="text-muted-foreground text-xs">{description}</div>
-            )}
+            {description && <div className="text-muted-foreground text-xs">{description}</div>}
           </Label>
         </div>
       ))}
     </UIRadioGroup>
-  )
+  );
 }

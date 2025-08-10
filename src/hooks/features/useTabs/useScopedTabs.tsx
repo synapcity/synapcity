@@ -39,7 +39,6 @@
 //     return added;
 //   };
 
-
 //   const updateTab = (tabId: string, updates: Partial<Tab>) => {
 //     return updateTabRaw(tabId, updates);
 //   };

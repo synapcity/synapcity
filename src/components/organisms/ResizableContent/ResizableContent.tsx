@@ -1,30 +1,41 @@
-"use client"
+"use client";
 
 import { useUIStore, useUserStore } from "@/stores";
 import dynamic from "next/dynamic";
 import { useEffect } from "react";
 import { useShallow } from "zustand/shallow";
 
-const ResizablePanelGroup = dynamic(() => import("@/components/atoms/ui/resizable").then(mod => mod.ResizablePanelGroup), { ssr: false });
-const ResizablePanel = dynamic(() => import("@/components/atoms/ui/resizable").then(mod => mod.ResizablePanel), { ssr: false });
-const ResizableHandle = dynamic(() => import("@/components/atoms/ui/resizable").then(mod => mod.ResizableHandle), { ssr: false });
-const UserPanel = dynamic(() => import("@/components/panels/UserPanel/UserPanelShell/UserPanelShell").then((mod) => mod.UserPanelShell), { ssr: false, loading: () => <div>Loading...</div> })
+const ResizablePanelGroup = dynamic(
+  () => import("@/components/atoms/ui/resizable").then((mod) => mod.ResizablePanelGroup),
+  { ssr: false }
+);
+const ResizablePanel = dynamic(
+  () => import("@/components/atoms/ui/resizable").then((mod) => mod.ResizablePanel),
+  { ssr: false }
+);
+const ResizableHandle = dynamic(
+  () => import("@/components/atoms/ui/resizable").then((mod) => mod.ResizableHandle),
+  { ssr: false }
+);
+const UserPanel = dynamic(
+  () =>
+    import("@/components/panels/UserPanel/UserPanelShell/UserPanelShell").then(
+      (mod) => mod.UserPanelShell
+    ),
+  { ssr: false, loading: () => <div>Loading...</div> }
+);
 
-export const ResizableContent = ({ children }: { children: React.ReactNode; }) => {
-  const isOpen = useUIStore(
-    useShallow((s) => s.components?.userPanel?.isVisible ?? false)
-  );
-  const isLoggedIn = useUserStore(useShallow(s => s.isLoggedIn))
-  const isLocked = useUIStore(s =>
-    s.components?.userPanel?.isLocked ?? false
-  )
-  const setCompState = useUIStore(s => s.setCompState)
+export const ResizableContent = ({ children }: { children: React.ReactNode }) => {
+  const isOpen = useUIStore(useShallow((s) => s.components?.userPanel?.isVisible ?? false));
+  const isLoggedIn = useUserStore(useShallow((s) => s.isLoggedIn));
+  const isLocked = useUIStore((s) => s.components?.userPanel?.isLocked ?? false);
+  const setCompState = useUIStore((s) => s.setCompState);
 
   useEffect(() => {
     if (!isLoggedIn) {
-      setCompState("userPanel", "isVisible", false)
+      setCompState("userPanel", "isVisible", false);
     }
-  }, [isLoggedIn, setCompState])
+  }, [isLoggedIn, setCompState]);
 
   return (
     <ResizablePanelGroup direction="vertical" className="flex-1">
@@ -39,7 +50,7 @@ export const ResizableContent = ({ children }: { children: React.ReactNode; }) =
             maxSize={90}
             onResize={() => {
               if (isLocked) return;
-              setCompState("userPanel", "isLocked", true)
+              setCompState("userPanel", "isLocked", true);
             }}
           >
             <UserPanel />
@@ -47,13 +58,9 @@ export const ResizableContent = ({ children }: { children: React.ReactNode; }) =
           <ResizableHandle withHandle />
         </>
       )}
-      <ResizablePanel
-        order={2}
-        className="relative"
-      >
+      <ResizablePanel order={2} className="relative">
         {children}
       </ResizablePanel>
-
     </ResizablePanelGroup>
-  )
-}
+  );
+};

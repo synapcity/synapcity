@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
   DndContext,
@@ -8,24 +8,22 @@ import {
   PointerSensor,
   DragOverlay,
 } from "@dnd-kit/core";
-import {
-  arrayMove,
-  SortableContext,
-  verticalListSortingStrategy,
-} from "@dnd-kit/sortable";
+import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { useState } from "react";
 
 function SortableItem({ id, children }: { id: string; children: React.ReactNode }) {
-  return <div key={id} data-sortable-item-id={id}>{children}</div>;
+  return (
+    <div key={id} data-sortable-item-id={id}>
+      {children}
+    </div>
+  );
 }
 
 export function SortableList({ items }: { items: string[] }) {
   const [order, setOrder] = useState(items);
   const [activeId, setActive] = useState<string | null>(null);
 
-  const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 5 } })
-  );
+  const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
 
   return (
     <DndContext

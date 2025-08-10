@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs-vite";
@@ -36,9 +36,11 @@ function Template(args: Partial<React.ComponentProps<typeof SearchableMultiSelec
           setValue(v);
           args.onChange?.(v);
         }}
-        onSearch={(query: string) => new Promise(() => {
-          console.log(query)
-        })}
+        onSearch={(query: string) =>
+          new Promise(() => {
+            console.log(query);
+          })
+        }
       />
     </div>
   );
@@ -84,9 +86,14 @@ export const CustomIconsAndColors: Story = {
       value: ["react", "ts"],
       renderTagsBelow: true,
       getTagIcon: (val) =>
-        val === "react" ? <Code size={14} /> : val === "ts" ? <PenTool size={14} /> : <BookOpen size={14} />,
-      getTagColor: (val) =>
-        val === "react" ? "#e5f0ff" : val === "ts" ? "#fdf6b2" : "#e2e8f0",
+        val === "react" ? (
+          <Code size={14} />
+        ) : val === "ts" ? (
+          <PenTool size={14} />
+        ) : (
+          <BookOpen size={14} />
+        ),
+      getTagColor: (val) => (val === "react" ? "#e5f0ff" : val === "ts" ? "#fdf6b2" : "#e2e8f0"),
     }),
 };
 

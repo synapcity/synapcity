@@ -22,7 +22,7 @@ export function StackedMeta({ createdAt, updatedAt }: MetaProps) {
       {updatedAt && (
         <div className="group flex-1 flex gap-2">
           <RefreshCcw />
-          <span className="group-hover:hidden block" >Updated</span>
+          <span className="group-hover:hidden block">Updated</span>
           <span className="hidden group-hover:block whitespace-nowrap">{exactUpdated}</span>
         </div>
       )}

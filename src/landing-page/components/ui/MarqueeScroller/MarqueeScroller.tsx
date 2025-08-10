@@ -8,7 +8,7 @@ type MarqueeScrollerProps = {
   children: React.ReactNode;
 };
 
-const MotionDiv = dynamic(() => import("@/landing-page/components").then((mod) => mod.MotionDiv))
+const MotionDiv = dynamic(() => import("@/landing-page/components").then((mod) => mod.MotionDiv));
 export function MarqueeScroller({ children }: MarqueeScrollerProps) {
   const x = useMotionValue(0);
   const controls = useAnimationControls();

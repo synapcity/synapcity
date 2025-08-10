@@ -3,7 +3,13 @@ import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { z } from "zod";
 import { FormWrapper, FormWrapperWithRender } from "./FormWrapper";
 import { Input } from "@/components/atoms/Input";
-import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/atoms/ui/form";
+import {
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from "@/components/atoms/ui/form";
 
 const schema = z.object({
   email: z.string().email(),

@@ -38,15 +38,17 @@ export function ClockWidget({ widgetId, props, settings, className }: Props) {
   const dateStr = useMemo(() => formatDate(now, timezone), [now, timezone]);
 
   useEffect(() => {
-
     const now = new Date();
     const ms = now.getMilliseconds();
     const sec = now.getSeconds();
-    const remainder = showSeconds ? (1000 - ms) : ((60 - sec) * 1000 - ms);
+    const remainder = showSeconds ? 1000 - ms : (60 - sec) * 1000 - ms;
 
     const timeout = window.setTimeout(() => {
       setNow(new Date());
-      intervalRef.current = window.setInterval(() => setNow(new Date()), tickInterval) as unknown as number;
+      intervalRef.current = window.setInterval(
+        () => setNow(new Date()),
+        tickInterval
+      ) as unknown as number;
     }, remainder);
 
     const onVisibility = () => {
@@ -58,7 +60,10 @@ export function ClockWidget({ widgetId, props, settings, className }: Props) {
       } else {
         setNow(new Date());
         if (!intervalRef.current) {
-          intervalRef.current = window.setInterval(() => setNow(new Date()), tickInterval) as unknown as number;
+          intervalRef.current = window.setInterval(
+            () => setNow(new Date()),
+            tickInterval
+          ) as unknown as number;
         }
       }
     };
@@ -70,7 +75,6 @@ export function ClockWidget({ widgetId, props, settings, className }: Props) {
       intervalRef.current = null;
       document.removeEventListener("visibilitychange", onVisibility);
     };
-
   }, [showSeconds, tickInterval, timezone, format]);
 
   return (

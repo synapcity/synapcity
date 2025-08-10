@@ -8,7 +8,7 @@ export default async function Layout({
   params: Promise<{ noteId: string }>;
 }) {
   const noteParams = await params;
-  const { noteId } = noteParams
+  const { noteId } = noteParams;
   return (
     <NoteProvider noteId={noteId}>
       <NoteEditorLayout noteId={noteId}>{children}</NoteEditorLayout>

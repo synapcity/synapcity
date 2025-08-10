@@ -39,12 +39,7 @@ export const Raised: React.FC<RaisedProps> = ({
   return (
     <div className="relative inline-block">
       <div
-        className={clsx(
-          "absolute inset-0",
-          depthShadowMap[zDepth],
-          radiusMap[radius],
-          className
-        )}
+        className={clsx("absolute inset-0", depthShadowMap[zDepth], radiusMap[radius], className)}
         style={{ background }}
       />
       <div className="relative">{children}</div>

@@ -24,7 +24,7 @@ interface Props {
   onClick?: () => void;
   className?: string;
   activeClassName?: string;
-  variant?: ToggleOrButtonVariant
+  variant?: ToggleOrButtonVariant;
   size?: ButtonSize | ToggleSize;
 }
 
@@ -69,14 +69,16 @@ export function NavLink({
     >
       {label}
     </Toggle>
-  ) : href && (
-    <LinkButton
-      href={href}
-      variant={(isActive ? variant.active : variant.inactive) as ButtonVariant}
-      aria-current={isActive ? "page" : undefined}
-      {...sharedProps}
-    >
-      {label}
-    </LinkButton>
+  ) : (
+    href && (
+      <LinkButton
+        href={href}
+        variant={(isActive ? variant.active : variant.inactive) as ButtonVariant}
+        aria-current={isActive ? "page" : undefined}
+        {...sharedProps}
+      >
+        {label}
+      </LinkButton>
+    )
   );
 }

@@ -20,7 +20,8 @@ export const Default: Story = {
     delay: 5000,
     enabled: true,
     hoverOverlay: true,
-    className: "fixed top-0 left-0 right-0 h-12 bg-gray-900 text-white flex items-center justify-center shadow-md z-50",
+    className:
+      "fixed top-0 left-0 right-0 h-12 bg-gray-900 text-white flex items-center justify-center shadow-md z-50",
     children: "IdleControlled Header (Auto-Hides)",
   },
 };
@@ -37,7 +38,8 @@ export const CustomAnimation: Story = {
       exit: { opacity: 0, y: -20 },
       transition: { type: "spring", stiffness: 300, damping: 30 },
     },
-    className: "fixed top-0 left-0 right-0 h-10 bg-accent text-white flex items-center justify-center shadow z-50",
+    className:
+      "fixed top-0 left-0 right-0 h-10 bg-accent text-white flex items-center justify-center shadow z-50",
     children: "Animated Auto-Hiding Bar",
   },
 };

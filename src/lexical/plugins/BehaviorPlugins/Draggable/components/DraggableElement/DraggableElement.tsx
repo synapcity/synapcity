@@ -1,10 +1,10 @@
-import React, { DragEvent as ReactDragEvent, useCallback } from 'react';
-import { draggableStore } from '../../store/useDraggableStore';
+import React, { DragEvent as ReactDragEvent, useCallback } from "react";
+import { draggableStore } from "../../store/useDraggableStore";
 
-import './DraggableElement.css';
-import { cn } from '@/utils';
+import "./DraggableElement.css";
+import { cn } from "@/utils";
 
-export const DraggableElement = ({ className }: { className?: string; }) => {
+export const DraggableElement = ({ className }: { className?: string }) => {
   const { draggable, resetState } = draggableStore.getState();
 
   const handleOnDragStart = useCallback(

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { EditorStore, useEditorStore } from "@/stores";
 import { PropsWithChildren, useMemo } from "react";
@@ -6,8 +6,7 @@ import { EditorContext } from "./editor-context";
 
 export type EditorContextType = Pick<
   EditorStore,
-  |
-  "editors"
+  | "editors"
   | "activeEditorId"
   | "clipboard"
   | "registerEditor"

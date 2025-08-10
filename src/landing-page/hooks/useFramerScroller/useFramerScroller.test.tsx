@@ -8,7 +8,7 @@ jest.mock("framer-motion", () => ({
     set: jest.fn(),
   })),
   useMotionValue: jest.fn(() => ({
-    on: jest.fn(() => () => { }),
+    on: jest.fn(() => () => {}),
     set: jest.fn(),
     get: jest.fn(),
   })),

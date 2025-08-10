@@ -14,5 +14,5 @@ export const Basic: Story = {
   args: {
     avatarUrl: "https://i.pravatar.cc/150?img=23",
     username: "JD",
-  }
+  },
 };

@@ -9,10 +9,7 @@ export function LanguagePlugin({ language }: { language: string }) {
     const root = editor.getRootElement();
     if (root) {
       root.setAttribute("lang", language);
-      root.setAttribute(
-        "dir",
-        ["ar", "he", "fa", "ur"].includes(language) ? "rtl" : "ltr"
-      );
+      root.setAttribute("dir", ["ar", "he", "fa", "ur"].includes(language) ? "rtl" : "ltr");
     }
   }, [language, editor]);
   return null;

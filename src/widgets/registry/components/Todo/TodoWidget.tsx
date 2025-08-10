@@ -62,9 +62,7 @@ export function TodoWidget({ widgetId, props, settings, className }: Props) {
   const toggleItem = useCallback((id: string) => {
     setItems((prev) =>
       prev.map((it) =>
-        it.id === id
-          ? { ...it, completed: !it.completed, updatedAt: Date.now() }
-          : it
+        it.id === id ? { ...it, completed: !it.completed, updatedAt: Date.now() } : it
       )
     );
   }, []);
@@ -73,8 +71,7 @@ export function TodoWidget({ widgetId, props, settings, className }: Props) {
     return [...items].sort((a, b) => {
       if (sortBy === "createdAt") return b.createdAt - a.createdAt;
       if (sortBy === "updatedAt") return b.updatedAt - a.updatedAt;
-      if (sortBy === "dueDate")
-        return (a.dueDate ?? Infinity) - (b.dueDate ?? Infinity);
+      if (sortBy === "dueDate") return (a.dueDate ?? Infinity) - (b.dueDate ?? Infinity);
       return 0;
     });
   }, [items, sortBy]);
@@ -84,10 +81,7 @@ export function TodoWidget({ widgetId, props, settings, className }: Props) {
   }, [sortedItems, showCompleted]);
 
   return (
-    <Card
-      className={cn("h-full w-full p-3 flex flex-col", className)}
-      data-widget-id={widgetId}
-    >
+    <Card className={cn("h-full w-full p-3 flex flex-col", className)} data-widget-id={widgetId}>
       <div className="flex items-center justify-between mb-2">
         <h3 className="text-sm font-medium">{title}</h3>
         <form
@@ -113,15 +107,9 @@ export function TodoWidget({ widgetId, props, settings, className }: Props) {
         {visibleItems.length ? (
           visibleItems.map((item) => (
             <div key={item.id} className="flex items-center gap-2">
-              <Checkbox
-                checked={item.completed}
-                onCheckedChange={() => toggleItem(item.id)}
-              />
+              <Checkbox checked={item.completed} onCheckedChange={() => toggleItem(item.id)} />
               <span
-                className={cn(
-                  "text-sm",
-                  item.completed && "line-through text-muted-foreground"
-                )}
+                className={cn("text-sm", item.completed && "line-through text-muted-foreground")}
               >
                 {item.text}
               </span>

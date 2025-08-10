@@ -19,35 +19,35 @@ export default function AppSidebar() {
     () => Object.values(dashboardsObj).map(({ id, name }) => ({ id, name })),
     [dashboardsObj]
   );
-  const { activeId, setActive } = usePanels("global", "main")
+  const { activeId, setActive } = usePanels("global", "main");
   const notesObj = useNoteStore(useShallow((s) => s.items));
   const notes = React.useMemo(
     () => Object.values(notesObj).map(({ id, title }) => ({ id, title })),
     [notesObj]
   );
-  const activeDashboardId = useDashboardStore(useShallow(s => s.selected['dashboard']))
-  const activeNoteId = useNoteStore(useShallow(s => s.selected['note']))
+  const activeDashboardId = useDashboardStore(useShallow((s) => s.selected["dashboard"]));
+  const activeNoteId = useNoteStore(useShallow((s) => s.selected["note"]));
 
   const [createDashboardOpen, setCreateDashboardOpen] = React.useState(false);
   const [createNoteOpen, setCreateNoteOpen] = React.useState(false);
 
   useEffect(() => {
     const active = activeDashboardId ?? activeNoteId ?? null;
-    setActive(active)
-  }, [activeDashboardId, activeNoteId, setActive])
+    setActive(active);
+  }, [activeDashboardId, activeNoteId, setActive]);
 
   useKeyboardShortcut({
     key: "D",
     metaKey: true,
-    onKeyPressed: () => setCreateDashboardOpen(true)
-  })
+    onKeyPressed: () => setCreateDashboardOpen(true),
+  });
 
   useKeyboardShortcut({
     key: "N",
     metaKey: true,
     shiftKey: true,
-    onKeyPressed: () => setCreateNoteOpen(true)
-  })
+    onKeyPressed: () => setCreateNoteOpen(true),
+  });
   return (
     <Sidebar variant="container" className="shrink-0">
       <SidebarContent className="py-6">
@@ -55,7 +55,9 @@ export default function AppSidebar() {
         <SidebarSection
           label="Dashboards"
           labelLink="/home/dashboards"
-          action={<CreateDashboardModal open={createDashboardOpen} setOpen={setCreateDashboardOpen} />}
+          action={
+            <CreateDashboardModal open={createDashboardOpen} setOpen={setCreateDashboardOpen} />
+          }
           emptyLabel="No dashboards"
           items={dashboards}
           itemUrl={(d) => `/home/dashboards/${d.id}`}

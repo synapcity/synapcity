@@ -1,4 +1,4 @@
-import { UISkeleton } from "@/components/atoms"
+import { UISkeleton } from "@/components/atoms";
 
 export function LinkButtonSkeleton() {
   return (
@@ -7,5 +7,5 @@ export function LinkButtonSkeleton() {
       className="h-8 w-24 rounded-md inline-block"
       data-testid="link-button-skeleton"
     />
-  )
+  );
 }

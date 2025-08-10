@@ -13,9 +13,12 @@ import { Breadcrumbs } from "./Breadcrumbs";
 
 export function BreadcrumbHeader() {
   const pathname = usePathname();
-  const segments = pathname.replace(/^\/|\/$/g, "").split("/").filter(Boolean);
+  const segments = pathname
+    .replace(/^\/|\/$/g, "")
+    .split("/")
+    .filter(Boolean);
   const items = useDynamicBreadcrumbs(segments);
-  const toggleMain = useUIStore(useShallow(s => s.toggleCompState))
+  const toggleMain = useUIStore(useShallow((s) => s.toggleCompState));
 
   // const breadcrumbsComponent = useUIStore(
   //   useShallow((s) => s.components["breadcrumbs"])
@@ -51,23 +54,29 @@ export function BreadcrumbHeader() {
 
   return (
     <header
-      className={cn("flex items-center gap-4 px-6 pt-2 pb-4 group transition-opacity duration-200 ease-linear drop-shadow-xl drop-shadow-(--primary) opacity-100 text-(--foreground)", {
-        "h-[40px]": true,
-        // "absolute top-0 left-0 right-0 h-2 p-0 opacity-0 z-[100]": !breadcrumbsComponent?.isVisible,
-      })}
-    // onMouseEnter={showHeader}
-    // onMouseLeave={hideHeaderDelayed}
+      className={cn(
+        "flex items-center gap-4 px-6 pt-2 pb-4 group transition-opacity duration-200 ease-linear drop-shadow-xl drop-shadow-(--primary) opacity-100 text-(--foreground)",
+        {
+          "h-[40px]": true,
+          // "absolute top-0 left-0 right-0 h-2 p-0 opacity-0 z-[100]": !breadcrumbsComponent?.isVisible,
+        }
+      )}
+      // onMouseEnter={showHeader}
+      // onMouseLeave={hideHeaderDelayed}
     >
       <div
         className={cn(
-          "flex flex-1 justify-start items-center duration-200 ease-linear transition-opacity opacity-100",
+          "flex flex-1 justify-start items-center duration-200 ease-linear transition-opacity opacity-100"
           // {
           //   "-translate-y-full opacity-0": !breadcrumbsComponent?.isVisible,
           //   "translate-y-0 opacity-100": breadcrumbsComponent?.isVisible,
           // }
         )}
       >
-        <span className="relative group p-2 mr-2" onClick={() => toggleMain("mainSidebar", "isVisible")}>
+        <span
+          className="relative group p-2 mr-2"
+          onClick={() => toggleMain("mainSidebar", "isVisible")}
+        >
           <span className="absolute inset-0 flex items-center justify-center transition-opacity duration-150 opacity-100 group-hover:opacity-0">
             <Menu className="h-5 w-5" />
           </span>
@@ -78,10 +87,7 @@ export function BreadcrumbHeader() {
           </span>
         </span>
 
-        <Separator
-          orientation="vertical"
-          className="mr-2 data-[orientation=vertical]:h-4"
-        />
+        <Separator orientation="vertical" className="mr-2 data-[orientation=vertical]:h-4" />
         <Breadcrumbs items={items} />
       </div>
     </header>

@@ -1,20 +1,20 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { UISwitch, UISwitchThumb } from "@/components/atoms"
-import { cn } from "@/utils"
+import * as React from "react";
+import { UISwitch, UISwitchThumb } from "@/components/atoms";
+import { cn } from "@/utils";
 
 export interface SwitchProps {
-  label?: string
-  description?: string
-  error?: string
-  checked?: boolean
-  defaultChecked?: boolean
-  onCheckedChange?: (checked: boolean) => void
-  disabled?: boolean
-  name?: string
-  className?: string
-  id?: string
+  label?: string;
+  description?: string;
+  error?: string;
+  checked?: boolean;
+  defaultChecked?: boolean;
+  onCheckedChange?: (checked: boolean) => void;
+  disabled?: boolean;
+  name?: string;
+  className?: string;
+  id?: string;
 }
 
 export const Switch = React.forwardRef<HTMLButtonElement, SwitchProps>(
@@ -33,9 +33,9 @@ export const Switch = React.forwardRef<HTMLButtonElement, SwitchProps>(
     },
     ref
   ) => {
-    const reactId = React.useId()
-    const switchId = id ?? reactId
-    const describedBy = error ? `${switchId}-error` : `${switchId}-desc`
+    const reactId = React.useId();
+    const switchId = id ?? reactId;
+    const describedBy = error ? `${switchId}-error` : `${switchId}-desc`;
 
     return (
       <div className="space-y-1">
@@ -73,8 +73,8 @@ export const Switch = React.forwardRef<HTMLButtonElement, SwitchProps>(
           </p>
         )}
       </div>
-    )
+    );
   }
-)
+);
 
-Switch.displayName = "Switch"
+Switch.displayName = "Switch";

@@ -65,10 +65,7 @@ export const CardWithLoading: FC<CardWithLoadingProps> = ({
   return (
     <button
       onClick={onClick}
-      className={cn(
-        "w-full text-left p-0 border-none bg-transparent",
-        className
-      )}
+      className={cn("w-full text-left p-0 border-none bg-transparent", className)}
       aria-label={ariaLabel}
       disabled={isLoading}
       type="button"
@@ -115,18 +112,14 @@ export function StackedMeta({ createdAt, updatedAt }: MetaProps) {
         <div className="group flex-1 flex gap-2 items-center">
           <Clock className="flex-shrink-0" />
           <span className="group-hover:hidden block">Created</span>
-          <span className="hidden group-hover:block whitespace-nowrap">
-            {exactCreated}
-          </span>
+          <span className="hidden group-hover:block whitespace-nowrap">{exactCreated}</span>
         </div>
       )}
       {exactUpdated && (
         <div className="group flex-1 flex gap-2 items-center">
           <RefreshCcw className="flex-shrink-0" />
           <span className="group-hover:hidden block">Updated</span>
-          <span className="hidden group-hover:block whitespace-nowrap">
-            {exactUpdated}
-          </span>
+          <span className="hidden group-hover:block whitespace-nowrap">{exactUpdated}</span>
         </div>
       )}
     </div>

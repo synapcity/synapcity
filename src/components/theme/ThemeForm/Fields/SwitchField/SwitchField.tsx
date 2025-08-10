@@ -9,11 +9,8 @@ interface SwitchFieldProps {
   name: string;
 }
 
-export const SwitchField = ({
-  label,
-  name
-}: SwitchFieldProps) => {
-  const { control } = useFormContext()
+export const SwitchField = ({ label, name }: SwitchFieldProps) => {
+  const { control } = useFormContext();
   return (
     <div className="flex items-center gap-2">
       <Label>{label}</Label>
@@ -23,5 +20,5 @@ export const SwitchField = ({
         render={({ field }) => <Switch checked={field.value} onCheckedChange={field.onChange} />}
       />
     </div>
-  )
-}
+  );
+};

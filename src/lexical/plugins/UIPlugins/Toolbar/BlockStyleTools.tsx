@@ -2,11 +2,7 @@
 
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { $createHeadingNode, $createQuoteNode, $isHeadingNode } from "@lexical/rich-text";
-import {
-  $createParagraphNode,
-  $getSelection,
-  $isRangeSelection,
-} from "lexical";
+import { $createParagraphNode, $getSelection, $isRangeSelection } from "lexical";
 import { Button } from "@/components/atoms";
 import { useEffect, useState } from "react";
 

@@ -3,7 +3,7 @@ import * as utils from "./export-utils";
 
 describe("csvCell", () => {
   it("quotes cells with commas", () => {
-    expect(utils.csvCell("a,b")).toBe("\"a,b\"");
+    expect(utils.csvCell("a,b")).toBe('"a,b"');
   });
 
   it("escapes internal double quotes", () => {
@@ -41,11 +41,7 @@ describe("exportCsv", () => {
 
     utils.exportCsv(data, false, "test");
 
-    const expected = [
-      "a,b",
-      '"hello, world",simple',
-      '"""quoted""","line1\nline2"',
-    ].join("\n");
+    const expected = ["a,b", '"hello, world",simple', '"""quoted""","line1\nline2"'].join("\n");
 
     expect(csvData).toBe(expected);
     expect(csvData).not.toContain("hello\\, world");

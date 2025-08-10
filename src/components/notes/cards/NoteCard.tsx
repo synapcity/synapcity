@@ -18,7 +18,7 @@ export const NoteCard: FC<NoteCardProps> = ({ id, title, excerpt, onClick }) => 
   const router = useRouter();
 
   const status = useNoteStore(
-    useShallow((s) => s.localStatus?.[id] ?? { isLoading: false, error: null }),
+    useShallow((s) => s.localStatus?.[id] ?? { isLoading: false, error: null })
   );
   const startStatus = useNoteStore((s) => s.startStatus);
 
@@ -43,14 +43,8 @@ export const NoteCard: FC<NoteCardProps> = ({ id, title, excerpt, onClick }) => 
   const isLoading = !!status?.isLoading || localLoading;
 
   return (
-    <CardWithLoading
-      isLoading={isLoading}
-      onClick={handleClick}
-      ariaLabel={`Open note ${title}`}
-    >
-      <h3 className="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-200">
-        {title}
-      </h3>
+    <CardWithLoading isLoading={isLoading} onClick={handleClick} ariaLabel={`Open note ${title}`}>
+      <h3 className="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-200">{title}</h3>
       <p
         className="
           text-sm text-gray-600 dark:text-gray-400

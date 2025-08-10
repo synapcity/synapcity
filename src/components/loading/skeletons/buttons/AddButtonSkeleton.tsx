@@ -1,4 +1,4 @@
-import { UISkeleton } from "@/components/atoms"
+import { UISkeleton } from "@/components/atoms";
 
 export function AddButtonSkeleton() {
   return (
@@ -8,5 +8,5 @@ export function AddButtonSkeleton() {
     >
       <UISkeleton as="button" className="h-5 w-5 rounded-full" />
     </div>
-  )
+  );
 }

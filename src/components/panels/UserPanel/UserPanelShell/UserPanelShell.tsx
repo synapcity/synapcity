@@ -7,17 +7,13 @@ import { cn } from "@/utils";
 import { useUIStore } from "@/stores";
 import dynamic from "next/dynamic";
 
-const UserPanel = dynamic(() => import("../UserPanel").then(mod => mod.UserPanel), {
+const UserPanel = dynamic(() => import("../UserPanel").then((mod) => mod.UserPanel), {
   ssr: false,
-  loading: () => <div>Loading...</div>
-})
+  loading: () => <div>Loading...</div>,
+});
 export const UserPanelShell = () => {
-  const isOpen = useUIStore((s) =>
-    s.components?.userPanel?.isVisible ?? false
-  );
-  const isLocked = useUIStore((s) =>
-    s.components.userPanel.isLocked ?? false
-  );
+  const isOpen = useUIStore((s) => s.components?.userPanel?.isVisible ?? false);
+  const isLocked = useUIStore((s) => s.components.userPanel.isLocked ?? false);
   const setComponentUIState = useUIStore((s) => s.setComponent);
 
   const clickAwayRef = useRef(null);
@@ -44,5 +40,5 @@ export const UserPanelShell = () => {
         <UserPanel />
       </motion.div>
     </AnimatePresence>
-  ) : null
-}
+  ) : null;
+};

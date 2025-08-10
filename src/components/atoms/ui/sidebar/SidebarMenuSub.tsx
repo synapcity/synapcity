@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Slot } from "@radix-ui/react-slot"
+import * as React from "react";
+import { Slot } from "@radix-ui/react-slot";
 
-import { cn } from "@/utils/index"
+import { cn } from "@/utils/index";
 
 export function SidebarMenuSub({ className, ...props }: React.ComponentProps<"ul">) {
   return (
@@ -17,13 +17,10 @@ export function SidebarMenuSub({ className, ...props }: React.ComponentProps<"ul
       )}
       {...props}
     />
-  )
+  );
 }
 
-export function SidebarMenuSubItem({
-  className,
-  ...props
-}: React.ComponentProps<"li">) {
+export function SidebarMenuSubItem({ className, ...props }: React.ComponentProps<"li">) {
   return (
     <li
       data-slot="sidebar-menu-sub-item"
@@ -31,7 +28,7 @@ export function SidebarMenuSubItem({
       className={cn("group/menu-sub-item relative", className)}
       {...props}
     />
-  )
+  );
 }
 
 export function SidebarMenuSubButton({
@@ -41,11 +38,11 @@ export function SidebarMenuSubButton({
   className,
   ...props
 }: React.ComponentProps<"a"> & {
-  asChild?: boolean
-  size?: "sm" | "md"
-  isActive?: boolean
+  asChild?: boolean;
+  size?: "sm" | "md";
+  isActive?: boolean;
 }) {
-  const Comp = asChild ? Slot : "a"
+  const Comp = asChild ? Slot : "a";
 
   return (
     <Comp
@@ -63,5 +60,5 @@ export function SidebarMenuSubButton({
       )}
       {...props}
     />
-  )
+  );
 }

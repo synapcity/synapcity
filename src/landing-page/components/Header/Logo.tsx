@@ -4,4 +4,4 @@ export const Logo = () => (
       Synapcity
     </span>
   </div>
-)
+);

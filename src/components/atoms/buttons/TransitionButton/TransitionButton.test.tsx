@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  render,
-  screen,
-  fireEvent,
-  act,
-  waitFor,
-} from "@testing-library/react";
+import { render, screen, fireEvent, act, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { TransitionButton } from "./TransitionButton";
 import { CheckCircle2, Star } from "lucide-react";
@@ -17,36 +11,39 @@ const CustomIcon = <Star data-testid="custom-icon" />;
 describe("TransitionButton", () => {
   beforeEach(() => {
     jest.clearAllMocks();
-  })
+  });
 
   it("renders loader icon when loading", () => {
     const { container } = render(<TransitionButton isLoading>Click</TransitionButton>);
     const spinner = container.querySelector("svg");
     expect(spinner).toBeInTheDocument();
     expect(spinner?.getAttribute("class")).toMatch(/animate-spin/);
-  })
+  });
 
   it("renders success icon when showSuccessIcon is true", () => {
     const { getByTestId } = render(
-      <TransitionButton showSuccessIcon successIcon={SuccessIcon}>Click</TransitionButton>
+      <TransitionButton showSuccessIcon successIcon={SuccessIcon}>
+        Click
+      </TransitionButton>
     );
     expect(getByTestId("success-icon")).toBeInTheDocument();
   });
 
   it("renders custom icon when not loading or in success", () => {
-    const { getByTestId } = render(
-      <TransitionButton icon={CustomIcon}>Click</TransitionButton>
-    );
+    const { getByTestId } = render(<TransitionButton icon={CustomIcon}>Click</TransitionButton>);
     expect(getByTestId("custom-icon")).toBeInTheDocument();
   });
 
   it("renders loading text", () => {
-    render(<TransitionButton isLoading loadingText="Please wait...">Click</TransitionButton>);
+    render(
+      <TransitionButton isLoading loadingText="Please wait...">
+        Click
+      </TransitionButton>
+    );
     expect(screen.getByText("Please wait...")).toBeInTheDocument();
   });
 
   it("renders success text after loading ends", async () => {
-
     jest.useFakeTimers();
     const { rerender } = render(
       <TransitionButton
@@ -80,8 +77,6 @@ describe("TransitionButton", () => {
     jest.useRealTimers();
   });
 
-
-
   it("renders fallback text when not loading or success", () => {
     render(<TransitionButton>Save</TransitionButton>);
     expect(screen.getByText("Save")).toBeInTheDocument();
@@ -101,7 +96,12 @@ describe("TransitionButton", () => {
 
   it("shows tooltip if tooltip and hideTextOnLoading are set", async () => {
     renderWithTooltip(
-      <TransitionButton isLoading tooltip="Hello Tooltip" hideTextOnLoading data-testid="tooltip-trigger">
+      <TransitionButton
+        isLoading
+        tooltip="Hello Tooltip"
+        hideTextOnLoading
+        data-testid="tooltip-trigger"
+      >
         Submit
       </TransitionButton>
     );
@@ -113,7 +113,6 @@ describe("TransitionButton", () => {
     expect(tooltip).toHaveTextContent("Hello Tooltip");
   });
 
-
   it("disables button when loading", () => {
     const { container } = render(<TransitionButton isLoading>Click</TransitionButton>);
     const button = container.querySelector("button");
@@ -124,7 +123,11 @@ describe("TransitionButton", () => {
     const action = jest.fn();
     const onSuccess = jest.fn();
 
-    render(<TransitionButton action={action} onSuccess={onSuccess}>Click</TransitionButton>);
+    render(
+      <TransitionButton action={action} onSuccess={onSuccess}>
+        Click
+      </TransitionButton>
+    );
     fireEvent.click(screen.getByRole("button"));
     expect(action).toHaveBeenCalled();
     expect(onSuccess).toHaveBeenCalled();
@@ -132,7 +135,11 @@ describe("TransitionButton", () => {
 
   it("does not call action if type is submit", () => {
     const action = jest.fn();
-    render(<TransitionButton type="submit" action={action}>Submit</TransitionButton>);
+    render(
+      <TransitionButton type="submit" action={action}>
+        Submit
+      </TransitionButton>
+    );
     fireEvent.click(screen.getByRole("button"));
     expect(action).not.toHaveBeenCalled();
   });
@@ -146,12 +153,8 @@ describe("TransitionButton", () => {
 
     await waitFor(() => {
       const spans = container.querySelectorAll("span");
-      const target = Array.from(spans).find((el) =>
-        el.textContent?.includes("Hidden on Small")
-      );
+      const target = Array.from(spans).find((el) => el.textContent?.includes("Hidden on Small"));
       expect(target).toHaveClass("hidden", "sm:inline");
     });
   });
-
-
 });

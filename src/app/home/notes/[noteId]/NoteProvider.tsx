@@ -7,9 +7,15 @@ import { useNoteStore } from "@/stores";
 import { useEffect } from "react";
 import { useShallow } from "zustand/shallow";
 
-export default function NoteProvider({ noteId, children }: { noteId: string; children: React.ReactNode; }) {
+export default function NoteProvider({
+  noteId,
+  children,
+}: {
+  noteId: string;
+  children: React.ReactNode;
+}) {
   const selectNote = useNoteStore((s) => s.setSelected);
-  const selected = useNoteStore(useShallow((s) => s.selected['note']))
+  const selected = useNoteStore(useShallow((s) => s.selected["note"]));
 
   useEffect(() => {
     if (!noteId) return;
@@ -34,5 +40,5 @@ export default function NoteProvider({ noteId, children }: { noteId: string; chi
         </EditorProvider>
       </ThemeProvider>
     </MetadataProvider>
-  )
+  );
 }

@@ -28,7 +28,7 @@ const noteSearchOptions: UseFuzzyFilterOptions<any> = {
   minQueryLength: 1,
   includeScore: true,
   includeMatches: true,
-  ignoreLocation: true
+  ignoreLocation: true,
 };
 
 const dashboardSearchOptions: UseFuzzyFilterOptions<any> = {
@@ -37,14 +37,14 @@ const dashboardSearchOptions: UseFuzzyFilterOptions<any> = {
   minQueryLength: 1,
   includeMatches: true,
   includeScore: true,
-  ignoreLocation: true
+  ignoreLocation: true,
 };
 
 export function useGlobalSearchResults(query: string): CommandMenuGroup[] {
   const router = useRouter();
-  const notesObj = useNoteStore(useShallow(s => s.items));
-  const notes = useMemo(() => Object.values(notesObj), [notesObj])
-  const dashboardsObj = useDashboardStore(useShallow(s => s.items))
+  const notesObj = useNoteStore(useShallow((s) => s.items));
+  const notes = useMemo(() => Object.values(notesObj), [notesObj]);
+  const dashboardsObj = useDashboardStore(useShallow((s) => s.items));
   const dashboards = useMemo(() => Object.values(dashboardsObj), [dashboardsObj]);
 
   const filteredNotes = useFuzzyFilter(notes, query, noteSearchOptions);

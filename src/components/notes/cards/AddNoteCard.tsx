@@ -8,7 +8,7 @@ import { CreateEntityCard } from "../../molecules/cards/CreateEntityCard";
 
 export const AddNoteCard = () => {
   const createNote = useNoteStore((s) => s.addResourceWithDefaultView);
-  const startStatus = useNoteStore((s) => s.startStatus)
+  const startStatus = useNoteStore((s) => s.startStatus);
 
   return (
     <CreateEntityCard
@@ -22,10 +22,10 @@ export const AddNoteCard = () => {
       }}
       getSuccessPath={(note) => `/home/notes/${note.id}`}
       onStart={() => {
-        startStatus("creating", "note")
+        startStatus("creating", "note");
       }}
-      onFinish={() => { }}
-      onFail={() => { }}
+      onFinish={() => {}}
+      onFail={() => {}}
       ariaLabel="Create new note"
     />
   );

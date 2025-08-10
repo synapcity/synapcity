@@ -26,9 +26,7 @@ export function CreateNoteModal({ open, setOpen }: Props) {
     <CreateModalShell
       open={open}
       setOpen={setOpen}
-      trigger={
-        <IconButton variant="ghost" label="Add Note" tooltip="Add Note" icon="plus" />
-      }
+      trigger={<IconButton variant="ghost" label="Add Note" tooltip="Add Note" icon="plus" />}
       title="Create New Note"
       description="Enter a title for your note."
       onSubmit={handleSubmit}

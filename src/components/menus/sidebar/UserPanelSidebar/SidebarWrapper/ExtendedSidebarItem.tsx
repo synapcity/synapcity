@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { IconButton } from "@/components/atoms";
 import { SidebarMenuItem, SidebarMenuButton, useSidebar } from "@/components/atoms/ui/sidebar";
@@ -13,14 +13,20 @@ interface ExtendedSidebarItemProps {
   [key: string]: any;
 }
 
-export const ExtendedSidebarItem = ({ module, isActive, isDragging, ...sortableProps }: ExtendedSidebarItemProps) => {
-  const { setActiveModuleId } = useUserPanel()
-  const { setOpen } = useSidebar()
+export const ExtendedSidebarItem = ({
+  module,
+  isActive,
+  isDragging,
+  ...sortableProps
+}: ExtendedSidebarItemProps) => {
+  const { setActiveModuleId } = useUserPanel();
+  const { setOpen } = useSidebar();
   return (
-    <SidebarMenuItem {...sortableProps}
+    <SidebarMenuItem
+      {...sortableProps}
       style={{
         width: "48px",
-        maxWidth: "48px"
+        maxWidth: "48px",
       }}
     >
       <SidebarMenuButton
@@ -34,12 +40,11 @@ export const ExtendedSidebarItem = ({ module, isActive, isDragging, ...sortableP
         asChild
         style={{
           width: "48px",
-          maxWidth: "48px"
+          maxWidth: "48px",
         }}
         tooltip={module.label}
         tooltipPosition="right"
       >
-
         <IconButton
           icon={module.icon}
           variant="ghost"
@@ -53,7 +58,6 @@ export const ExtendedSidebarItem = ({ module, isActive, isDragging, ...sortableP
         />
       </SidebarMenuButton>
       {isActive && <span className="absolute left-1.5 h-1.5 w-1.5 bg-accent rounded-full" />}
-
     </SidebarMenuItem>
-  )
-}
+  );
+};

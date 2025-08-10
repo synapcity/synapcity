@@ -1,16 +1,16 @@
-"use client"
+"use client";
 
-import { ReactNode } from "react"
-import { Button } from "@/components/atoms"
+import { ReactNode } from "react";
+import { Button } from "@/components/atoms";
 
 interface FormLayoutWrapperProps {
-  layout?: "vertical" | "grid" | "inline"
-  children: ReactNode
-  showSubmit?: boolean
-  showCancel?: boolean
-  onCancel?: () => void
-  submitLabel?: string
-  cancelLabel?: string
+  layout?: "vertical" | "grid" | "inline";
+  children: ReactNode;
+  showSubmit?: boolean;
+  showCancel?: boolean;
+  onCancel?: () => void;
+  submitLabel?: string;
+  cancelLabel?: string;
 }
 
 export const FormLayoutWrapper = ({
@@ -27,7 +27,7 @@ export const FormLayoutWrapper = ({
       ? "grid grid-cols-1 md:grid-cols-2 gap-4"
       : layout === "inline"
         ? "flex flex-wrap items-center gap-4"
-        : "space-y-6"
+        : "space-y-6";
 
   return (
     <div className={layoutClass}>
@@ -43,5 +43,5 @@ export const FormLayoutWrapper = ({
         </div>
       )}
     </div>
-  )
-}
+  );
+};

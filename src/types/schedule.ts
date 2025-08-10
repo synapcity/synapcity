@@ -10,7 +10,7 @@ export const ScheduleTagSchema = z.object({
   color: z.string().optional(),
 });
 
-export type ScheduleTag = z.infer<typeof ScheduleTagSchema>
+export type ScheduleTag = z.infer<typeof ScheduleTagSchema>;
 export const LinkedResourceSchema = z.object({
   label: z.string().min(1),
   type: z.enum(["note", "dashboard", "widget"]),
@@ -18,15 +18,23 @@ export const LinkedResourceSchema = z.object({
 });
 
 export const ReminderSchema = z.object({
-  minutesBefore: z.number().int().min(0).max(7 * 24 * 60).default(10),
-  channels: z.array(z.enum(["browser", "email", "sms", "audio"])).min(1).default(["browser"]),
+  minutesBefore: z
+    .number()
+    .int()
+    .min(0)
+    .max(7 * 24 * 60)
+    .default(10),
+  channels: z
+    .array(z.enum(["browser", "email", "sms", "audio"]))
+    .min(1)
+    .default(["browser"]),
 });
 
 export const ScheduleEventInputSchema = z
   .object({
     title: z.string().min(1, "Title is required").max(200),
-    start: optDate,            // optional
-    end: optDate,              // optional
+    start: optDate, // optional
+    end: optDate, // optional
     allDay: z.boolean().default(false),
     tags: z.array(ScheduleTagSchema).default([]),
     resources: z.array(LinkedResourceSchema).default([]),
@@ -42,12 +50,12 @@ export const ScheduleEventInputSchema = z
     message: "End must be after start",
     path: ["end"],
   });
-export const ScheduleEventSchema = ResourceSchema(ScheduleEventInputSchema)
+export const ScheduleEventSchema = ResourceSchema(ScheduleEventInputSchema);
 
-	export type ScheduleEvent = z.infer<typeof ScheduleEventSchema>;
+export type ScheduleEvent = z.infer<typeof ScheduleEventSchema>;
 export type ScheduleEventFormValues = z.infer<typeof ScheduleEventInputSchema>;
 export type ScheduleEventFormInput = z.input<typeof ScheduleEventInputSchema>;
-	export type ScheduleEventPayload = {
+export type ScheduleEventPayload = {
   title: string;
   start?: string;
   end?: string;
@@ -63,7 +71,7 @@ export type ScheduleEventFormInput = z.input<typeof ScheduleEventInputSchema>;
   isFocus: boolean;
 };
 
-	// Helper to convert form values to your payload type
+// Helper to convert form values to your payload type
 export function toEventPayload(data: ScheduleEventFormValues): ScheduleEventPayload {
   return {
     title: data.title,

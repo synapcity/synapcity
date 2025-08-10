@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import { motion } from 'framer-motion';
-import { useLazyMountWithExpiry } from '@/hooks';
+import * as React from "react";
+import { motion } from "framer-motion";
+import { useLazyMountWithExpiry } from "@/hooks";
 
 export interface CardItemBase {
   id: string;
@@ -31,7 +31,11 @@ export function MasonryGridCardSlot<T extends CardItemBase>({
   expiryMs,
 }: CardSlotProps<T>) {
   const wrapperRef = React.useRef<HTMLDivElement | null>(null);
-  const isMounted = useLazyMountWithExpiry(wrapperRef as React.RefObject<HTMLDivElement>, lazyRootMargin, expiryMs);
+  const isMounted = useLazyMountWithExpiry(
+    wrapperRef as React.RefObject<HTMLDivElement>,
+    lazyRootMargin,
+    expiryMs
+  );
 
   const key = item === null ? `add-${index}` : item.id;
 
@@ -45,8 +49,14 @@ export function MasonryGridCardSlot<T extends CardItemBase>({
       className="break-inside-avoid"
       ref={wrapperRef}
     >
-      {isMounted ? (item === null ? renderAddNew?.() : renderCard(item)) : (
-        <div style={{ minHeight: estimatedCardHeight, width: '100%' }} aria-hidden="true" />
+      {isMounted ? (
+        item === null ? (
+          renderAddNew?.()
+        ) : (
+          renderCard(item)
+        )
+      ) : (
+        <div style={{ minHeight: estimatedCardHeight, width: "100%" }} aria-hidden="true" />
       )}
     </motion.div>
   );

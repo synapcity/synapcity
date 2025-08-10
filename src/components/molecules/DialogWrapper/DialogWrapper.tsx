@@ -3,7 +3,17 @@
 import { X } from "lucide-react";
 import { cn } from "@/utils";
 import { Button, type ButtonVariant } from "@/components/atoms/buttons";
-import { DialogClose, DialogContent, Dialog, DialogOverlay, DialogPortal, DialogTitle, DialogDescription, DialogTrigger, DialogFooter } from "@/components/atoms/ui/dialog";
+import {
+  DialogClose,
+  DialogContent,
+  Dialog,
+  DialogOverlay,
+  DialogPortal,
+  DialogTitle,
+  DialogDescription,
+  DialogTrigger,
+  DialogFooter,
+} from "@/components/atoms/ui/dialog";
 
 export type DialogAction = {
   label: string;
@@ -53,11 +63,7 @@ export function DialogWrapper({
     <Dialog open={open ?? undefined} onOpenChange={onOpenChange ?? undefined}>
       <DialogPortal>
         <DialogOverlay className="fixed inset-0 bg-black/30 backdrop-blur-sm z-40" />
-        {trigger && (
-          <DialogTrigger asChild={asChild}>
-            {trigger}
-          </DialogTrigger>
-        )}
+        {trigger && <DialogTrigger asChild={asChild}>{trigger}</DialogTrigger>}
         <DialogContent
           className={cn(
             "fixed z-50 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-xl bg-white dark:bg-neutral-950 p-6 shadow-xl transition-all duration-300",
@@ -82,12 +88,21 @@ export function DialogWrapper({
           )}
 
           {title && (
-            <DialogTitle data-testid="dialog-title" className={cn("text-lg font-semibold text-neutral-900 dark:text-white", { "sr-only": !showTitle })}>
+            <DialogTitle
+              data-testid="dialog-title"
+              className={cn("text-lg font-semibold text-neutral-900 dark:text-white", {
+                "sr-only": !showTitle,
+              })}
+            >
               {title}
             </DialogTitle>
           )}
           {description && (
-            <DialogDescription className={cn("mt-1 text-sm text-neutral-500 dark:text-neutral-400", { "sr-only": !showDescription })}>
+            <DialogDescription
+              className={cn("mt-1 text-sm text-neutral-500 dark:text-neutral-400", {
+                "sr-only": !showDescription,
+              })}
+            >
               {description}
             </DialogDescription>
           )}
@@ -135,11 +150,7 @@ export function DialogWrapper({
             </div>
           )}
         </DialogContent>
-        {footer && (
-          <DialogFooter>
-            {footer}
-          </DialogFooter>
-        )}
+        {footer && <DialogFooter>{footer}</DialogFooter>}
       </DialogPortal>
     </Dialog>
   );

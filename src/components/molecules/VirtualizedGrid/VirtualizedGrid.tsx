@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import { useVirtualizer } from '@tanstack/react-virtual';
-import { cn } from '@/utils';
-import { AnimatePresence, motion } from 'framer-motion';
+import * as React from "react";
+import { useVirtualizer } from "@tanstack/react-virtual";
+import { cn } from "@/utils";
+import { AnimatePresence, motion } from "framer-motion";
 
 export interface CardItemBase {
   id: string;
@@ -19,7 +19,7 @@ interface VirtualizedGridProps<T extends CardItemBase> {
   gap?: number;
   minColumnWidth?: number;
   containerClassName?: string;
-  'aria-label'?: string;
+  "aria-label"?: string;
 }
 
 export function VirtualizedGrid<T extends CardItemBase>({
@@ -29,15 +29,15 @@ export function VirtualizedGrid<T extends CardItemBase>({
   estimatedRowHeight = 220,
   gap = 16,
   minColumnWidth = 280,
-  containerClassName = '',
-  'aria-label': ariaLabel = 'Virtualized grid of items',
+  containerClassName = "",
+  "aria-label": ariaLabel = "Virtualized grid of items",
 }: VirtualizedGridProps<T>) {
   const parentRef = React.useRef<HTMLDivElement | null>(null);
   const [columns, setColumns] = React.useState(1);
 
   React.useLayoutEffect(() => {
     if (!parentRef.current) return;
-    const resizeObserver = new ResizeObserver(entries => {
+    const resizeObserver = new ResizeObserver((entries) => {
       for (const e of entries) {
         const width = e.contentRect.width;
         const cols = Math.max(1, Math.floor(width / minColumnWidth));
@@ -65,29 +65,26 @@ export function VirtualizedGrid<T extends CardItemBase>({
     <div
       aria-label={ariaLabel}
       ref={parentRef}
-      className={cn(
-        'relative overflow-auto h-full w-full',
-        containerClassName
-      )}
+      className={cn("relative overflow-auto h-full w-full", containerClassName)}
       style={{ padding: gap / 2 }}
     >
       <div
         style={{
           height: rowVirtualizer.getTotalSize(),
-          position: 'relative',
+          position: "relative",
         }}
       >
-        {rowVirtualizer.getVirtualItems().map(virtualRow => {
+        {rowVirtualizer.getVirtualItems().map((virtualRow) => {
           const rowItems = rows[virtualRow.index] || [];
           return (
             <div
               key={virtualRow.key}
               style={{
-                position: 'absolute',
+                position: "absolute",
                 top: virtualRow.start,
                 left: 0,
-                width: '100%',
-                display: 'grid',
+                width: "100%",
+                display: "grid",
                 gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
                 gap: gap,
                 paddingBottom: gap,

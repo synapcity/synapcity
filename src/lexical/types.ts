@@ -99,11 +99,11 @@
 export type SidebarType = "Comments" | "Links" | "Resources";
 
 export interface Coordinates {
-	top: number;
-	left: number;
-	right: number;
-	height: number;
-	width: number;
+  top: number;
+  left: number;
+  right: number;
+  height: number;
+  width: number;
 }
 
 export type ResourceType = "IMAGE" | "LINK" | "VIDEO" | "FILE";

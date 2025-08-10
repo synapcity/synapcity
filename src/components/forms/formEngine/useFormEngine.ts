@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client"
+"use client";
 
 import { useForm, DefaultValues } from "react-hook-form";
 import { z, ZodObject, ZodRawShape } from "zod";

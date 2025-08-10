@@ -67,22 +67,10 @@ export const DashboardCard = ({
 }: DashboardCardProps) => {
   return (
     <div
-      className={cn(
-        "rounded-md p-4 text-sm transition-shadow",
-        variantStyles[variant],
-        className
-      )}
+      className={cn("rounded-md p-4 text-sm transition-shadow", variantStyles[variant], className)}
     >
-      {title && (
-        <h3 className="text-base font-semibold text-foreground mb-2">
-          {title}
-        </h3>
-      )}
-      {loading ? (
-        <div className="animate-pulse text-muted-foreground">Loading...</div>
-      ) : (
-        children
-      )}
+      {title && <h3 className="text-base font-semibold text-foreground mb-2">{title}</h3>}
+      {loading ? <div className="animate-pulse text-muted-foreground">Loading...</div> : children}
       {footer && <div className="mt-4 pt-2 border-t border-border/20">{footer}</div>}
     </div>
   );

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useRef, useCallback, useEffect, useState } from "react";
 import { InitialConfigType, LexicalComposer } from "@lexical/react/LexicalComposer";
@@ -11,72 +11,84 @@ import Plugins from "@/lexical/plugins/Plugins";
 
 export const fallbackEditorState = JSON.stringify({
   root: {
-    children: [{
-      children: [
-        {
-          text: "Write something here...",
-          type: "text",
-          version: 1
-        }],
-      direction: "ltr",
-      format: "",
-      indent: 0,
-      type: "paragraph",
-      version: 1,
-      textFormat: 0,
-      textStyle: ""
-    }],
+    children: [
+      {
+        children: [
+          {
+            text: "Write something here...",
+            type: "text",
+            version: 1,
+          },
+        ],
+        direction: "ltr",
+        format: "",
+        indent: 0,
+        type: "paragraph",
+        version: 1,
+        textFormat: 0,
+        textStyle: "",
+      },
+    ],
     type: "root",
 
     version: 1,
     format: "",
     indent: 0,
-    direction: null
+    direction: null,
   },
   type: "editor",
-  version: 1
+  version: 1,
 });
 
 export const loadContent = async () => {
-  const value = '{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1}],"direction":null,"format":"","indent":0,"type":"root","version":1}}';
+  const value =
+    '{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1}],"direction":null,"format":"","indent":0,"type":"root","version":1}}';
 
   return value;
-}
+};
 
-export default function NoteEditor({ noteId, viewId, content }: { noteId: string; viewId: string; content: string; }) {
-  const [config, setConfig] = useState<InitialConfigType | null>(null)
-  const updateView = useNoteViewStore(s => s.updateResource)
-  const updateNote = useNoteStore(s => s.updateResource)
+export default function NoteEditor({
+  noteId,
+  viewId,
+  content,
+}: {
+  noteId: string;
+  viewId: string;
+  content: string;
+}) {
+  const [config, setConfig] = useState<InitialConfigType | null>(null);
+  const updateView = useNoteViewStore((s) => s.updateResource);
+  const updateNote = useNoteStore((s) => s.updateResource);
   const latestEditorState = useRef(content ?? fallbackEditorState);
-  const hasHydrated = useNoteViewStore(s => s.hasHydrated)
+  const hasHydrated = useNoteViewStore((s) => s.hasHydrated);
 
   useEffect(() => {
     if (!hasHydrated || !noteId || !viewId) return;
     if (!latestEditorState.current) {
-      latestEditorState.current = content ?? fallbackEditorState
+      latestEditorState.current = content ?? fallbackEditorState;
     }
-  }, [noteId, viewId, content, hasHydrated])
+  }, [noteId, viewId, content, hasHydrated]);
 
   useEffect(() => {
     const loadConfig = async () => {
-      const initialConfig = await createInitialConfig(`${noteId}:${viewId}`)
+      const initialConfig = await createInitialConfig(`${noteId}:${viewId}`);
       if (initialConfig) {
-        setConfig(initialConfig)
+        setConfig(initialConfig);
       }
-    }
+    };
     if (!config) {
-      loadConfig()
+      loadConfig();
     }
-  }, [config, content, noteId, viewId])
+  }, [config, content, noteId, viewId]);
 
   const handleChange = useCallback(
     (editorState: EditorState, editor: LexicalEditor) => {
       editorState.read(() => {
-        const json = JSON.stringify(editor.getEditorState())
+        const json = JSON.stringify(editor.getEditorState());
         latestEditorState.current = json;
         const plain = editor.getRootElement()?.textContent ?? "";
-        updateNote(noteId, { summary: plain })
-        return updateView(viewId, { editorState: json, content: plain })
+        updateNote(noteId, { summary: plain });
+        return updateView(viewId, { editorState: json, content: plain });
       });
     },
     [noteId, updateNote, updateView, viewId]
@@ -94,13 +106,15 @@ export default function NoteEditor({ noteId, viewId, content }: { noteId: string
     return <div className="p-4 text-red-600">Invalid editor state. Please reload the page.</div>;
   }
 
-  return config && (
-    <div className="flex flex-col flex-1 min-h-0 max-h-5/6 text-(--foreground) bg-(--backgroound)">
-      <LexicalComposer initialConfig={config}>
-        <Plugins noteId={noteId} viewId={viewId} editorId={`${noteId}`} />
-        <OnChangePlugin onChange={handleChange} />
-        <SetEditorStatePlugin content={latestEditorState.current} />
-      </LexicalComposer>
-    </div>
+  return (
+    config && (
+      <div className="flex flex-col flex-1 min-h-0 max-h-5/6 text-(--foreground) bg-(--backgroound)">
+        <LexicalComposer initialConfig={config}>
+          <Plugins noteId={noteId} viewId={viewId} editorId={`${noteId}`} />
+          <OnChangePlugin onChange={handleChange} />
+          <SetEditorStatePlugin content={latestEditorState.current} />
+        </LexicalComposer>
+      </div>
+    )
   );
 }

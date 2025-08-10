@@ -6,12 +6,20 @@ import { useTheme } from "@/providers/ThemeProvider";
 import { convertFormToPrefs } from "@/theme";
 import { ThemePreferencesFormValues } from "../schema";
 
-const IconButton = dynamic(() => import("@/components/atoms/buttons/IconButton/IconButton").then(mod => mod.IconButton));
-const PopoverWrapper = dynamic(() => import("@/components/molecules/PopoverWrapper/PopoverWrapper").then(mod => mod.PopoverWrapper));
-const ThemeForm = dynamic(() => import("../ThemeForm/ThemePopoverForm/ThemePopoverForm").then(mod => mod.ThemePopoverForm), {
-  ssr: false,
-  loading: () => <div className="p-4 text-sm">Loading theme settings...</div>,
-});
+const IconButton = dynamic(() =>
+  import("@/components/atoms/buttons/IconButton/IconButton").then((mod) => mod.IconButton)
+);
+const PopoverWrapper = dynamic(() =>
+  import("@/components/molecules/PopoverWrapper/PopoverWrapper").then((mod) => mod.PopoverWrapper)
+);
+const ThemeForm = dynamic(
+  () =>
+    import("../ThemeForm/ThemePopoverForm/ThemePopoverForm").then((mod) => mod.ThemePopoverForm),
+  {
+    ssr: false,
+    loading: () => <div className="p-4 text-sm">Loading theme settings...</div>,
+  }
+);
 
 export const ScopedThemePopover = ({
   scope,
@@ -20,12 +28,12 @@ export const ScopedThemePopover = ({
   scope: ThemeScope;
   entityId: string;
 }) => {
-  const { updateThemePreferences, applyThemeStyles } = useTheme()
+  const { updateThemePreferences, applyThemeStyles } = useTheme();
 
   const handleSubmit = (data: ThemePreferencesFormValues) => {
-    const finalData = convertFormToPrefs(data)
-    updateThemePreferences(finalData)
-    applyThemeStyles(finalData)
+    const finalData = convertFormToPrefs(data);
+    updateThemePreferences(finalData);
+    applyThemeStyles(finalData);
   };
 
   return (
@@ -45,7 +53,11 @@ export const ScopedThemePopover = ({
       }
       content={
         <div className="w-[320px] h-128 max-h-[calc(100vh-12rem)] overflow-hidden p-2 flex flex-col">
-          <ThemeForm scope={scope} entityId={entityId} onSubmit={(data: ThemePreferencesFormValues) => handleSubmit(data)} />
+          <ThemeForm
+            scope={scope}
+            entityId={entityId}
+            onSubmit={(data: ThemePreferencesFormValues) => handleSubmit(data)}
+          />
         </div>
       }
     />
