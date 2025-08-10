@@ -29,7 +29,7 @@ export function usePanels(scope: SidebarScope, entityId?: string) {
 	// 3) subscribe directly to the *data* you need—never return a new array/object here
 	const dynamicPanels = useSidebarStore((s) => {
 		// pick out the stored array, or fall back to our constant
-		const definitions = s.definitions[scope];
+		const definitions = s.definitions?.[scope] ?? {};
 		const arr = entityId ? definitions[entityId] : []
 		return arr ?? EMPTY_PANELS;
 	});

@@ -13,29 +13,28 @@ _description?: string;
 	_confirmText?: string;
 	_cancelText?: string;
 }): Promise<boolean> {
-	return new Promise((_resolve) => {
-		// const openModal = useModalStore.getState().openModal;
-		// 	openModal("confirm", {
-		// 		id: "confirm-delete",
-		// 		title,
-		// 		description,
-		// 		actions: [
-		// 			{
-		// 				label: cancelText,
-		// 				variant: "ghost",
-		// 				onClick: () => resolve(false),
-		// 			},
-		// 			{
-		// 				label: confirmText,
-		// 				variant: "primary",
-		// 				onClick: () => resolve(true),
-		// 			},
-		// 		],
-		// 		onCancel: () => resolve(false),
-		// 		onConfirm: () => resolve(true),
-		// 	});
-
-	});
+  return new Promise((_resolve) => {
+  //   const openModal = useModalStore.getState().openModal;
+  //   openModal("confirm", {
+  //     id: "confirm-delete",
+  //     title,
+  //     description,
+  //     actions: [
+  //       {
+  //         label: cancelText,
+  //         variant: "ghost",
+  //         onClick: () => resolve(false),
+  //       },
+  //       {
+  //         label: confirmText,
+  //         variant: "primary",
+  //         onClick: () => resolve(true),
+  //       },
+  //     ],
+  //     onCancel: () => resolve(false),
+  //     onConfirm: () => resolve(true),
+  //   });
+  });
 }
 
 // // "use client";

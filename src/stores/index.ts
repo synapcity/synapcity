@@ -6,4 +6,4 @@ export * from "./inboxStore";
 export * from "./weatherStore";
 export * from "./metadataStore";
 export * from "./editorStore";
-export * from "./commandMenuStore"
+export * from "./commandMenuStore";
