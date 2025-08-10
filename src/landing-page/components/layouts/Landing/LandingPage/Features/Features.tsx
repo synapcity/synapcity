@@ -12,7 +12,7 @@ export const Features = () => {
     threshold: 0.4,
   });
   return (
-    <section ref={featuresRef} className="section-container">
+    <section ref={featuresRef} className="section-container" key="features">
       <div className="size-full max-w-7xl mx-auto flex flex-col justify-center items-start">
         <FeatureHeader />
         <FeatureContainer inView={featuresInView} />

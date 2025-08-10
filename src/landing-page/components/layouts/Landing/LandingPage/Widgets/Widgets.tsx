@@ -17,6 +17,7 @@ export const Widgets = () => {
       exit={{ opacity: 0, y: 50 }}
       transition={{ duration: 0.8 }}
       className="section-container flex-col"
+      key="widgets"
     >
       <Header />
       <Gallery />

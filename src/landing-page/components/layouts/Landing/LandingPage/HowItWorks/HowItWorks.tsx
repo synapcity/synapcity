@@ -1,3 +1,5 @@
+"use client"
+
 import { Container, SectionContainer, SectionHeading } from "@/landing-page/components"
 import { LucideIcon, Pencil, FolderKanban, Compass, Eye } from "lucide-react"
 import { HowItWorksStep } from "./HowItWorksStep/HowItWorksStep"
@@ -34,6 +36,7 @@ const steps: TimelineStep[] = [
 export const HowItWorks = () => {
   return (
     <SectionContainer
+      key="how-it-works"
       className="relative h-full p-4"
       center
     >

@@ -5,6 +5,7 @@ export const About = () => {
   return (
     <SectionContainer
       maxWidth="3xl"
+      key="about"
     >
       <Container
         left

@@ -7,6 +7,7 @@ import { fadeInUp } from "@/landing-page/lib/variants";
 export const Hero = () => {
   return (
     <SectionContainer
+      key="hero"
       backgroundContent={<div className="black-gradient -z-10" />}
       flexProps={{
         direction: "column",

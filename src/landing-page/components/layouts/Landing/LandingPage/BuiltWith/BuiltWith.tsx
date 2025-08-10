@@ -31,7 +31,7 @@ const techStack: TechType[] = [
 ]
 export function BuiltWith({ className }: { className: string }) {
   return (
-    <div className={clsx("backdrop-blur-sm text-center flex items-center justify-center absolute top-0 left-0 right-0 group px-6", className)}>
+    <div className={clsx("backdrop-blur-sm text-center flex items-center justify-center absolute top-0 left-0 right-0 group px-6", className)} key="built-with">
       <span className="text-sm text-muted font-bold text-neutral-100 m-0 opacity-20 group-hover:opacity-100 transition-all duration-300 mb-4 pt-4">
         Built With
       </span>

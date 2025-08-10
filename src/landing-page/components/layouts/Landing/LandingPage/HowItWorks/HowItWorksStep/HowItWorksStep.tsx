@@ -1,3 +1,5 @@
+"use client"
+
 import { IconRenderer } from "@/landing-page/components/ui";
 import { motion } from "framer-motion";
 import { LucideIcon } from "lucide-react"

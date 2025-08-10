@@ -21,7 +21,9 @@ export const CTA = () => {
       className={clsx(
         "section-container"
       )}
+      key="cta"
     >
+
       <div className="transform transition-all duration-300 gap-8 flex flex-col justify-center items-center bg-black max-w-4xl mx-auto py-16 px-6 md:px-12 text-center">
         <h2 className="font-semibold text-2xl md:text-3xl text-neutral-100 mb-4">
           Get Started with Synapcity
