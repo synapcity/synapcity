@@ -7,6 +7,6 @@ describe("GlobalPage", () => {
     const html = renderToString(<GlobalPage />);
     expect(html).toContain('class="sr-only"');
     expect(html).toContain('<h1>Synapcity</h1>');
-    expect(html).not.toContain('<p>Capture, connect, and create with your digital thoughtspace.</p>');
+    expect(html).toContain('<div class=\"flex flex-col items-center justify-items-center size-full p-8 pb-20 gap-16 sm:p-20\"><div class=\"sr-only\"><h1>Synapcity</h1><p>Capture, connect, and create with your digital thoughtspace.</p></div></div>');
   });
 });
