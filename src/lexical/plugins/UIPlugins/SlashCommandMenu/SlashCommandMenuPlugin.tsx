@@ -14,7 +14,7 @@ export function SlashCommandMenuPlugin() {
         if ($isRangeSelection(selection)) {
           const text = selection.getTextContent();
           if (text.endsWith("/")) {
-            console.log("Open Slash Menu");
+            // TODO: Trigger slash command menu
           }
         }
       });

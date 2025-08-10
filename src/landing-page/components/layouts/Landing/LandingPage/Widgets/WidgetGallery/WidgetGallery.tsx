@@ -21,9 +21,6 @@ export const WidgetGallery = () => {
   const handleClick = React.useCallback(() => stop(), [stop]);
   const handleHoverLeave = React.useCallback(() => start(), [start]);
 
-  console.log("x", x)
-
-
   return (
     <MotionDiv
       onClick={handleClick}

@@ -37,7 +37,6 @@ export function useIdleVisibilityController(
 
     timeoutRef.current = setTimeout(() => {
       if (!isHovering.current) {
-        console.log("[Idle] Timer expired, collapsing");
         setState(true);
       }
     }, delay);

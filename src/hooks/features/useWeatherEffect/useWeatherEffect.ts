@@ -24,8 +24,6 @@ export function useWeatherEffect() {
 			setJustFetchedManually(false);
 			return;
 		}
-		console.log("[auto fetch triggered]", Date.now(), preferences);
-
 		setLoading(true);
 		const { zipcode, gpsCoords, locationSource, alertsEnabled } = preferences;
 

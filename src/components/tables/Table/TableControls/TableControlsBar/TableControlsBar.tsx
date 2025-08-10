@@ -19,7 +19,7 @@ export default function TableControlsBar({ table, data, onBulkDelete, tabs }: {
     <div className="flex flex-wrap justify-between items-center gap-4 p-3 border-b bg-muted rounded-t-lg">
       <div className="flex items-center gap-3">
         <ColumnVisibilityMenu table={table} />
-        <DynamicTabsBar value={tabs[0].value} onAdd={() => console.log("adding new tab")} tabs={tabs} />
+        <DynamicTabsBar value={tabs[0].value} onAdd={() => { }} tabs={tabs} />
       </div>
       <div className="flex items-center gap-2">
         <GlobalSearch table={table} />

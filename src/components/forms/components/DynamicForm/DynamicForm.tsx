@@ -52,9 +52,7 @@ export function DynamicForm<Schema extends ZodObject<ZodRawShape>>({
       <form
         onSubmit={methods.handleSubmit(onSubmit)}
         className="size-full flex flex-col justify-space-around"
-        onKeyDown={(e) => {
-          console.log("Key pressed:", e.key, e.target);
-        }}
+        onKeyDown={() => { }}
       >
         <DynamicFormErrorsDisplay />
         <DynamicFormFields fields={fields} layout={layout} meta={meta} />

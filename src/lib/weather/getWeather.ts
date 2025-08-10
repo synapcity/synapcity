@@ -21,8 +21,6 @@ export async function getWeather(
 ): Promise<WeatherData | null> {
 	let lat = options.lat ?? options.gps?.lat;
 	let lon = options.lon ?? options.gps?.lon;
-	console.log("[getWeather] input:", options);
-	console.log("[getWeather] called at", Date.now());
 
 	if (!lat || !lon) {
 		if (!options.zip) return null;

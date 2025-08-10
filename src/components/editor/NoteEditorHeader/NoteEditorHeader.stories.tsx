@@ -23,7 +23,7 @@ const baseArgs: NoteEditorHeaderProps = {
     { label: 'Idea', value: 'idea', color: '#10b981' },
   ],
   onTagClick: (val) => console.log('Tag clicked', val),
-  onTagRemove: (val) => console.log('Tag removed', val),
+  onTagRemove: (val) => useNoteStore.getState().removeTag("note-123", val),
   createdAt: new Date(2025, 6, 15),
   updatedAt: new Date(2025, 6, 19),
   wordCount: 1207,

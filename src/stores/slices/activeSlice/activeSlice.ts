@@ -15,7 +15,6 @@ export const createActiveSlice: StateCreator<
 	activeByScope: {} as Record<string, string | null>,
 
 	setActive(scope, id) {
-		console.log("setting active", scope, id);
 		set((state) => ({
 			activeByScope: {
 				...state.activeByScope,
@@ -25,7 +24,6 @@ export const createActiveSlice: StateCreator<
 	},
 
 	getActive(scope) {
-		console.log("getting active", scope);
 		return get().activeByScope[scope] ?? null;
 	},
 });

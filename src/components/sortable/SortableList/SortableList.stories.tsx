@@ -51,7 +51,7 @@ const StoryWithMockDrag = () => {
     <SortableList
       items={items}
       renderItem={renderItem}
-      handleDragEnd={() => console.log("Mock drag end")}
+      handleDragEnd={() => { }}
     />
   );
 };

@@ -16,6 +16,7 @@ export interface NoteStore extends ResourceStore<NoteResource> {
 	updateTitle(id: string, title: string): void;
 	resetAll(): void;
 	getByTag(tag: string): NoteResource[];
+	removeTag(noteId: string, tag: string): string[]
 }
 
 const _useNoteStore = createResourceStore<NoteResource>({
@@ -54,6 +55,17 @@ const _useNoteStore = createResourceStore<NoteResource>({
 		getByTag(tag: string) {
 			return Object.values(get().items).filter((n) => n.tags?.includes(tag));
 		},
+		removeTag(noteId: string, tag: string){
+			const currentNote = get().items[noteId]
+			const newTags = (currentNote.tags || []).filter(t => t !== tag)
+			set({ items: {
+				[noteId]: {
+					...currentNote,
+					tags: newTags
+				}
+			}})
+			return newTags;
+		}
 	}),
 });
 

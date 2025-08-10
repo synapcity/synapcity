@@ -40,7 +40,6 @@ export function SidebarSection<T extends { id: string }>({
   keyboardShortcutTooltip,
   activeItemId
 }: SidebarSectionProps<T>) {
-  console.log("is active", activeItemId, label)
   return (
     <SidebarGroup>
       <div className="flex items-center justify-between px-1.5 py-2">
@@ -65,7 +64,6 @@ export function SidebarSection<T extends { id: string }>({
         <SidebarMenu>
           {items.length > 0 ? (
             items.map((item) => {
-              console.log("item", item, "active", activeItemId)
               return (
                 <SidebarMenuItem key={item.id}>
                   <SidebarMenuButton isActive={activeItemId === item.id} asChild>

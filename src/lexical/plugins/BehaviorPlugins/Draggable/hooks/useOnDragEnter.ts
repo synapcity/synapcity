@@ -23,8 +23,6 @@ export const useOnDragEnter = () => {
 
 			if (!key) {
 				return false;
-			} else {
-				console.log(`Lexical node key is ${key}`);
 			}
 
 			const element = editor.getElementByKey(key);

@@ -1,11 +1,13 @@
 import "./src/utils/supressConsole";
 
-Object.defineProperty(HTMLCanvasElement.prototype, "getContext", {
-  value: () => {
-    // minimal mock so nothing breaks
-    return {};
-  },
-});
+if (typeof HTMLCanvasElement !== "undefined") {
+  Object.defineProperty(HTMLCanvasElement.prototype, "getContext", {
+    value: () => {
+      // minimal mock so nothing breaks
+      return {};
+    },
+  });
+}
 
 import "@testing-library/jest-dom";
 import { ResizeObserver } from "@juggle/resize-observer";

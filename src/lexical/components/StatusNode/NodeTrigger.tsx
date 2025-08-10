@@ -1,12 +1,14 @@
 "use client"
 
-// import { useSidebarStore } from "@/stores/sidebarStore";
+import { useSidebarStore } from "@/stores";
 import { useNodeRelationsStore } from "./nodeRelationsStore";
+import { useMetadata } from "@/providers";
+import { usePanels } from "@/hooks";
 
 export function NodeTrigger({ nodeId }: { nodeId: string }) {
-  // const openPanel = useSidebarStore((s) => s.getPanels);
+  const { scope, id } = useMetadata()
+  const { setActive, activeId } = usePanels(scope, id)
   const { connections, annotations, resources } = useNodeRelationsStore.getState()
-  console.log("nodeId", nodeId)
   // Only render when there’s something to manage
   if (
     Object.values(connections).length === 0 &&
@@ -16,12 +18,17 @@ export function NodeTrigger({ nodeId }: { nodeId: string }) {
     return null;
   }
 
+  const isActive = activeId === nodeId
+
   return (
     <button
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();
-        // openPanel(nodeId, /* module: "connections" | "annotations" | "resources" */);
+        if (isActive) {
+          setActive(null)
+        }
+        setActive(nodeId);
       }}
       title="Manage…"
       className="opacity-50 hover:opacity-100 transition"

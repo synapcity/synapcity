@@ -51,7 +51,6 @@ export const ReactGridLayout = ({ layoutRef }: { layoutRef: RefObject<LayoutItem
       resizeHandles={config?.resizeHandles as any}
       onLayoutChange={(layout, allLayouts) => {
         handleLayoutChange(layoutRef, debouncedSetLayout, currentBreakpoint, allLayouts[currentBreakpoint] || layout);
-        console.log("layout", layout, "all", allLayouts)
       }}
       onBreakpointChange={(bp: BreakpointType) => {
         handleBreakpointChange(

@@ -68,7 +68,6 @@ export const ThemeProvider = ({
 
 	useEffect(() => {
 		if (entityId && hasHydrated && !hydratedScoped[entityId]) {
-			console.debug(`[ThemeProvider] Initializing scoped theme for ${scope}:${entityId}`);
 			initScopedPreferences(scope as EntityType, entityId);
 		}
 	}, [entityId, hasHydrated, hydratedScoped, initScopedPreferences, scope]);

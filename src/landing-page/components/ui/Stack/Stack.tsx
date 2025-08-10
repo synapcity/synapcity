@@ -1,62 +1,3 @@
-// import { cn } from "@/landing-page/lib/utils";
-// import { ElementType, ReactNode } from "react";
-
-// type ResponsiveValue<T> = T | { base?: T; sm?: T; md?: T; lg?: T; xl?: T };
-
-// type StackProps<E extends ElementType = "div"> = {
-//   as?: E;
-//   children: ReactNode;
-//   className?: string;
-
-//   gap?: ResponsiveValue<string>;
-//   align?: ResponsiveValue<"start" | "center" | "end" | "stretch">;
-//   justify?: ResponsiveValue<"start" | "center" | "end" | "between" | "around" | "evenly">;
-//   center?: boolean;
-// } & Omit<React.ComponentPropsWithoutRef<E>, "as">;
-
-// function getResponsiveClasses<T extends string>(
-//   prefix: string,
-//   value?: ResponsiveValue<T>
-// ): string[] {
-//   if (!value) return [];
-
-//   if (typeof value === "string") {
-//     return [`${prefix}-${value}`];
-//   }
-
-//   return Object.entries(value).map(([breakpoint, val]) =>
-//     breakpoint === "base" ? `${prefix}-${val}` : `${breakpoint}:${prefix}-${val}`
-//   );
-// }
-
-// export function Stack<E extends ElementType = "div">({
-//   as,
-//   children,
-//   className,
-//   gap = "4",
-//   align,
-//   justify,
-//   center,
-//   ...rest
-// }: StackProps<E>) {
-//   const Component = as || "div";
-
-//   const classes = cn(
-//     "flex flex-col",
-//     center && "items-center justify-center",
-//     ...getResponsiveClasses("gap", gap),
-//     ...getResponsiveClasses("items", align),
-//     ...getResponsiveClasses("justify", justify),
-//     className
-//   );
-
-//   return (
-//     <Component className={classes} {...rest}>
-//       {children}
-//     </Component>
-//   );
-// }
-// components/layout/Stack.tsx
 import { cn } from "@/landing-page/lib/utils";
 import { ElementType, ReactNode } from "react";
 
@@ -118,7 +59,6 @@ export function Stack<E extends ElementType = "div">({
     padding && `p-${padding}`,
     className
   );
-  console.log("new classes", classes)
 
   return (
     <Component className={classes} {...rest}>
@@ -144,7 +84,6 @@ export function Stack<E extends ElementType = "div">({
 export function HStack<E extends ElementType = "div">(props: StackProps<E>) {
   const { children, ...rest } = props;
   const { gap, className, ...restProps } = rest
-  console.log("stack gap", gap, "rest", rest, "props", props);
   return (
     <Stack<E> {...(restProps as StackProps<E>)} gap={gap} className={cn("flex-row", className)}>
       {children}
@@ -167,8 +106,6 @@ export function VStack<E extends ElementType = "div">(props: StackProps<E>) {
 //   const { className, ...rest } = props;
 //   return <Stack {...rest} className={cn("flex-col", className)} >{props.children}</Stack>;
 // }
-
-
 
 
 // Utility functions for handling spacing, margins, etc.

@@ -28,8 +28,6 @@ export const InboxCaptureForm = () => {
       <InboxForm
         layout="inline"
         onSubmit={(data) => {
-          // handle quick capture save
-          console.log("submitting", data)
           handleSubmit(data)
         }}
 

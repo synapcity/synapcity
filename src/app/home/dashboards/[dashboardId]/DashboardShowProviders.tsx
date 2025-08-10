@@ -57,7 +57,7 @@ export function DashboardShowProviders({ dashboardId, children }: { dashboardId:
 
   useEffect(() => {
     if (dashboard) {
-      console.log("dashboard", dashboard)
+      // TODO: Handle when dashboard exists
     }
   }, [dashboard])
 

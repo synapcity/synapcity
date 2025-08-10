@@ -64,7 +64,7 @@ export const ScrollWrapper = ({ children }: ScrollWrapperProps) => {
       dragScroll
       showProgressBar
       snap
-      onReachEnd={() => console.log("You reached the end!")}
+      onReachEnd={() => { }}
       className="flex-col"
     >
       {elements}

@@ -21,7 +21,7 @@ export const defaultOG = {
     other: [
       {
         rel: "manifest",
-        url: "/site.webmanifest",
+        url: "/manifest.webmanifest",
       },
     ],
   },

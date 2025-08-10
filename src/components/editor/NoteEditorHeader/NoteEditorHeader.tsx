@@ -23,7 +23,7 @@ export interface NoteEditorHeaderProps {
     value: string;
     color?: string;
   }[];
-  onTagRemove: (tag: string) => void;
+  onTagRemove?: (tag: string) => void;
   onTagClick: (tag: string) => void;
   createdAt: Date;
   updatedAt: Date;
@@ -56,6 +56,7 @@ export function NoteEditorHeader({
   }, [viewObj, noteId])
   const activeView = useNoteViewStore(useShallow(s => s.activeByScope[noteId]))
   const setSelected = useNoteViewStore(s => s.setActive)
+  const removeTag = useNoteStore(s => s.removeTag)
 
   const { title, status } = useNoteStore(
     useShallow((s) => ({
@@ -211,7 +212,10 @@ export function NoteEditorHeader({
               </span>
             </span>
           </div>
-          <TagPills tags={tags} onClick={onTagClick} onRemove={onTagRemove} />
+          <TagPills tags={tags} onClick={onTagClick} onRemove={(tag) => {
+            removeTag(noteId, tag)
+            onTagRemove?.(tag)
+          }} />
         </div>
         <div className="px-4 pb-3">
           <DynamicTabsBar

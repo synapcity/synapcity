@@ -50,7 +50,6 @@ export const useWeatherStore = create<WeatherState>()(
 				justFetchedManually: false,
 				setJustFetchedManually: (val) => set({ justFetchedManually: val }),
 				setData: (data) => {
-					console.log("[manual fetch] setData:", data);
 					set({ data });
 				},
 				setLocationLabel: (label) => set({ locationLabel: label }),

@@ -20,16 +20,15 @@ const X = dynamic(() => import("lucide-react").then((mod) => mod.X), { ssr: fals
 export const CaptureInboxItem = ({ item, removeItem }: CaptureInboxItemProps) => {
   const widgets = useWidgetStore(state => state.widgets)
   const linkToNote = () => {
-    console.log("link to note")
+    // Placeholder for linking to note
   }
 
   const notes = widgets.filter((widget) => widget.type === "notes") as unknown as Note[]
-  console.log("found notes", notes)
   return (
     <li
       className="p-2 bg-neutral-900 hover:bg-neutral-800 rounded transition group flex justify-between items-start gap-2"
     >
-      <button onClick={() => console.log("Reviewed")}>
+      <button onClick={() => { }}>
         <Circle size={16} />
       </button>
       <div className="flex justify-between items-center m-0 p-0">

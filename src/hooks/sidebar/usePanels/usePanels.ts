@@ -11,7 +11,7 @@ import { getDefaultPanels } from "@/lib/data/sidebar";
 // 📦 module‐level constant for an empty panels list
 const EMPTY_PANELS: SidebarPanel[] = [];
 
-export function usePanels(scope: SidebarScope, entityId: string) {
+export function usePanels(scope: SidebarScope, entityId?: string) {
 	// 1) static defaults—memoized once per scope
 	const defaults = useMemo(() => getDefaultPanels(scope), [scope]);
 
@@ -29,13 +29,13 @@ export function usePanels(scope: SidebarScope, entityId: string) {
 	// 3) subscribe directly to the *data* you need—never return a new array/object here
 	const dynamicPanels = useSidebarStore((s) => {
 		// pick out the stored array, or fall back to our constant
-		const arr = s.definitions[scope]?.[entityId];
+		const definitions = s.definitions[scope];
+		const arr = entityId ? definitions[entityId] : []
 		return arr ?? EMPTY_PANELS;
 	});
 
 	const prefs = useSidebarStore((s) => {
 		const key = `${scope}:${entityId}`;
-		// if stored, return it; otherwise return our memoized default
 		return s.prefsByKey[key] ?? defaultPrefs;
 	});
 
@@ -70,17 +70,15 @@ export function usePanels(scope: SidebarScope, entityId: string) {
 		[panels, activeId]
 	);
 
-	// 5) grab your setters (these are stable references)
 	const setPanels = useSidebarStore((s) => s.setPanels);
 	const setActivePanel = useSidebarStore((s) => s.setActivePanel);
 
-	// 6) wrap in callbacks
 	const updatePanels = useCallback(
-		(pbs: SidebarPanel[]) => setPanels(scope, entityId, pbs),
+		(pbs: SidebarPanel[]) => entityId && setPanels(scope, entityId, pbs),
 		[setPanels, scope, entityId]
 	);
 	const updateActive = useCallback(
-		(panelId: string | null) => setActivePanel(scope, entityId, panelId),
+		(panelId: string | null) => entityId && setActivePanel(scope, entityId, panelId),
 		[setActivePanel, scope, entityId]
 	);
 

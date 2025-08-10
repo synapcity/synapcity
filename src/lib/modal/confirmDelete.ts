@@ -3,17 +3,17 @@
  * Opens a confirm modal and resolves to true/false.
  */
 export function confirmDelete({
-	title = "Are you sure you'd like to delete?",
-	description = "This action cannot be undone.",
-	confirmText = "Delete",
-	cancelText = "Cancel",
+	_title = "Are you sure you'd like to delete?",
+_description = "This action cannot be undone.",
+	_confirmText = "Delete",
+	_cancelText = "Cancel",
 }: {
-	title?: string;
-	description?: string;
-	confirmText?: string;
-	cancelText?: string;
+	_title?: string;
+_description?: string;
+	_confirmText?: string;
+	_cancelText?: string;
 }): Promise<boolean> {
-	return new Promise((resolve) => {
+	return new Promise((_resolve) => {
 		// const openModal = useModalStore.getState().openModal;
 		// 	openModal("confirm", {
 		// 		id: "confirm-delete",
@@ -34,18 +34,7 @@ export function confirmDelete({
 		// 		onCancel: () => resolve(false),
 		// 		onConfirm: () => resolve(true),
 		// 	});
-		console.log(
-			"resolve modal",
-			resolve,
-			"title",
-			title,
-			"desc",
-			description,
-			"confirmText",
-			confirmText,
-			"cancelext",
-			cancelText
-		);
+
 	});
 }
 

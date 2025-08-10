@@ -1,6 +1,6 @@
 import { MetadataProvider } from "@/providers";
 import { ThemeProvider } from "@/providers/ThemeProvider";
-import "@/utils/suppressConsole";
+import { } from "@/utils/supressConsole";
 
 export default function GlobalProvider({ children }: { children: React.ReactNode; }) {
   return (

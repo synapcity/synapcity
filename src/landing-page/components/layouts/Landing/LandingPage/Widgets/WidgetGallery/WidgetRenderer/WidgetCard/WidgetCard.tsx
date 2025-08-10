@@ -29,7 +29,7 @@ export const WidgetCard = ({
 
   useIntersectionObserver(isLast ?? false, onLoadMore ?? (() => { }), cardRef);
   const Component = widget.component;
-  console.log("widget", widget)
+
   return (
     <MotionDiv
       ref={cardRef}

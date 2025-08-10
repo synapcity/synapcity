@@ -9,9 +9,9 @@ import { CreateNoteModal } from "@/components/notes";
 import { useDashboardStore } from "@/stores/resources/dashboardStore/useDashboardStore";
 import { useNoteStore } from "@/stores";
 import { LayoutDashboard, FileText } from "lucide-react";
-import React from "react";
+import React, { useEffect } from "react";
 import { useShallow } from "zustand/shallow";
-import { useKeyboardShortcut } from "@/hooks";
+import { useKeyboardShortcut, usePanels } from "@/hooks";
 
 export default function AppSidebar() {
   const dashboardsObj = useDashboardStore(useShallow((s) => s.items));
@@ -19,6 +19,7 @@ export default function AppSidebar() {
     () => Object.values(dashboardsObj).map(({ id, name }) => ({ id, name })),
     [dashboardsObj]
   );
+  const { activeId, setActive } = usePanels("global", "main")
   const notesObj = useNoteStore(useShallow((s) => s.items));
   const notes = React.useMemo(
     () => Object.values(notesObj).map(({ id, title }) => ({ id, title })),
@@ -29,6 +30,11 @@ export default function AppSidebar() {
 
   const [createDashboardOpen, setCreateDashboardOpen] = React.useState(false);
   const [createNoteOpen, setCreateNoteOpen] = React.useState(false);
+
+  useEffect(() => {
+    const active = activeDashboardId ?? activeNoteId ?? null;
+    setActive(active)
+  }, [activeDashboardId, activeNoteId, setActive])
 
   useKeyboardShortcut({
     key: "D",
@@ -57,7 +63,7 @@ export default function AppSidebar() {
           getItemLabel={(d) => d.name}
           keyboardShortcut="⌘D"
           keyboardShortcutTooltip="Cmd+D"
-          activeItemId={activeDashboardId}
+          activeItemId={activeId}
         />
         <SidebarSection
           label="Notes"
@@ -70,7 +76,7 @@ export default function AppSidebar() {
           getItemLabel={(n) => n.title}
           keyboardShortcut="⌘⇧N"
           keyboardShortcutTooltip="Cmd+Shift+N"
-          activeItemId={activeNoteId}
+          activeItemId={activeId}
         />
       </SidebarContent>
     </Sidebar>
