@@ -3,7 +3,7 @@ import type { ThemePreferences } from "../types";
 import { defaultPrimary, defaultAccent } from "./colors";
 
 const LANGUAGE = "en";
-const MODE = "light";
+const MODE = "dark";
 
 const THEME: ThemePreferences = {
 	language: LANGUAGE,

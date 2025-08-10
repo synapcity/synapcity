@@ -63,7 +63,7 @@ export const FeatureContainer = ({ inView }: { inView?: boolean; }) => {
       animate={inView ? "visible" : "hidden"}
       exit="hidden"
       className="
-          max-w-7xl w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 overflow-y-auto h-1/2
+          max-w-7xl w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 py-8
         "
     >
       {features.map((feature, index) => (

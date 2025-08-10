@@ -91,7 +91,6 @@ export const ThemeProvider = ({
 			if (entityId) setPreferences(scope as EntityType, entityId, updates);
 		},
 	});
-	console.log("scope", scope, "entityId", entityId)
 
 	const resetTheme = () => {
 		if (isGlobal) {

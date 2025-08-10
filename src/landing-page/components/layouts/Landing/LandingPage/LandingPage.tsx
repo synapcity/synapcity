@@ -1,10 +1,11 @@
 "use client";
 
-import { useUIStore } from "@/stores/ui";
+import { useThemeStore, useUIStore } from "@/stores/ui";
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import type { ScrollRef } from "@/landing-page/components/ui/containers/ScrollContainer/Scroll";
+import { useShallow } from "zustand/shallow";
 
 const ScrollContainer = dynamic(
   () =>
@@ -38,6 +39,8 @@ const HowItWorks = dynamic(
 export const LandingPage = () => {
   const scrollRef = useRef<ScrollRef>(null);
   const [scrollElement, setScrollElement] = useState<HTMLElement | null>(null);
+  const theme = useThemeStore(useShallow(s => s.globalPreferences.mode))
+  const setTheme = useThemeStore(s => s.setGlobalPreferences)
 
   // Set scrollElement to the DOM node once available
   useEffect(() => {
@@ -60,6 +63,11 @@ export const LandingPage = () => {
     setShowHeader("header", "isVisible", true);
   }, [heroInView, setShowHeader]);
 
+  useEffect(() => {
+    if (theme !== "dark") {
+      setTheme({ mode: "dark" })
+    }
+  }, [setTheme, theme])
   return (
     <div className="min-h-full size-full">
       <ScrollContainer

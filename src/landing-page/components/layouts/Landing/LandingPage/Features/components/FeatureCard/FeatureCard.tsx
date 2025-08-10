@@ -15,12 +15,7 @@ export const FeatureCard = ({ feature }: {
   return (
     <Card collapsible icon={feature.icon} title={feature.title} >
       <p
-        className="
-            text-sm 
-              line-clamp-2 icon
-               group-hover:line-clamp-none lg:line-clamp-none
-              transition-all duration-300
-             "
+        className="text-sm line-clamp-2 group-hover:line-clamp-none lg:line-clamp-none transition-all duration-300"
       >
         {feature.description}
       </p>

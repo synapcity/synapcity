@@ -1,5 +1,4 @@
-// schemas/schedule.ts
-import { ResourceSchema } from "@/stores";
+import { ResourceSchema } from "@/stores/resources/factory/base-schema";
 import { z } from "zod";
 
 /** Accepts Date | string | number at runtime -> outputs Date */
