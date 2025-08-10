@@ -36,7 +36,7 @@ export const ThemeForm = ({
   onSubmit: (values: ThemePreferencesFormValues) => void;
 }) => {
   const hasHydrated = useThemeStore(s => s.hasHydrated)
-  const scopedPreferences = useThemeStore(useShallow(theme => theme.scopedPreferences[scope as EntityType][entityId!]))
+  const scopedPreferences = useThemeStore(useShallow(theme => theme.scopedPreferences[scope as EntityType]?.[entityId ?? ""]))
   const globalPreferences = useThemeStore(theme => theme.globalPreferences)
   const theme = scope === "global" ? globalPreferences : scopedPreferences
   const { isCustom } = useTheme()

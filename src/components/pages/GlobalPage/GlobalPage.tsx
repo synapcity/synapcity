@@ -1,3 +1,5 @@
+"use client"
+
 import dynamic from "next/dynamic";
 import { SkeletonOrLoading } from "../../loading/SkeletonOrLoading/SkeletonOrLoading";
 
@@ -6,7 +8,7 @@ const LandingPage = dynamic(
     import("@/landing-page/components/layouts/Landing/LandingPage/LandingPage").then(
       (mod) => mod.LandingPage,
     ),
-  { loading: ({ isLoading }) => <SkeletonOrLoading isLoading={isLoading} /> },
+  { ssr: false, loading: ({ isLoading }) => <SkeletonOrLoading isLoading={isLoading} /> },
 );
 export default function GlobalPage() {
 

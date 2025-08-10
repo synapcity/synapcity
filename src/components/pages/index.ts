@@ -1,2 +1,2 @@
-export * from "./GlobalPage/GlobalPage";
+export * from "./GlobalPage";
 export * from "./DashboardPage";
