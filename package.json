@@ -15,7 +15,8 @@
     "build-storybook": "storybook build",
     "test": "jest",
     "analyze": "ANALYZE=true next build && open .next/analyze/client.html",
-    "generate-sitemap": "node --loader ts-node/esm scripts/generate-sitemap.ts"
+    "generate-sitemap": "node --loader ts-node/esm scripts/generate-sitemap.ts",
+    "generate-icons": "node --loader ts-node/esm scripts/generate-icons.ts"
   },
   "dependencies": {
     "@cypress/react": "^9.0.1",
@@ -92,6 +93,7 @@
     "react-resizable": "^3.0.5",
     "react-resizable-panels": "^3.0.4",
     "react-use": "^17.6.0",
+    "sharp": "^0.34.3",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.3.1",
     "tinycolor2": "^1.6.0",

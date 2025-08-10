@@ -39,6 +39,23 @@ export const metadata: Metadata = {
     title: "Synapcity — Your Second Brain",
     description: "Capture, connect, and create with your digital thoughtspace.",
   },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/icon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/icon-48x48.png", sizes: "48x48", type: "image/png" },
+    ],
+    apple: [
+      { url: "/icon-192x192.png" },
+    ],
+    other: [
+      {
+        rel: "manifest",
+        url: "/site.webmanifest",
+      },
+    ],
+  },
 };
 
 const GlobalProvider = dynamic(() => import("./GlobalProvider").then((mod) => mod.default), { ssr: true })

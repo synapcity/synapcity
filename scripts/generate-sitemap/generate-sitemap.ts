@@ -1,7 +1,7 @@
 import { writeFileSync } from 'fs'
 import { resolve } from 'path'
 
-const SITE_URL = (process.env.SITE_URL ?? 'https://official-synapcity.vercel.app/').replace(/\/$/, '')
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://official-synapcity.vercel.app/').replace(/\/$/, '')
 
 const pages = ['/', '/home', '/home/dashboards', '/home/notes']
 
