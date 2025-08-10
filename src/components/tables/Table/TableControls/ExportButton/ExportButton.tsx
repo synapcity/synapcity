@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import React from 'react';
@@ -10,7 +9,7 @@ import { useExport } from '@/hooks/editor/useExport/useExport';
 import type { Format } from '@/types/export';
 
 export interface ExportButtonProps {
-  data: Record<string, any>[];
+  data: Record<string, unknown>[];
   /** 'table' allows all formats; 'document' only pdf/txt */
   exportAs?: 'table' | 'document';
   dataType?: 'default' | 'nested' | 'flattened' | 'lexical';

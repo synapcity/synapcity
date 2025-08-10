@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useRef } from 'react';
-import type { Format } from './exportUtils';
+import type { Format } from '@/types/export';
 import { SelectOption } from '@/components/atoms';
 import { SelectField } from '@/components/forms/fields/Select';
 import { SelectFieldProps } from '@/types/form';

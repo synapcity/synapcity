@@ -14,8 +14,7 @@ import type {
 
 type KnownKeys = "isVisible" | "isLocked" | "isExpanded";
 export type ComponentUIState = Partial<Record<KnownKeys, boolean>> & {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	[key: string]: any;
+	[key: string]: unknown;
 };
 
 export type UIState = {
@@ -24,12 +23,11 @@ export type UIState = {
 };
 
 export type UIActions = {
-	toggleSiteFocus: () => void;
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	setCompState: <T = any>(id: string, key: string, value: T) => void;
-	getCompState: (id: string, key: string) => void;
-	setComponent: (id: string, updates: Partial<ComponentUIState>) => void;
-	toggleCompState: (id: string, key: string) => void;
+        toggleSiteFocus: () => void;
+        setCompState: <T = unknown>(id: string, key: string, value: T) => void;
+        getCompState: (id: string, key: string) => void;
+        setComponent: (id: string, updates: Partial<ComponentUIState>) => void;
+        toggleCompState: (id: string, key: string) => void;
 };
 
 const defaultComponentState: ComponentUIState = {

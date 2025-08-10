@@ -1,12 +1,11 @@
 import type { ComponentType } from "react";
 
 export type OpenModalFn = {
-	<T extends ModalType>(
-		type: T,
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		props?: ModalComponentProps<any> | null,
-		scope?: ModalScope
-	): void;
+        <T extends ModalType>(
+                type: T,
+                props?: ModalComponentProps<Record<string, unknown>> | null,
+                scope?: ModalScope
+        ): void;
 };
 
 export type ModalScope = "global" | "userPanelMain" | "userPanelSidebar";
