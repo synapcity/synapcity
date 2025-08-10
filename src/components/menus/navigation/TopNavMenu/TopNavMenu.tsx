@@ -53,7 +53,7 @@ export function TopNavMenu() {
         }
       )}
     >
-      <Logo />
+      <Logo size={32} variant="mark" title="SynapCity" />
 
       <NavigationMenu className="mx-auto w-full">
         <NavigationMenuList>

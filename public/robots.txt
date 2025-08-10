@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://official-synapcity.vercel.app/sitemap.xml

@@ -18,7 +18,7 @@ describe("resolveThemeMetadata", () => {
 			isScoped: false,
 			isInherited: false,
 			preferences: globalPreferences,
-			isCustom: true,
+			isCustom: false,
 		});
 	});
 
@@ -27,7 +27,7 @@ describe("resolveThemeMetadata", () => {
 			note: {
 				abc: {
 					...DEFAULT.THEME,
-					mode: "light" as ThemeMode,
+					mode: "dark" as ThemeMode,
 					inheritsFromGlobalTheme: false,
 				},
 			},
