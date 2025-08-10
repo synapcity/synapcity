@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { Inter, Space_Mono, Space_Grotesk } from "next/font/google";
-import "../styles/globals.css";
 import { defaultOG, defaultTwitter } from "@/lib/metadata";
 import { Toaster } from "sonner";
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import { Loading } from "@/components/loading/Loading/Loading";
+import "../styles/globals.css";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -38,24 +38,7 @@ export const metadata: Metadata = {
     ...defaultTwitter,
     title: "Synapcity — Your Second Brain",
     description: "Capture, connect, and create with your digital thoughtspace.",
-  },
-  icons: {
-    icon: [
-      { url: "/favicon.ico", sizes: "any" },
-      { url: "/icon.svg", type: "image/svg+xml" },
-      { url: "/icon-32x32.png", sizes: "32x32", type: "image/png" },
-      { url: "/icon-48x48.png", sizes: "48x48", type: "image/png" },
-    ],
-    apple: [
-      { url: "/icon-192x192.png" },
-    ],
-    other: [
-      {
-        rel: "manifest",
-        url: "/site.webmanifest",
-      },
-    ],
-  },
+  }
 };
 
 const GlobalProvider = dynamic(() => import("./GlobalProvider").then((mod) => mod.default), { ssr: true })
@@ -71,6 +54,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="manifest" href="/manifest.json" />
+        <link rel="favicon" href="/favicon.ico" />
       </head>
       <body
         className={`${spaceGrotesk.variable} ${spaceMono.variable} ${inter.variable}`}

@@ -2,6 +2,8 @@ export const siteBaseURL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://official
 export const siteName = "Synapcity";
 export const defaultImage = `${siteBaseURL}/og-image.png`;
 
+export const runtime = "nodejs"
+
 export const defaultOG = {
 	url: siteBaseURL,
   metadataBase: siteBaseURL,
