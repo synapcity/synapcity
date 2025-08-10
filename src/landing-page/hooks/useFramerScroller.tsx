@@ -10,7 +10,7 @@ type UseScrollerOptions = {
   onThresholdReach?: () => void;
 };
 
-export const useFrameScroller = ({
+export const useFramerScroller = ({
   animation,
   threshold = 0.75,
   getTotalWidth,
@@ -19,6 +19,14 @@ export const useFrameScroller = ({
   const controls = useAnimation();
   const x = useMotionValue(0);
   const isMounted = useRef(false);
+
+  useEffect(() => {
+    isMounted.current = true;
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
 
   const start = useCallback(() => {
     console.log("start", animation)

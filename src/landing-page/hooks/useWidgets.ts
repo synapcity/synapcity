@@ -3,7 +3,7 @@
 import { useState, useCallback, useEffect } from "react";
 import { useWidgetStore } from "@/landing-page/stores/widgets/widgetStore";
 import { scrollVariants as scrollAnimation } from "@/landing-page/lib/variants";
-import { useFrameScroller } from "./useFramerScroller";
+import { useFramerScroller } from "./useFramerScroller";
 
 export const useWidgets = (maxWidgets = 20) => {
 	const widgets = useWidgetStore((state) => state.widgets);
@@ -41,7 +41,7 @@ export const useWidgets = (maxWidgets = 20) => {
 export const useWidgetGalleryController = (maxWidgets = 20) => {
 	const { widgets, widgetWidth, loadMore, loading } = useWidgets(maxWidgets);
 
-	const { x, controls, start, stop } = useFrameScroller({
+	const { x, controls, start, stop } = useFramerScroller({
 		animation: scrollAnimation,
 		threshold: 0.75,
 		getTotalWidth: () => widgetWidth * 2,
