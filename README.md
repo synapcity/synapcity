@@ -78,6 +78,36 @@ npm run type-check  # TypeScript type check
 npm run verify      # Lint and type-check together
 ```
 
+#### Cypress end-to-end tests
+
+1. Start the dev server in a separate terminal:
+
+   ```bash
+   npm run dev
+   ```
+
+2. Run Cypress tests:
+
+   ```bash
+   npm run test:e2e
+   ```
+
+The configuration assumes the app is available at [http://localhost:3000](http://localhost:3000). Update the `baseUrl` in `cypress.config.ts` or set the `CYPRESS_BASE_URL` environment variable if your server runs elsewhere.
+
+#### Continuous integration
+
+The workflow defined in `.github/cypress.yml` runs `npm run test:e2e` in GitHub Actions to exercise end-to-end tests on every pull request.
+
+#### Troubleshooting
+
+- Linux users may need the `Xvfb` package to run headless tests locally:
+
+  ```bash
+  sudo apt-get install xvfb
+  ```
+  
+  Alternatively, prefix commands with `xvfb-run`.
+
 ### Production Build
 
 Create an optimized build and start the server:

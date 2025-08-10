@@ -40,10 +40,14 @@ const securityHeaders = [
 
 const withBundleAnalyzer = createAnalyzer({
 enabled: process.env.ANALYZE === "true",
+
 });
 
 const nextConfig = withBundleAnalyzer({
   reactStrictMode: true,
+  compiler: {
+    removeConsole: process.env.NODE_ENV === "production",
+  },
   // Expose security headers for all routes.
   async headers() {
     return [

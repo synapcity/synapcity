@@ -17,6 +17,7 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "test": "jest",
+    "test:e2e": "cypress run",
     "analyze": "ANALYZE=true next build && open .next/analyze/client.html",
     "generate-sitemap": "node --loader ts-node/esm scripts/generate-sitemap/generate-sitemap.ts",
     "generate-icons": "node --loader ts-node/esm scripts/generate-icons.ts"
