@@ -112,7 +112,7 @@ export function Dropdown({
   }
 
   return (
-    <BaseDropdownMenu className="bg-(--background) text-(--foreground)">
+    <BaseDropdownMenu>
       <DropdownMenuTrigger asChild>{triggerNode}</DropdownMenuTrigger>
 
       <DropdownMenuContent
