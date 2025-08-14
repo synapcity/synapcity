@@ -1,17 +1,12 @@
-export const siteBaseURL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://official-synapcity.vercel.app/";
+import { siteBaseURL } from "@/utils/getBaseUrl";
+
 export const siteName = "Synapcity";
 export const defaultImage = "/src/app/opengraph-image.tsx";
 
 export const runtime = "nodejs";
 
-const appBaseUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ||
-  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
-
 export const defaultOG = {
-  url: new URL(appBaseUrl),
-  metadataBase: new URL(siteBaseURL),
+  metadataBase: siteBaseURL,
   siteName,
   icons: {
     icon: [

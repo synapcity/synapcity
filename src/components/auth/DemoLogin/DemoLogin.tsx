@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useUserStore, userJane } from "@/stores/userStore";
 import { Button, ButtonProps } from "@/components/atoms";
 import React from "react";
@@ -14,7 +14,6 @@ export function DemoLogin({
   asChild?: boolean;
 } & ButtonProps) {
   const router = useRouter();
-  const from = useSearchParams().get("from") ?? "/home";
   const login = useUserStore((s) => s.login);
   const setHydrated = useUserStore((s) => s.setHasHydrated);
 
@@ -26,8 +25,8 @@ export function DemoLogin({
       console.error(`Error logging in: ${err}`);
     } finally {
       login(userJane);
+      router.push("/home");
       setHydrated(true);
-      router.replace(from);
     }
   };
 

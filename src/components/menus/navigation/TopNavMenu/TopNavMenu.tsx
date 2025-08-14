@@ -1,12 +1,12 @@
 "use client";
 
-import { Logo } from "@/components/atoms/Logo";
 import { useUIStore } from "@/stores";
 import { cn } from "@/utils";
 import { useShallow } from "zustand/shallow";
 import { ActionsContainer } from "../ActionsContainer/ActionsContainer";
 import { NavContainer } from "../NavContainer/NavContainer";
 import { landingNavItems, mainNavItems } from "@/lib";
+import { SiteLogo } from "@/components/auth/SiteLogo";
 
 export function TopNavMenu({
   isLoggedIn,
@@ -32,7 +32,7 @@ export function TopNavMenu({
         }
       )}
     >
-      <Logo size={32} variant="mark" title="SynapCity" />
+      <SiteLogo isLoggedIn={isLoggedIn} />
       <NavContainer
         links={isLoggedIn ? mainNavItems : landingNavItems}
         className={className}
