@@ -1,18 +1,25 @@
+// src/lib/data/sidebar/defaultNotePanels.ts
 import { lazy } from "react";
-import { notePanelMeta } from "./sharedPanelMeta";
-import { SidebarPanel } from "@/stores/ui/sidebarStore";
+import capitalize from "lodash/capitalize";
+import { noteMetas } from "./metaRegistry";
 
-export const defaultNotePanels: SidebarPanel[] = notePanelMeta.map((meta) => ({
-  ...meta,
-  component: lazy(() =>
-    import(
-      /* webpackChunkName: "NotesSidebarPanel-[request]" */
-      `@/components/menus/sidebar/NotesSidebar/panels/${capitalize(meta.id)}Panel`
-    ).then((mod) => ({ default: mod.default }))
-  ),
-  props: meta.id === "theme" ? { scope: "note" } : undefined,
-}));
+// Let Vite discover the files at build time
+const notePanelModules = import.meta.glob(
+  "/src/components/menus/sidebar/NotesSidebar/panels/*Panel.tsx"
+);
 
-function capitalize(str: string) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
+function loadNotePanel(id: string) {
+  const name = `${capitalize(id)}Panel.tsx`;
+  const entry = Object.entries(notePanelModules).find(([p]) => p.endsWith(`/panels/${name}`));
+  if (!entry) {
+    // return a harmless null component instead of crashing SB
+    return Promise.resolve({ default: () => null });
+  }
+  return entry[1]().then((m) => ({ default: m.default }));
 }
+
+export const defaultNotePanels = noteMetas.map((meta) => ({
+  id: meta.id,
+  title: meta.title,
+  component: lazy(() => loadNotePanel(meta.id)),
+}));

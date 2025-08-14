@@ -38,10 +38,14 @@ export const ThemeSheet = ({
   entityId,
   scope,
   triggerStyles,
+  open,
+  onOpenChange,
 }: {
   entityId?: string;
   scope: ThemeScope;
   triggerStyles?: string;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }) => {
   const { updateThemePreferences, applyThemeStyles } = useTheme();
   const handleSubmit = (data: ThemePreferencesFormValues) => {
@@ -51,6 +55,8 @@ export const ThemeSheet = ({
   };
   return (
     <Drawer
+      open={open}
+      onOpenChange={onOpenChange}
       trigger={
         <IconButton
           variant="ghost"

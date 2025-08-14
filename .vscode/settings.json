@@ -1,12 +1,19 @@
 {
-  "editor.defaultFormatter": "exceptionptr.vscode-prettier-eslint",
-  "editor.formatOnType": false,
-  "editor.formatOnPaste": true,
+  // "deno.enable": false,
+  // "prettier.enable": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[typescript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[typescriptreact]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
   "editor.formatOnSave": true,
-  "editor.formatOnSaveMode": "file",
-  "files.autoSave": "onFocusChange",
-  "editor.tokenColorCustomizations": {
-    "comments": "",
-    "textMateRules": []
-  }
+  // "tailwindCSS.experimental.classRegex": [
+  //   "clsx\\(([^)]*)\\)",
+  //   "cva\\(([^)]*)\\)",
+  //   "cn\\(([^)]*)\\)"
+  // ],
+  "editor.codeActionsOnSave": {
+    "eslint.useFlatConfig": "always",
+    "eslint.format.enable": "always",
+    "source.fixAll.eslint": "explicit"
+  },
+  "editor.linkedEditing": true
 }

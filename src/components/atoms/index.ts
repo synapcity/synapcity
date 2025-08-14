@@ -10,4 +10,4 @@ export * from "./Select";
 export * from "./triggers";
 export * from "./Typography";
 export * from "./controls";
-export * from "./Toggle";
+export * from "./toggles";

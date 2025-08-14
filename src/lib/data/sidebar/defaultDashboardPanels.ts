@@ -1,18 +1,24 @@
 import { lazy } from "react";
-import { dashboardPanelMeta } from "./sharedPanelMeta";
-import { SidebarPanel } from "@/stores/ui/sidebarStore";
+import capitalize from "lodash/capitalize";
+import { dashboardMetas } from "./metaRegistry";
 
-export const defaultDashboardPanels: SidebarPanel[] = dashboardPanelMeta.map((meta) => ({
-  ...meta,
-  component: lazy(() =>
-    import(
-      /* webpackChunkName: "DashboardSidebarPanel-[request]" */
-      `@/components/menus/sidebar/DashboardSidebar/panels/${capitalize(meta.id)}Panel`
-    ).then((mod) => ({ default: mod.default }))
-  ),
-  props: meta.id === "theme" ? { scope: "dashboard" } : undefined,
-}));
+// Let Vite discover the files at build time
+const dashboardPanelModules = import.meta.glob(
+  "/src/components/menus/sidebar/DashboardsSidebar/panels/*Panel.tsx"
+);
 
-function capitalize(str: string) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
+function loadDashPanel(id: string) {
+  const name = `${capitalize(id)}Panel.tsx`;
+  const entry = Object.entries(dashboardPanelModules).find(([p]) => p.endsWith(`/panels/${name}`));
+  if (!entry) {
+    // return a harmless null component instead of crashing SB
+    return Promise.resolve({ default: () => null });
+  }
+  return entry[1]().then((m) => ({ default: m.default }));
 }
+
+export const defaultDashboardPanels = dashboardMetas.map((meta) => ({
+  id: meta.id,
+  title: meta.title,
+  component: lazy(() => loadDashPanel(meta.id)),
+}));

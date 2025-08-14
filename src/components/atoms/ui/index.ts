@@ -71,7 +71,7 @@ export {
   CommandSeparator as UICommandSeparator,
 } from "./command";
 export { Skeleton as UISkeleton } from "./skeleton";
-export { Toggle as UIToggle } from "./toggle";
+export * from "./UIToggle";
 export { Collapsible as UICollapsible } from "./collapsible";
 export {
   NavigationMenu as UINavigationMenu,

@@ -6,9 +6,9 @@ import { sharedPanelMeta } from "./sharedPanelMeta";
 export function getDefaultPanels(scope: SidebarScope): SidebarPanel[] {
   switch (scope) {
     case "note":
-      return defaultNotePanels;
+      return defaultNotePanels ?? [];
     case "dashboard":
-      return defaultDashboardPanels;
+      return defaultDashboardPanels ?? [];
     case "global":
       return [];
     default:

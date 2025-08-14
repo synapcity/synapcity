@@ -68,7 +68,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         className={cn(
           baseButtonStyles,
           variantClasses[variant],
-          sizeClass,
+          !isIconOnly && sizeClass,
           fullWidth && "w-full",
           className
         )}

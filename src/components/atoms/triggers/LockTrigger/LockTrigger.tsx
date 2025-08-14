@@ -1,6 +1,6 @@
 "use client";
 
-import { Toggle } from "@/components/atoms/Toggle";
+import { UIToggle as Toggle } from "@/components/atoms";
 import { cn } from "@/utils";
 import { ToggleSize } from "../../ui/toggle";
 import { useUIStore } from "@/stores";

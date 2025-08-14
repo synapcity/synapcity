@@ -6,7 +6,7 @@ import manifest from "./manifest";
 describe("manifest", () => {
   it("includes expected name and icons", () => {
     const json = manifest();
-    expect(json.name).toBe("Synapcity — Your Second Brain");
+    expect(json.name).toBe("SynapCity - Your Second Brain");
     expect(Array.isArray(json.icons)).toBe(true);
     expect(json.icons).toEqual(
       expect.arrayContaining([

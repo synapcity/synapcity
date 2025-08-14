@@ -46,7 +46,7 @@ export const SectionContainer = ({
       padding={"0"}
       {...props}
     >
-      {backgroundContent && <div className="absolute inset-0">{backgroundContent}</div>}
+      {backgroundContent && <div className="absolute inset-0 -z-10">{backgroundContent}</div>}
       {flexProps ? (
         <Flex className="mx-auto" {...flexProps}>
           {children}

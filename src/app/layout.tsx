@@ -41,6 +41,12 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
+
+
 const GlobalProvider = dynamic(() => import("./GlobalProvider").then((mod) => mod.default), {
   ssr: true,
 });

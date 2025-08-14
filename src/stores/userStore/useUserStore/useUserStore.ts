@@ -26,6 +26,7 @@ export type UserActions = {
   setError: (error: string | null) => void;
   updateUser: (data: Partial<User>) => void;
   setHasHydrated: (hasHydrated: boolean) => void;
+  loginDemo: () => void;
 };
 
 export type UserStore = UserState & UserActions;
@@ -52,7 +53,7 @@ export const useUserStore = create<UserStore>()(
     (set) => ({
       ...defaultUserStore,
       login: (user: User) => {
-        set({ user: user ?? { ...userJane }, isLoggedIn: true });
+        set({ user, isLoggedIn: true });
       },
       logout: () => {
         set({ user: null, isLoggedIn: false });
@@ -69,6 +70,9 @@ export const useUserStore = create<UserStore>()(
         }));
       },
       setHasHydrated: (hasHydrated) => set({ hasHydrated }),
+      loginDemo: () => {
+        set({ user: { ...userJane }, isLoggedIn: true });
+      },
     }),
     {
       name: "user-state",

@@ -20,7 +20,6 @@ export const AvatarDropdown: React.FC<{
           icon: "user",
           onSelect: onEdit,
         },
-        "separator",
         {
           label: "Log Out",
           icon: "logOut",

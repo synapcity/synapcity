@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/atoms";
+import { Button } from "@/components/atoms/buttons/Button";
 import { SunIcon, MoonIcon } from "lucide-react";
 import { useThemeStore } from "@/stores/ui";
 
