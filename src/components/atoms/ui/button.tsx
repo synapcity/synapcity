@@ -58,10 +58,13 @@ function Button({
 
   return (
     <Comp
-      {...(asChild
-        ? { children }
-        : { ...props, className: computedClassName, "data-slot": "button", type, children })}
-    />
+      className={computedClassName}
+      data-slot="button"
+      type={asChild ? undefined : type}
+      {...props}
+    >
+      {children}
+    </Comp>
   );
 }
 

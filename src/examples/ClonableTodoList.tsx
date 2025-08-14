@@ -8,29 +8,13 @@ import {
   useSensor,
   useSensors,
   DragOverlay,
-  useDroppable,
   Active,
   Over,
 } from "@dnd-kit/core";
-import {
-  SortableContext,
-  useSortable,
-  verticalListSortingStrategy,
-  arrayMove,
-} from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
+import { SortableContext, verticalListSortingStrategy, arrayMove } from "@dnd-kit/sortable";
+import { findContainer, DroppableList, SortableListItem } from "@/components/sortable/helpers";
 
 type Task = { id: string; text: string };
-
-// Droppable container wrapper
-function DroppableList({ id, children }: { id: string; children: React.ReactNode }) {
-  const { setNodeRef } = useDroppable({ id });
-  return (
-    <div ref={setNodeRef} className="p-2 border rounded">
-      {children}
-    </div>
-  );
-}
 
 export default function SortableTodoList() {
   const [lists, setLists] = useState<{ [key: string]: Task[] }>({
@@ -42,13 +26,7 @@ export default function SortableTodoList() {
 
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
 
-  const findContainer = (id: string) => {
-    for (const key in lists) {
-      if (lists[key].some((t) => t.id === id)) return key;
-    }
-    return null;
-  };
-
+  // Add a new task to the "todo" list
   const handleAdd = () => {
     const text = newTaskText.trim();
     if (!text) return;
@@ -70,8 +48,8 @@ export default function SortableTodoList() {
     setActiveId(null);
     if (!overId) return;
 
-    const from = findContainer(activeId)!;
-    const to = findContainer(overId) ?? (lists[overId] ? overId : null);
+    const from = findContainer(lists, activeId)!;
+    const to = findContainer(lists, overId) ?? (lists[overId] ? overId : null);
     if (!to) return;
 
     const sourceItems = lists[from];
@@ -80,25 +58,31 @@ export default function SortableTodoList() {
     if (destIndex < 0) destIndex = destItems.length;
 
     if (from === to) {
+      // reorder within the same list
       const oldIndex = sourceItems.findIndex((t) => t.id === activeId);
       if (oldIndex !== destIndex) {
         const newOrder = arrayMove(sourceItems, oldIndex, destIndex);
         setLists((prev) => ({ ...prev, [from]: newOrder }));
       }
     } else {
+      // clone the item instead of moving
       const movingTask = sourceItems.find((t) => t.id === activeId)!;
-      const newSource = sourceItems.filter((t) => t.id !== activeId);
-      const newDest = [...destItems.slice(0, destIndex), movingTask, ...destItems.slice(destIndex)];
+      const clonedTask: Task = { id: Date.now().toString(), text: movingTask.text };
+
+      // insert clone into destination
+      const newDest = [...destItems.slice(0, destIndex), clonedTask, ...destItems.slice(destIndex)];
+
       setLists((prev) => ({
         ...prev,
-        [from]: newSource,
         [to]: newDest,
+        // source list remains unchanged
       }));
     }
   };
 
   return (
     <div className="p-4">
+      {/* Input for new tasks */}
       <div className="mb-4 flex">
         <input
           type="text"
@@ -113,6 +97,7 @@ export default function SortableTodoList() {
         </button>
       </div>
 
+      {/* Draggable lists */}
       <div className="grid grid-cols-2 gap-4">
         <DndContext
           sensors={sensors}
@@ -129,9 +114,9 @@ export default function SortableTodoList() {
                 strategy={verticalListSortingStrategy}
               >
                 {lists[containerId].map((task) => (
-                  <SortableItem key={task.id} id={task.id}>
+                  <SortableListItem key={task.id} id={task.id}>
                     {task.text}
-                  </SortableItem>
+                  </SortableListItem>
                 ))}
               </SortableContext>
             </DroppableList>
@@ -140,35 +125,12 @@ export default function SortableTodoList() {
           <DragOverlay dropAnimation={null}>
             {activeId ? (
               <div className="p-2 bg-white rounded shadow">
-                {lists[findContainer(activeId)!].find((t) => t.id === activeId)?.text}
+                {lists[findContainer(lists, activeId)!].find((t) => t.id === activeId)?.text}
               </div>
             ) : null}
           </DragOverlay>
         </DndContext>
       </div>
-    </div>
-  );
-}
-
-function SortableItem({ id, children }: { id: string; children: React.ReactNode }) {
-  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
-    id,
-  });
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-    opacity: isDragging ? 0.5 : 1,
-  };
-
-  return (
-    <div
-      ref={setNodeRef}
-      style={style}
-      {...attributes}
-      {...listeners}
-      className="p-2 mb-2 bg-white rounded shadow cursor-move"
-    >
-      {children}
     </div>
   );
 }

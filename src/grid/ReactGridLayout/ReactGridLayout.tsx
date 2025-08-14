@@ -46,10 +46,26 @@ export const ReactGridLayout = ({ layoutRef }: { layoutRef: RefObject<LayoutItem
   return (
     <ResponsiveGrid
       key={currentBreakpoint}
+      {...config}
       data-testid="react-grid-layout"
       className="layout flex-1 overflow-y-auto no-scrollbar shadow-inner bg-[var(--background)] text-[var(--foreground)] h-full"
       layouts={safeLayouts}
+      breakpoints={config?.breakpoints}
+      cols={config?.cols}
+      margin={config?.margin}
+      containerPadding={config?.containerPadding}
+      rowHeight={config?.rowHeight}
       resizeHandles={config?.resizeHandles as any}
+      compactType={config?.compactType}
+      autoSize={config?.autoSize}
+      isDraggable={config?.flags?.isDraggable}
+      isResizable={config?.flags?.isResizable}
+      isDroppable={config?.flags?.isDroppable}
+      isBounded={config?.flags?.isBounded}
+      allowOverlap={config?.flags?.allowOverlap}
+      preventCollision={config?.flags?.preventCollision}
+      draggableCancel={config?.handles?.draggableCancel}
+      draggableHandle={config?.handles?.draggableHandle}
       onLayoutChange={(layout, allLayouts) => {
         handleLayoutChange(
           layoutRef,
@@ -64,10 +80,6 @@ export const ReactGridLayout = ({ layoutRef }: { layoutRef: RefObject<LayoutItem
         );
       }}
       useCSSTransforms={hasHydrated}
-      {...config}
-      isDraggable={true}
-      isResizable={true}
-      isDroppable={true}
     >
       {state?.layout.map((item) => (
         <div key={item.i} data-grid={{ ...item }} className="size-full">

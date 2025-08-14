@@ -8,46 +8,27 @@ import {
   useSensor,
   useSensors,
   DragOverlay,
-  useDroppable,
   Active,
   Over,
 } from "@dnd-kit/core";
-import {
-  SortableContext,
-  useSortable,
-  verticalListSortingStrategy,
-  arrayMove,
-} from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
+import { SortableContext, verticalListSortingStrategy, arrayMove } from "@dnd-kit/sortable";
+import { findContainer, SortableListItem, DroppableList } from "@/components/sortable/helpers";
 
 type Task = { id: string; text: string };
 
-// Wrapper to make a container droppable
-function DroppableList({ id, children }: { id: string; children: React.ReactNode }) {
-  const { setNodeRef } = useDroppable({ id });
-  return (
-    <div ref={setNodeRef} className="p-2 border rounded">
-      {children}
-    </div>
-  );
-}
-
-export default function SortableTodoList() {
-  // State for lists and dragging
+export default function MultiSelectTodoList() {
+  // State for tasks in two lists
   const [lists, setLists] = useState<{ [key: string]: Task[] }>({ todo: [], done: [] });
   const [activeId, setActiveId] = useState<string | null>(null);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
-  // New-task input and mode toggle
+  // New task input & clone/move toggle
   const [newTaskText, setNewTaskText] = useState("");
   const [cloneMode, setCloneMode] = useState(false);
 
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
 
-  const findContainer = (id: string) => {
-    for (const key in lists) if (lists[key].some((t) => t.id === id)) return key;
-    return null;
-  };
-
+  // Add new task into "todo"
   const handleAdd = () => {
     const text = newTaskText.trim();
     if (!text) return;
@@ -55,27 +36,42 @@ export default function SortableTodoList() {
     setLists((prev) => ({ ...prev, todo: [...prev.todo, newTask] }));
     setNewTaskText("");
   };
+
   const handleDragStart = ({ active }: { active: Active }) => {
-    setActiveId(active.id as string);
+    const id = active.id as string;
+    setActiveId(id);
+    if (!selectedIds.includes(id)) {
+      setSelectedIds([id]);
+    }
   };
 
+  // Drag end: move or clone all selected items
   const handleDragEnd = ({ active, over }: { active: Active; over: Over | null }) => {
     const activeId = active.id as string;
     const overId = over?.id as string;
     setActiveId(null);
-    if (!overId) return;
+    if (!overId) {
+      setSelectedIds([]);
+      return;
+    }
 
-    const from = findContainer(activeId)!;
-    const to = findContainer(overId) ?? (lists[overId] ? overId : null);
-    if (!to) return;
+    const from = findContainer(lists, activeId)!;
+    const to = findContainer(lists, overId) ?? (lists[overId] ? overId : null);
+    if (!to) {
+      setSelectedIds([]);
+      return;
+    }
 
     const sourceItems = lists[from];
     const destItems = lists[to];
     let destIndex = destItems.findIndex((t) => t.id === overId);
     if (destIndex < 0) destIndex = destItems.length;
 
-    if (from === to) {
-      // Reorder within same list
+    // Determine items to move or clone
+    const movingIds = selectedIds.includes(activeId) ? selectedIds : [activeId];
+
+    if (from === to && !cloneMode) {
+      // Reorder within same list: move first selected only
       const oldIndex = sourceItems.findIndex((t) => t.id === activeId);
       if (oldIndex !== destIndex) {
         setLists((prev) => ({
@@ -83,27 +79,62 @@ export default function SortableTodoList() {
           [from]: arrayMove(prev[from], oldIndex, destIndex),
         }));
       }
-    } else if (cloneMode) {
-      // Clone into destination
-      const moving = sourceItems.find((t) => t.id === activeId)!;
-      const clone: Task = { id: Date.now().toString(), text: moving.text };
-      setLists((prev) => ({
-        ...prev,
-        [to]: [...prev[to].slice(0, destIndex), clone, ...prev[to].slice(destIndex)],
-      }));
     } else {
-      // Move across lists
-      const moving = sourceItems.find((t) => t.id === activeId)!;
-      setLists((prev) => ({
-        ...prev,
-        [from]: prev[from].filter((t) => t.id !== activeId),
-        [to]: [...prev[to].slice(0, destIndex), moving, ...prev[to].slice(destIndex)],
-      }));
+      // For each id, either clone or move
+      setLists((prev) => {
+        const newLists = { ...prev };
+        movingIds.forEach((id) => {
+          const task = prev[from].find((t) => t.id === id)!;
+          if (cloneMode) {
+            // insert clone
+            const clone: Task = { id: Date.now().toString() + Math.random(), text: task.text };
+            newLists[to] = [
+              ...newLists[to].slice(0, destIndex),
+              clone,
+              ...newLists[to].slice(destIndex),
+            ];
+          } else {
+            // move
+            newLists[from] = newLists[from].filter((t) => t.id !== id);
+            newLists[to] = [
+              ...newLists[to].slice(0, destIndex),
+              task,
+              ...newLists[to].slice(destIndex),
+            ];
+          }
+        });
+        return newLists;
+      });
     }
+
+    // clear selection
+    setSelectedIds([]);
+  };
+
+  const renderSortableItem = (task: Task) => {
+    const isSelected = selectedIds.includes(task.id);
+    return (
+      <SortableListItem
+        key={task.id}
+        id={task.id}
+        className={`${isSelected ? "ring-2 ring-blue-500" : ""} p-2 mb-2 bg-white rounded shadow cursor-move`}
+        onClick={(e) => {
+          if (e.shiftKey || e.ctrlKey || e.metaKey) {
+            e.stopPropagation();
+            setSelectedIds((prev) =>
+              prev.includes(task.id) ? prev.filter((x) => x !== task.id) : [...prev, task.id]
+            );
+          }
+        }}
+      >
+        {task.text}
+      </SortableListItem>
+    );
   };
 
   return (
     <div className="p-4">
+      {/* Input & controls */}
       <div className="mb-4 flex items-center gap-4">
         <input
           type="text"
@@ -122,13 +153,14 @@ export default function SortableTodoList() {
         </label>
       </div>
 
+      {/* Draggable lists */}
       <div className="grid grid-cols-2 gap-4">
         <DndContext
           sensors={sensors}
           collisionDetection={closestCenter}
           onDragStart={handleDragStart}
           onDragEnd={handleDragEnd}
-          onDragCancel={() => setActiveId(null)}
+          onDragCancel={() => setSelectedIds([])}
         >
           {Object.keys(lists).map((containerId) => (
             <DroppableList key={containerId} id={containerId}>
@@ -137,46 +169,20 @@ export default function SortableTodoList() {
                 items={lists[containerId].map((t) => t.id)}
                 strategy={verticalListSortingStrategy}
               >
-                {lists[containerId].map((task) => (
-                  <SortableItem key={task.id} id={task.id}>
-                    {task.text}
-                  </SortableItem>
-                ))}
+                {lists[containerId].map((task) => renderSortableItem(task))}
               </SortableContext>
             </DroppableList>
           ))}
 
           <DragOverlay dropAnimation={null}>
-            {activeId ? (
-              <div className="p-2 bg-white rounded shadow">
-                {lists[findContainer(activeId)!].find((t) => t.id === activeId)?.text}
+            {(selectedIds.length > 1 ? selectedIds : activeId ? [activeId] : []).map((id) => (
+              <div key={id} className="p-2 mb-1 bg-white rounded shadow">
+                {lists[findContainer(lists, id)!].find((t) => t.id === id)?.text}
               </div>
-            ) : null}
+            ))}
           </DragOverlay>
         </DndContext>
       </div>
-    </div>
-  );
-}
-
-function SortableItem({ id, children }: { id: string; children: React.ReactNode }) {
-  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
-    id,
-  });
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-    opacity: isDragging ? 0.5 : 1,
-  };
-  return (
-    <div
-      ref={setNodeRef}
-      style={style}
-      {...attributes}
-      {...listeners}
-      className="p-2 mb-2 bg-white rounded shadow cursor-move"
-    >
-      {children}
     </div>
   );
 }

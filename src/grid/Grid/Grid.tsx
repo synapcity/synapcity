@@ -40,9 +40,21 @@ const Grid = () => {
   // }, [grid])
   // const dashboardId = useDashboardStore(useShallow(s => s.getSelected?.("dashboard")));
   const layouts = state?.layouts ?? {
-    xxs: [],
-    xs: [],
-    sm: [],
+    xxs: [
+      { i: "a", x: 0, y: 0, w: 2, h: 2 },
+      { i: "b", x: 0, y: 2, w: 2, h: 2 },
+      { i: "c", x: 0, y: 4, w: 2, h: 2 },
+    ],
+    xs: [
+      { i: "a", x: 0, y: 0, w: 4, h: 2 },
+      { i: "b", x: 0, y: 2, w: 4, h: 2 },
+      { i: "c", x: 0, y: 4, w: 4, h: 2 },
+    ],
+    sm: [
+      { i: "a", x: 0, y: 0, w: 3, h: 2 },
+      { i: "b", x: 3, y: 0, w: 3, h: 2 },
+      { i: "c", x: 0, y: 2, w: 6, h: 2 },
+    ],
     md: [],
     lg: [],
     xl: [],

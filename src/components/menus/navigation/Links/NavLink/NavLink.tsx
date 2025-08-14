@@ -31,6 +31,7 @@ interface Props {
 }
 
 export function NavLink({
+  id,
   href,
   label,
   icon,
@@ -62,10 +63,11 @@ export function NavLink({
     className: cn("font-normal", className, isActive && activeClassName),
   };
 
-  if (href === "/home" && onClick) {
+  if (id === "demo" || id === "login") {
+    const { onClick: _handleClick, ...rest } = sharedProps;
     return (
-      <DemoLogin asChild={false} {...sharedProps}>
-        Demo
+      <DemoLogin asChild={false} {...rest}>
+        {label}
       </DemoLogin>
     );
   }

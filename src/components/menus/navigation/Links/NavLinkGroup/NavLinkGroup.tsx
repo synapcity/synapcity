@@ -59,8 +59,8 @@ export function NavLinkGroup({
       {items.map((item) => {
         const actions = item.href ? { href: item.href } : { onClick: item.onClick };
         const isActive =
-          (item.href === "/home" && pathname === "/home") ||
-          (pathname !== "/home" && pathname.startsWith(item.href!));
+          (item.id === "/home" && pathname === "/home") ||
+          (item.id !== "/home" && pathname.startsWith(item.href!));
         return (
           <NavLink
             key={item.id}

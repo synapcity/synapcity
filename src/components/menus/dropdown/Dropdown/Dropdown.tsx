@@ -22,6 +22,7 @@ export interface DropdownItem {
   shortcut?: string;
   tooltip?: string;
   active?: boolean;
+  render?: React.ReactNode;
 }
 
 export type DropdownGroup = "separator" | { label: string; items: DropdownItem[] } | DropdownItem;
@@ -54,33 +55,52 @@ export function Dropdown({
     "data-[highlighted]:bg-(--foreground) data-[highlighted]:text-(--background) " +
     "data-[disabled]:pointer-events-none data-[disabled]:opacity-50";
 
-  const renderItem = (item: DropdownItem, key: React.Key) => (
-    <DropdownMenuItem
-      key={key}
-      disabled={item.disabled}
-      onSelect={() => {
-        if (!item.disabled) item.onSelect?.();
-      }}
-      className={cn(
-        itemClass,
-        item.destructive &&
-          "text-red-600 data-[highlighted]:bg-red-600 data-[highlighted]:text-white",
-        item.active && "bg-(--muted)/50"
-      )}
-    >
-      <span className="flex items-center gap-2">
-        {item.active && <Icon name="check" size="sm" className="opacity-80" />}
-        {item.icon && <Icon name={item.icon} size="sm" />}
-        <span className={cn(item.active && "font-medium")}>{item.label}</span>
-      </span>
-
-      {item.shortcut && (
-        <span className="text-[11px] tabular-nums text-muted-foreground group-data-[highlighted]:text-(--accent-foreground)">
-          {item.shortcut}
+  const renderItem = (item: DropdownItem, key: React.Key) => {
+    if (item.render) {
+      return (
+        <DropdownMenuItem
+          key={key}
+          disabled={item.disabled}
+          asChild
+          className={cn(
+            itemClass,
+            item.destructive &&
+              "text-red-600 data-[highlighted]:bg-red-600 data-[highlighted]:text-white",
+            item.active && "bg-(--muted)/50"
+          )}
+        >
+          {item.render}
+        </DropdownMenuItem>
+      );
+    }
+    return (
+      <DropdownMenuItem
+        key={key}
+        disabled={item.disabled}
+        onSelect={() => {
+          if (!item.disabled) item.onSelect?.();
+        }}
+        className={cn(
+          itemClass,
+          item.destructive &&
+            "text-red-600 data-[highlighted]:bg-red-600 data-[highlighted]:text-white",
+          item.active && "bg-(--muted)/50"
+        )}
+      >
+        <span className="flex items-center gap-2">
+          {item.active && <Icon name="check" size="sm" className="opacity-80" />}
+          {item.icon && <Icon name={item.icon} size="sm" />}
+          <span className={cn(item.active && "font-medium")}>{item.label}</span>
         </span>
-      )}
-    </DropdownMenuItem>
-  );
+
+        {item.shortcut && (
+          <span className="text-[11px] tabular-nums text-muted-foreground group-data-[highlighted]:text-(--accent-foreground)">
+            {item.shortcut}
+          </span>
+        )}
+      </DropdownMenuItem>
+    );
+  };
 
   // — Trigger resolution (NO cloneElement) —
   let triggerNode: React.ReactElement;

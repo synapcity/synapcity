@@ -3,16 +3,13 @@
 import { CommandMenu } from "@/components/molecules/CommandMenu/CommandMenu";
 import { AvatarDropdown } from "@/components/menus/dropdown/AvatarDropdown";
 import { NavLinkGroup } from "../NavLinkGroup";
-import { userJane, useUserStore } from "@/stores/userStore";
+import { useUserStore } from "@/stores/userStore";
 import { Spinner } from "@/components/atoms";
-import { usePathname, useRouter } from "next/navigation";
 import { useShallow } from "zustand/shallow";
-import { useEffect } from "react";
 import { avatarMenu } from "@/lib";
+import { useAuthRedirect } from "@/hooks";
 
 export function AuthLinks() {
-  const router = useRouter();
-  const pathname = usePathname();
   const { isLoggedIn, hasHydrated } = useUserStore(
     useShallow((state) => ({
       isLoggedIn: state.isLoggedIn,
@@ -20,14 +17,8 @@ export function AuthLinks() {
     }))
   );
   const user = useUserStore(useShallow((state) => state.user));
-  const login = useUserStore((state) => state.login);
   const loading = useUserStore((state) => state.loading);
-
-  useEffect(() => {
-    if (hasHydrated && isLoggedIn && pathname === "/") {
-      router.push("/home");
-    }
-  }, [hasHydrated, isLoggedIn, pathname, router]);
+  useAuthRedirect();
 
   if (!hasHydrated) {
     return null;
@@ -40,11 +31,7 @@ export function AuthLinks() {
           {
             id: "login",
             label: "Login",
-            href: "#",
-            onClick: () => {
-              login(userJane);
-              router.push("/home");
-            },
+            href: "/home",
             variant: {
               active: "default",
               inactive: "ghost",

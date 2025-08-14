@@ -1,5 +1,6 @@
 import type { NavLinkData } from "@/components/menus/navigation/Links/NavLinkGroup";
-import { useUserStore, useThemeStore, useUIStore } from "@/stores";
+import { useThemeStore, useUIStore } from "@/stores";
+import { demoLogout } from "@/components/auth";
 
 export interface DropdownItem {
   label: string;
@@ -9,6 +10,7 @@ export interface DropdownItem {
   destructive?: boolean;
   shortcut?: string;
   tooltip?: string;
+  render?: React.ReactNode;
 }
 
 type DropdownGroup = "separator" | { label: string; items: DropdownItem[] } | DropdownItem;
@@ -19,6 +21,7 @@ export interface DropdownLinkData {
   onClick?: () => void;
   group: string;
   destructive?: boolean;
+  render?: React.ReactNode;
 }
 
 export const mainNavItems: NavLinkData[] = [
@@ -71,15 +74,10 @@ export const landingNavItems: NavLinkData[] = [
     variant: { active: "primary", inactive: "outline" },
   },
   {
-    id: "demo",
+    id: "login",
     href: "/home",
     label: "Demo",
     variant: { active: "link", inactive: "link" },
-    onClick: () => {
-      useUserStore.getState().loginDemo();
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (window as any).history.pushState(null, "", "/home");
-    },
   },
 ];
 
@@ -101,10 +99,7 @@ export const avatarNavItems: DropdownLinkData[] = [
     icon: "logOut",
     destructive: true,
     group: "auth",
-    onClick: () => {
-      useUserStore.getState().logout();
-      window.history.replaceState(null, "", "/");
-    },
+    onClick: () => demoLogout(() => window.history.replaceState(null, "", "/")),
   },
 ];
 

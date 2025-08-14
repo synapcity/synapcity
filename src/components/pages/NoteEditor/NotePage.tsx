@@ -50,7 +50,7 @@ export default function NotePage() {
       finishStatus(status, noteId);
     }
   };
-  if (!hasHydrated || !noteId || !activeTabId) return null;
+  if (!noteId || !activeTabId) return null;
   return (
     <div className="flex flex-col flex-1">
       <DynamicTabsWrapper

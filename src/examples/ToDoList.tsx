@@ -9,38 +9,8 @@ import {
   useSensors,
   DragOverlay,
 } from "@dnd-kit/core";
-import {
-  SortableContext,
-  useSortable,
-  verticalListSortingStrategy,
-  arrayMove,
-} from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
-
-// A sortable list item
-function SortableItem({ id, children }: { id: string; children: React.ReactNode }) {
-  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
-    id,
-  });
-
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-    opacity: isDragging ? 0.5 : 1,
-  };
-
-  return (
-    <div
-      ref={setNodeRef}
-      style={style}
-      {...attributes}
-      {...listeners}
-      className="p-2 mb-2 bg-white rounded shadow cursor-move"
-    >
-      {children}
-    </div>
-  );
-}
+import { SortableContext, verticalListSortingStrategy, arrayMove } from "@dnd-kit/sortable";
+import { SortableListItem } from "@/components/sortable";
 
 // Main Todo List component with drag-and-drop
 export default function SortableTodoList() {
@@ -66,7 +36,6 @@ export default function SortableTodoList() {
         <input
           type="text"
           value={newTask}
-          onChange={(e) => setNewTask(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleAdd()}
           placeholder="Add a task..."
           className="flex-1 p-2 border rounded-l"
@@ -92,9 +61,9 @@ export default function SortableTodoList() {
       >
         <SortableContext items={tasks} strategy={verticalListSortingStrategy}>
           {tasks.map((task) => (
-            <SortableItem key={task} id={task}>
+            <SortableListItem key={task} id={task}>
               {task}
-            </SortableItem>
+            </SortableListItem>
           ))}
         </SortableContext>
 

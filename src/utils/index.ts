@@ -44,8 +44,6 @@ export { cn } from "./style-utils";
 
 export { toTitleCase } from "./text-utils";
 export { fmtTime, isTimeOrderValid } from "./time-utils/time-utils";
-export * from "./testId";
-export * from "./getUpdatedValues";
 export { applyDateRangeFilter } from "./applyDateRangeFilter";
 export { getExcerpt, getViewExcerpts, aggregateViewContent } from "./note-utils";
 export { deepMerge } from "./deepMerge";

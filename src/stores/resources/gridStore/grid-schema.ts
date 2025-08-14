@@ -20,8 +20,8 @@ export const defaultBreakpoints: Record<BreakpointType, number> = {
   xxl: 1400,
 };
 export const defaultCols: Record<BreakpointType, number> = {
-  xxs: 2,
-  xs: 3,
+  xxs: 1,
+  xs: 2,
   sm: 4,
   md: 8,
   lg: 12,
@@ -29,8 +29,8 @@ export const defaultCols: Record<BreakpointType, number> = {
   xxl: 16,
 };
 export const defaultMargin: Record<BreakpointType, [number, number]> = {
-  xxs: [0, 0],
-  xs: [10, 10],
+  xxs: [5, 5],
+  xs: [5, 5],
   sm: [10, 10],
   md: [20, 20],
   lg: [20, 20],
@@ -38,8 +38,8 @@ export const defaultMargin: Record<BreakpointType, [number, number]> = {
   xxl: [30, 30],
 };
 export const defaultContainerPadding: Record<BreakpointType, [number, number]> = {
-  xxs: [0, 0],
-  xs: [10, 10],
+  xxs: [5, 5],
+  xs: [5, 5],
   sm: [10, 10],
   md: [20, 20],
   lg: [20, 20],

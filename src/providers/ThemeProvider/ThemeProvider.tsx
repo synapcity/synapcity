@@ -75,7 +75,6 @@ export const ThemeProvider = ({
       if (entityId) setPreferences(scope as EntityType, entityId, updates);
     },
   });
-  console.log("scope", scope, "entityId", entityId);
 
   const resetTheme = () => {
     if (isGlobal) {
@@ -101,9 +100,6 @@ export const ThemeProvider = ({
   }, [preferences, isGlobal]);
 
   if (!hasHydrated) return <Loading fullScreen size={6} />;
-  if (entityId && hasHydrated && !scopedPrefs) {
-    console.debug(`[ThemeProvider] Initializing scoped theme for ${scope}:${entityId}`);
-  }
 
   return (
     <ThemeContext.Provider

@@ -1,4 +1,4 @@
-import rawNotes from "./notes.json";
+import { getNoteData } from "@/lib/data/notes";
 import { initItems } from "@/utils/initItems";
 import { createResourceStore, ResourceStore } from "@/stores/resources/factory";
 import { createNote, NoteResourceSchema, type Note as NoteResource } from "./note-schema";
@@ -28,7 +28,7 @@ const _useNoteStore = createResourceStore<NoteResource>({
   afterHydrate: (state, err) => {
     state.setHasHydrated(true);
     if (!err && Object.values(state.items).length === 0) {
-      state.initItems?.(rawNotes);
+      state.initItems?.(getNoteData());
     }
   },
 

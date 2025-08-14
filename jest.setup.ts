@@ -1,5 +1,3 @@
-import "./src/utils/supressConsole";
-
 if (typeof HTMLCanvasElement !== "undefined") {
   Object.defineProperty(HTMLCanvasElement.prototype, "getContext", {
     value: () => {

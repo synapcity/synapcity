@@ -10,14 +10,7 @@ import {
 } from "@dnd-kit/core";
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { useState } from "react";
-
-function SortableItem({ id, children }: { id: string; children: React.ReactNode }) {
-  return (
-    <div key={id} data-sortable-item-id={id}>
-      {children}
-    </div>
-  );
-}
+import { SortableListItem } from "@/components/sortable";
 
 export function SortableList({ items }: { items: string[] }) {
   const [order, setOrder] = useState(items);
@@ -42,10 +35,9 @@ export function SortableList({ items }: { items: string[] }) {
     >
       <SortableContext items={order} strategy={verticalListSortingStrategy}>
         {order.map((id) => (
-          <SortableItem key={id} id={id}>
-            {/* your item contents */}
+          <SortableListItem key={id} id={id}>
             {id}
-          </SortableItem>
+          </SortableListItem>
         ))}
       </SortableContext>
 

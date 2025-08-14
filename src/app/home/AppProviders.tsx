@@ -1,10 +1,9 @@
 "use client";
 
 import { SkeletonOrLoading } from "@/components";
+import { useAuthRedirect } from "@/hooks";
 import { useUIStore, useUserStore } from "@/stores";
 import dynamic from "next/dynamic";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 import { useShallow } from "zustand/shallow";
 
 const AppSidebar = dynamic(() => import("./AppSidebar").then((mod) => mod.default), { ssr: true });
@@ -20,16 +19,11 @@ export default function AppProviders({ children }: { children: React.ReactNode }
   const isOpen = useUIStore(
     useShallow((s) => s.components?.["mainSidebar"]?.["isVisible"] ?? false)
   );
-  const router = useRouter();
   const { isLoggedIn, hasHydrated } = useUserStore(
     useShallow(({ isLoggedIn, hasHydrated }) => ({ isLoggedIn, hasHydrated }))
   );
 
-  useEffect(() => {
-    if (hasHydrated && !isLoggedIn) {
-      router.replace("/");
-    }
-  }, [hasHydrated, isLoggedIn, router]);
+  useAuthRedirect();
 
   if (!hasHydrated) {
     return <SkeletonOrLoading />;

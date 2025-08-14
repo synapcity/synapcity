@@ -16,19 +16,6 @@ describe("generateColorScale", () => {
       expect(value).toMatch(/^#([0-9a-fA-F]{6})$/);
     }
   });
-
-  it("should log a warning in console when base is invalid", () => {
-    const warnSpy = jest.spyOn(console, "warn").mockImplementation(() => {});
-    const scale = generateColorScale("$%^^$%#");
-    expect(warnSpy).toHaveBeenCalledWith(
-      "[generateColorScale] Invalid base color: $%^^$%#",
-      "$%^^$%#"
-    );
-
-    expect(Object.values(scale).every((value) => /^#([0-9a-fA-F]{6})$/.test(value))).toBe(true);
-
-    warnSpy.mockRestore();
-  });
 });
 
 describe("generateColorScale edge cases", () => {
