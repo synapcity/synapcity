@@ -6,7 +6,7 @@ const config: StorybookConfig = {
   framework: "@storybook/nextjs-vite",
   stories: ["../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
   staticDirs: ["../public"],
-  addons: ["@storybook/addon-docs", "@storybook/addon-a11y"],
+  addons: ["@storybook/addon-docs", "@storybook/addon-a11y", "@storybook/addon-vitest"],
   viteFinal: async (cfg) => {
     cfg.plugins = [tsconfigPaths({ loose: true }), ...(cfg.plugins ?? [])];
     cfg.resolve ??= {};

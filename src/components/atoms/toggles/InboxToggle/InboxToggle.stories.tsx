@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import React, { useEffect } from "react";
-import { within, userEvent, expect } from "@storybook/test";
+import { within, userEvent, expect } from "storybook/test";
 import { InboxToggle } from "./InboxToggle";
 import { useUIStore } from "@/stores/ui/uiStore";
 
