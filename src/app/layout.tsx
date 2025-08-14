@@ -1,29 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Space_Mono, Space_Grotesk } from "next/font/google";
 import { defaultOG, defaultTwitter } from "@/lib/metadata";
 import { Toaster } from "sonner";
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import { Loading } from "@/components/loading/Loading/Loading";
 import "../styles/globals.css";
-
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
-  subsets: ["latin"],
-  display: "swap",
-});
-const spaceMono = Space_Mono({
-  variable: "--font-space-mono",
-  subsets: ["latin"],
-  weight: "400",
-  display: "swap",
-});
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  display: "swap",
-});
+import { fontVars } from "@/lib/theme/fonts";
 
 export const metadata: Metadata = {
   title: "Synapcity — Your Second Brain",
@@ -38,6 +20,9 @@ export const metadata: Metadata = {
     ...defaultTwitter,
     title: "Synapcity — Your Second Brain",
     description: "Capture, connect, and create with your digital thoughtspace.",
+  },
+  icons: {
+    icon: "/favicon.ico",
   },
 };
 
@@ -61,10 +46,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link rel="manifest" href="/manifest.webmanifest" />
         <link rel="icon" href="/favicon.ico" />
       </head>
-      <body className={`${spaceGrotesk.variable} ${spaceMono.variable} ${inter.variable}`}>
+      <body className={fontVars}>
         <GlobalProvider>
           <GlobalLayout>
             <Suspense fallback={<Loading />}>{children}</Suspense>

@@ -127,7 +127,25 @@ body {
   body {
     @apply bg-(--background) text-(--foreground);
     @apply relative flex flex-col;
+    font-family: var(--font-inter);
     font-size: 14px;
+  }
+
+  code,
+  kbd,
+  samp,
+  pre,
+  .font-mono {
+    font-family: var(--font-space-mono);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-grotesk);
   }
 
   [data-slot="nav-menu-link"]:focus-visible {

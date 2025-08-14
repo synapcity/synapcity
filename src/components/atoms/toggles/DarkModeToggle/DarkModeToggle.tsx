@@ -20,14 +20,17 @@ export const DarkModeToggle = ({
   return (
     <BaseToggle
       size={size}
-      className={cn("text-(--background) bg-transparent", className)}
+      className={cn(
+        "text-(--background) bg-transparent border-transparent hover:border-(--accent)",
+        className
+      )}
       inactiveClasses="text-(--background)"
       pressed={isDarkMode}
       onChange={() => toggleDarkMode()}
       inactiveChildren={<Moon />}
       variant="outline"
     >
-      <Sun />
+      <Sun className="text-(--background)" />
     </BaseToggle>
   );
 };
