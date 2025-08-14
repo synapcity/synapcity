@@ -1,4 +1,5 @@
 "use client";
+
 import { useRouter } from "next/navigation";
 import { useUserStore } from "@/stores/userStore";
 import React from "react";
@@ -9,9 +10,14 @@ export function DemoLogout({ children }: { children: React.ReactNode }) {
   const logout = useUserStore((s) => s.logout);
 
   const onLogout = async () => {
-    await fetch("/api/auth/demo-logout", { method: "POST" });
-    logout();
-    router.replace("/login");
+    try {
+      await fetch("/api/auth/demo-logout", { method: "POST" });
+    } catch (err) {
+      console.error(`Error logging out: ${err}`);
+    } finally {
+      logout();
+      router.replace("/");
+    }
   };
 
   return (

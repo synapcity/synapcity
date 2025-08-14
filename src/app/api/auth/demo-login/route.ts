@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 export async function POST() {
   const res = NextResponse.json({ ok: true });
   res.cookies.set("demo_auth", "1", {
-    path: "/",
+    path: "/home",
     httpOnly: true,
     sameSite: "lax",
     // secure: process.env.NODE_ENV === "production",

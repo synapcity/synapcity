@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const PROTECTED = ["/dashboard", "/app", "/notes", "/settings"]; // roots you want to protect
+const PROTECTED = ["/app", "/settings", "/home"];
 
 export function middleware(req: NextRequest) {
   const { pathname, search } = req.nextUrl;
@@ -10,7 +10,7 @@ export function middleware(req: NextRequest) {
 
   const hasCookie = !!req.cookies.get("demo_auth");
   if (!hasCookie) {
-    const url = new URL("/login", req.url);
+    const url = new URL("/", req.url);
     url.searchParams.set("from", pathname + (search ?? ""));
     return NextResponse.redirect(url);
   }
@@ -19,5 +19,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/app/:path*", "/notes/:path*", "/settings/:path*"],
+  matcher: ["/settings/:path*, /home/:path*"],
 };

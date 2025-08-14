@@ -8,8 +8,8 @@ const AppProviders = dynamic(() => import("./AppProviders").then((mod) => mod.de
   loading: () => <SkeletonOrLoading />,
 });
 
-export default function HomeLayout({ children }: { children: React.ReactNode }) {
-  if (!hasDemoSession()) redirect("/");
+export default async function HomeLayout({ children }: { children: React.ReactNode }) {
+  if (!(await hasDemoSession())) redirect("/");
   return (
     <Protected>
       <AppProviders>{children}</AppProviders>

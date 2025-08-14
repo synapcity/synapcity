@@ -14,17 +14,21 @@ export function DemoLogin({
   asChild?: boolean;
 } & ButtonProps) {
   const router = useRouter();
-  const from = useSearchParams().get("from") ?? "/dashboard";
+  const from = useSearchParams().get("from") ?? "/home";
   const login = useUserStore((s) => s.login);
   const setHydrated = useUserStore((s) => s.setHasHydrated);
 
   const onLogin = async () => {
-    // 1) server cookie (visible to middleware/SSR)
-    await fetch("/api/auth/demo-login", { method: "POST" });
-    // 2) client state for UX
-    login(userJane);
-    setHydrated(true);
-    router.replace(from);
+    try {
+      // 1) server cookie (visible to middleware/SSR)
+      await fetch("/api/auth/demo-login", { method: "POST" });
+    } catch (err) {
+      console.error(`Error logging in: ${err}`);
+    } finally {
+      login(userJane);
+      setHydrated(true);
+      router.replace(from);
+    }
   };
 
   return (
