@@ -7,19 +7,30 @@ import { Loading } from "@/components/loading/Loading/Loading";
 import "../styles/globals.css";
 import { fontVars } from "@/lib/theme/fonts";
 
+const appBaseUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
+
 export const metadata: Metadata = {
-  title: "Synapcity — Your Second Brain",
+  metadataBase: new URL(appBaseUrl),
+  title: {
+    default: "Synapcity - Your Second Brain",
+    template: "%s | Synapcity",
+  },
   description: "Capture, connect, and create with your digital thoughtspace.",
   keywords: ["notes", "second brain", "Zettelkasten", "productivity", "Synapcity"],
   openGraph: {
     ...defaultOG,
     title: "Synapcity — Your Second Brain",
+    siteName: "Synapcity",
     description: "Capture, connect, and create with your digital thoughtspace.",
+    images: ["./opengraph-image.tsx"],
   },
   twitter: {
     ...defaultTwitter,
     title: "Synapcity — Your Second Brain",
     description: "Capture, connect, and create with your digital thoughtspace.",
+    images: ["./twitter-image.tsx"],
   },
   icons: {
     icon: "/favicon.ico",

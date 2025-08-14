@@ -1,13 +1,17 @@
 export const siteBaseURL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://official-synapcity.vercel.app/";
 export const siteName = "Synapcity";
-export const defaultImage = `${siteBaseURL}/og-image.png`;
+export const defaultImage = "/src/app/opengraph-image.tsx";
 
 export const runtime = "nodejs";
 
+const appBaseUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
+
 export const defaultOG = {
-  url: siteBaseURL,
-  metadataBase: siteBaseURL,
+  url: new URL(appBaseUrl),
+  metadataBase: new URL(siteBaseURL),
   siteName,
   icons: {
     icon: [
@@ -32,7 +36,11 @@ export const defaultOG = {
       alt: "Synapcity",
     },
   ],
-  type: "website",
+  openGraph: {
+    title: "SynapCity - Your Second Brain",
+    description: "Capture, connect, and create with your digital thoughtspace.",
+    type: "website",
+  },
 };
 
 export const defaultTwitter = {
