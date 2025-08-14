@@ -2,7 +2,7 @@ import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Avatar } from "./Avatar";
 
 const meta: Meta<typeof Avatar> = {
-  title: "Components/atoms/Avatar",
+  title: "Atoms/Avatar",
   component: Avatar,
   tags: ["autodocs"],
   argTypes: {

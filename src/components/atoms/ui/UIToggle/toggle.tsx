@@ -8,13 +8,13 @@ import { cn } from "@/utils";
 export const toggleVariants = cva(
   [
     "inline-flex select-none items-center justify-center gap-2",
-    "rounded-md text-sm font-medium",
+    "rounded-sm text-sm font-medium p-2",
     "transition-[background-color,color,box-shadow,transform] duration-150",
-    "outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-(--background)",
+    "outline-none focus-visible:ring-2 focus-visible:ring-(--accent) focus-visible:ring-offset-2 focus-visible:ring-offset-(--background)",
     "disabled:pointer-events-none disabled:opacity-50",
     "[&_svg:not([class*='size-'])]:size-4 [&_svg]:shrink-0",
     "active:translate-y-[0.5px]",
-    "aria-invalid:ring-(--destructive)/30 aria-invalid:border-(--destructive)",
+    "aria-invalid:ring-(--destructive)/30 aria-invalid:border-(--destructive) hover:cursor-pointer",
   ].join(" "),
   {
     variants: {
@@ -25,12 +25,12 @@ export const toggleVariants = cva(
           "data-[state=on]:shadow-sm",
         ].join(" "),
         outline: [
-          "border border-(--border) bg-(--transparent) text-(--foreground) hover:bg-(--muted)/60",
+          "border border-(--border) bg-transparent text-(--foreground) hover:bg-(--muted)/60",
           "data-[state=on]:border-(--accent) data-[state=on]:bg-[color:var(--accent-muted,transparent)]",
           "data-[state=on]:text-(--accent-foreground)",
         ].join(" "),
         ghost: [
-          "bg-(--transparent) text-(--foreground) hover:bg-(--muted)/60",
+          "bg-transparent text-(--foreground) hover:bg-(--muted)/60",
           "data-[state=on]:text-(--accent-foreground)] data-[state=on]:bg-(--accent)",
         ].join(" "),
         solid: [
@@ -51,9 +51,9 @@ export const toggleVariants = cva(
       },
       size: {
         sm: "h-7 min-w-7 px-2 text-[13px]",
-        md: "h-8 min-w-8 px-2.5",
-        lg: "h-9 min-w-9 px-3 text-[15px]",
-        default: "h-6 min-w-6 text-[12px]",
+        md: "h-8 min-w-8 px-3",
+        lg: "h-9 min-w-9 px-4 text-[15px]",
+        default: "min-h-6 min-w-6 text-[12px] px-3",
       },
       elevated: {
         true: "data-[state=on]:shadow-[0_1px_0_0_rgba(0,0,0,0.04),0_2px_6px_-1px_rgba(0,0,0,0.08)]",

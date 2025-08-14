@@ -1,6 +1,6 @@
 export const textVariants = {
   default: "leading-7 [&:not(:first-child)]:mt-6",
-  lead: "text-xl text-muted-foreground",
+  lead: "text-xl font-normal",
   large: "text-lg font-semibold",
   small: "text-xs font-medium leading-none",
   muted: "text-sm text-muted-foreground",

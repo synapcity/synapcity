@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { LinkButton } from "./LinkButton";
 
 const meta: Meta<typeof LinkButton> = {
-  title: "Atoms/Buttons/LinkButton",
+  title: "Buttons/LinkButton",
   component: LinkButton,
   args: {
     href: "#",

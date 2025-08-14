@@ -3,7 +3,7 @@ import { InboxTrigger } from "./InboxTrigger";
 import { Collapsible } from "@/components/atoms/ui/collapsible";
 
 const meta: Meta<typeof InboxTrigger> = {
-  title: "Components/molecules/Inbox/Triggers/InboxTrigger",
+  title: "Toggles/InboxTrigger",
   component: InboxTrigger,
   argTypes: {
     className: { control: "text" },
@@ -17,7 +17,7 @@ type Story = StoryObj<typeof InboxTrigger>;
 export const Default: Story = {
   render: (args) => (
     <Collapsible>
-      <InboxTrigger {...args} />,
+      <InboxTrigger {...args} />
     </Collapsible>
   ),
 };
@@ -25,7 +25,7 @@ export const Default: Story = {
 export const CustomLabel: Story = {
   render: (args) => (
     <Collapsible>
-      <InboxTrigger {...args} />,
+      <InboxTrigger {...args} />
     </Collapsible>
   ),
 };
@@ -36,7 +36,7 @@ export const WithCustomClass: Story = {
   },
   render: (args) => (
     <Collapsible>
-      <InboxTrigger {...args} />,
+      <InboxTrigger {...args} />
     </Collapsible>
   ),
 };

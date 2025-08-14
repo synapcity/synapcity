@@ -35,9 +35,9 @@ export const sizeClasses: Record<ButtonSize, string> = {
 };
 
 export const iconSizeClasses: Record<ButtonSize, string> = {
-  xs: "h-6 px-2",
-  sm: "h-7 px-3",
-  md: "h-8 px-4",
-  lg: "h-9 px-5",
-  xl: "h-10 px-6",
+  xs: "h-6 p-2",
+  sm: "h-7 p-3",
+  md: "h-8 p-4",
+  lg: "h-9 p-5",
+  xl: "h-10 p-6",
 };

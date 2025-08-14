@@ -28,7 +28,7 @@ export const Typography = ({
     : textVariants[variant as TextVariant];
 
   return (
-    <Tag className={cn(styles, className)} {...props}>
+    <Tag className={cn("text-(--foreground)", styles, className)} {...props}>
       {children}
     </Tag>
   );

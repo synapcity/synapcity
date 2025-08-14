@@ -1,9 +1,8 @@
-// stories/Typography.stories.tsx
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Typography } from "./Typography";
 
 const meta: Meta<typeof Typography> = {
-  title: "Components/atoms/Typography",
+  title: "Atoms/Typography",
   component: Typography,
   args: {
     children: "Sample Text",
