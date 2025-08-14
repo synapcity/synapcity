@@ -130,7 +130,9 @@ export function Dropdown({
     <BaseDropdownMenu>
       {/* Wrapper controls trigger placement in your layout */}
       <div className={cn("inline-flex items-center justify-center", className)}>
-        <DropdownMenuTrigger asChild>{triggerNode}</DropdownMenuTrigger>
+        <DropdownMenuTrigger asChild className="inline-flex place-items-center">
+          {triggerNode}
+        </DropdownMenuTrigger>
       </div>
 
       <DropdownMenuContent
