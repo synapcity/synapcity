@@ -32,7 +32,7 @@ export const sidebarMenuButtonVariants = cva(
         auto: "h-auto p-auto",
       },
       isActive: {
-        true: "data-[active=true]:bg-(--sidebar-accent) data-[active=true]:text-(--sidebar-accent-foreground)",
+        true: "data-[active=true]:bg-(--sidebar-accent) data-[active=true]:text-(--sidebar-accent-foreground) data-[active=true]:hover:text-(--foreground)",
         false: "",
       },
       icon: {

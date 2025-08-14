@@ -44,7 +44,7 @@ export function NavLinkGroup({
   items,
   direction = "horizontal",
   className,
-  activeClassName = "ring ring-accent font-semibold",
+  activeClassName = "text-(--accent) font-medium",
 }: NavLinkGroupProps) {
   const pathname = usePathname();
 
@@ -58,9 +58,12 @@ export function NavLinkGroup({
     >
       {items.map((item) => {
         const actions = item.href ? { href: item.href } : { onClick: item.onClick };
-        const isActive =
-          (item.id === "/home" && pathname === "/home") ||
-          (item.id !== "/home" && pathname.startsWith(item.href!));
+        const href = item.href;
+        const isActive = href
+          ? href === "/home"
+            ? pathname === "/home"
+            : pathname === item.href || pathname.startsWith(`${item.href}/`)
+          : false;
         return (
           <NavLink
             key={item.id}

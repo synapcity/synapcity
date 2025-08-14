@@ -9,9 +9,9 @@ import { Suspense } from "react";
 export const AppContent = ({ children }: { children: React.ReactNode }) => {
   const { toggleSidebar } = useSidebar();
   const toggleComp = useUIStore((s) => s.toggleCompState);
+
   useKeyboardShortcut({
-    key: "m",
-    metaKey: true,
+    combos: [{ key: "m", meta: true }],
     onKeyPressed: () => {
       toggleComp("mainSidebar", "isVisible");
       toggleSidebar();

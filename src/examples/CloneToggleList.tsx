@@ -16,7 +16,7 @@ import { SortableListItem, DroppableList, findContainer } from "@/components/sor
 
 type Task = { id: string; text: string };
 
-export default function SortableTodoList() {
+export default function CloneToggleList() {
   // State for lists and dragging
   const [lists, setLists] = useState<{ [key: string]: Task[] }>({ todo: [], done: [] });
   const [activeId, setActiveId] = useState<string | null>(null);

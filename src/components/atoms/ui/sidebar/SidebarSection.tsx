@@ -13,7 +13,6 @@ import React from "react";
 import Link from "next/link";
 import { CommandShortcut } from "../command";
 import { usePathname } from "next/navigation";
-import { cn } from "@/utils";
 
 interface SidebarSectionProps<T> {
   label: string;
@@ -40,15 +39,14 @@ export function SidebarSection<T extends { id: string }>({
   getItemLabel,
   keyboardShortcut,
   keyboardShortcutTooltip,
+  activeItemId,
 }: SidebarSectionProps<T>) {
   const pathname = usePathname();
   return (
     <SidebarGroup>
       <div className="flex items-center justify-between px-1.5 py-2">
         {labelLink ? (
-          <Link href={labelLink} className="font-semibold hover:underline pl-0">
-            <SidebarGroupLabel>{label}</SidebarGroupLabel>
-          </Link>
+          <SidebarGroupLabel>{label}</SidebarGroupLabel>
         ) : (
           <SidebarGroupLabel>{label}</SidebarGroupLabel>
         )}
@@ -65,15 +63,11 @@ export function SidebarSection<T extends { id: string }>({
         <SidebarMenu>
           {items.length > 0 ? (
             items.map((item) => {
+              const isActive = activeItemId ? activeItemId === item.id : pathname.endsWith(item.id);
               return (
                 <SidebarMenuItem key={item.id}>
-                  <SidebarMenuButton isActive={pathname.endsWith(item.id)} asChild>
-                    <Link
-                      href={itemUrl(item)}
-                      className={cn("flex items-center gap-2 px-2 py-1", {
-                        "hover:text-(--foreground": pathname.endsWith(item.id),
-                      })}
-                    >
+                  <SidebarMenuButton isActive={isActive} asChild>
+                    <Link href={itemUrl(item)} className="flex items-center gap-2 px-2 py-1">
                       <ItemIcon className="h-4 w-4" />
                       <span>{getItemLabel(item)}</span>
                     </Link>

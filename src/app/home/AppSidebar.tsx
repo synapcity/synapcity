@@ -37,15 +37,12 @@ export default function AppSidebar() {
   }, [activeDashboardId, activeNoteId, setActive]);
 
   useKeyboardShortcut({
-    key: "D",
-    metaKey: true,
+    combos: [{ key: "d", meta: true }],
     onKeyPressed: () => setCreateDashboardOpen(true),
   });
 
   useKeyboardShortcut({
-    key: "N",
-    metaKey: true,
-    shiftKey: true,
+    combos: [{ key: "n", meta: true, shift: true }],
     onKeyPressed: () => setCreateNoteOpen(true),
   });
   return (

@@ -24,8 +24,7 @@ export function IconSidebar({ scope, id, side = "right" }: IconSidebarProps) {
   const { sidebarState, toggleSidebar } = useSidebar();
 
   useKeyboardShortcut({
-    key: "s",
-    metaKey: true,
+    combos: [{ key: "s", meta: true }],
     onKeyPressed: () => toggleSidebar(),
   });
 

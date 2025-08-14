@@ -4,5 +4,11 @@ import { usePathname } from "next/navigation";
 
 export function useNavLinkActive(href: string) {
   const pathname = usePathname();
-  return pathname === href || (pathname === href && href !== "/");
+  if (!href) return false;
+
+  if (href === "/home") {
+    return pathname === "/home";
+  }
+
+  return pathname === href || pathname.startsWith(`${href}/`);
 }
