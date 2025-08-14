@@ -1,4 +1,3 @@
-// Mocks
 const mockSetPreferences = jest.fn();
 const mockSetGlobalPreferences = jest.fn();
 
