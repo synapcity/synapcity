@@ -65,7 +65,7 @@ export function ResizableSidebarWrapper({
           </div>
 
           {/* Main content area can scroll independently if it needs to */}
-          <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden">{children}</div>
+          <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden flex">{children}</div>
         </ResizablePanel>
 
         <ResizableHandle
