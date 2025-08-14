@@ -1,9 +1,10 @@
 "use client";
 
-import { IconButton, LockTrigger } from "@/components/atoms";
+import { IconButton } from "@/components/atoms";
 import { useUIStore, useUserStore } from "@/stores";
 import { AvatarDropdown } from "@/components/menus/dropdown/AvatarDropdown/AvatarDropdown";
 import { Separator } from "@/components/atoms/ui/separator";
+import { LockToggle } from "@/components/atoms/toggles/LockToggle/LockToggle";
 
 export const UserActions = () => {
   const logout = useUserStore((s) => s.logout);
@@ -14,7 +15,8 @@ export const UserActions = () => {
     <div className="flex items-center gap-3">
       <IconButton icon="schedule" onClick={() => toggleModal("scheduleModal", "isVisible")} />
       <Separator orientation="vertical" className="h-4" />
-      <LockTrigger size="sm" />
+      {/* <LockTrigger size="sm" /> */}
+      <LockToggle size="sm" />
       <AvatarDropdown
         avatarUrl={user?.avatar ?? ""}
         username={user?.username ?? ""}

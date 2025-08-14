@@ -28,5 +28,11 @@ const eslintConfig = [
       ],
     },
   },
+  {
+    files: ["**/*.stories.@(ts|tsx)"],
+    rules: {
+      "react/display-name": "off",
+    },
+  },
 ];
 export default eslintConfig;

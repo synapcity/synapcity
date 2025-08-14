@@ -50,3 +50,4 @@ export { applyDateRangeFilter } from "./applyDateRangeFilter";
 export { getExcerpt, getViewExcerpts, aggregateViewContent } from "./note-utils";
 export { deepMerge } from "./deepMerge";
 export { getBreakpointForWidth, normalizeLayouts } from "./grid-utils";
+export { safeViteGlob, type GlobMap } from "./safeViteGlob";

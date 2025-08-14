@@ -31,14 +31,15 @@ const defaultComponentState: ComponentUIState = {
 const defaultUIState: UIState = {
   isSiteFocus: false,
   components: {
-    header: { ...defaultComponentState },
-    userPanel: { ...defaultComponentState, isExpanded: false },
-    userPanelSidebar: { ...defaultComponentState, isExpanded: false },
+    header: { ...defaultComponentState, isVisible: true, isExpanded: true },
+    userPanel: { ...defaultComponentState },
+    userPanelSidebar: { ...defaultComponentState },
     scheduleModal: { isVisible: false },
     notesSidebar: { ...defaultComponentState },
     breadcrumbs: { ...defaultComponentState },
     dashboardsSidebar: { ...defaultComponentState },
     mainSidebar: { ...defaultComponentState },
+    globalTheme: { ...defaultComponentState },
   },
 };
 

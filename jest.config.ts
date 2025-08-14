@@ -101,6 +101,9 @@ const config: Config = {
     "^@/(.*)$": "<rootDir>/src/$1",
     "^nanoid$": "<rootDir>/__mocks__/nanoid.ts",
     "^react-resizable-panels$": "<rootDir>/__mocks__/react-resizable-panels.tsx",
+    "^@/lib/data/sidebar/defaultNotePanels$": "<rootDir>/test/__mocks__/defaultNotePanels.ts",
+    "^@/lib/data/sidebar/defaultDashboardPanels$":
+      "<rootDir>/test/__mocks__/defaultDashboardPanels.ts",
   },
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
   // modulePathIgnorePatterns: [],

@@ -3,7 +3,7 @@
 import { useUIStore } from "@/stores";
 import { SidebarProvider } from "../atoms/ui/sidebar";
 import { useShallow } from "zustand/shallow";
-import { InboxTrigger } from "../atoms";
+import { InboxToggle } from "../atoms";
 
 export const UserContainer = ({ children }: { children: React.ReactNode }) => {
   const isOpen = useUIStore(
@@ -18,7 +18,7 @@ export const UserContainer = ({ children }: { children: React.ReactNode }) => {
       className="relative"
     >
       {children}
-      <InboxTrigger className="absolute bottom-4 right-4 opacity-50 hover:opacity-100 transition-opacity duration-200 ease-linear" />
+      <InboxToggle className="absolute bottom-4 right-4 opacity-50 hover:opacity-100 transition-opacity duration-200 ease-linear" />
     </SidebarProvider>
   );
 };

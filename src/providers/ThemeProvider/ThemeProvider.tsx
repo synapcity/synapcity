@@ -3,7 +3,7 @@
 import { useRef, RefObject, useEffect } from "react";
 import { useThemeStore } from "@/stores/ui/themeStore/useThemeStore/useThemeStore";
 import { ThemeContext } from "./theme-context";
-import { cn } from "@/utils";
+import { cn } from "@/utils/style-utils";
 import { useThemeEngine } from "@/hooks/theme/useThemeEngine";
 import type { ThemeScope, ThemePreferences, EntityType } from "@/theme/types";
 import { Loading } from "@/components";
