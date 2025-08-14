@@ -3,14 +3,11 @@
 import { NavigationMenu, NavigationMenuList } from "@/components/atoms/ui/navigation-menu";
 import dynamic from "next/dynamic";
 import { Logo } from "@/components/atoms/Logo";
-import { InboxTrigger } from "@/components/atoms/triggers";
-import { DarkModeSwitch } from "@/components/atoms/DarkModeSwitch";
 import { Separator } from "@/components/atoms/ui/separator";
-import { useThemeStore, useUIStore } from "@/stores";
-import { ThemeSheet } from "@/components/theme";
+import { useUIStore } from "@/stores";
 import { AuthLinks } from "../Links/AuthLinks";
 import { cn } from "@/utils";
-import { IconButton } from "@/components/atoms";
+import { DarkModeToggle, InboxToggle, ThemeToggle, VisibilityToggle } from "@/components/atoms";
 import { useShallow } from "zustand/shallow";
 
 const links = [
@@ -32,11 +29,6 @@ export function TopNavMenu() {
   const getCompState = useUIStore((s) => s.getCompState);
 
   const isHeaderVisible = header ? getCompState("header", "isVisible") : true;
-
-  const toggleFocus = useUIStore((s) => s.toggleSiteFocus);
-  const toggleMode = useThemeStore((s) => s.toggleGlobalMode);
-  const mode = useThemeStore((s) => s.globalPreferences.mode);
-
   return (
     <div
       className={cn(
@@ -60,19 +52,11 @@ export function TopNavMenu() {
       </NavigationMenu>
 
       <div className="flex items-center gap-2 text-(--background)">
-        <InboxTrigger />
-        <ThemeSheet scope="global" triggerStyles="text-(--background)" />
-        <IconButton
-          icon={isSiteFocused ? "eyeOff" : "eye"}
-          iconClassName={
-            isSiteFocused ? "!text-(--background) bg-(--foreground)" : "text-(--background)"
-          }
-          onClick={toggleFocus}
-          variant={isSiteFocused ? "primary" : "inverse"}
-          aria-label="Toggle site focus mode"
-        />
+        <InboxToggle />
+        <ThemeToggle />
+        <VisibilityToggle />
         <Separator orientation="vertical" className="h-4" />
-        <DarkModeSwitch key={mode} value={mode} onChange={toggleMode} />
+        <DarkModeToggle />
         <Separator orientation="vertical" className="h-4" />
         <AuthLinks />
       </div>

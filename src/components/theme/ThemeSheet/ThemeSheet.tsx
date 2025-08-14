@@ -38,12 +38,14 @@ export const ThemeSheet = ({
   entityId,
   scope,
   triggerStyles,
+  trigger,
   open,
   onOpenChange,
 }: {
   entityId?: string;
   scope: ThemeScope;
   triggerStyles?: string;
+  trigger?: React.ReactNode;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
 }) => {
@@ -58,13 +60,15 @@ export const ThemeSheet = ({
       open={open}
       onOpenChange={onOpenChange}
       trigger={
-        <IconButton
-          variant="ghost"
-          icon="palette"
-          aria-label="Font & Theme"
-          tooltip="Font & Theme"
-          className={triggerStyles}
-        />
+        trigger ?? (
+          <IconButton
+            variant="ghost"
+            icon="palette"
+            aria-label="Font & Theme"
+            tooltip="Font & Theme"
+            className={triggerStyles}
+          />
+        )
       }
       title="Theme"
     >

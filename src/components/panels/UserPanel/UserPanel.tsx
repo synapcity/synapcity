@@ -9,7 +9,6 @@ import { motion } from "framer-motion";
 import { Suspense } from "react";
 import { ModalRenderer } from "@/components/modals";
 import dynamic from "next/dynamic";
-// import { IconSidebar } from "@/components/menus/sidebar";
 
 const UserPanelContainer = dynamic(() =>
   import("../UserPanelContainer").then((mod) => mod.UserContainer)
@@ -25,7 +24,7 @@ export const UserPanel = () => {
           <motion.div
             layout
             transition={{ type: "spring", duration: 0.3 }}
-            className="flex-1 flex flex-col overflow-y-auto flex-1 relative"
+            className="flex-1 flex flex-col overflow-y-auto relative"
           >
             <UserPanelHeader />
             <Suspense fallback={<div>Loading...</div>}>
