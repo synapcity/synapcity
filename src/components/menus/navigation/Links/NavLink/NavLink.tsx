@@ -5,7 +5,7 @@ import { cn } from "@/utils";
 import { LinkButton, Toggle } from "@/components/atoms";
 
 import type { ButtonSize, ButtonVariant } from "@/components/atoms/buttons/variants";
-import type { ToggleSize, ToggleVariant } from "@/components/atoms/ui/toggle";
+import type { ToggleSize, ToggleVariant } from "@/components/atoms/ui/UIToggle";
 
 export type ToggleOrButtonVariant = {
   active?: ButtonVariant | ToggleVariant;
@@ -40,7 +40,7 @@ export function NavLink({
   onClick,
   className,
   activeClassName,
-  variant = { active: "default", inactive: "outline" },
+  variant = { active: "ghost", inactive: "outline" },
   size = "md",
 }: Props) {
   const router = useRouter();

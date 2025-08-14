@@ -4,7 +4,6 @@ import { SidebarPanel, SidebarScope, SidebarPrefs } from "../types";
 
 export interface SidebarPrefsSlice {
   prefsByKey: Record<string, SidebarPrefs>;
-
   getPrefs(scope: SidebarScope, entityId: string): SidebarPrefs;
   setActivePanel(scope: SidebarScope, entityId: string, panelId: string | null): void;
   togglePanelPinned(scope: SidebarScope, entityId: string, panelId: string): void;
@@ -14,13 +13,22 @@ export interface SidebarPrefsSlice {
   resetToDefault(scope: SidebarScope, entityId: string): void;
 }
 
+function addLabels<T extends { title?: string; label?: string }>(panels: T[]) {
+  return panels.map((p) => ({ ...p, label: p.label ?? p.title ?? "" }));
+}
+
 function defaults(scope: SidebarScope): SidebarPrefs {
+  const base =
+    scope === "note"
+      ? addLabels(defaultNotePanels)
+      : scope === "dashboard"
+        ? addLabels(defaultDashboardPanels)
+        : [];
   return {
     activePanel: null,
     pinned: [],
     hidden: [],
-    panels:
-      scope === "note" ? defaultNotePanels : scope === "dashboard" ? defaultDashboardPanels : [],
+    panels: base,
   };
 }
 

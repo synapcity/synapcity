@@ -7,6 +7,7 @@ const defaultUserActions = {
   setError: () => {},
   updateUser: () => {},
   setHasHydrated: () => {},
+  loginDemo: () => {},
 };
 export const migrateUserStore = (persistedState: unknown, version: number): UserStore => {
   const state = (persistedState as Partial<UserState>) ?? {};

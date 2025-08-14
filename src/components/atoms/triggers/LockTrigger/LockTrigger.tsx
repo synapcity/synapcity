@@ -2,11 +2,11 @@
 
 import { UIToggle as Toggle } from "@/components/atoms";
 import { cn } from "@/utils";
-import { ToggleSize } from "../../ui/toggle";
+import { ToggleSize } from "../../ui/UIToggle";
 import { useUIStore } from "@/stores";
+import { Lock, LockOpen } from "lucide-react";
 
 interface LcokTriggerProps {
-  label?: string;
   className?: string;
   size?: ToggleSize;
   component?: string;
@@ -14,7 +14,6 @@ interface LcokTriggerProps {
 
 export const LockTrigger = ({
   component = "userPanel",
-  label = "Lock",
   className,
   size = "lg",
 }: LcokTriggerProps) => {
@@ -25,9 +24,6 @@ export const LockTrigger = ({
   };
   return (
     <Toggle
-      icon={isLocked ? "lock" : "lockOpen"}
-      isIconOnly
-      showIcons={false}
       className={cn(className, { "text-[var(--background)]": isLocked })}
       variant={isLocked ? "outline" : "ghost"}
       onClick={() => toggleLock?.()}
@@ -35,7 +31,7 @@ export const LockTrigger = ({
       pressed={isLocked}
       onPressedChange={(val) => setCompState(component, "isLocked", val)}
     >
-      {label}
+      {isLocked ? <Lock /> : <LockOpen />}
     </Toggle>
   );
 };

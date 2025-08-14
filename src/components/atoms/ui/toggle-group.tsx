@@ -5,11 +5,11 @@ import * as ToggleGroupPrimitive from "@radix-ui/react-toggle-group";
 import { type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/utils/index";
-import { toggleVariants } from "@/components/atoms/ui/Toggle";
+import { toggleVariants } from "@/components/atoms/ui/UIToggle";
 
 const ToggleGroupContext = React.createContext<VariantProps<typeof toggleVariants>>({
   size: "default",
-  variant: "default",
+  variant: "ghost",
 });
 
 function ToggleGroup({

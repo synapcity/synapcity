@@ -7,7 +7,6 @@ const meta: Meta<typeof InboxTrigger> = {
   component: InboxTrigger,
   argTypes: {
     className: { control: "text" },
-    label: { control: "text" },
   },
 };
 
@@ -16,9 +15,6 @@ export default meta;
 type Story = StoryObj<typeof InboxTrigger>;
 
 export const Default: Story = {
-  args: {
-    label: "Inbox",
-  },
   render: (args) => (
     <Collapsible>
       <InboxTrigger {...args} />,
@@ -27,9 +23,6 @@ export const Default: Story = {
 };
 
 export const CustomLabel: Story = {
-  args: {
-    label: "Messages",
-  },
   render: (args) => (
     <Collapsible>
       <InboxTrigger {...args} />,

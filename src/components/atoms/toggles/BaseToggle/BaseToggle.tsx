@@ -4,7 +4,8 @@ import * as React from "react";
 import { UIToggle, type ToggleProps as UIToggleProps } from "@/components/atoms";
 import { cn } from "@/utils";
 
-export interface BaseToggleProps extends Omit<UIToggleProps, "onPressedChange" | "pressed"> {
+export interface BaseToggleProps
+  extends Omit<UIToggleProps, "onPressedChange" | "pressed" | "onChange"> {
   children: React.ReactNode;
   inactiveChildren?: React.ReactNode;
   inactiveClasses?: string;
@@ -45,18 +46,18 @@ export const BaseToggle: React.FC<BaseToggleProps> = ({
   const content = isPressed ? children : (inactiveChildren ?? children);
 
   const iconOnly =
-    React.isValidElement(content) && typeof (content.props?.children ?? "") === "undefined";
+    React.isValidElement(content) &&
+    (content.props as { children?: React.ReactNode })?.children == null;
 
   const ariaLabel = iconOnly ? (isPressed ? activeLabel : inactiveLabel) : undefined;
 
   const renderContent = React.isValidElement(content)
-    ? React.cloneElement(content as React.ReactElement, {
+    ? React.cloneElement(content as React.ReactElement<{ className?: string }>, {
         className: cn(
           "inline-flex items-center justify-center",
-
           "[&>*]:pointer-events-none",
-          !isPressed && inactiveClasses,
-          content.props?.className
+          !isPressed && (inactiveClasses ?? ""),
+          (content.props as { className?: string })?.className
         ),
       })
     : content;

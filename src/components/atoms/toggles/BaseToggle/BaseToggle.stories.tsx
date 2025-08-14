@@ -4,6 +4,10 @@ import React, { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { BaseToggle, type BaseToggleProps } from "./BaseToggle";
 import { Sun, Moon, Bell, BellOff, Check, X } from "lucide-react";
+import type { ToggleVariant, ToggleSize } from "@/components/atoms/ui";
+
+const variantOptions = ["soft", "outline", "ghost", "solid"] as ToggleVariant[];
+const sizeOptions = ["default", "sm", "md", "lg"] as ToggleSize[];
 
 // ---- Meta ----
 const meta = {
@@ -28,9 +32,11 @@ const meta = {
     ),
   ],
   argTypes: {
-    onChange: { action: "changed" }, // built-in actions (no addon needed)
+    onChange: { action: "changed" },
     inactiveChildren: { control: false },
-    children: { control: false },
+    children: { control: false, default: <span /> },
+    size: { control: "select", options: sizeOptions },
+    variant: { control: "select", options: variantOptions },
   },
 } satisfies Meta<typeof BaseToggle>;
 
@@ -40,23 +46,13 @@ type Story = StoryObj<typeof meta>;
 // ---- Helpers ----
 const TextChip = ({ label }: { label: string }) => <span className="px-2">{label}</span>;
 
-// If your UIToggle supports 'variant' | 'size' props, you can surface them here.
-// Adjust the options to match your actual Toggle props.
-const variantOptions = ["default", "outline", "ghost"] as const;
-const sizeOptions = ["default", "sm", "lg"] as const;
-
 // ---- Stories ----
 
 // 1) simplest text toggle
 export const Default: Story = {
-  control: {
-    size: sizeOptions,
-    variant: variantOptions,
-  },
   args: {
     children: <TextChip label="Toggle" />,
     inactiveChildren: <TextChip label="Toggle" />,
-    variant: "outline",
     size: sizeOptions[0],
     initialPressed: false,
   } satisfies BaseToggleProps,
@@ -67,11 +63,10 @@ export const WithIcons: Story = {
   args: {
     children: <Sun className="size-4" />,
     inactiveChildren: <Moon className="size-4" />,
-    variant: "outline",
-    size: "default",
+    initialPressed: false,
     activeLabel: "Switch to light",
     inactiveLabel: "Switch to dark",
-    initialPressed: false,
+    size: "default",
   } satisfies BaseToggleProps,
 };
 
@@ -90,7 +85,7 @@ export const WithTextAndIcon: Story = {
         <span>Notifications</span>
       </span>
     ),
-    variant: "default",
+    variant: "outline",
     size: "lg",
     initialPressed: true,
   } satisfies BaseToggleProps,
@@ -151,6 +146,7 @@ export const Sizes: Story = {
     variant: "outline",
     initialPressed: false,
     inactiveChildren: <TextChip label="" />,
+    children: <span />,
   } satisfies Partial<BaseToggleProps>,
 };
 
@@ -175,6 +171,7 @@ export const Variants: Story = {
     size: "default",
     inactiveChildren: <TextChip label="Off" />,
     initialPressed: true,
+    children: <span />,
   } satisfies Partial<BaseToggleProps>,
 };
 
@@ -194,6 +191,7 @@ export const DisabledStates: Story = {
     variant: "outline",
     size: "default",
     inactiveChildren: <TextChip label="" />,
+    children: <span />,
   } satisfies Partial<BaseToggleProps>,
 };
 
@@ -223,6 +221,9 @@ export const SegmentedGroup: Story = {
       </div>
     );
   },
+  args: {
+    children: <span />,
+  },
 };
 
 // 10) success / danger look using child content classes
@@ -231,7 +232,7 @@ export const SemanticLooks: Story = {
     <div className="flex items-center gap-3">
       <BaseToggle
         {...args}
-        variant="default"
+        variant="soft"
         initialPressed
         inactiveChildren={
           <span className="inline-flex items-center gap-2">
@@ -259,5 +260,6 @@ export const SemanticLooks: Story = {
   ),
   args: {
     size: "default",
+    children: <TextChip label="On" />,
   },
 };

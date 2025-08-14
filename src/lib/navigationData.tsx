@@ -1,7 +1,16 @@
-import type { NavLinkData } from "../navigation/Links/NavLinkGroup";
-import { useUserStore } from "@/stores";
+import type { NavLinkData } from "@/components/menus/navigation/Links/NavLinkGroup";
+import { useUserStore, useThemeStore } from "@/stores";
 import { ThemeSheet } from "@/components/theme";
 import { DarkModeSwitch } from "@/components/atoms/DarkModeSwitch";
+
+export interface DropdownLinkData {
+  label: string;
+  icon: string;
+  render?: () => React.ReactNode;
+  onClick?: () => void;
+  group: string;
+  destructive?: boolean;
+}
 
 export const mainNavItems: NavLinkData[] = [
   {
@@ -79,18 +88,9 @@ export const landingNavItems: NavLinkData[] = [
     variant: { active: "link", inactive: "link" },
     onClick: () => {
       useUserStore.getState().loginDemo();
-      router.push("/home");
     },
   },
 ];
-
-export interface DropdownLinkData {
-  label: string;
-  icon: string;
-  render?: () => React.ComponentProps<unknown>;
-  onClick?: () => void;
-  group: string;
-}
 
 export const avatarNavItems: DropdownLinkData[] = [
   {
@@ -112,7 +112,7 @@ export const avatarNavItems: DropdownLinkData[] = [
     group: "auth",
     onClick: () => {
       useUserStore.getState().logout();
-      router.push("/");
+      return "/";
     },
   },
 ];
@@ -125,7 +125,8 @@ export const mobileAvatarNavItems: DropdownLinkData[] = [
       <DarkModeSwitch
         key={"dark-mode-switch"}
         value={useThemeStore.getState().globalPreferences.mode}
-        onChange={() => useThemeStore.getState().toggleMode()}
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        onChange={() => (useThemeStore.getState() as any).toggleMode?.()}
       />
     ),
     group: "ui",
@@ -133,8 +134,8 @@ export const mobileAvatarNavItems: DropdownLinkData[] = [
   {
     label: "Theme & Font",
     icon: "paintbrush",
-    render: () => <ThemeSheet />,
-    theme: "ui",
+    render: () => <ThemeSheet scope="global" />,
+    group: "ui",
   },
   ...avatarNavItems,
 ];

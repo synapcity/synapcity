@@ -1,1 +1,1 @@
-export { BaseToggle } from "./BaseToggle";
+export * from "./BaseToggle";

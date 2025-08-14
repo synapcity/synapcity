@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Space_Mono, Space_Grotesk } from "next/font/google";
 import { defaultOG, defaultTwitter } from "@/lib/metadata";
 import { Toaster } from "sonner";
@@ -45,7 +45,6 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
 };
-
 
 const GlobalProvider = dynamic(() => import("./GlobalProvider").then((mod) => mod.default), {
   ssr: true,

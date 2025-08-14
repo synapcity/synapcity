@@ -3,13 +3,13 @@
 import { UIToggle as Toggle } from "@/components/atoms/ui";
 import { cn } from "@/utils";
 import { useUIStore } from "@/stores";
+import { Inbox } from "lucide-react";
 
 interface InboxTriggerProps {
-  label?: string;
   className?: string;
 }
 
-export const InboxTrigger = ({ label = "Panel", className }: InboxTriggerProps) => {
+export const InboxTrigger = ({ className }: InboxTriggerProps) => {
   const setCompState = useUIStore((s) => s.setCompState);
   const isOpen = useUIStore((s) => s.components.userPanel?.isVisible ?? false);
 
@@ -21,9 +21,6 @@ export const InboxTrigger = ({ label = "Panel", className }: InboxTriggerProps) 
 
   return (
     <Toggle
-      icon="inbox"
-      isIconOnly
-      showIcons={false}
       className={cn("bg-transparent text-(--background)", className, {
         "text-(--background) bg-transparent data-[state=on]:bg-(--accent)": isOpen,
       })}
@@ -33,7 +30,7 @@ export const InboxTrigger = ({ label = "Panel", className }: InboxTriggerProps) 
       pressed={isOpen}
       onPressedChange={(val) => setCompState("userPanel", "isVisible", val)}
     >
-      {label}
+      <Inbox />
     </Toggle>
   );
 };
