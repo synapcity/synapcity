@@ -188,7 +188,6 @@ body {
     height: 120px; /* full height */
     display: flex;
     flex-direction: column;
-    /* will animate height down to 60px */
     overflow: hidden;
   }
 

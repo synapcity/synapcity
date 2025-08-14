@@ -1,27 +1,14 @@
 "use client";
 
-import { NavigationMenu, NavigationMenuList } from "@/components/atoms/ui/navigation-menu";
-import dynamic from "next/dynamic";
 import { Logo } from "@/components/atoms/Logo";
 import { useUIStore } from "@/stores";
 import { cn } from "@/utils";
 import { useShallow } from "zustand/shallow";
 import { ActionsContainer } from "../ActionsContainer/ActionsContainer";
+import { NavContainer } from "../NavContainer/NavContainer";
+import { landingNavItems, mainNavItems } from "@/lib";
 
-const links = [
-  { href: "/", label: "Home" },
-  { href: "/home/dashboards", label: "Dashboards" },
-  { href: "/home/notes", label: "Notes" },
-  { href: "/libraries", label: "Libraries" },
-  { href: "/settings", label: "Settings" },
-];
-
-const NavMenuLink = dynamic(
-  () => import("@/components/menus/navigation/NavItem/NavItem").then((mod) => mod.NavMenuLink),
-  { ssr: true }
-);
-
-export function TopNavMenu() {
+export function TopNavMenu({ isLoggedIn }: { isLoggedIn: boolean }) {
   const isSiteFocused = useUIStore(useShallow((s) => s.isSiteFocus));
   const header = useUIStore(useShallow((s) => s.components.header));
   const getCompState = useUIStore((s) => s.getCompState);
@@ -38,17 +25,7 @@ export function TopNavMenu() {
       )}
     >
       <Logo size={32} variant="mark" title="SynapCity" />
-
-      <NavigationMenu className="mx-auto w-full">
-        <NavigationMenuList>
-          <ul className="flex gap-4">
-            {links.map((link) => (
-              <NavMenuLink key={link.href} title={link.label} href={link.href} />
-            ))}
-          </ul>
-        </NavigationMenuList>
-      </NavigationMenu>
-
+      <NavContainer links={isLoggedIn ? mainNavItems : landingNavItems} />
       <ActionsContainer />
     </div>
   );

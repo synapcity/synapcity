@@ -10,7 +10,7 @@ export function FloatingActions() {
   const user = useUserStore(useShallow((s) => s.user));
   if (typeof window === "undefined") return null;
   return createPortal(
-    <div className="fixed bottom-4 right-4 z-[100] md:hidden">
+    <div className="fixed bottom-4 right-4 z-[100] lg:hidden">
       <AvatarDropdown
         avatarUrl={user?.avatar ?? ""}
         username={user?.username ?? ""}

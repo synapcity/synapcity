@@ -6,6 +6,7 @@ import { LinkButton, Toggle } from "@/components/atoms";
 
 import type { ButtonSize, ButtonVariant } from "@/components/atoms/buttons/variants";
 import type { ToggleSize, ToggleVariant } from "@/components/atoms/ui/UIToggle";
+import { useState } from "react";
 
 export type ToggleOrButtonVariant = {
   active?: ButtonVariant | ToggleVariant;
@@ -40,9 +41,10 @@ export function NavLink({
   onClick,
   className,
   activeClassName,
-  variant = { active: "ghost", inactive: "outline" },
+  variant = { active: "outline", inactive: "ghost" },
   size = "md",
 }: Props) {
+  const [active, setActive] = useState(false);
   const router = useRouter();
 
   const handleClick = () => {
@@ -75,6 +77,8 @@ export function NavLink({
         href={href}
         variant={(isActive ? variant.active : variant.inactive) as ButtonVariant}
         aria-current={isActive ? "page" : undefined}
+        prefetch={active ? null : false}
+        onMouseEnter={() => setActive(true)}
         {...sharedProps}
       >
         {label}

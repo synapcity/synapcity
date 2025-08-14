@@ -8,10 +8,11 @@ import { CardItemBase } from "@/components/molecules/VirtualizedGrid/MasonryVirt
 import { useNotesSearchSort, NoteLike } from "@/hooks/notes/useNotesSearchSort/useNotesSearchSort";
 import { SortKey, SortDir } from "@/components/atoms/controls";
 import { useRouter } from "next/navigation";
-import { useMemo, useCallback } from "react";
+import { useMemo, useCallback, useState } from "react";
 import { NotesControlsBar } from "./NotesControlsBar";
 import { aggregateViewContent, getViewExcerpts } from "@/utils";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 
 interface NoteCardItem extends CardItemBase {
   title?: string;
@@ -42,8 +43,21 @@ const AddNoteCard = dynamic(
   { ssr: false }
 );
 
+export const RenderNoteCard = ({ note }: { note: NoteCardItem }) => {
+  const [active, setActive] = useState(false);
+  return (
+    <Link
+      key={note.id}
+      href={`/home/notes/${note.id}`}
+      prefetch={active ? null : false}
+      onMouseEnter={() => setActive(true)}
+    >
+      <NoteCard id={note.id} title={note.title ?? ""} excerpt={note.summary ?? ""} />
+    </Link>
+  );
+};
+
 export function SearchableSortableNotes() {
-  const router = useRouter();
   const notesObj = useNoteStore((s) => s.items) as Record<
     string,
     Note & { id: string; tags?: string[] }
@@ -105,22 +119,6 @@ export function SearchableSortableNotes() {
     [filtered]
   );
 
-  const renderCard = useCallback(
-    function RenderNoteCard(note: NoteCardItem) {
-      return (
-        <div
-          key={note.id}
-          onClick={() => {
-            router.push(`/home/notes/${note.id}`);
-          }}
-        >
-          <NoteCard id={note.id} title={note.title ?? ""} excerpt={note.summary ?? ""} />
-        </div>
-      );
-    },
-    [router]
-  );
-
   if (!hasHydrated) return null;
   return (
     <div className="flex flex-col gap-4 min-h-0">
@@ -149,7 +147,7 @@ export function SearchableSortableNotes() {
         estimatedCardHeight={180}
         overscanScreens={1}
         renderAddNew={() => <AddNoteCard />}
-        renderCard={(item) => renderCard(item)}
+        renderCard={(item) => <RenderNoteCard note={item} />}
       />
 
       {filtered.length === 0 && (

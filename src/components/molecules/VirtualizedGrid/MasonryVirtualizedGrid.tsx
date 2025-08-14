@@ -52,12 +52,17 @@ export function MasonryVirtualWindow<T extends CardItemBase>({
     <div
       aria-label={ariaLabel}
       className={cn(
-        "relative overflow-y-auto p-6 flex-1 @container no-scrollbar",
+        "relative overflow-y-auto p-6 flex-1 @container/masonry no-scrollbar",
         containerClassName
       )}
       style={{ minHeight: 0 }}
     >
-      <div className={cn("columns-1 @lg:columns-2 @xl:columns-3 gap-4 space-y-4", columnClassName)}>
+      <div
+        className={cn(
+          "columns-1 @[700px]/masonry:columns-2 @[1000px]/masonry:columns-3 @[1500px]/masonry:columns-4 gap-4 space-y-4",
+          columnClassName
+        )}
+      >
         <AnimatePresence initial={false}>
           {allItems.map((item, idx) => (
             <MasonryGridCardSlot

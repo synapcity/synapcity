@@ -12,7 +12,7 @@ export const sidebarMenuButtonVariants = cva(
       variant: {
         default: cn(
           "bg-transparent text-(--sidebar-foreground) hover:bg-muted/10 hover:text-foreground",
-          "data-[active=true]:bg-accent-100 data-[active=true]:text-accent-foreground data-[active=true]:font-medium",
+          "data-[active=true]:bg-accent-100 data-[active=true]:text-(--foreground) data-[active=true]:font-medium",
           "hover:bg-muted/10 active:bg-muted/20 hover:text-(--accent)"
         ),
         outline: cn(

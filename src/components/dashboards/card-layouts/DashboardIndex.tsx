@@ -50,7 +50,7 @@ export default function DashboardsIndex() {
 
   return (
     <div className="flex-1 min-h-0 p-4 flex flex-col">
-      <SearchableSortableDashboards dashboards={dashboards} renderCard={renderCard} />
+      <SearchableSortableDashboards dashboards={dashboards} renderCardAction={renderCard} />
     </div>
   );
 }

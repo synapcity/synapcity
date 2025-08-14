@@ -82,6 +82,9 @@ import {
   ListCheck,
   PanelRightClose,
   Copy,
+  Home,
+  Library,
+  StickyNote,
 } from "lucide-react";
 
 export const lucideIcons = {
@@ -127,11 +130,13 @@ export const lucideIcons = {
   fileTextIcon: FileTextIcon,
   gripVerticalIcon: GripVerticalIcon,
   hash: Hash,
+  home: Home,
   inbox: Inbox,
   info: Info,
   layers: Layers,
   layoutDashboard: LayoutDashboard,
   loading: Loader2,
+  library: Library,
   list: List,
   listOrdered: ListOrdered,
   listCheck: ListCheck,
@@ -164,6 +169,7 @@ export const lucideIcons = {
   searchIcon: SearchIcon,
   settings: Cog,
   sleep: BedSingleIcon,
+  stickyNote: StickyNote,
   sun: Sun,
   star: Star,
   tagIcon: TagIcon,

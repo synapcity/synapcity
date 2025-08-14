@@ -32,12 +32,12 @@ const AddDashboardCard = dynamic(
 
 export type SearchableSortableDashboardsProps = {
   dashboards: Dashboard[];
-  renderCard: (item: Dashboard) => React.ReactNode;
+  renderCardAction: (item: Dashboard) => React.ReactNode;
 };
 
 export function SearchableSortableDashboards({
   dashboards,
-  renderCard,
+  renderCardAction,
 }: SearchableSortableDashboardsProps) {
   const {
     rawQuery,
@@ -110,7 +110,7 @@ export function SearchableSortableDashboards({
 
       <MasonryVirtualWindow
         items={sorted as Dashboard[]}
-        renderCard={(item: CardItemBase) => renderCard(item as Dashboard)}
+        renderCard={(item: CardItemBase) => renderCardAction(item as Dashboard)}
         estimatedCardHeight={220}
         overscanScreens={1}
         renderAddNew={() => <AddDashboardCard />}

@@ -4,6 +4,18 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/utils";
 import { NavLink, ToggleOrButtonVariant } from "../NavLink";
 
+export interface NavLink {
+  id: string;
+  href: string;
+  label: string;
+  icon?: string;
+  variant: {
+    active?: string;
+    inactive?: string;
+  };
+  className?: string;
+}
+
 export interface NavLinkData {
   id: string;
   href?: string;
@@ -53,7 +65,8 @@ export function NavLinkGroup({
             {...actions}
             variant={item.variant as ToggleOrButtonVariant}
             isActive={pathname === item.href}
-            activeClassName={activeClassName}
+            activeClassName={cn("hover:text-(--background)", activeClassName)}
+            className="text-(--background) active:text-(--foreground) hover:text-(--foreground)"
           />
         );
       })}

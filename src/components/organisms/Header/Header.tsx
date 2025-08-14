@@ -2,8 +2,9 @@
 
 import dynamic from "next/dynamic";
 import { cn } from "@/utils";
-import { useUIStore } from "@/stores";
+import { useUIStore, useUserStore } from "@/stores";
 import { useEffect, useRef } from "react";
+import { useShallow } from "zustand/shallow";
 
 const TopNavMenu = dynamic(
   () => import("@/components/menus/navigation/TopNavMenu/TopNavMenu").then((mod) => mod.TopNavMenu),
@@ -16,6 +17,7 @@ export const Header = () => {
   const isSiteFocused = useUIStore((s) => s.isSiteFocus);
   const setCompState = useUIStore((s) => s.setCompState);
   const getCompState = useUIStore((s) => s.getCompState);
+  const isLoggedIn = useUserStore(useShallow((s) => !!s.user));
 
   const isLocked = userPanel ? getCompState("userPanel", "isLocked") : false;
   const isPanelOpen = userPanel ? getCompState("userPanel", "isVisible") : false;
@@ -53,7 +55,7 @@ export const Header = () => {
         onMouseEnter={showHeader}
         onMouseLeave={hideHeaderDelayed}
       >
-        <TopNavMenu />
+        <TopNavMenu isLoggedIn={isLoggedIn} />
       </header>
     </div>
   );

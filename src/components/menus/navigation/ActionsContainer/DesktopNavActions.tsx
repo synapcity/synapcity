@@ -4,7 +4,7 @@ import { Separator } from "@/components/atoms/ui/separator";
 
 export const DesktopNavActions = () => {
   return (
-    <div className="hidden md:flex items-center gap-2 text-(--background)">
+    <div className="hidden lg:flex items-center gap-2 text-(--background)">
       <InboxToggle />
       <ThemeToggle />
       <VisibilityToggle />

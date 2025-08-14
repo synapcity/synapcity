@@ -9,6 +9,7 @@ import { StackedMeta } from "../../../molecules/cards/meta/StackedMeta";
 import { CreateDashboardModal, useDashboardModal } from "@/components/dashboards/modals";
 import type { Dashboard as DashboardResource } from "@/stores/resources/dashboardStore/dashboard-schema";
 import { getShortRelativeTime } from "@/utils/date-utils";
+import Link from "next/link";
 
 interface DashboardCardProps {
   dashboard?: DashboardResource | null;
@@ -32,6 +33,7 @@ export const DashboardCard: FC<DashboardCardProps> = memo(
     search = false,
     onClick,
   }) => {
+    const [active, setActive] = useState(false);
     const resolved: DashboardResource = useMemo(() => {
       return dashboard
         ? dashboard
@@ -84,13 +86,16 @@ export const DashboardCard: FC<DashboardCardProps> = memo(
         e.preventDefault();
         setIsLoading(true);
         onClick?.();
-        router.push(`/home/dashboards/${id}`);
       },
-      [id, onClick, router]
+      [onClick]
     );
 
     return (
-      <>
+      <Link
+        href={`/home/dashboards/${id}`}
+        prefetch={active ? null : false}
+        onMouseEnter={() => setActive(true)}
+      >
         <CardWithLoading
           isLoading={isLoading}
           onClick={handleClick}
@@ -125,7 +130,7 @@ export const DashboardCard: FC<DashboardCardProps> = memo(
         {open && initialData?.id === id && (
           <CreateDashboardModal open={open} setOpen={setOpen} initialData={initialData} />
         )}
-      </>
+      </Link>
     );
   }
 );
