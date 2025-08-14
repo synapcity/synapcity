@@ -7,6 +7,7 @@ import { LinkButton, Toggle } from "@/components/atoms";
 import type { ButtonSize, ButtonVariant } from "@/components/atoms/buttons/variants";
 import type { ToggleSize, ToggleVariant } from "@/components/atoms/ui/UIToggle";
 import { useState } from "react";
+import { DemoLogin } from "@/components/auth";
 
 export type ToggleOrButtonVariant = {
   active?: ButtonVariant | ToggleVariant;
@@ -60,6 +61,14 @@ export function NavLink({
     onClick: handleClick,
     className: cn("font-normal", className, isActive && activeClassName),
   };
+
+  if (href === "/home" && onClick) {
+    return (
+      <DemoLogin asChild={false} {...sharedProps}>
+        Demo
+      </DemoLogin>
+    );
+  }
 
   return isToggle && onClick ? (
     <Toggle
