@@ -1,7 +1,7 @@
 "use client";
 
 import { SkeletonOrLoading } from "@/components";
-import { useAuthRedirect, useCloseMainSidebar } from "@/hooks";
+import { useAuthRedirect, useMainSidebar } from "@/hooks";
 import { useUIStore, useUserStore } from "@/stores";
 import dynamic from "next/dynamic";
 import { useShallow } from "zustand/shallow";
@@ -24,7 +24,7 @@ export default function AppProviders({ children }: { children: React.ReactNode }
   );
 
   useAuthRedirect();
-  useCloseMainSidebar();
+  useMainSidebar();
 
   if (!hasHydrated) {
     return <SkeletonOrLoading />;

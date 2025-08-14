@@ -5,10 +5,9 @@ import { usePathname } from "next/navigation";
 import { useUIStore } from "@/stores";
 import { useShallow } from "zustand/shallow";
 
-/** Match /home/dashboards/:id or /home/notes/:id (no trailing slash) */
 const DETAIL_ROUTE_RE = /^\/home\/(dashboards|notes)\/[^/]+$/;
 
-export function useCloseMainSidebar() {
+export function useMainSidebar() {
   const pathname = usePathname();
   const enabled = DETAIL_ROUTE_RE.test(pathname ?? "");
 
@@ -36,13 +35,9 @@ export function useCloseMainSidebar() {
       const el = ev.target as Element | null;
       if (!el) return;
 
-      // Ignore clicks inside the sidebar container
       if (el.closest("#app-sidebar")) return;
 
-      // Optional ignores: dialogs, sheets, or anything you don’t want to close from
       if (el.closest("[data-dialog-overlay],[data-sheet],.modal,[role='dialog']")) return;
-
-      // Close the main sidebar
       setCompState("mainSidebar", "isVisible", false);
     };
 
