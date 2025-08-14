@@ -49,8 +49,12 @@ export function NavLink({
   const [active, setActive] = useState(false);
   const router = useRouter();
 
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => {
     onClick?.();
+    if (href?.startsWith("#")) {
+      e.preventDefault();
+      return;
+    }
     if (!isActive && !isToggle && href) router.push(href);
   };
 

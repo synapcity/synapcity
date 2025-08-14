@@ -63,10 +63,10 @@ export const mainNavItems: NavLinkData[] = [
 ];
 
 export const landingNavItems: NavLinkData[] = [
-  { id: "home", href: "#home", label: "Home" },
-  { id: "features", href: "#features", label: "Features" },
-  { id: "how-it-works", href: "#how-it-works", label: "How It Works" },
-  { id: "widgets", href: "#widgets", label: "Widgets" },
+  { id: "home", href: "#home", label: "Home", sectionIndex: 0 },
+  { id: "features", href: "#features", label: "Features", sectionIndex: 2 },
+  { id: "how-it-works", href: "#how-it-works", label: "How It Works", sectionIndex: 3 },
+  { id: "widgets", href: "#widgets", label: "Widgets", sectionIndex: 4 },
   {
     id: "signup",
     href: "/signup",

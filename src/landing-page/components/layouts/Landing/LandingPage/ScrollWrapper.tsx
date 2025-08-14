@@ -1,11 +1,12 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useEffect, useRef, useState, Children } from "react";
-import { useInView } from "react-intersection-observer";
+import { useEffect, useRef, useState } from "react";
 import { useThemeStore, useUIStore } from "@/stores/ui";
 import type { ScrollRef } from "@/landing-page/components/ui/containers/ScrollContainer/Scroll";
 import { useShallow } from "zustand/shallow";
+import { useChildIntersectionObserver } from "@/landing-page/hooks";
+import { useLandingNavStore } from "@/stores";
 
 interface ScrollWrapperProps {
   children: React.ReactNode;
@@ -21,30 +22,27 @@ const ScrollContainer = dynamic(
 
 export const ScrollWrapper = ({ children }: ScrollWrapperProps) => {
   const scrollRef = useRef<ScrollRef>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const [scrollElement, setScrollElement] = useState<HTMLElement | null>(null);
 
   const theme = useThemeStore(useShallow((s) => s.globalPreferences.mode));
   const setTheme = useThemeStore((s) => s.setGlobalPreferences);
+  const setCompState = useUIStore((s) => s.setCompState);
+  const { setActiveSection, setScrollToSection } = useLandingNavStore();
 
   useEffect(() => {
     if (scrollRef.current?.container instanceof Element) {
+      containerRef.current = scrollRef.current.container;
       setScrollElement(scrollRef.current.container);
-    } else {
-      setScrollElement(null);
+      setScrollToSection((index) => scrollRef.current?.scrollToIndex(index));
     }
-  }, [scrollRef.current?.container]);
+  }, [setScrollToSection]);
 
-  const { ref: heroRef, inView: heroInView } = useInView({
-    threshold: 0.6,
-    root: scrollElement,
-    triggerOnce: false,
-  });
-
-  const setShowHeader = useUIStore((state) => state.setCompState);
+  const { currentIndex } = useChildIntersectionObserver(containerRef);
 
   useEffect(() => {
-    setShowHeader("header", "isVisible", true);
-  }, [heroInView, setShowHeader]);
+    setActiveSection(currentIndex);
+  }, [currentIndex, setActiveSection]);
 
   useEffect(() => {
     if (theme !== "dark") {
@@ -52,14 +50,15 @@ export const ScrollWrapper = ({ children }: ScrollWrapperProps) => {
     }
   }, [theme, setTheme]);
 
-  const elements = Children.toArray(children);
-  if (elements.length > 0) {
-    elements[0] = (
-      <div key="hero" ref={heroRef}>
-        {elements[0]}
-      </div>
-    );
-  }
+  useEffect(() => {
+    const el = scrollElement;
+    if (!el) return;
+    const handleScroll = () => {
+      setCompState("header", "isVisible", false);
+    };
+    el.addEventListener("scroll", handleScroll);
+    return () => el.removeEventListener("scroll", handleScroll);
+  }, [scrollElement, setCompState]);
 
   return (
     <ScrollContainer
@@ -71,7 +70,7 @@ export const ScrollWrapper = ({ children }: ScrollWrapperProps) => {
       onReachEnd={() => {}}
       className="flex-col"
     >
-      {elements}
+      {children}
     </ScrollContainer>
   );
 };

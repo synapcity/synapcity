@@ -5,7 +5,7 @@ import { fadeIn } from "../../../../../lib/variants";
 
 export const About = () => {
   return (
-    <SectionContainer maxWidth="3xl" key="about">
+    <SectionContainer id="about" maxWidth="3xl" key="about">
       <Container left className="mx-auto">
         <SectionHeading size="lg" motion={fadeIn} left>
           Inspired by Second Brain & PARA

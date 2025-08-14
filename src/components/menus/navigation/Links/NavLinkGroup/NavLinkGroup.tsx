@@ -3,6 +3,8 @@
 import { usePathname } from "next/navigation";
 import { cn } from "@/utils";
 import { NavLink, ToggleOrButtonVariant } from "../NavLink";
+import { useLandingNavStore } from "@/stores";
+import { useShallow } from "zustand/shallow";
 
 export interface NavLink {
   id: string;
@@ -31,6 +33,7 @@ export interface NavLinkData {
   className?: string;
   source?: "lucide" | "iconify";
   onClick?: () => void;
+  sectionIndex?: number;
 }
 
 interface NavLinkGroupProps {
@@ -39,7 +42,6 @@ interface NavLinkGroupProps {
   className?: string;
   activeClassName?: string;
 }
-
 export function NavLinkGroup({
   items,
   direction = "horizontal",
@@ -47,6 +49,8 @@ export function NavLinkGroup({
   activeClassName = "text-(--accent) font-medium",
 }: NavLinkGroupProps) {
   const pathname = usePathname();
+  const activeSection = useLandingNavStore(useShallow((s) => s.activeSection));
+  const scrollToSection = useLandingNavStore((s) => s.scrollToSection);
 
   return (
     <div
@@ -56,23 +60,27 @@ export function NavLinkGroup({
         className
       )}
     >
-      {items.map((item) => {
-        const actions = item.href ? { href: item.href } : { onClick: item.onClick };
+      {items.map(({ sectionIndex, ...item }) => {
         const href = item.href;
-        const isActive = href
-          ? href === "/home"
-            ? pathname === "/home"
-            : pathname === item.href || pathname.startsWith(`${item.href}/`)
-          : false;
+        const isLanding = typeof sectionIndex === "number";
+        const onClick = isLanding ? () => scrollToSection(sectionIndex) : item.onClick;
+        const isActive = isLanding
+          ? activeSection === sectionIndex
+          : href
+            ? href === "/home"
+              ? pathname === "/home"
+              : pathname === href || pathname.startsWith(`${href}/`)
+            : false;
         return (
           <NavLink
             key={item.id}
             {...item}
-            {...actions}
+            href={href}
+            onClick={onClick}
             variant={item.variant as ToggleOrButtonVariant}
             isActive={isActive}
             activeClassName={cn(activeClassName)}
-            className={cn(className)}
+            className={cn(className, item.className)}
           />
         );
       })}

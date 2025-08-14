@@ -39,7 +39,7 @@ const steps: TimelineStep[] = [
 
 export const HowItWorks = () => {
   return (
-    <SectionContainer key="how-it-works" className="relative h-full p-4" center>
+    <SectionContainer id="how-it-works" key="how-it-works" className="relative h-full p-4" center>
       <Container center>
         <SectionHeading
           size="lg"

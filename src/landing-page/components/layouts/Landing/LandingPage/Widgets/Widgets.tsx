@@ -22,11 +22,12 @@ export const Widgets = () => {
 
   return (
     <MotionSection
+      id="widgets"
       ref={widgetsRef}
       animate={{ opacity: widgetsInView ? 1 : 0, y: widgetsInView ? 0 : 50 }}
       exit={{ opacity: 0, y: 50 }}
       transition={{ duration: 0.8 }}
-      className="section-container flex-col"
+      className="section-container flex-col overscroll-x-contain"
       key="widgets"
     >
       <Header />

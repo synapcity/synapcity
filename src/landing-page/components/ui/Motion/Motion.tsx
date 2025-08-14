@@ -5,6 +5,7 @@ import { motion, MotionValue } from "framer-motion";
 import { CSSProperties } from "react";
 
 type MotionWrapperProps = {
+  id?: string;
   ref?: React.Ref<HTMLElement>;
   children: React.ReactNode;
   className?: string;
@@ -35,8 +36,12 @@ export const MotionDiv = ({
 }: MotionWrapperProps & { ref?: React.Ref<HTMLDivElement> }) => {
   return <motion.div {...props}>{children}</motion.div>;
 };
-export const MotionSection = ({ children, ...props }: MotionWrapperProps) => {
-  return <motion.section {...props}>{children}</motion.section>;
+export const MotionSection = ({ id, children, ...props }: MotionWrapperProps) => {
+  return (
+    <motion.section id={id} {...props}>
+      {children}
+    </motion.section>
+  );
 };
 export const MotionP = ({
   children,
