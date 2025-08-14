@@ -50,7 +50,7 @@ export function ResizableSidebarWrapper({
         className="flex-1 h-full min-h-0"
       >
         <ResizablePanel
-          id="resizable-panel"
+          id="main"
           order={1}
           className="
             min-w-0 flex-1 h-full min-h-0
@@ -68,11 +68,13 @@ export function ResizableSidebarWrapper({
           <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden">{children}</div>
         </ResizablePanel>
 
-        {sidebarState === "expanded" && (
-          <ResizableHandle withHandle className="cursor-col-resize" />
-        )}
+        <ResizableHandle
+          withHandle
+          className={cn("cursor-col-resize", { "sr-only": sidebarState !== "expanded" })}
+        />
 
         <ResizablePanel
+          id="sidebar"
           ref={panelRef}
           collapsible
           collapsedSize={0}

@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { defaultNotePanels } from "./defaultNotePanels";
 import { defaultDashboardPanels } from "./defaultDashboardPanels";
-import type { SidebarPrefs, SidebarScope } from "@/stores/ui/sidebarStore";
+import type { SidebarPanel, SidebarScope } from "@/stores/ui/sidebarStore";
 
-export function getDefaultPanels(scope: SidebarScope): SidebarPrefs[] {
+export function getDefaultPanels(scope: SidebarScope): SidebarPanel[] {
   switch (scope) {
     case "note":
       return (defaultNotePanels ?? []).map((p) => ({

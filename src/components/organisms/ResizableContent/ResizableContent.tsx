@@ -42,6 +42,7 @@ export const ResizableContent = ({ children }: { children: React.ReactNode }) =>
       {isOpen && (
         <>
           <ResizablePanel
+            id="inbox"
             defaultSize={30}
             collapsible
             collapsedSize={0}
@@ -58,7 +59,7 @@ export const ResizableContent = ({ children }: { children: React.ReactNode }) =>
           <ResizableHandle withHandle />
         </>
       )}
-      <ResizablePanel order={2} className="relative">
+      <ResizablePanel id="main" order={2} className="relative">
         {children}
       </ResizablePanel>
     </ResizablePanelGroup>

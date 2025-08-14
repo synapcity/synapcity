@@ -1,3 +1,3 @@
-export default function DashboardProviders({ children }: { children: React.ReactNode }) {
+export default function NoteProviders({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
