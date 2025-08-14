@@ -2,6 +2,7 @@ import React from "react";
 import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { DynamicTabsBar } from "./DynamicTabsBar";
 import { useNoteViewStore } from "@/stores";
+import { TabsList, Tabs } from "@/components/atoms/ui/tabs";
 
 const meta: Meta<typeof DynamicTabsBar> = {
   title: "Table/DynamicTabsBar",
@@ -15,6 +16,15 @@ const meta: Meta<typeof DynamicTabsBar> = {
     ],
     onAdd: () => useNoteViewStore.getState().addView("note-123"),
   },
+  decorators: [
+    (Story) => (
+      <Tabs>
+        <TabsList>
+          <Story />
+        </TabsList>
+      </Tabs>
+    ),
+  ],
 };
 
 export default meta;

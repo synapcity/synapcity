@@ -13,6 +13,7 @@ import {
   Table,
 } from "@tanstack/react-table";
 import { TabOption } from "../DynamicTabsBar";
+import { Tabs, TabsList } from "@/components/atoms/ui/tabs";
 
 type Person = {
   firstName: string;
@@ -83,6 +84,15 @@ const meta: Meta<typeof TableControlsBar> = {
   title: "Table/TableControlsBar",
   component: TableControlsBar,
   tags: ["autodocs"],
+  decorators: [
+    (Story) => (
+      <Tabs>
+        <TabsList>
+          <Story />
+        </TabsList>
+      </Tabs>
+    ),
+  ],
 };
 
 export default meta;

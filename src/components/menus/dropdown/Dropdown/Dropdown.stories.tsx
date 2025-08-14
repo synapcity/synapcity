@@ -17,18 +17,18 @@ export const Default: Story = {
       items={[
         {
           label: "Edit",
-          icon: "Pencil",
+          icon: "pencil",
           onSelect: () => alert("Edit clicked"),
         },
         {
           label: "Duplicate",
-          icon: "Copy",
+          icon: "copy",
           onSelect: () => alert("Duplicate clicked"),
         },
         "separator",
         {
           label: "Delete",
-          icon: "Trash",
+          icon: "trash",
           onSelect: () => alert("Deleted"),
           destructive: true,
         },

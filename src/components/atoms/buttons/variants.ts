@@ -10,16 +10,16 @@ export type ButtonVariant =
   | "inverse";
 
 export const baseButtonStyles =
-  "inline-flex items-center justify-center rounded-md font-medium transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 aria-invalid:ring-destructive/30 aria-invalid:border-destructive disabled:cursor-not-allowed disabled:opacity-50 data-[state=loading]:cursor-wait data-[state=loading]:opacity-60 [&_svg:not([class*='size-'])]:size-4 [&_svg]:shrink-0";
+  "inline-flex items-center justify-center rounded-md font-medium transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 aria-invalid:ring-destructive/30 aria-invalid:border-destructive disabled:cursor-not-allowed disabled:opacity-50 data-[state=loading]:cursor-wait data-[state=loading]:opacity-60 [&_svg:not([class*='size-'])]:size-4 [&_svg]:shrink-0 hover:cursor-pointer";
 
 export const variantClasses: Record<ButtonVariant, string> = {
   primary:
-    "bg-[var(--primary)] text-[var(--background)] hover:bg-[var(--primary-hover)] hover:text-[var(--foreground)] focus-visible:ring-[var(--primary)] border border-transparent",
+    "bg-(--foreground) text-[var(--background)] hover:bg-(--background) hover:text-(--foreground) focus-visible:ring-[var(--primary)] border border-transparent",
   outline:
-    "bg-transparent border border-[var(--border)] text-[var(--foreground)] hover:bg-[var(--muted)]",
+    "bg-transparent border border-[var(--border)] text-[var(--foreground)] hover:bg-(--foreground) hover:text-(--background)",
   inverse:
     "text-(--background) bg-(--transparent) hover:bg-(--accent) focus-visible:ring-(--primary) border border-transparent",
-  ghost: "bg-transparent hover:bg-[var(--muted)] text-[var(--foreground)]",
+  ghost: "bg-transparent hover:bg-(--background) text-(--foreground)",
   link: "text-[var(--primary)] underline-offset-4 hover:underline shadow-none",
   destructive: "bg-red-600 text-white hover:bg-red-700 focus-visible:ring-red-400",
   disabled: "bg-muted text-muted-foreground pointer-events-none opacity-50",

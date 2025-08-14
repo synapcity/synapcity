@@ -81,6 +81,7 @@ import {
   BedSingleIcon,
   ListCheck,
   PanelRightClose,
+  Copy,
 } from "lucide-react";
 
 export const lucideIcons = {
@@ -118,6 +119,7 @@ export const lucideIcons = {
   chevronLeft: ChevronLeftIcon,
   code: Code,
   command: Command,
+  copy: Copy,
   eye: Eye,
   eyeOff: EyeOff,
   eyeClosed: EyeOff,
@@ -152,6 +154,7 @@ export const lucideIcons = {
   pencilLine: PencilLine,
   penTool: PenTool,
   penLine: PenLine,
+  pencil: PenLine,
   pin: Pin,
   plus: Plus,
   dumbbell: Dumbbell,
@@ -166,6 +169,7 @@ export const lucideIcons = {
   tagIcon: TagIcon,
   target: Target,
   trash2: Trash2,
+  trash: Trash2,
   user: User,
   userIcon: UserIcon,
   x: X,

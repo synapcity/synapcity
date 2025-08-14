@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from "react";
 import {
   DropdownMenu as BaseDropdownMenu,
   DropdownMenuTrigger,
@@ -20,80 +21,126 @@ interface DropdownItem {
   destructive?: boolean;
   shortcut?: string;
   tooltip?: string;
-  children?: React.ReactNode;
 }
+
+type DropdownGroup = "separator" | { label: string; items: DropdownItem[] } | DropdownItem;
 
 interface DropdownProps {
-  trigger?: ButtonProps;
-  items: (DropdownItem | "separator" | { label: string; items: DropdownItem[] })[];
+  trigger?: ButtonProps; // render a <Button {...trigger} />
+  items: DropdownGroup[];
   align?: "start" | "center" | "end";
-  children?: React.ReactNode;
+  children?: React.ReactNode; // custom trigger node
+  sideOffset?: number;
+  className?: string; // extra class for <DropdownMenuContent>
 }
 
-export function Dropdown({ trigger, items, align = "end", children }: DropdownProps) {
+export function Dropdown({
+  trigger,
+  items,
+  align = "end",
+  sideOffset = 6,
+  children,
+  className,
+}: DropdownProps) {
+  // Shared menu item class
+  const itemClass =
+    "group flex items-center justify-between gap-2 px-2.5 py-1.5 rounded-sm text-sm " +
+    "cursor-pointer select-none outline-none transition-colors " +
+    "text-foreground " +
+    "data-[highlighted]:bg-(--foreground) data-[highlighted]:text-(--background) " +
+    "data-[disabled]:pointer-events-none data-[disabled]:opacity-50";
+
+  const renderItem = (item: DropdownItem, key: React.Key) => (
+    <DropdownMenuItem
+      key={key}
+      disabled={item.disabled}
+      onSelect={() => {
+        // prevent menu from closing only if you later add keepOpen logic
+        if (!item.disabled) item.onSelect?.();
+      }}
+      className={cn(
+        itemClass,
+        item.destructive &&
+          "text-red-600 data-[highlighted]:bg-red-600 data-[highlighted]:text-white"
+      )}
+    >
+      <span className="flex items-center gap-2">
+        {item.icon && <Icon name={item.icon} size="sm" />}
+        <span>{item.label}</span>
+      </span>
+
+      {item.shortcut && (
+        <span
+          className={cn(
+            "text-[11px] tabular-nums text-muted-foreground",
+            "group-data-[highlighted]:text-[var(--accent-foreground)]"
+          )}
+        >
+          {item.shortcut}
+        </span>
+      )}
+    </DropdownMenuItem>
+  );
+
+  // —— Trigger resolution (NO Fragments) ——
+  // Priority: children element → <Button {...trigger} /> → default outline button.
+  let triggerNode: React.ReactElement;
+
+  if (React.isValidElement(children)) {
+    // Good: a single, focusable element (button, IconButton, etc.)
+    triggerNode = children as React.ReactElement;
+  } else if (children != null) {
+    // Children provided but not a valid element (string, number, array): wrap in a button
+    triggerNode = (
+      <button
+        type="button"
+        className="rounded-md outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--background)]"
+      >
+        {children}
+      </button>
+    );
+  } else if (trigger) {
+    // Use your design-system Button as the trigger
+    triggerNode = <Button {...trigger} />;
+  } else {
+    // Sensible default
+    triggerNode = (
+      <Button variant="outline" size="sm">
+        Menu
+      </Button>
+    );
+  }
+
   return (
-    <BaseDropdownMenu>
-      <DropdownMenuTrigger asChild>
-        {children ?? (trigger && trigger.children) ?? <Button {...trigger} />}
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align={align} className="min-w-[180px]">
-        {items.map((item, i) => {
-          if (item === "separator") {
-            return <DropdownMenuSeparator key={`sep-${i}`} />;
+    <BaseDropdownMenu className="bg-(--background) text-(--foreground)">
+      <DropdownMenuTrigger asChild>{triggerNode}</DropdownMenuTrigger>
+
+      <DropdownMenuContent
+        align={align}
+        sideOffset={sideOffset}
+        className={cn(
+          "min-w-[200px] rounded-md border bg-(--background) text-(--foreground) shadow-md ",
+          "p-1",
+          className
+        )}
+      >
+        {items.map((entry, i) => {
+          if (entry === "separator") {
+            return <DropdownMenuSeparator key={`sep-${i}`} className="my-1" />;
           }
 
-          if ("items" in item) {
+          if ("items" in entry) {
             return (
-              <DropdownMenuGroup key={`group-${item.label}`}>
-                <DropdownMenuLabel>{item.label}</DropdownMenuLabel>
-                {item.items.map((subItem, j) => (
-                  <DropdownMenuItem
-                    key={`${i}-${j}`}
-                    onSelect={(e) => {
-                      e.preventDefault();
-                      if (!subItem.disabled) subItem.onSelect?.();
-                    }}
-                    disabled={subItem.disabled}
-                    className={cn(
-                      "flex items-center justify-between gap-2",
-                      subItem.destructive && "text-red-500 focus:text-red-600"
-                    )}
-                  >
-                    <span className="flex items-center gap-2">
-                      {subItem.icon && <Icon name={subItem.icon} size="sm" />}
-                      {subItem.label}
-                    </span>
-                    {subItem.shortcut && (
-                      <span className="text-xs text-muted-foreground">{subItem.shortcut}</span>
-                    )}
-                  </DropdownMenuItem>
-                ))}
+              <DropdownMenuGroup key={`group-${entry.label}`}>
+                <DropdownMenuLabel className="px-2 py-1.5 text-xs font-medium text-muted-foreground">
+                  {entry.label}
+                </DropdownMenuLabel>
+                {entry.items.map((subItem, j) => renderItem(subItem, `${i}-${j}`))}
               </DropdownMenuGroup>
             );
           }
 
-          return (
-            <DropdownMenuItem
-              key={item.label}
-              onSelect={(e) => {
-                e.preventDefault();
-                if (!item.disabled) item.onSelect?.();
-              }}
-              disabled={item.disabled}
-              className={cn(
-                "flex items-center justify-between gap-2 group group-hover:bg-black/50 group-hover:text-white",
-                item.destructive && "text-red-500 focus:text-red-600"
-              )}
-            >
-              <span className="flex items-center gap-2  group-hover:bg-black/50 group-hover:text-white dark:group-hover:text-background">
-                {item.icon && <Icon name={item.icon} size="sm" />}
-                {item.label}
-              </span>
-              {item.shortcut && (
-                <span className="text-xs text-muted-foreground">{item.shortcut}</span>
-              )}
-            </DropdownMenuItem>
-          );
+          return renderItem(entry, `item-${i}`);
         })}
       </DropdownMenuContent>
     </BaseDropdownMenu>
