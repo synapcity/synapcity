@@ -58,15 +58,18 @@ export function NavLinkGroup({
     >
       {items.map((item) => {
         const actions = item.href ? { href: item.href } : { onClick: item.onClick };
+        const isActive =
+          (item.href === "/home" && pathname === "/home") ||
+          (pathname !== "/home" && pathname.startsWith(item.href!));
         return (
           <NavLink
             key={item.id}
             {...item}
             {...actions}
             variant={item.variant as ToggleOrButtonVariant}
-            isActive={pathname === item.href}
-            activeClassName={cn("hover:text-(--background)", activeClassName)}
-            className="text-(--background) active:text-(--foreground) hover:text-(--foreground)"
+            isActive={isActive}
+            activeClassName={cn(activeClassName)}
+            className={cn(className)}
           />
         );
       })}

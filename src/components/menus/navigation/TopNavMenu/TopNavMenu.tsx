@@ -8,7 +8,15 @@ import { ActionsContainer } from "../ActionsContainer/ActionsContainer";
 import { NavContainer } from "../NavContainer/NavContainer";
 import { landingNavItems, mainNavItems } from "@/lib";
 
-export function TopNavMenu({ isLoggedIn }: { isLoggedIn: boolean }) {
+export function TopNavMenu({
+  isLoggedIn,
+  className,
+  activeClassName,
+}: {
+  isLoggedIn: boolean;
+  className?: string;
+  activeClassName?: string;
+}) {
   const isSiteFocused = useUIStore(useShallow((s) => s.isSiteFocus));
   const header = useUIStore(useShallow((s) => s.components.header));
   const getCompState = useUIStore((s) => s.getCompState);
@@ -25,8 +33,13 @@ export function TopNavMenu({ isLoggedIn }: { isLoggedIn: boolean }) {
       )}
     >
       <Logo size={32} variant="mark" title="SynapCity" />
-      <NavContainer links={isLoggedIn ? mainNavItems : landingNavItems} />
-      <ActionsContainer />
+      <NavContainer
+        links={isLoggedIn ? mainNavItems : landingNavItems}
+        className={className}
+        activeClassName={activeClassName}
+        menuClassName={isLoggedIn ? "mx-auto" : "ml-auto"}
+      />
+      {isLoggedIn && <ActionsContainer />}
     </div>
   );
 }

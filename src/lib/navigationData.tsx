@@ -78,7 +78,7 @@ export const landingNavItems: NavLinkData[] = [
     onClick: () => {
       useUserStore.getState().loginDemo();
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (window as any).history.replaceState(null, "", "/home");
+      (window as any).history.pushState(null, "", "/home");
     },
   },
 ];

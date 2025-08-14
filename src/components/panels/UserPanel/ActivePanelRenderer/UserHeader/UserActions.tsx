@@ -5,9 +5,9 @@ import { useUIStore, useUserStore } from "@/stores";
 import { AvatarDropdown } from "@/components/menus/dropdown/AvatarDropdown/AvatarDropdown";
 import { Separator } from "@/components/atoms/ui/separator";
 import { LockToggle } from "@/components/atoms/toggles/LockToggle/LockToggle";
+import { avatarNavItems } from "@/lib";
 
 export const UserActions = () => {
-  const logout = useUserStore((s) => s.logout);
   const user = useUserStore((s) => s.user);
   const toggleModal = useUIStore((s) => s.toggleCompState);
 
@@ -21,8 +21,7 @@ export const UserActions = () => {
         avatarUrl={user?.avatar ?? ""}
         username={user?.username ?? ""}
         fallbackIcon="User"
-        onEdit={() => console.log("Edit profile")}
-        onLogout={logout}
+        items={avatarNavItems}
       />
     </div>
   );

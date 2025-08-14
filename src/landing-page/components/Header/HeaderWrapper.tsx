@@ -3,17 +3,24 @@
 import { useRef, useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import clsx from "clsx";
-import { Logo } from "./Logo";
-import { Navbar } from "./Navbar";
 import dynamic from "next/dynamic";
+import { useUIStore } from "@/stores";
 
 const MotionDiv = dynamic(() => import("../ui/Motion").then((mod) => mod.MotionDiv), {
   ssr: false,
 });
 
-export const Header = ({ visible }: { visible: boolean }) => {
+export const HeaderWrapper = ({
+  visible,
+  children,
+}: {
+  visible: boolean;
+  children: React.ReactNode;
+}) => {
   const [isHovered, setIsHovered] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const setCompState = useUIStore((s) => s.setCompState);
+  const setVisible = (visible?: boolean) => setCompState("header", "isVisible", visible);
 
   const handleHover = (hovering: boolean) => {
     if (timeoutRef.current) {
@@ -23,9 +30,11 @@ export const Header = ({ visible }: { visible: boolean }) => {
 
     if (hovering) {
       setIsHovered(true);
+      setVisible(true);
     } else {
       timeoutRef.current = setTimeout(() => {
         setIsHovered(false);
+        setVisible(false);
       }, 800);
     }
   };
@@ -56,8 +65,7 @@ export const Header = ({ visible }: { visible: boolean }) => {
               }
             )}
           >
-            <Logo />
-            <Navbar isHovered={isHovered} />
+            {children}
           </MotionDiv>
         )}
       </header>

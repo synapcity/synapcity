@@ -29,7 +29,6 @@ const baseArgs: NoteEditorHeaderProps = {
   wordCount: 1207,
 };
 function withTabsList(status?: "idle" | "saving" | "syncing" | "error") {
-  // eslint-disable-next-line react/display-name
   return (args: NoteEditorHeaderProps) => {
     const noteId = args.noteId || "note-123";
     const store = useNoteStore.getState();

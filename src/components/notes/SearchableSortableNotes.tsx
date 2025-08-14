@@ -7,8 +7,7 @@ import type { CombinedEditor, Note } from "@/stores";
 import { CardItemBase } from "@/components/molecules/VirtualizedGrid/MasonryVirtualizedGrid";
 import { useNotesSearchSort, NoteLike } from "@/hooks/notes/useNotesSearchSort/useNotesSearchSort";
 import { SortKey, SortDir } from "@/components/atoms/controls";
-import { useRouter } from "next/navigation";
-import { useMemo, useCallback, useState } from "react";
+import { useMemo, useState } from "react";
 import { NotesControlsBar } from "./NotesControlsBar";
 import { aggregateViewContent, getViewExcerpts } from "@/utils";
 import dynamic from "next/dynamic";
@@ -52,7 +51,7 @@ export const RenderNoteCard = ({ note }: { note: NoteCardItem }) => {
       prefetch={active ? null : false}
       onMouseEnter={() => setActive(true)}
     >
-      <NoteCard id={note.id} title={note.title ?? ""} excerpt={note.summary ?? ""} />
+      <NoteCard id={note.id} />
     </Link>
   );
 };

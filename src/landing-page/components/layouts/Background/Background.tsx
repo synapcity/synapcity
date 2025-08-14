@@ -1,13 +1,17 @@
 "use client";
 
+import { TopNavMenu } from "@/components";
 import { useUIStore } from "@/stores/ui";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import { useShallow } from "zustand/shallow";
 
-const Header = dynamic(() => import("../../Header/Header").then((mod) => mod.Header), {
-  ssr: true,
-});
+const Header = dynamic(
+  () => import("../../Header/HeaderWrapper").then((mod) => mod.HeaderWrapper),
+  {
+    ssr: true,
+  }
+);
 
 export const Background = ({ children }: { children: React.ReactNode }) => {
   const showHeader = useUIStore(useShallow((s) => s.components.header.isVisible ?? true));
@@ -35,7 +39,11 @@ export const Background = ({ children }: { children: React.ReactNode }) => {
       />
       <div className="relative z-10 h-screen">
         {children}
-        {showHeader && <Header visible={showHeader} />}
+        {showHeader && (
+          <Header visible={showHeader}>
+            <TopNavMenu isLoggedIn={false} />
+          </Header>
+        )}
       </div>
     </div>
   );

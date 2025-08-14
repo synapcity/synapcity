@@ -9,12 +9,10 @@ import { useActionStatus } from "@/hooks/useActionStatus";
 
 interface NoteCardProps {
   id: string;
-  title: string;
-  excerpt: string;
   onClick?: () => void;
 }
 
-export const NoteCard: FC<NoteCardProps> = ({ id, title, excerpt, onClick }) => {
+export const NoteCard: FC<NoteCardProps> = ({ id, onClick }) => {
   const router = useRouter();
   const note = useNoteStore(useShallow((s) => s.items[id]));
   const status = useNoteStore(

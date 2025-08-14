@@ -9,6 +9,7 @@ import { format } from "date-fns";
 import { useState, useEffect } from "react";
 import { AvatarDropdown } from "@/components/menus/dropdown/AvatarDropdown/AvatarDropdown";
 import { UserWeather } from "../UserWeather/UserWeather";
+import { avatarNavItems } from "@/lib";
 
 const getGreeting = () => {
   const hour = new Date().getHours();
@@ -22,7 +23,6 @@ export const UserPanelHeader = () => {
   const user = useUserStore((state) => state.user);
   const state = useComponentUIState("userPanel");
   const isVisible = state.isVisible ?? true;
-  const logout = useUserStore((state) => state.logout);
   // const isModalVisible = useUIStore(state => state.components)["scheduleModal"]?.["isVisible"] ?? false
   const toggleModal = useUIStore((state) => state.toggleCompState);
 
@@ -66,8 +66,7 @@ export const UserPanelHeader = () => {
               avatarUrl={user?.avatar ?? ""}
               username={user?.username ?? ""}
               fallbackIcon="User"
-              onEdit={() => console.log("Edit profile")}
-              onLogout={logout}
+              items={avatarNavItems}
             />
           </div>
         </div>

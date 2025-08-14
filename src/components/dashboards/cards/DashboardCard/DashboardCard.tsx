@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { FC, memo, useCallback, useMemo, useState } from "react";
 import { RefreshCcw } from "lucide-react";
 import { CardWithLoading } from "../../../molecules/cards/CardWithLoading";
@@ -54,7 +53,6 @@ export const DashboardCard: FC<DashboardCardProps> = memo(
     const lastUpdatedAt = updatedAt || createdAt;
 
     const [isLoading, setIsLoading] = useState(false);
-    const router = useRouter();
     const { open, initialData, setOpen } = useDashboardModal();
 
     // Parse and validate dates once

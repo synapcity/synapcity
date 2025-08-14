@@ -5,6 +5,7 @@ import { cn } from "@/utils";
 import { useUIStore, useUserStore } from "@/stores";
 import { useEffect, useRef } from "react";
 import { useShallow } from "zustand/shallow";
+import { HeaderWrapper } from "@/landing-page/components/Header/HeaderWrapper";
 
 const TopNavMenu = dynamic(
   () => import("@/components/menus/navigation/TopNavMenu/TopNavMenu").then((mod) => mod.TopNavMenu),
@@ -41,6 +42,14 @@ export const Header = () => {
     }, 2000);
   };
 
+  if (!isLoggedIn) {
+    return (
+      <HeaderWrapper visible={isHeaderVisible!}>
+        <TopNavMenu isLoggedIn={false} className={"text(--foreground)"} />
+      </HeaderWrapper>
+    );
+  }
+
   return (
     <div className="w-full">
       <header
@@ -55,7 +64,11 @@ export const Header = () => {
         onMouseEnter={showHeader}
         onMouseLeave={hideHeaderDelayed}
       >
-        <TopNavMenu isLoggedIn={isLoggedIn} />
+        <TopNavMenu
+          isLoggedIn={isLoggedIn}
+          className={"text-(--background) active:text-(--foreground) hover:text-(--foreground)"}
+          activeClassName={"hover:text-(--background)"}
+        />
       </header>
     </div>
   );

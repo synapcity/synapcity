@@ -1,12 +1,22 @@
 import { NavigationMenu, NavigationMenuList } from "@/components/atoms/ui/navigation-menu";
-import { NavMenuLink } from "../NavItem";
 import { NavLinkData, NavLinkGroup } from "../Links/NavLinkGroup";
+import { cn } from "@/landing-page/lib/utils";
 
-export const DesktopNavList = ({ links }: { links: NavLinkData[] }) => {
+export const DesktopNavList = ({
+  links,
+  className,
+  activeClassName,
+  menuClassName,
+}: {
+  links: NavLinkData[];
+  className?: string;
+  activeClassName?: string;
+  menuClassName?: string;
+}) => {
   return (
-    <NavigationMenu className="mx-auto w-full">
+    <NavigationMenu className={cn("w-full", menuClassName)}>
       <NavigationMenuList>
-        <NavLinkGroup items={links} />
+        <NavLinkGroup items={links} className={className} activeClassName={activeClassName} />
       </NavigationMenuList>
     </NavigationMenu>
   );

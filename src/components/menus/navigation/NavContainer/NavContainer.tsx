@@ -4,11 +4,26 @@ import { NavLinkData } from "../Links/NavLinkGroup";
 import { DesktopNavList } from "./DesktopNavList";
 import { MobileNavDropdown } from "./MobileNavDropdown";
 
-export const NavContainer = ({ links }: { links: NavLinkData[] }) => {
+export const NavContainer = ({
+  links,
+  className,
+  activeClassName,
+  menuClassName,
+}: {
+  links: NavLinkData[];
+  className?: string;
+  activeClassName?: string;
+  menuClassName?: string;
+}) => {
   return (
     <div className="flex-1">
       <div className="hidden md:block">
-        <DesktopNavList links={links} />
+        <DesktopNavList
+          links={links}
+          className={className}
+          activeClassName={activeClassName}
+          menuClassName={menuClassName}
+        />
       </div>
       <div className="md:hidden px-3 py-2 flex items-center justify-end">
         <MobileNavDropdown
