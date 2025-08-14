@@ -2,23 +2,16 @@
 
 import { Icon } from "@/components/atoms";
 import { Avatar } from "@/components/atoms/Avatar/Avatar";
-import { Dropdown } from "../Dropdown";
+import { Dropdown, DropdownGroup } from "../Dropdown";
 
 export const AvatarDropdown: React.FC<{
   avatarUrl: string;
   username: string;
-  onEdit: () => void;
-  onLogout: () => void;
   fallbackIcon: string;
-}> = ({ avatarUrl, username, onEdit, onLogout, fallbackIcon }) => {
+  items: DropdownGroup[];
+}> = ({ avatarUrl, username, fallbackIcon, items }) => {
   return (
-    <Dropdown
-      items={[
-        { label: "Profile", icon: "user", onSelect: onEdit },
-        { label: "Log Out", icon: "logOut", destructive: true, onSelect: onLogout },
-      ]}
-      align="end"
-    >
+    <Dropdown items={items} align="end">
       <button
         type="button"
         aria-label="Account menu"

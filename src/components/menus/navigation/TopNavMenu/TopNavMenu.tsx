@@ -3,12 +3,10 @@
 import { NavigationMenu, NavigationMenuList } from "@/components/atoms/ui/navigation-menu";
 import dynamic from "next/dynamic";
 import { Logo } from "@/components/atoms/Logo";
-import { Separator } from "@/components/atoms/ui/separator";
 import { useUIStore } from "@/stores";
-import { AuthLinks } from "../Links/AuthLinks";
 import { cn } from "@/utils";
-import { DarkModeToggle, InboxToggle, ThemeToggle, VisibilityToggle } from "@/components/atoms";
 import { useShallow } from "zustand/shallow";
+import { ActionsContainer } from "../ActionsContainer/ActionsContainer";
 
 const links = [
   { href: "/", label: "Home" },
@@ -51,15 +49,7 @@ export function TopNavMenu() {
         </NavigationMenuList>
       </NavigationMenu>
 
-      <div className="flex items-center gap-2 text-(--background)">
-        <InboxToggle />
-        <ThemeToggle />
-        <VisibilityToggle />
-        <Separator orientation="vertical" className="h-4" />
-        <DarkModeToggle />
-        <Separator orientation="vertical" className="h-4" />
-        <AuthLinks />
-      </div>
+      <ActionsContainer />
     </div>
   );
 }

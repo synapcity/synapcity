@@ -23,7 +23,7 @@ interface DropdownItem {
   tooltip?: string;
 }
 
-type DropdownGroup = "separator" | { label: string; items: DropdownItem[] } | DropdownItem;
+export type DropdownGroup = "separator" | { label: string; items: DropdownItem[] } | DropdownItem;
 
 interface DropdownProps {
   trigger?: ButtonProps; // render a <Button {...trigger} />
@@ -113,7 +113,9 @@ export function Dropdown({
 
   return (
     <BaseDropdownMenu>
-      <DropdownMenuTrigger asChild>{triggerNode}</DropdownMenuTrigger>
+      <DropdownMenuTrigger asChild className="size-full inline-flex justify-center items-center">
+        {triggerNode}
+      </DropdownMenuTrigger>
 
       <DropdownMenuContent
         align={align}

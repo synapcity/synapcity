@@ -8,6 +8,7 @@ import { Spinner } from "@/components/atoms";
 import { usePathname, useRouter } from "next/navigation";
 import { useShallow } from "zustand/shallow";
 import { useEffect } from "react";
+import { avatarMenu } from "@/lib";
 
 export function AuthLinks() {
   const router = useRouter();
@@ -20,7 +21,6 @@ export function AuthLinks() {
   );
   const user = useUserStore(useShallow((state) => state.user));
   const login = useUserStore((state) => state.login);
-  const logout = useUserStore((state) => state.logout);
   const loading = useUserStore((state) => state.loading);
 
   useEffect(() => {
@@ -75,11 +75,7 @@ export function AuthLinks() {
         avatarUrl={user?.avatar ?? ""}
         username={user?.username ?? ""}
         fallbackIcon="User"
-        onEdit={() => console.log("Edit profile")}
-        onLogout={() => {
-          logout();
-          router.push("/");
-        }}
+        items={avatarMenu}
       />
     </div>
   );
