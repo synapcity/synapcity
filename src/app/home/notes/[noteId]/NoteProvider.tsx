@@ -1,6 +1,7 @@
 "use client";
 
 import { SidebarProvider } from "@/components/atoms/ui/sidebar";
+// import { IconSidebar } from "@/components/menus/sidebar";
 import { EditorProvider, MetadataProvider } from "@/providers";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import { useNoteStore } from "@/stores";
@@ -36,6 +37,11 @@ export default function NoteProvider({
             collapsible="icon"
           >
             {children}
+            {/* <div className="fixed bottom-0 left-0 right-0 bg-(--sidebar) h-16 min-w-0 overflow-x-auto md:hidden transition-all duration-200 ease-linear">
+              <div className="flex flex-nowrap gap-2 h-full">
+                <IconSidebar side="bottom" scope="note" id={noteId} />
+              </div>
+            </div> */}
           </SidebarProvider>
         </EditorProvider>
       </ThemeProvider>

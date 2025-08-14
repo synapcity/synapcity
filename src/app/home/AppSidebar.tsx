@@ -46,7 +46,7 @@ export default function AppSidebar() {
     onKeyPressed: () => setCreateNoteOpen(true),
   });
   return (
-    <Sidebar variant="container" className="shrink-0">
+    <Sidebar variant="container" className="shrink-0" id="app-sidebar">
       <SidebarContent className="py-6">
         <SidebarMainMenu />
         <SidebarSection
