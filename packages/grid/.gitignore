@@ -42,7 +42,7 @@ next-env.d.ts
 
 *storybook.log
 storybook-static
-/.archive/
+.archive
 
 # cypress artifacts
 cypress/screenshots
@@ -57,3 +57,6 @@ cypress/downloads
 
 # builds
 dist
+
+# typescript
+*.build

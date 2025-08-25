@@ -50,10 +50,13 @@ cypress/videos
 cypress/downloads
 
 # vs code editor settings
-.vscode
+/.vscode/
 
 # turbo 
-.turbo
+/.turbo/
 
 # builds
-dist
+/dist/
+
+# WIP
+*.md
