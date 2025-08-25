@@ -8,17 +8,32 @@ on:
 jobs:
   mirror:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
     steps:
-      - name: Checkout full history
+      - name: Checkout full history of main
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: main
 
-      - name: Push main to org public repo
+      - name: Show debug refs (optional)
         run: |
+          git --version
+          git status
+          git branch -vv
+          git log --oneline -n 3
+          git remote -v
+
+      - name: Push HEAD -> Synapcity/synapcity-web main
+        env:
+          PUBLIC_REPO_TOKEN: ${{ secrets.PUBLIC_REPO_TOKEN }}
+        run: |
+          set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git remote add public https://x-access-token:${{ secrets.PUBLIC_REPO_TOKEN }}@github.com/synapcity/synapcity-web.git
-          git push public origin/main:refs/heads/main --force-with-lease
+
+          # Add the public remote using your PAT
+          git remote add public "https://x-access-token:${PUBLIC_REPO_TOKEN}@github.com/synapcity/synapcity-web.git"
+
+          # Create or update 'main' on the public repo from the current commit
+          # Use --force-with-lease only if you expect history rewrites; otherwise drop it.
+          git push public HEAD:refs/heads/main --force-with-lease
