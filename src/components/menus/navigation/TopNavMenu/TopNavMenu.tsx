@@ -37,7 +37,7 @@ export function TopNavMenu({
         links={isLoggedIn ? mainNavItems : landingNavItems}
         className={className}
         activeClassName={activeClassName}
-        menuClassName={isLoggedIn ? "mx-auto" : "ml-auto"}
+        menuClassName={isLoggedIn ? "mr-auto" : "ml-auto"}
       />
       {isLoggedIn && <ActionsContainer />}
     </div>

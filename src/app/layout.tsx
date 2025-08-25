@@ -21,20 +21,34 @@ export const metadata: Metadata = {
   keywords: ["notes", "second brain", "Zettelkasten", "productivity", "Synapcity"],
   openGraph: {
     ...defaultOG,
+    type: "website",
     title: "Synapcity — Your Second Brain",
     siteName: "Synapcity",
     description: "Capture, connect, and create with your digital thoughtspace.",
-    images: ["./opengraph-image.tsx"],
+    images: [
+      {
+        url: "/api/og",
+        width: 1200,
+        height: 630,
+        alt: "Synapcity",
+      },
+    ],
   },
   twitter: {
     ...defaultTwitter,
     title: "Synapcity — Your Second Brain",
     description: "Capture, connect, and create with your digital thoughtspace.",
-    images: ["./twitter-image.tsx"],
+    // images: ["./twitter-image.tsx"],
+    images: ["/api/og"],
   },
   icons: {
-    icon: "/favicon.ico",
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/icon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/icon-16x16.png", sizes: "16x16", type: "image/png" },
+    ],
   },
+  manifest: "/manifest.webmanifest",
 };
 
 export const viewport: Viewport = {

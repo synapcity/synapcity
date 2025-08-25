@@ -46,20 +46,6 @@ export const mainNavItems: NavLinkData[] = [
     icon: "stickyNote",
     variant: { active: "outline", inactive: "ghost" },
   },
-  {
-    id: "libraries",
-    href: "/libraries",
-    label: "Libraries",
-    icon: "library",
-    variant: { active: "outline", inactive: "ghost" },
-  },
-  {
-    id: "settings",
-    href: "/settings",
-    label: "Settings",
-    icon: "settings",
-    variant: { active: "outline", inactive: "ghost" },
-  },
 ];
 
 export const landingNavItems: NavLinkData[] = [
