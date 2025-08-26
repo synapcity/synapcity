@@ -1,9 +1,8 @@
-// app/og/route.tsx  (or app/api/og/route.tsx)
 import { ImageResponse } from "next/og";
+import Image from "next/image";
 
-export const runtime = "edge"; // fast & recommended
-export const size = { width: 1200, height: 630 };
-export const contentType = "image/png";
+export const runtime = "edge";
+const size = { width: 1200, height: 630 };
 
 export async function GET(req: Request) {
   const { searchParams, origin } = new URL(req.url);
@@ -15,7 +14,7 @@ export async function GET(req: Request) {
   const accent = searchParams.get("accent") ?? "#06B6D4";
   const dark = searchParams.get("dark") ?? "#111827";
 
-  const logoUrl = `${origin}/logo-og.png`; // put logo at /public/logo-og.png
+  const logoUrl = `${origin}/logo-og.png`;
 
   return new ImageResponse(
     (
@@ -60,7 +59,7 @@ export async function GET(req: Request) {
               overflow: "hidden",
             }}
           >
-            <img
+            <Image
               src={logoUrl}
               width={180}
               height={180}

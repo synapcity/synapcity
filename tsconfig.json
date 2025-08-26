@@ -1,7 +1,10 @@
 {
   "compilerOptions": {
     "target": "es2022",
-    "lib": ["dom", "esnext"],
+    "lib": [
+      "dom",
+      "es2022"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -21,10 +24,29 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": [
+        "src/*"
+      ]
     },
-    "types": ["@types/node", "next"]
+    "types": [
+      "next"
+    ],
+    "typeRoots": [
+      "@lexical",
+      "@/types/node"
+    ]
   },
-  "include": ["next-env.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx", "png-to-ico"],
-  "exclude": ["node_modules", "**/*.cy.*", "cypress/*", "cypress.config.ts"]
+  "include": [
+    "next-env.d.ts",
+    ".next/types/**/*.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "png-to-ico"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.cy.*",
+    "cypress/*",
+    "cypress.config.ts"
+  ]
 }

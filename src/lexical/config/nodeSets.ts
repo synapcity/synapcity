@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { HeadingNode } from "@lexical/rich-text";
+
 export const commonNodes: Array<() => Promise<any>> = [
   () => import("@lexical/code").then((m) => m.CodeNode),
   () => import("@lexical/link").then((m) => m.AutoLinkNode),
@@ -32,9 +34,9 @@ export const commonNodes: Array<() => Promise<any>> = [
 // ];
 
 export const readonlyNodes: Array<() => Promise<any>> = [
-  () => import("lexical/nodes/LexicalElementNode").then((m) => m.ElementNode),
-  () => import("lexical/nodes/LexicalDecoratorNode").then((m) => m.DecoratorNode),
-  () => import("lexical/nodes/LexicalParagraphNode").then((m) => m.ParagraphNode),
-  () => import("lexical/nodes/LexicalTextNode").then((m) => m.TextNode),
-  () => import("@lexical/rich-text").then((m) => m.HeadingNode),
+  () => import("lexical").then((m) => m.ElementNode),
+  () => import("lexical").then((m) => m.DecoratorNode),
+  () => import("lexical").then((m) => m.ParagraphNode),
+  () => import("lexical").then((m) => m.TextNode),
+  () => import("@lexical/rich-text").then((m) => m.HeadingNode as unknown as HeadingNode),
 ];
