@@ -36,7 +36,14 @@ jobs:
           sha256sum package.json package-lock.json || true
 
       - name: Clean node_modules
-        run: rm -rf node_modules
+        key: ${{ runner.os }}-next-${{ hashFiles('package-lock.json') }}
+        restore-keys: |
+            ${{ runner.os }}-next-
+
+      - name: Ensure lockfile is in sync
+        run: |
+          npm install --package-lock-only
+          git diff --exit-code || (echo "Lockfile is out of sync with package.json. Run 'npm install' locally and commit the updated lockfile." && exit 1)
 
       - name: Verify lockfile is in sync
         run: npm ci --dry-run
