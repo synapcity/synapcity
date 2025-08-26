@@ -1,5 +1,9 @@
 # Synapcity
 
+[![CI](https://github.com/synapcity/synapcity/actions/workflows/ci.yml/badge.svg)](https://github.com/synapcity/synapcity/actions/workflows/ci.yml)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+![SemVer](https://img.shields.io/badge/SemVer-2.0.0-blue)
+
 Synapcity is a customizable, modular workspace for building interactive dashboards and rich note‑taking experiences. It uses a widget‑based architecture so users can compose custom interfaces with drag‑and‑drop grids, persistent state, and a Lexical‑powered editor. Inspired by Tiago Forte's Second Brain and the PARA framework.
 
 ## Key Features
