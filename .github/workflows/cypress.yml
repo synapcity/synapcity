@@ -1,52 +1,55 @@
 name: Cypress E2E Tests
-
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  push: { branches: [ main ] }
+  pull_request: { branches: [ main ] }
 
 jobs:
   e2e:
     if: github.repository == 'hsadoqi/final_synapcity'
     runs-on: ubuntu-24.04
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
 
-      - name: Use Node 20 + npm cache
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm   # uses package-lock.json hash automatically
+          cache: npm
 
-      - name: Debug environment & files
+      - name: Show repo/commit & file hashes
         run: |
-          echo "Repo: $GITHUB_REPOSITORY"
-          echo "Commit: $GITHUB_SHA"
-          node -v
-          npm -v
-          echo "== package.json (first 60 lines) =="
-          sed -n '1,60p' package.json
-          echo "== package-lock.json present? =="
-          test -f package-lock.json && echo "yes" || echo "NO"
-          echo "== hashes =="
+          echo "Repo:  $GITHUB_REPOSITORY"
+          echo "SHA:   $GITHUB_SHA"
+          node -v; npm -v
           sha256sum package.json package-lock.json || true
+          (grep -q '"yjs"' package-lock.json && echo "yjs: OK") || echo "yjs: MISSING"
+          (grep -q '"lib0"' package-lock.json && echo "lib0: OK") || echo "lib0: MISSING"
+          (grep -q '"yaml"' package-lock.json && echo "yaml: OK") || echo "yaml: MISSING"
 
-      - name: Clean node_modules
-        run: rm -rf node_modules
+      - run: rm -rf node_modules
 
-      # Do NOT rewrite the lockfile in CI; just verify it.
-      - name: Verify lockfile is in sync
-        run: npm ci --dry-run
-
-      - name: Install deps
+      - name: Try npm ci (fast fail if in sync)
+        id: ci_try
+        continue-on-error: true
         run: npm ci --no-audit --no-fund
 
+      - name: Fallback: compute lockfile diff (do not commit from CI)
+        if: steps.ci_try.outcome == 'failure'
+        run: |
+          echo "npm ci failed; regenerating lockfile to show diff…"
+          rm -rf node_modules
+          npm install --no-audit --no-fund
+          git diff -- package-lock.json > lockfile.diff || true
+          if [ -s lockfile.diff ]; then
+            echo "Lockfile changed. Run 'npm install' locally & commit package-lock.json."
+            exit 1
+          else
+            echo "No lockfile change; investigate other causes."
+            exit 1
+          fi
+
       - name: Run Cypress e2e
+        if: steps.ci_try.outcome == 'success'
         run: npm run test:cypress:e2e
-        env:
-          CI: "true"
+        env: { CI: "true" }
+
