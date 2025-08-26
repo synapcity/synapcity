@@ -1,3 +1,6 @@
+/**
+ * @jest-environment node
+ */
 import React from "react";
 import { renderToString } from "react-dom/server";
 import GlobalPage from "./GlobalPage";

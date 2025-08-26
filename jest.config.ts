@@ -16,6 +16,7 @@ const config = {
     "^@/lib/data/sidebar/defaultDashboardPanels$": [
       "<rootDir>/test/__mocks__/defaultDashboardPanels.ts",
     ],
+        '^react-dom/server$': 'react-dom/server.node',
   },
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
   testEnvironment: "jsdom",

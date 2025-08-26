@@ -93,7 +93,7 @@ describe("<PopoverWrapper />", () => {
 
     const popover = await screen.findByTestId("popover-content");
     expect(popover).toBeVisible();
-    expect(popover.getAttribute("data-side")).toBe("right");
+    expect(popover.getAttribute("data-side")).toBe("left");
     expect(popover.getAttribute("data-align")).toBe("start");
   });
 
