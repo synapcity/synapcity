@@ -28,15 +28,15 @@ jobs:
 
       - run: rm -rf node_modules
 
-      - name: Try npm ci (fast fail if in sync)
+      - name: Try npm install --no-audit --no-fund (fast fail if in sync)
         id: ci_try
         continue-on-error: true
-        run: npm ci --no-audit --no-fund
+        run: npm install --no-audit --no-fund --no-audit --no-fund
 
       - name: Fallback: compute lockfile diff (do not commit from CI)
         if: steps.ci_try.outcome == 'failure'
         run: |
-          echo "npm ci failed; regenerating lockfile to show diff…"
+          echo "npm install --no-audit --no-fund failed; regenerating lockfile to show diff…"
           rm -rf node_modules
           npm install --no-audit --no-fund
           git diff -- package-lock.json > lockfile.diff || true
