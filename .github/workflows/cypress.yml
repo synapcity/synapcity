@@ -21,30 +21,25 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
+          cache: npm   # uses package-lock.json hash automatically
 
       - name: Debug environment & files
         run: |
+          echo "Repo: $GITHUB_REPOSITORY"
           echo "Commit: $GITHUB_SHA"
           node -v
           npm -v
           echo "== package.json (first 60 lines) =="
           sed -n '1,60p' package.json
-          echo "== package-lock.json (first 60 lines) =="
-          sed -n '1,60p' package-lock.json || echo "package-lock.json MISSING"
+          echo "== package-lock.json present? =="
+          test -f package-lock.json && echo "yes" || echo "NO"
           echo "== hashes =="
           sha256sum package.json package-lock.json || true
 
       - name: Clean node_modules
-        key: ${{ runner.os }}-next-${{ hashFiles('package-lock.json') }}
-        restore-keys: |
-            ${{ runner.os }}-next-
+        run: rm -rf node_modules
 
-      - name: Ensure lockfile is in sync
-        run: |
-          npm install --package-lock-only
-          git diff --exit-code || (echo "Lockfile is out of sync with package.json. Run 'npm install' locally and commit the updated lockfile." && exit 1)
-
+      # Do NOT rewrite the lockfile in CI; just verify it.
       - name: Verify lockfile is in sync
         run: npm ci --dry-run
 
