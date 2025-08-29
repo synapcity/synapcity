@@ -2,7 +2,7 @@
 
 import React from "react";
 import { type Widget } from "@/landing-page/types";
-import { WidgetCard } from "../WidgetRenderer/WidgetCard";
+import { WidgetCard } from "./WidgetCard";
 import { getRandomPosition } from "@/landing-page/utils";
 
 interface WidgetRendererProps {

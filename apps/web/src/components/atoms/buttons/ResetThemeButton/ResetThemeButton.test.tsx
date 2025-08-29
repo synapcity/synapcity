@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { ResetThemeButton } from "../ResetThemeButton";
+import { ResetThemeButton } from ".";
 import { resetTheme } from "@/theme/utils/resetTheme";
 
 jest.mock("@/theme/utils/resetTheme", () => ({

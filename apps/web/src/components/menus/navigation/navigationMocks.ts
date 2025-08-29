@@ -1,4 +1,4 @@
-import type { NavLinkData } from "../navigation/Links/NavLinkGroup";
+import type { NavLinkData } from "./Links/NavLinkGroup";
 
 export const mainNavItems: NavLinkData[] = [
   {

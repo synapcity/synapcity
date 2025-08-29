@@ -1,4 +1,4 @@
-import { getDefaultTheme } from "../getDefaultTheme";
+import { getDefaultTheme } from ".";
 import { DEFAULT } from "@/theme/defaults";
 
 describe("getDefaultTheme", () => {

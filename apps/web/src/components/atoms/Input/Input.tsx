@@ -1,6 +1,6 @@
 import * as React from "react";
 import { cn } from "@/utils";
-import { Icon, IconButton, UIInput } from "../../atoms";
+import { Icon, IconButton, UIInput } from "..";
 
 interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: boolean;

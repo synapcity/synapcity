@@ -1,5 +1,5 @@
 import { ThemeMode } from "@/theme/types";
-import { resolveThemeMetadata } from "../resolveThemeMetadata";
+import { resolveThemeMetadata } from ".";
 import { DEFAULT } from "@/theme/defaults";
 
 describe("resolveThemeMetadata", () => {
