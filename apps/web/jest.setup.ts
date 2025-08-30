@@ -13,6 +13,12 @@ global.ResizeObserver = ResizeObserver;
 import "jest-axe/extend-expect";
 import { cleanup } from "@testing-library/react";
 
+// Avoid act(...) warnings from Radix Presence during tests by rendering synchronously
+jest.mock("@radix-ui/react-presence", () => ({
+  __esModule: true,
+  Presence: ({ children }: any) => children,
+}));
+
 // Polyfill TextEncoder/TextDecoder for Node test environment
 // Some dependencies (e.g., iobuffer/fast-png/jspdf) expect these globals.
 try {
