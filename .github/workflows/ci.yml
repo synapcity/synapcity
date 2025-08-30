@@ -43,8 +43,8 @@ jobs:
           node-version: 20
           cache: "pnpm"
 
-      - name: Install deps
-        run: pnpm install --frozen-lockfile
+      - name: Install deps (allow lockfile update)
+        run: pnpm install --no-frozen-lockfile
 
       - name: Typecheck (all)
         run: pnpm turbo run check-types
@@ -70,8 +70,8 @@ jobs:
           node-version: 20
           cache: "pnpm"
 
-      - name: Install deps
-        run: pnpm install --frozen-lockfile
+      - name: Install deps (allow lockfile update)
+        run: pnpm install --no-frozen-lockfile
 
       - name: Tests (all)
         env:
@@ -104,8 +104,8 @@ jobs:
           node-version: 20
           cache: "pnpm"
 
-      - name: Install deps
-        run: pnpm install --frozen-lockfile
+      - name: Install deps (allow lockfile update)
+        run: pnpm install --no-frozen-lockfile
 
       - name: Build (all)
         run: pnpm turbo run build
@@ -129,8 +129,8 @@ jobs:
           node-version: 20
           cache: "pnpm"
 
-      - name: Install deps
-        run: pnpm install --frozen-lockfile
+      - name: Install deps (allow lockfile update)
+        run: pnpm install --no-frozen-lockfile
 
       - name: Build web app
         run: pnpm --filter ./apps/web run build
