@@ -12,7 +12,7 @@ jest.mock("@/hooks/controls/search/useDebouncedSearch/useDebouncedSearch", () =>
   useDebouncedSearch: jest.fn(),
 }));
 
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { SearchableMultiSelect, SearchableMultiSelectOption } from "./SearchableMultiSelect";
 import { useDebouncedSearch } from "@/hooks/controls/search/useDebouncedSearch/useDebouncedSearch";
@@ -114,7 +114,8 @@ describe("SearchableMultiSelect", () => {
         renderTagsBelow
       />
     );
-    expect(screen.getByText("React")).toBeInTheDocument();
+    const selected = screen.getByTestId("selected-tags");
+    expect(within(selected).getByText("React")).toBeInTheDocument();
   });
 
   it("clears all tags on clear button click", async () => {
@@ -180,7 +181,7 @@ describe("SearchableMultiSelect", () => {
       />
     );
 
-    const tagPill = screen.getByText("React").closest("span");
+    const tagPill = screen.getByTestId("tag-pill-react");
     expect(tagPill).toBeInTheDocument();
 
     const closeIcon = tagPill?.querySelector("svg");
@@ -205,7 +206,7 @@ describe("SearchableMultiSelect", () => {
       />
     );
 
-    const tag = screen.getByText("React").closest("span");
+    const tag = screen.getByTestId("tag-pill-react");
     expect(tag).toHaveClass("bg-[#ff0000]");
   });
 

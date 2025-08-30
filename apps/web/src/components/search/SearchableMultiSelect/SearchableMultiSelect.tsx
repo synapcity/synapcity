@@ -112,6 +112,7 @@ export function SearchableMultiSelect({
   const tagPill = (label: string, val: string) => (
     <span
       key={val}
+      data-testid={`tag-pill-${val}`}
       className={cn(
         "text-(--accent-foreground) inline-flex items-center gap-1 rounded px-2 py-0.5 text-xs",
         getTagColor?.(val) ? `bg-[${getTagColor(val)}]` : "bg-(--accent-200)"
@@ -223,7 +224,7 @@ export function SearchableMultiSelect({
       />
 
       {renderTagsBelow && selectedOptions.length > 0 && (
-        <div className="flex flex-wrap gap-2 mt-1">
+        <div className="flex flex-wrap gap-2 mt-1" data-testid="selected-tags">
           {selectedOptions.map((opt) => tagPill(opt.label, opt.value))}
         </div>
       )}
