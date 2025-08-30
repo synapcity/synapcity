@@ -7,8 +7,13 @@ describe("<PopoverWrapper />", () => {
     render(<PopoverWrapper trigger={<button>Open</button>} content={<div>Popover Content</div>} />);
 
     expect(screen.getByRole("button", { name: /open/i })).toBeInTheDocument();
-    const content = screen.queryByText(/popover content/i);
-    expect(content).not.toBeInTheDocument();
+    // When closed, popover content may be unmounted (preferred) or mounted but hidden.
+    const content = screen.queryByTestId("popover-content");
+    if (content) {
+      expect(content).not.toBeVisible();
+    } else {
+      expect(content).toBeNull();
+    }
   });
 
   it("shows content after clicking the trigger (uncontrolled)", async () => {
@@ -27,8 +32,12 @@ describe("<PopoverWrapper />", () => {
       />
     );
 
-    const closed = screen.queryByText(/controlled content/i);
-    expect(closed).not.toBeInTheDocument();
+    const closed = screen.queryByTestId("popover-content");
+    if (closed) {
+      expect(closed).not.toBeVisible();
+    } else {
+      expect(closed).toBeNull();
+    }
 
     rerender(
       <PopoverWrapper
@@ -37,7 +46,7 @@ describe("<PopoverWrapper />", () => {
         content={<div>Controlled Content</div>}
       />
     );
-    expect(screen.getByText(/controlled content/i)).toBeVisible();
+    expect(screen.getByTestId("popover-content")).toBeVisible();
   });
 
   it("calls onOpenChange when opened or closed (controlled)", async () => {

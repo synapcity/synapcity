@@ -7,6 +7,7 @@ on:
     branches:
       - main
       - refactor-turborepo-monorepo
+
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
@@ -41,7 +42,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: "pnpm"
+          cache: pnpm
 
       - name: Install deps (allow lockfile update)
         run: pnpm install --no-frozen-lockfile
@@ -68,7 +69,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: "pnpm"
+          cache: pnpm
 
       - name: Install deps (allow lockfile update)
         run: pnpm install --no-frozen-lockfile
@@ -102,7 +103,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: "pnpm"
+          cache: pnpm
 
       - name: Install deps (allow lockfile update)
         run: pnpm install --no-frozen-lockfile
@@ -111,36 +112,42 @@ jobs:
         run: pnpm turbo run build
 
   e2e:
-    name: Cypress E2E (web)
+    name: Cypress E2E
     runs-on: ubuntu-24.04
+    env:
+      CYPRESS_CACHE_FOLDER: ~/.cache/Cypress
+      CYPRESS_INSTALL_BINARY: 14.5.4
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
         with:
-          fetch-depth: 0
+          node-version: 20
+          cache: pnpm
 
       - uses: pnpm/action-setup@v4
         with:
           version: 10.0.0
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - name: Cache Cypress binary
+        uses: actions/cache@v4
         with:
-          node-version: 20
-          cache: "pnpm"
+          path: ~/.cache/Cypress
+          key: cypress-${{ runner.os }}-${{ env.CYPRESS_INSTALL_BINARY }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            cypress-${{ runner.os }}-${{ env.CYPRESS_INSTALL_BINARY }}-
+            cypress-${{ runner.os }}-
 
-      - name: Install deps
+      - name: Install deps (root)
         run: pnpm install --frozen-lockfile
 
-      - name: Cypress run (apps/web)
+      - name: Install Cypress binary (apps/web)
+        working-directory: apps/web
+        run: npx cypress install
+
+      - name: Run Cypress
         uses: cypress-io/github-action@v6
         with:
-          project: apps/web
-          install-command: pnpm install --frozen-lockfile
-          build: pnpm --filter ./apps/web run build
-          start: pnpm --filter ./apps/web run start
-          wait-on: "http://localhost:3000"
-          # default command is `cypress run`, override if your script is different
-          command: pnpm --filter ./apps/web run test:cypress:e2e
-        env:
-          CI: "true"
+          working-directory: apps/web
+          browser: electron
+          install: false

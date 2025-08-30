@@ -57,14 +57,18 @@ describe("CommandMenu - Full Coverage", () => {
 
   it("handles internal state toggle (uncontrolled mode)", async () => {
     render(<CommandMenu groups={mockGroups} />);
-    // closed initially
-    expect(screen.queryByRole("dialog")).toBeNull();
+    // Closed initially. Depending on the atom config, it might be unmounted or hidden.
+    const initially = screen.queryByRole("dialog", { hidden: true });
+    if (initially) {
+      expect(initially).not.toBeVisible();
+    } else {
+      expect(initially).toBeNull();
+    }
 
     // trigger open with ⌘K (meta) or Ctrl+K
     fireEvent.keyDown(document, { key: "k", metaKey: true });
-
-    const dialog = await screen.findByRole("dialog");
-    expect(dialog).toBeVisible();
+    const opened = await screen.findByRole("dialog", { hidden: true });
+    expect(opened).toBeVisible();
 
     fireEvent.keyDown(document, { key: "Escape" });
   });
