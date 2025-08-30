@@ -12,26 +12,17 @@ describe("<PopoverWrapper />", () => {
   });
 
   it("shows content after clicking the trigger (uncontrolled)", async () => {
-    const user = userEvent.setup();
-    render(
-      <PopoverWrapper
-        trigger={<button>Toggle Popover</button>}
-        content={<div>Popover Content</div>}
-      />
-    );
+    render(<PopoverWrapper trigger={<button>Open</button>} content={<div>Popover Content</div>} />);
 
-    await user.click(screen.getByRole("button", { name: /toggle popover/i }));
-    expect(await screen.findByText(/popover content/i)).toBeVisible();
+    await userEvent.click(screen.getByRole("button", { name: /open/i }));
+    expect(screen.getByText(/popover content/i)).toBeVisible();
   });
 
-  it("toggles visibility via controlled open prop", async () => {
-    const onOpenChange = jest.fn();
-
+  it("toggles visibility via controlled open prop", () => {
     const { rerender } = render(
       <PopoverWrapper
         open={false}
-        onOpenChange={onOpenChange}
-        trigger={<button>Controlled</button>}
+        trigger={<button>Open</button>}
         content={<div>Controlled Content</div>}
       />
     );
@@ -41,13 +32,11 @@ describe("<PopoverWrapper />", () => {
 
     rerender(
       <PopoverWrapper
-        open={true}
-        onOpenChange={onOpenChange}
-        trigger={<button>Controlled</button>}
+        open
+        trigger={<button>Open</button>}
         content={<div>Controlled Content</div>}
       />
     );
-
     expect(screen.getByText(/controlled content/i)).toBeVisible();
   });
 

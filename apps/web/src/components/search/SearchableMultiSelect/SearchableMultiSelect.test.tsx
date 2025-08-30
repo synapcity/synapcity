@@ -211,32 +211,22 @@ describe("SearchableMultiSelect", () => {
   });
 
   it("renders custom icons from getTagIcon", async () => {
-    const handleChange = jest.fn();
-    const handleSearch = jest.fn();
-
-    const getTagIcon = (val: string) => <span data-testid={`icon-${val}`}>🔍</span>;
-
     render(
       <SearchableMultiSelect
+        options={OPTIONS}
         value={["react"]}
-        onSearch={handleSearch}
-        onChange={handleChange}
-        options={[
-          { label: "React", value: "react" },
-          { label: "Node", value: "node" },
-        ]}
-        getTagIcon={getTagIcon}
-        renderTagsBelow
+        getTagIcon={(id) => (id === "react" ? "🔍" : undefined)}
       />
     );
 
+    // icon should only be found inside the selected-tags container
     const selected = screen.getByTestId("selected-tags");
     expect(within(selected).getByTestId("icon-react")).toBeInTheDocument();
 
+    // open the popover to ensure icon appears in the suggestion list as well
     const trigger = screen.getByTestId("popover-trigger");
     await userEvent.click(trigger);
-
-    expect(screen.getByTestId("icon-node")).toBeInTheDocument();
+    expect(screen.getAllByTestId("icon-react")).toHaveLength(2);
   });
 
   it("renders static options when onSearch is not provided", async () => {

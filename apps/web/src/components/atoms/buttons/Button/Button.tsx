@@ -61,6 +61,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const button = (
       <UIButton
+        role="button"
         ref={ref}
         type={props.type || "button"}
         data-state={isLoading ? "loading" : undefined}

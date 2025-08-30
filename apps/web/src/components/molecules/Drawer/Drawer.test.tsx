@@ -14,7 +14,7 @@ describe("Drawer", () => {
 
     expect(screen.queryByText("My Drawer")).not.toBeInTheDocument();
 
-    await user.click(screen.getByRole("button", { name: "Open" }));
+    await user.click(screen.getByRole("button", { name: "Close" }));
 
     expect(await screen.findByText("My Drawer")).toBeInTheDocument();
     expect(screen.getByText("Drawer Content")).toBeInTheDocument();

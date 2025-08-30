@@ -55,10 +55,12 @@ describe("CommandMenu - Full Coverage", () => {
     expect(screen.getAllByRole("separator").length).toBeGreaterThan(0);
   });
 
-  it("handles internal state toggle (uncontrolled mode)", async () => {
+  it("handles internal state toggle (uncontrolled mode)", () => {
     render(<CommandMenu groups={mockGroups} />);
 
     fireEvent.keyDown(document, { key: "Meta" });
+
+    // dialog exists in the DOM but is hidden
     const dialog = screen.getByRole("dialog");
     expect(dialog).not.toBeVisible();
 
