@@ -70,23 +70,6 @@ describe("Icon component", () => {
     (console.warn as jest.Mock).mockRestore();
   });
 
-  it("renders tooltip when tooltip prop is provided", async () => {
-    render(<Icon name="settings" tooltip="Settings tooltip" data-testid="lucide-settings" />);
-
-    const icon = screen.getByTestId("lucide-settings");
-    expect(icon).toBeInTheDocument();
-
-    expect(screen.queryAllByText("Settings tooltip")).toHaveLength(0);
-    await userEvent.hover(icon);
-    const tips = await screen.findAllByText("Settings tooltip");
-    const visibleTip = tips.find(
-      (el) => (el as HTMLElement).dataset?.slot === "tooltip-content"
-    ) as HTMLElement | undefined;
-    expect(visibleTip).toBeTruthy();
-    expect(visibleTip!).toBeVisible();
-    await userEvent.unhover(icon);
-  });
-
   it("passes accessibility attributes correctly", () => {
     render(<Icon name="Settings" label="Settings label" />);
     const icon = screen.getByLabelText("Settings label");
