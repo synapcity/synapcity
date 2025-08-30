@@ -2,14 +2,21 @@
   "$schema": "https://turborepo.com/schema.json",
   "tasks": {
     "lint": {
-        "outputs": []
+      "outputs": []
     },
     "test": {
       "outputs": ["coverage/**"]
     },
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**", "dist/**"]
+      "outputs": [
+        ".next/**",
+        "!.next/cache/**",
+        "dist/**",
+        "apps/*/.next/**",
+        "apps/design/storybook-static/**",
+        "packages/*/dist/**"
+      ]
     },
     "check-types": {
       "dependsOn": ["^check-types"],
