@@ -6,6 +6,7 @@ import dynamic from "next/dynamic";
 import { Loading } from "@/components/loading/Loading/Loading";
 import "../styles/globals.css";
 import { fontVars } from "@/lib/theme/fonts";
+import { Analytics } from "@vercel/analytics/next";
 
 const appBaseUrl =
   process.env.NEXT_PUBLIC_SITE_URL ||
@@ -83,6 +84,7 @@ export default function RootLayout({
             <Toaster position="top-left" />
           </GlobalLayout>
         </GlobalProvider>
+        <Analytics />
       </body>
     </html>
   );

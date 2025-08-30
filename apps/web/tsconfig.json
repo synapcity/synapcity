@@ -11,7 +11,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "allowSyntheticDefaultImports": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "incremental": true,
     "plugins": [
       {
@@ -20,28 +20,11 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      "@/*": ["src/*"]
     },
-    
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ]
+
+    "lib": ["dom", "dom.iterable", "esnext"]
   },
-  "include": [
-    "next-env.d.ts",
-    ".next/types/**/*.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "png-to-ico"
-  ],
-  "exclude": [
-    "node_modules",
-    "**/*.cy.*",
-    "cypress/*",
-    "cypress.config.ts"
-  ]
+  "include": ["next-env.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx", "png-to-ico"],
+  "exclude": ["node_modules", "**/*.cy.*", "cypress/*", "cypress.config.ts"]
 }
