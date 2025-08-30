@@ -2,7 +2,12 @@
     "name": "synapcity-root",
     "version": "0.1.0",
     "scripts": {
-        "check-types": "tsc --noEmit"
+        "check-types": "turbo run check-types",
+        "typecheck": "turbo run check-types",
+        "dev": "turbo run dev --parallel",
+        "build": "turbo run build",
+        "test": "turbo run test",
+        "lint": "turbo run lint"
     },
     "dependencies": {
         "turbo": "^2.5.6"
