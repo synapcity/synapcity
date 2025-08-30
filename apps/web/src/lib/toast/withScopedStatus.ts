@@ -56,7 +56,7 @@ export async function withStatusAndToast<T>(
 
 export async function withScopedStatusToast<T>(
   field: StatusField,
-  type: string,
+  _type: string,
   id: string,
   action: () => Promise<T>,
   messages: Messages

@@ -8,10 +8,8 @@ export const alt = "Synapcity";
 export const runtime = "nodejs";
 
 export default function Image({
-  _params,
   searchParams,
 }: {
-  _params?: Record<string, string>;
   searchParams?: { title?: string; primary?: string; accent?: string };
 }) {
   const title = (searchParams?.title ?? "Synapcity").slice(0, 120);

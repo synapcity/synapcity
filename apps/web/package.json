@@ -3,15 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "engines": {
-    "node": "20"
-  },
   "packageManager": "pnpm@10.15.0",
   "scripts": {
     "dev": "next dev",
     "check-types": "tsc --noEmit --pretty",
     "lint:check": "eslint \"src/**/*.{ts,tsx,js,jsx}\" --max-warnings=0",
-    "verify": "npm run check-types && npm run lint:check",
+    "verify": "pnpm run check-types && pnpm run lint:check",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -20,7 +17,7 @@
     "test": "jest",
     "test:cypress:component": "cypress run --component",
     "test:cypress:e2e": "cypress run",
-    "test:cypress": "npm run test:cypress:component && npm run test:cypress:e2e",
+    "test:cypress": "pnpm run test:cypress:component && pnpm run test:cypress:e2e",
     "analyze": "ANALYZE=true next build && open .next/analyze/client.html",
     "generate-sitemap": "node --loader ts-node/esm scripts/generate-sitemap/generate-sitemap.ts",
     "generate-icons": "node --loader ts-node/esm scripts/generate-icons.ts",

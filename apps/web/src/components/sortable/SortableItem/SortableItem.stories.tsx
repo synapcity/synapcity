@@ -17,7 +17,7 @@ export const Default = () => (
     <SortableContext items={[mockItem.id]}>
       <SortableItem
         item={mockItem}
-        renderItem={(item, { getSortableProps }) => (
+        renderItem={(_item, { getSortableProps }) => (
           <div {...getSortableProps()} className="bg-white border p-4 rounded shadow">
             Hello
           </div>

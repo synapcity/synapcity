@@ -2,6 +2,6 @@
 
 import { useStatus } from "../useStatus";
 
-export function useIsSaving(type?: string, id?: string) {
+export function useIsSaving(_type?: string, id?: string) {
   return useStatus(id).isSaving;
 }

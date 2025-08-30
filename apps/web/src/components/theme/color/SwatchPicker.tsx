@@ -22,7 +22,7 @@ interface SwatchPickerProps {
 }
 
 export const SwatchPicker: React.FC<SwatchPickerProps> = ({ value, onChange, className = "" }) => {
-  const handleColorChange = (e: React.MouseEvent, color: string) => {
+  const handleColorChange = (_e: React.MouseEvent, color: string) => {
     onChange(color);
   };
 

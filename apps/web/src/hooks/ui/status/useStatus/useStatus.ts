@@ -6,7 +6,7 @@ export function useStatus(id?: string) {
   return useUIStore((s) => s.getStatus(id));
 }
 
-export function useStatusFlags(type?: string, id?: string) {
+export function useStatusFlags(_type?: string, id?: string) {
   const status = useStatus(id);
   return {
     isSaving: status.isSaving,
