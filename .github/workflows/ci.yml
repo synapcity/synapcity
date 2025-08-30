@@ -114,7 +114,7 @@ jobs:
     name: Cypress E2E (web)
     runs-on: ubuntu-24.04
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -123,35 +123,24 @@ jobs:
         with:
           version: 10.0.0
 
-      - name: Setup Node.js environment
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: "pnpm"
 
-      - name: Install deps (allow lockfile update)
-        run: pnpm install --no-frozen-lockfile
+      - name: Install deps
+        run: pnpm install --frozen-lockfile
 
-      - name: Build web app
-        run: pnpm --filter ./apps/web run build
-
-      - name: Start web app
-        run: |
-          PORT=3000 pnpm --filter ./apps/web run start &
-
-      - name: Wait for http://localhost:3000
-        shell: bash
-        run: |
-          set -euo pipefail
-          for i in {1..60}; do
-            if curl -sf http://localhost:3000 >/dev/null; then
-              echo "Server is up"; exit 0
-            fi
-            echo "Waiting for server... ($i)"; sleep 2
-          done
-          echo "Server failed to start"; exit 1
-
-      - name: Run Cypress E2E for web
-        run: pnpm --filter ./apps/web run test:cypress:e2e
+      - name: Cypress run (apps/web)
+        uses: cypress-io/github-action@v6
+        with:
+          project: apps/web
+          install-command: pnpm install --frozen-lockfile
+          build: pnpm --filter ./apps/web run build
+          start: pnpm --filter ./apps/web run start
+          wait-on: "http://localhost:3000"
+          # default command is `cypress run`, override if your script is different
+          command: pnpm --filter ./apps/web run test:cypress:e2e
         env:
           CI: "true"

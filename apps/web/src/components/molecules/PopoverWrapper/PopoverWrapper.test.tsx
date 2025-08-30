@@ -7,15 +7,15 @@ describe("<PopoverWrapper />", () => {
     render(<PopoverWrapper trigger={<button>Open</button>} content={<div>Popover Content</div>} />);
 
     expect(screen.getByRole("button", { name: /open/i })).toBeInTheDocument();
-    const content = screen.getByText(/popover content/i);
-    expect(content).not.toBeVisible();
+    const content = screen.queryByText(/popover content/i);
+    expect(content).not.toBeInTheDocument();
   });
 
   it("shows content after clicking the trigger (uncontrolled)", async () => {
     render(<PopoverWrapper trigger={<button>Open</button>} content={<div>Popover Content</div>} />);
 
     await userEvent.click(screen.getByRole("button", { name: /open/i }));
-    expect(screen.getByText(/popover content/i)).toBeVisible();
+    expect(await screen.findByText(/popover content/i)).toBeVisible();
   });
 
   it("toggles visibility via controlled open prop", () => {
@@ -27,8 +27,8 @@ describe("<PopoverWrapper />", () => {
       />
     );
 
-    const closed = screen.getByText(/controlled content/i);
-    expect(closed).not.toBeVisible();
+    const closed = screen.queryByText(/controlled content/i);
+    expect(closed).not.toBeInTheDocument();
 
     rerender(
       <PopoverWrapper
@@ -74,6 +74,7 @@ describe("<PopoverWrapper />", () => {
       <PopoverWrapper
         side="right"
         align="start"
+        avoidCollisions={false}
         sideOffset={10}
         trigger={<button>Custom Position</button>}
         content={<div>Test</div>}
@@ -84,7 +85,7 @@ describe("<PopoverWrapper />", () => {
 
     const popover = await screen.findByTestId("popover-content");
     expect(popover).toBeVisible();
-    expect(popover.getAttribute("data-side")).toBe("left");
+    expect(popover.getAttribute("data-side")).toBe("right");
     expect(popover.getAttribute("data-align")).toBe("start");
   });
 

@@ -76,13 +76,14 @@ describe("Icon component", () => {
     const icon = screen.getByTestId("lucide-settings");
     expect(icon).toBeInTheDocument();
 
-    expect(screen.queryAllByText("Settings tooltip")).toBeNull();
-
+    expect(screen.queryAllByText("Settings tooltip")).toHaveLength(0);
     await userEvent.hover(icon);
-
-    waitFor(() => {
-      expect(screen.getAllByText("Settings tooltip")).toBeVisible();
-    });
+    const tips = await screen.findAllByText("Settings tooltip");
+    const visibleTip = tips.find(
+      (el) => (el as HTMLElement).dataset?.slot === "tooltip-content"
+    ) as HTMLElement | undefined;
+    expect(visibleTip).toBeTruthy();
+    expect(visibleTip!).toBeVisible();
     await userEvent.unhover(icon);
   });
 

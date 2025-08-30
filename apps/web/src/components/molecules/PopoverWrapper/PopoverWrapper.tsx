@@ -18,6 +18,7 @@ interface PopoverWrapperProps {
   className?: string;
   withAnchor?: boolean;
   anchorEl?: React.ReactNode;
+  avoidCollisions?: boolean;
   size?: "xs" | "sm" | "md" | "lg" | "xl" | "default";
 }
 
@@ -34,6 +35,7 @@ export function PopoverWrapper({
   className,
   withAnchor = false,
   anchorEl,
+  avoidCollisions = true,
   size = "default",
 }: PopoverWrapperProps) {
   const sizeClasses = {
@@ -56,6 +58,7 @@ export function PopoverWrapper({
         align={align}
         side={side}
         sideOffset={sideOffset}
+        avoidCollisions={avoidCollisions}
         className={cn(className, sizeClasses[size])}
       >
         {content}

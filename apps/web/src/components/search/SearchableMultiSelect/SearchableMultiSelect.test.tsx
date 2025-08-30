@@ -220,7 +220,7 @@ describe("SearchableMultiSelect", () => {
     );
 
     // icon should only be found inside the selected-tags container
-    const selected = screen.getByTestId("selected-tags");
+    const selected = screen.getByTestId("tag-pill-react");
     expect(within(selected).getByTestId("icon-react")).toBeInTheDocument();
 
     // open the popover to ensure icon appears in the suggestion list as well

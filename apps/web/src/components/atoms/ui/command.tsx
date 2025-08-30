@@ -44,7 +44,7 @@ function CommandDialog({
   showCloseButton?: boolean;
   loop?: boolean;
   shouldFilter?: boolean;
-}) {
+} & React.ComponentProps<typeof CommandPrimitive>) {
   return (
     <Dialog {...props}>
       <DialogHeader className="sr-only">

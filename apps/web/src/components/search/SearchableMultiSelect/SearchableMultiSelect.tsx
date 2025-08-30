@@ -108,27 +108,33 @@ export function SearchableMultiSelect({
     () => combinedOptions.filter((opt) => selectedSet.has(opt.value)),
     [combinedOptions, selectedSet]
   );
-
-  const tagPill = (label: string, val: string) => (
-    <span
-      key={val}
-      data-testid={`tag-pill-${val}`}
-      className={cn(
-        "text-(--accent-foreground) inline-flex items-center gap-1 rounded px-2 py-0.5 text-xs",
-        getTagColor?.(val) ? `bg-[${getTagColor(val)}]` : "bg-(--accent-200)"
-      )}
-    >
-      {getTagIcon?.(val) && <span aria-hidden="true">{getTagIcon(val)}</span>}
-      {label}
-      <X
-        className="size-3.5 cursor-pointer hover:text-(--destructive)"
-        onClick={(e) => {
-          e.stopPropagation();
-          handleRemove(val);
-        }}
-      />
-    </span>
-  );
+  const tagPill = (label: string, val: string) => {
+    const iconNode = getTagIcon?.(val);
+    return (
+      <span
+        key={val}
+        data-testid={`tag-pill-${val}`}
+        className={cn(
+          "text-(--accent-foreground) inline-flex items-center gap-1 rounded px-2 py-0.5 text-xs",
+          getTagColor?.(val) ? `bg-[${getTagColor(val)}]` : "bg-(--accent-200)"
+        )}
+      >
+        {iconNode && (
+          <span aria-hidden="true" data-testid={`icon-${val}`}>
+            {iconNode}
+          </span>
+        )}
+        {label}
+        <X
+          className="size-3.5 cursor-pointer hover:text-(--destructive)"
+          onClick={(e) => {
+            e.stopPropagation();
+            handleRemove(val);
+          }}
+        />
+      </span>
+    );
+  };
 
   return (
     <div className="space-y-1 bg-(--background) text-(--foreground)">
@@ -196,6 +202,14 @@ export function SearchableMultiSelect({
                         )}
                       >
                         {getTagIcon?.(opt.value)}
+                        {(() => {
+                          const icon = getTagIcon?.(opt.value);
+                          return icon ? (
+                            <span aria-hidden="true" data-testid={`icon-${opt.value}`}>
+                              {icon}
+                            </span>
+                          ) : null;
+                        })()}
                         {opt.label}
                       </span>
                       {isSelected && (

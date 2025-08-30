@@ -62,6 +62,22 @@ export function CommandMenu({
     [isControlled, onOpenChange]
   );
 
+  React.useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      const key = e.key.toLowerCase();
+      if (key === "k" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        if (!isControlled) {
+          setInternalOpen(true);
+        } else {
+          onOpenChange?.(true);
+        }
+      }
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [isControlled, onOpenChange]);
+
   const handleSelect = useCallback(
     (item: CommandMenuItem) => {
       item.onSelect?.();
@@ -77,6 +93,7 @@ export function CommandMenu({
       title={title}
       description={description}
       showCloseButton={showCloseButton}
+      role="dialog"
       className="bg-(--background) text-(--foreground)"
     >
       <CommandInput

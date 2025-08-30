@@ -55,14 +55,16 @@ describe("CommandMenu - Full Coverage", () => {
     expect(screen.getAllByRole("separator").length).toBeGreaterThan(0);
   });
 
-  it("handles internal state toggle (uncontrolled mode)", () => {
+  it("handles internal state toggle (uncontrolled mode)", async () => {
     render(<CommandMenu groups={mockGroups} />);
+    // closed initially
+    expect(screen.queryByRole("dialog")).toBeNull();
 
-    fireEvent.keyDown(document, { key: "Meta" });
+    // trigger open with ⌘K (meta) or Ctrl+K
+    fireEvent.keyDown(document, { key: "k", metaKey: true });
 
-    // dialog exists in the DOM but is hidden
-    const dialog = screen.getByRole("dialog");
-    expect(dialog).not.toBeVisible();
+    const dialog = await screen.findByRole("dialog");
+    expect(dialog).toBeVisible();
 
     fireEvent.keyDown(document, { key: "Escape" });
   });
