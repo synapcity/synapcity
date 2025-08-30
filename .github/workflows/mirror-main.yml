@@ -8,29 +8,30 @@ on:
 jobs:
   mirror:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout full history of main
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           ref: main
+          persist-credentials: false # use our PAT, not GITHUB_TOKEN
 
-      - name: Show debug refs (optional)
+      - name: Configure git
         run: |
-          git --version
-          git status
-          git branch -vv
-          git log --oneline -n 3
-          git remote -v
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
 
-      - name: Push HEAD -> Synapcity/synapcity-web main
+      - name: Add remote for public repo
         env:
           PUBLIC_REPO_TOKEN: ${{ secrets.PUBLIC_REPO_TOKEN }}
         run: |
-          set -euo pipefail
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Change OWNER/REPO to your target (e.g., thesynapcity/synapcity-web)
+          git remote add public "https://x-access-token:${PUBLIC_REPO_TOKEN}@github.com/synapcity/synapcity.git"
+          git remote -v
 
-          git remote add public https://x-access-token:${{ secrets.PUBLIC_REPO_TOKEN }}@github.com/synapcity/synapcity.git
-
-          git push public origin/main:refs/heads/main --force-with-lease
+      - name: Push HEAD:main (force-with-lease)
+        run: |
+          # Push the currently checked-out commit to the target main
+          git push public HEAD:refs/heads/main --force-with-lease
