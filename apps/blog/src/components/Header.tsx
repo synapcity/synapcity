@@ -18,8 +18,10 @@ interface MenuItem {
   openInNewTab?: boolean;
 }
 const menuItems: MenuItem[] = [
-  { name: "Blog", href: "/" },
   { name: "About", href: "/about" },
+  { name: "Blog", href: "/" },
+  { name: "Design", href: "https://design.synapcity.dev" },
+  { name: "Synapcity", href: "https://www.synapcity.dev" },
 ];
 export const Navigation: FunctionComponent = () => {
   const pathname = usePathname();
