@@ -1,0 +1,30 @@
+{
+  "name": "synapcity-docs",
+  "version": "0.1.0",
+  "engines": {
+    "node": "20"
+  },
+  "main": "./src/pages/posts/index.mdx",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "packageManager": "pnpm@10.15.0",
+  "dependencies": {
+    "next": "^15.5.2",
+    "nextra": "^4.4.0",
+    "nextra-theme-blog": "^4.4.0",
+    "nextra-theme-docs": "^4.4.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.1",
+    "@types/react-dom": "^19.1.1",
+    "@types/node": "^20",
+    "typescript": "^5.9.2"
+  }
+}
