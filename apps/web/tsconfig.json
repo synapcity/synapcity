@@ -24,13 +24,7 @@
         "src/*"
       ]
     },
-    "types": [
-      "next"
-    ],
-    "typeRoots": [
-      "@lexical",
-      "@/types/node"
-    ],
+    
     "lib": [
       "dom",
       "dom.iterable",
