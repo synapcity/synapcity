@@ -15,8 +15,9 @@ describe("<Drawer />", () => {
     // Closed: no dialog
     expect(screen.queryByRole("dialog")).toBeNull();
 
+    const trigger = screen.getByTestId("drawer-trigger");
     // Click trigger
-    await user.click(screen.getByRole("button", { name: /open/i }));
+    await user.click(trigger);
 
     // Open: dialog present and visible
     const dialog = await screen.findByRole("dialog");
@@ -31,7 +32,14 @@ describe("<Drawer />", () => {
     const user = userEvent.setup();
 
     render(
-      <Drawer title="Custom Drawer" trigger={<button type="button">Launch</button>}>
+      <Drawer
+        title="Custom Drawer"
+        trigger={
+          <button type="button" role="button">
+            Launch
+          </button>
+        }
+      >
         <p>Custom content</p>
       </Drawer>
     );
