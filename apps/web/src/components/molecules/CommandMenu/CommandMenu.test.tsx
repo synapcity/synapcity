@@ -59,7 +59,8 @@ describe("CommandMenu - Full Coverage", () => {
     render(<CommandMenu groups={mockGroups} />);
 
     fireEvent.keyDown(document, { key: "Meta" });
-    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    const dialog = screen.getByRole("dialog");
+    expect(dialog).not.toBeVisible();
 
     fireEvent.keyDown(document, { key: "Escape" });
   });

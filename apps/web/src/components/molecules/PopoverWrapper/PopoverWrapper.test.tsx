@@ -7,7 +7,8 @@ describe("<PopoverWrapper />", () => {
     render(<PopoverWrapper trigger={<button>Open</button>} content={<div>Popover Content</div>} />);
 
     expect(screen.getByRole("button", { name: /open/i })).toBeInTheDocument();
-    expect(screen.queryByText(/popover content/i)).not.toBeInTheDocument();
+    const content = screen.getByText(/popover content/i);
+    expect(content).not.toBeVisible();
   });
 
   it("shows content after clicking the trigger (uncontrolled)", async () => {
@@ -35,7 +36,8 @@ describe("<PopoverWrapper />", () => {
       />
     );
 
-    expect(screen.queryByText(/controlled content/i)).not.toBeInTheDocument();
+    const closed = screen.getByText(/controlled content/i);
+    expect(closed).not.toBeVisible();
 
     rerender(
       <PopoverWrapper

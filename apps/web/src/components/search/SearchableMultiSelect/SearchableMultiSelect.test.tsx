@@ -230,7 +230,8 @@ describe("SearchableMultiSelect", () => {
       />
     );
 
-    expect(screen.getByTestId("icon-react")).toBeInTheDocument();
+    const selected = screen.getByTestId("selected-tags");
+    expect(within(selected).getByTestId("icon-react")).toBeInTheDocument();
 
     const trigger = screen.getByTestId("popover-trigger");
     await userEvent.click(trigger);
