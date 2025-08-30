@@ -7,12 +7,11 @@
   },
   "packageManager": "pnpm@10.15.0",
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
-    "start": "next start",
-    "lint": "eslint",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "dev": "storybook dev -p 6006",
+    "build": "storybook build -o storybook-static",
+    "check-types": "tsc --noEmit --pretty",
+    "lint:check": "eslint \"src/**/*.{ts,tsx,js,jsx}\" --max-warnings=0",
+    "test": "No output"
   },
   "dependencies": {
     "next": "15.5.2",
