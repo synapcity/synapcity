@@ -1,7 +1,3 @@
-const config = {
-  plugins: {
-    "@tailwindcss/postcss": {},
-  },
-};
+import { postcssConfig } from "@builds/tailwind";
 
-export default config;
+export default postcssConfig;

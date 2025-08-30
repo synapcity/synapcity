@@ -1,0 +1,19 @@
+# Build artifacts
+dist
+.next
+.storybook-static
+storybook-static
+coverage
+.vite
+.vitest
+.cypress
+
+# Node + tooling
+node_modules
+pnpm-lock.yaml
+turbo
+*.log
+
+# Misc
+*.svg
+*.snap

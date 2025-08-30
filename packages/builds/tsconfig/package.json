@@ -1,0 +1,17 @@
+{
+  "name": "@builds/tsconfig",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "files": [
+    "*.json"
+  ],
+  "exports": {
+    "./base": "./base.json",
+    "./react": "./react.json",
+    "./next": "./next.json",
+    "./node": "./node.json",
+    "./lib": "./lib.json",
+    "./test": "./test.json"
+  }
+}
