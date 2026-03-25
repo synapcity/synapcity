@@ -5,7 +5,7 @@ import { StreakCalendarWidget } from "@/components/widgets/streak-calendar-widge
 import { CompletionMetricsWidget } from "@/components/widgets/completion-metrics-widget"
 import { TimeSpentWidget } from "@/components/widgets/time-spent-widget"
 import { CalendarWidget } from "@/components/widgets/calendar-widget"
-import { InboxDrawer } from "@/components/inbox-drawer"
+import InboxDrawer from "@/components/inbox-drawer"
 
 export default function DashboardPage() {
   return (
