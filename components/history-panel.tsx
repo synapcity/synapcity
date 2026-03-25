@@ -33,15 +33,13 @@ export function HistoryPanel({ isOpen, onClose, onViewDiff, className }: History
       <ScrollArea className="h-[calc(100vh-3.5rem)]">
         <div className="p-4 space-y-3">
           {mockHistory.map((entry) => (
-            <div key={entry.id} onClick={() => onViewDiff?.(entry)}>
-              <VersionCard
-                id={entry.id}
-                timestamp={entry.timestamp}
-                author={entry.author}
-                description={entry.description}
-                changes={entry.changes}
-              />
-            </div>
+            <button
+              key={entry.id}
+              onClick={() => onViewDiff?.(entry)}
+              className="w-full text-left transition-opacity hover:opacity-80"
+            >
+              <VersionCard entry={entry} />
+            </button>
           ))}
         </div>
       </ScrollArea>
