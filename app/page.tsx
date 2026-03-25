@@ -5,23 +5,25 @@ import { History } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { DocumentViewer } from "@/components/document-viewer"
 import { HistoryPanel } from "@/components/history-panel"
+import { DiffAccordion } from "@/components/diff-accordion"
 import { SidebarTrigger } from "@/components/ui/sidebar"
+import type { VersionEntry } from "@/types"
 
 const MOCK_DOC = {
-  title: "Project Phoenix Architecture",
-  content: `Project Phoenix represents a complete overhaul of our core infrastructure, designed to scale to 100 million concurrent users. This document outlines the key architectural decisions and the rationale behind them.
+  title: "Biology Notes",
+  content: `The study of life encompasses a vast range of disciplines, from the molecular level to ecosystem-wide interactions. Modern biology integrates principles from chemistry, physics, and environmental science.
 
-1. Microservices Architecture
-We are moving from a monolithic architecture to a microservices-based approach. This will allow us to scale individual components independently and improve fault isolation.
+Cellular Biology
+All living organisms are composed of one or more cells. The cell is the basic unit of life, capable of independent function and reproduction. There are two main types of cells: prokaryotic and eukaryotic.
 
-2. Event-Driven Design
-All inter-service communication will be asynchronous and event-driven, using Apache Kafka as the message backbone. This ensures loose coupling and high availability.
+Genetics and Heredity
+The transmission of traits from parents to offspring is governed by genes, which are segments of DNA. Gregor Mendel's work established the fundamental principles of inheritance through his experiments with pea plants.
 
-3. Database Strategy
-We will use a polyglot persistence strategy. Transactional data will reside in PostgreSQL, while time-series data will be stored in TimescaleDB. Redis will be used for caching.
+Evolution and Natural Selection
+Charles Darwin's theory of evolution by natural selection explains the diversity of life. Organisms with advantageous traits are more likely to survive and reproduce, passing these traits to their offspring.
 
-4. Security
-Zero-trust security model will be implemented across all services. mTLS will be mandatory for service-to-service communication.`,
+Ecology
+Ecosystems consist of both living organisms (biotic factors) and non-living elements (abiotic factors). Energy flows through ecosystems via food chains and food webs, while nutrients cycle through biogeochemical processes.`,
   lastModified: "2 hours ago",
   author: "Sarah Chen",
   version: "v2.4.0",
@@ -29,6 +31,13 @@ Zero-trust security model will be implemented across all services. mTLS will be 
 
 export default function SplitPanelPage() {
   const [isHistoryOpen, setIsHistoryOpen] = React.useState(false)
+  const [selectedVersion, setSelectedVersion] = React.useState<VersionEntry | null>(null)
+  const [isDiffOpen, setIsDiffOpen] = React.useState(false)
+
+  const handleViewDiff = (version: VersionEntry) => {
+    setSelectedVersion(version)
+    setIsDiffOpen(true)
+  }
 
   return (
     <div className="relative flex h-screen w-full overflow-hidden bg-background">
@@ -49,9 +58,27 @@ export default function SplitPanelPage() {
             History
           </Button>
         </header>
-        <DocumentViewer {...MOCK_DOC} />
+
+        <div className="flex-1 overflow-auto flex flex-col">
+          {selectedVersion && (
+            <DiffAccordion 
+              version={selectedVersion}
+              isOpen={isDiffOpen}
+              onToggle={() => setIsDiffOpen(!isDiffOpen)}
+            />
+          )}
+          
+          <DocumentViewer 
+            {...MOCK_DOC}
+            isDiffActive={isDiffOpen && !!selectedVersion}
+          />
+        </div>
       </div>
-      <HistoryPanel isOpen={isHistoryOpen} onClose={() => setIsHistoryOpen(false)} />
+      <HistoryPanel 
+        isOpen={isHistoryOpen} 
+        onClose={() => setIsHistoryOpen(false)}
+        onViewDiff={handleViewDiff}
+      />
     </div>
   )
 }
