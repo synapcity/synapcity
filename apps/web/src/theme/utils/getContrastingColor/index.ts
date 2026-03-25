@@ -1,1 +1,0 @@
-export { getContrastingColor } from "./getContrastingColor";

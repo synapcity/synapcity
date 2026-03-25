@@ -1,1 +1,0 @@
-export { useActiveNoteView } from "./useActiveNoteView";

@@ -1,7 +1,0 @@
-{
-  "extends": "./react.json",
-  "compilerOptions": {
-    "plugins": [{ "name": "next" }],
-    "noEmit": true
-  }
-}

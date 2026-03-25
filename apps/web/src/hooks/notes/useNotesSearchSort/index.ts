@@ -1,1 +1,0 @@
-export { useNotesSearchSort } from "./useNotesSearchSort";

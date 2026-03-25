@@ -1,1 +1,0 @@
-export { migrateThemeStore } from "./migrate";
