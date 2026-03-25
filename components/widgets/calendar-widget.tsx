@@ -82,6 +82,7 @@ export function CalendarWidget({ compact = false, className }: CalendarWidgetPro
   const [isCreating, setIsCreating] = React.useState(false)
   const [createStart, setCreateStart] = React.useState<Date | null>(null)
   const [createEnd, setCreateEnd] = React.useState<Date | null>(null)
+  const [dragOffset, setDragOffset] = React.useState(0)
 
   const hours = Array.from({ length: 24 }, (_, i) => i)
   const workingHours = hours.filter((h) => h >= 6 && h <= 22)
@@ -176,6 +177,64 @@ export function CalendarWidget({ compact = false, className }: CalendarWidgetPro
       newDate.setMonth(newDate.getMonth() + (direction === "next" ? 1 : -1))
     }
     setCurrentDate(newDate)
+  }
+
+  const getWeekDays = () => {
+    const start = new Date(currentDate)
+    start.setDate(start.getDate() - start.getDay())
+    return Array.from({ length: 7 }, (_, i) => {
+      const date = new Date(start)
+      date.setDate(date.getDate() + i)
+      return date
+    })
+  }
+
+  const getMonthDays = () => {
+    const year = currentDate.getFullYear()
+    const month = currentDate.getMonth()
+    const firstDay = new Date(year, month, 1)
+    const lastDay = new Date(year, month + 1, 0)
+    const daysInMonth = lastDay.getDate()
+    const startingDayOfWeek = firstDay.getDay()
+
+    const days: (Date | null)[] = []
+    for (let i = 0; i < startingDayOfWeek; i++) {
+      days.push(null)
+    }
+    for (let i = 1; i <= daysInMonth; i++) {
+      days.push(new Date(year, month, i))
+    }
+    return days
+  }
+
+  const getEventsForDate = (date: Date) => {
+    return events.filter(
+      (event) =>
+        event.startTime.toDateString() === date.toDateString(),
+    )
+  }
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault()
+    e.dataTransfer.dropEffect = "move"
+  }
+
+  const handleDrop = (e: React.DragEvent, targetTime: Date) => {
+    e.preventDefault()
+    if (draggedEvent) {
+      const duration = draggedEvent.endTime.getTime() - draggedEvent.startTime.getTime()
+      const newStart = new Date(targetTime)
+      const newEnd = new Date(newStart.getTime() + duration)
+
+      setEvents(
+        events.map((event) =>
+          event.id === draggedEvent.id
+            ? { ...event, startTime: newStart, endTime: newEnd }
+            : event,
+        ),
+      )
+      setDraggedEvent(null)
+    }
   }
 
   const timeSlots = getTimeSlots()
@@ -319,11 +378,29 @@ export function CalendarWidget({ compact = false, className }: CalendarWidgetPro
                       key={event.id}
                       className={cn(
                         "group absolute left-2 right-2 z-30 cursor-move rounded-md border-l-4 p-2 transition-all hover:shadow-md",
+                        draggedEvent?.id === event.id ? "opacity-50" : "",
                         event.color,
                       )}
                       style={{ top: `${top}px`, height: `${height}px` }}
                       draggable
-                      onDragStart={() => setDraggedEvent(event)}
+                      onDragStart={(e) => {
+                        setDraggedEvent(event)
+                        setDragOffset((e.clientY - (top + 64)) % 60)
+                      }}
+                      onDragOver={handleDragOver}
+                      onDrop={(e) => {
+                        const grid = e.currentTarget.parentElement
+                        if (grid) {
+                          const rect = grid.getBoundingClientRect()
+                          const y = e.clientY - rect.top - 64
+                          const slotIndex = Math.max(0, Math.floor(y / (60 / (60 / timeIncrement))))
+                          const targetMinutes = (slotIndex * timeIncrement) % 60
+                          const targetHour = 6 + Math.floor((slotIndex * timeIncrement) / 60)
+                          const targetDate = new Date(currentDate)
+                          targetDate.setHours(targetHour, targetMinutes, 0, 0)
+                          handleDrop(e, targetDate)
+                        }
+                      }}
                       onDragEnd={() => setDraggedEvent(null)}
                     >
                       <div className="flex h-full flex-col justify-between">
@@ -360,24 +437,152 @@ export function CalendarWidget({ compact = false, className }: CalendarWidgetPro
         </div>
       )}
 
-      {/* Week View Placeholder */}
+      {/* Week View */}
       {viewMode === "week" && (
-        <div className="flex flex-1 items-center justify-center p-12 text-center">
-          <div>
-            <CalendarIcon className="mx-auto size-12 text-muted-foreground/40 mb-3" />
-            <p className="text-sm text-muted-foreground">Week view coming soon</p>
-            <p className="text-xs text-muted-foreground/70">Switch to day view for full functionality</p>
+        <div className="flex-1 overflow-x-auto">
+          <div className="inline-flex min-w-full">
+            {getWeekDays().map((date, dayIndex) => (
+              <div key={dayIndex} className="flex-1 min-w-[200px] border-r last:border-r-0">
+                {/* Day Header */}
+                <div className="border-b bg-muted/50 px-3 py-2 text-center">
+                  <div className="text-xs font-medium text-muted-foreground">
+                    {date.toLocaleDateString("en-US", { weekday: "short" })}
+                  </div>
+                  <div className={cn(
+                    "text-lg font-semibold",
+                    date.toDateString() === new Date().toDateString() ? "text-primary" : "text-foreground"
+                  )}>
+                    {date.getDate()}
+                  </div>
+                </div>
+
+                {/* Time Slots for Week */}
+                <div className="relative min-h-[600px] overflow-y-auto">
+                  {workingHours.map((hour) => (
+                    <div
+                      key={hour}
+                      className="border-b border-border/50 relative"
+                      style={{ height: `${60 * (60 / timeIncrement)}px` }}
+                    >
+                      {Array.from({ length: 60 / timeIncrement }).map((_, slotIndex) => {
+                        const slotDate = new Date(date)
+                        slotDate.setHours(hour, slotIndex * timeIncrement, 0, 0)
+                        return (
+                          <div
+                            key={`${hour}-${slotIndex}`}
+                            onClick={() => handleTimeSlotClick(slotDate)}
+                            onDragOver={handleDragOver}
+                            onDrop={(e) => handleDrop(e, slotDate)}
+                            className="cursor-pointer hover:bg-muted/30 transition-colors h-full"
+                            style={{ height: `${60 / (60 / timeIncrement)}px` }}
+                          />
+                        )
+                      })}
+
+                      {/* Events for this hour */}
+                      {getEventsForDate(date)
+                        .filter((e) => e.startTime.getHours() === hour)
+                        .map((event) => {
+                          const { top, height } = getEventPosition(event)
+                          return (
+                            <div
+                              key={event.id}
+                              className={cn(
+                                "group absolute left-1 right-1 z-30 cursor-move rounded-md border-l-4 p-1 text-xs transition-all hover:shadow-md",
+                                event.color,
+                              )}
+                              style={{
+                                top: `${top % (60 * (60 / timeIncrement))}px`,
+                                height: `${height}px`,
+                              }}
+                              draggable
+                              onDragStart={() => setDraggedEvent(event)}
+                              onDragEnd={() => setDraggedEvent(null)}
+                            >
+                              <p className="truncate font-medium">{event.title}</p>
+                              <div className="text-[10px] opacity-80">
+                                {formatTime(event.startTime)}
+                              </div>
+                              <Button
+                                variant="ghost"
+                                size="icon-sm"
+                                onClick={() => handleDeleteEvent(event.id)}
+                                className="opacity-0 group-hover:opacity-100 transition-opacity absolute top-0 right-0"
+                              >
+                                <Trash2Icon className="size-2" />
+                              </Button>
+                            </div>
+                          )
+                        })}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       )}
 
-      {/* Month View Placeholder */}
+      {/* Month View */}
       {viewMode === "month" && (
-        <div className="flex flex-1 items-center justify-center p-12 text-center">
-          <div>
-            <CalendarIcon className="mx-auto size-12 text-muted-foreground/40 mb-3" />
-            <p className="text-sm text-muted-foreground">Month view coming soon</p>
-            <p className="text-xs text-muted-foreground/70">Switch to day view for full functionality</p>
+        <div className="flex-1 overflow-auto">
+          <div className="p-4">
+            {/* Weekday Headers */}
+            <div className="grid grid-cols-7 gap-2 mb-2">
+              {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
+                <div key={day} className="text-center text-xs font-semibold text-muted-foreground py-2">
+                  {day}
+                </div>
+              ))}
+            </div>
+
+            {/* Calendar Grid */}
+            <div className="grid grid-cols-7 gap-2">
+              {getMonthDays().map((date, index) => (
+                <div
+                  key={index}
+                  className={cn(
+                    "min-h-24 rounded-lg border p-2 transition-colors",
+                    date === null
+                      ? "bg-muted/20"
+                      : date.toDateString() === new Date().toDateString()
+                        ? "border-primary bg-primary/5"
+                        : "border-border/50 hover:bg-muted/30 cursor-pointer",
+                  )}
+                  onClick={() => date && setCurrentDate(date)}
+                >
+                  {date && (
+                    <>
+                      <div className="text-sm font-medium mb-1">{date.getDate()}</div>
+                      <div className="space-y-1">
+                        {getEventsForDate(date).map((event) => (
+                          <div
+                            key={event.id}
+                            className={cn(
+                              "group text-[10px] p-1 rounded truncate relative",
+                              event.color,
+                            )}
+                            onClick={(e) => {
+                              e.stopPropagation()
+                            }}
+                          >
+                            <div className="truncate">{event.title}</div>
+                            <Button
+                              variant="ghost"
+                              size="icon-sm"
+                              onClick={() => handleDeleteEvent(event.id)}
+                              className="opacity-0 group-hover:opacity-100 transition-opacity absolute top-0 right-0 h-4 w-4"
+                            >
+                              <Trash2Icon className="size-2" />
+                            </Button>
+                          </div>
+                        ))}
+                      </div>
+                    </>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       )}
