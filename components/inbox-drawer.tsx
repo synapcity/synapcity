@@ -387,9 +387,10 @@ export default function InboxDrawer() {
                   {/* Items List */}
                   {filteredItems.length === 0 ? (
                     <div className="flex flex-col items-center justify-center py-12 text-center">
-                      {React.createElement(enabledPanels.find((p) => p.id === activePanel)?.icon || InboxIcon, {
-                        className: "size-12 text-muted-foreground/40 mb-3",
-                      })}
+                      {(() => {
+                        const IconComponent = enabledPanels.find((p) => p.id === activePanel)?.icon || InboxIcon
+                        return <IconComponent className="size-12 text-muted-foreground/40 mb-3" />
+                      })()}
                       <p className="text-sm text-muted-foreground">No items in this panel</p>
                       <p className="text-xs text-muted-foreground/70">
                         {activePanel === "inbox"
