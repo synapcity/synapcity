@@ -1,1 +1,0 @@
-export { useComponentUI } from "./useComponentUI";

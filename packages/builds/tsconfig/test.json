@@ -1,6 +1,0 @@
-{
-  "extends": "./react.json",
-  "compilerOptions": {
-    "types": ["vitest/globals", "vitest", "jest", "@testing-library/jest-dom"]
-  }
-}

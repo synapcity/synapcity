@@ -1,5 +1,0 @@
-module.exports = {
-  root: false,
-  plugins: ["testing-library", "jest-dom"],
-  extends: ["plugin:testing-library/react", "plugin:jest-dom/recommended"],
-};

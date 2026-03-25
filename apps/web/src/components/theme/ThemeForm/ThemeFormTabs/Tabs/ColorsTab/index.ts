@@ -1,1 +1,0 @@
-export { ColorsTab } from "./ColorsTab";

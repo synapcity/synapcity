@@ -1,1 +1,0 @@
-export { applyColorVars } from "./applyColorVars";
